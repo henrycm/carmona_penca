@@ -43,7 +43,7 @@ public class ReporteListaCompensacionTotalPorDistribuidor extends HttpServlet {
 		String tipoReporte = request.getParameter("tipoReporte") == null ? "PDF" : request
 				.getParameter("tipoReporte");
 		try {
-			HashMap<Object, Object> map = new HashMap();
+			HashMap<String, Object> map = new HashMap<String, Object>();
 			Date fechaActual = new Date();
 			String distribuidor = request.getParameter("distribuidor") == null ? UsuarioHelper
 					.getUsuario() : request.getParameter("distribuidor");

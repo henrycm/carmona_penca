@@ -3,7 +3,7 @@ package co.com.multinivel.util;
 public enum CorreoEnum {
 	CORREO_HOST("smtp.gmail.com"), CORREO_ENABLE("true"), CORREO_PORT("587"), CORREO_AUTH("true"), CORREO_FROM(
 			"inscripciones@multinivel.com"), CORREO_TO("multi_aloe@hotmail.com"), CORREO_CLAVE(
-			"mateo123"), CORREO_USER("servicioalcliente@multialoe.com");
+			"cambiar_en_produccion"), CORREO_USER("servicioalcliente@multialoe.com");
 
 	private String valor;
 

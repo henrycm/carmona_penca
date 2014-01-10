@@ -36,7 +36,7 @@ public class ReportePremiosAfiliadoPeriodo extends HttpServlet {
 			throws ServletException, IOException {
 		RequestDispatcher rd = null;
 		try {
-			HashMap<Object, Object> map = new HashMap();
+			HashMap<String, Object> map = new HashMap<String, Object>();
 
 			String documento = request.getParameter("documento") == null ? "0" : request
 					.getParameter("documento");

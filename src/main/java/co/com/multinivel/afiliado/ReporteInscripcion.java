@@ -39,14 +39,14 @@ public class ReporteInscripcion extends HttpServlet {
 			throws ServletException, IOException {
 		RequestDispatcher rd = null;
 		try {
-			HashMap<Object, Object> map = new HashMap();
+			HashMap<String, Object> map = new HashMap<String, Object>();
 			String documento = request.getParameter("documento") == null ? "0" : request
 					.getParameter("documento");
 
 			map.put("titulo", "Inscripcion Afiliado");
 			map.put("rutaImagenes", getServletContext().getInitParameter("rutaImagenes"));
 
-			List<Object> lista = new ArrayList();
+			List<Object> lista = new ArrayList<Object>();
 
 			Afiliado afiliado = this.afiliadoService.consultar(documento);
 			lista.add(afiliado);

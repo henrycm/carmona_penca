@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletOutputStream;
@@ -25,10 +26,10 @@ import net.sf.jasperreports.engine.util.JRLoader;
 public class GenerarReporte {
 	public static void exportarPDF(HttpServletRequest request, HttpServletResponse response,
 			ServletContext contexto, String nombreReporte, String nombreRerpoteJasper,
-			HashMap<Object, Object> map, List<Object> lista) {
+			Map<String, Object> map, List<Object> lista) {
 		try {
 			JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(lista);
-			JasperReport reporte = (JasperReport) JRLoader.loadObject(contexto
+			JasperReport reporte = (JasperReport) JRLoader.loadObjectFromFile(contexto
 					.getInitParameter("rutaReportes") + nombreRerpoteJasper);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, map, ds);
 			response.setContentType("application/pdf");
@@ -49,7 +50,7 @@ public class GenerarReporte {
 			ServletContext contexto, String nombreReporte, String nombreRerpoteJasper) {
 		try {
 			Connection conexion = ConexionReporte.getConexion();
-			JasperReport reporte = (JasperReport) JRLoader.loadObject(contexto
+			JasperReport reporte = (JasperReport) JRLoader.loadObjectFromFile(contexto
 					.getInitParameter("rutaReportes") + nombreRerpoteJasper);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, null, conexion);
 
@@ -68,7 +69,7 @@ public class GenerarReporte {
 			ServletContext contexto, String nombreReporte, String nombreRerpoteJasper) {
 		try {
 			Connection conexion = ConexionReporte.getConexion();
-			JasperReport reporte = (JasperReport) JRLoader.loadObject(contexto
+			JasperReport reporte = (JasperReport) JRLoader.loadObjectFromFile(contexto
 					.getInitParameter("rutaReportes") + nombreRerpoteJasper);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, null, conexion);
 
@@ -89,7 +90,7 @@ public class GenerarReporte {
 			ServletContext contexto, String nombreReporte, String nombreRerpoteJasper) {
 		try {
 			Connection conexion = ConexionReporte.getConexion();
-			JasperReport reporte = (JasperReport) JRLoader.loadObject(contexto
+			JasperReport reporte = (JasperReport) JRLoader.loadObjectFromFile(contexto
 					.getInitParameter("rutaReportes") + nombreRerpoteJasper);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, null, conexion);
 			response.setContentType("application/pdf");
@@ -108,9 +109,9 @@ public class GenerarReporte {
 
 	public static void exportarExcel(HttpServletRequest request, HttpServletResponse response,
 			ServletContext contexto, String nombreReporte, String nombreRerpoteJasper,
-			HashMap<Object, Object> map, List<Object> lista) {
+			HashMap<String, Object> map, List<Object> lista) {
 		try {
-			JasperReport reporte = (JasperReport) JRLoader.loadObject(contexto
+			JasperReport reporte = (JasperReport) JRLoader.loadObjectFromFile(contexto
 					.getInitParameter("rutaReportes") + nombreRerpoteJasper);
 			JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(lista);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, map, ds);
@@ -129,9 +130,9 @@ public class GenerarReporte {
 
 	public static void exportarHTML(HttpServletRequest request, HttpServletResponse response,
 			ServletContext contexto, String nombreReporte, String nombreRerpoteJasper,
-			HashMap<Object, Object> map, List<Object> lista) {
+			HashMap<String, Object> map, List<Object> lista) {
 		try {
-			JasperReport reporte = (JasperReport) JRLoader.loadObject(contexto
+			JasperReport reporte = (JasperReport) JRLoader.loadObjectFromFile(contexto
 					.getInitParameter("rutaReportes") + nombreRerpoteJasper);
 			JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(lista);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, map, ds);

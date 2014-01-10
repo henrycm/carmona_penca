@@ -5,6 +5,7 @@ import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -58,14 +59,13 @@ public class UsuarioHelper {
 	}
 
 	public static char getRol() {
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		Collection<GrantedAuthority> roles = null;
-		char roleRetornado = '3';
-		if ((principal instanceof UserDetails)) {
-			roles = ((UserDetails) principal).getAuthorities();
-		}
+		Authentication principal = SecurityContextHolder.getContext().getAuthentication();
+		Collection< ? extends GrantedAuthority> roles = null;
+		char roleRetornado = '3';		
+		roles = principal.getAuthorities();
+		
 		if (roles != null) {
-			Iterator<GrantedAuthority> listaRoles = roles.iterator();
+			Iterator< ? extends GrantedAuthority> listaRoles = roles.iterator();
 
 			boolean bandera = true;
 			while ((listaRoles.hasNext()) && (bandera)) {

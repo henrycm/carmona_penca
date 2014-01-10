@@ -42,7 +42,7 @@ public class ReporteCompensacionDistribuidorPeriodo extends HttpServlet {
 			throws ServletException, IOException {
 		RequestDispatcher rd = null;
 		try {
-			HashMap<Object, Object> map = new HashMap();
+			HashMap<String, Object> map = new HashMap<String, Object>();
 			String documento = UsuarioHelper.getUsuario();
 			Date fechaActual = new Date();
 			SimpleDateFormat formato = new SimpleDateFormat("MM/yyyy");

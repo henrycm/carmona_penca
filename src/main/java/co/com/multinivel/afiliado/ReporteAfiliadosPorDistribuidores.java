@@ -31,7 +31,7 @@ public class ReporteAfiliadosPorDistribuidores extends HttpServlet {
 			throws ServletException, IOException {
 		RequestDispatcher rd = null;
 		try {
-			HashMap<Object, Object> map = new HashMap();
+			HashMap<String, Object> map = new HashMap<String, Object>();
 
 			Date fechaActual = new Date();
 			SimpleDateFormat formato = new SimpleDateFormat("MM/yyyy");

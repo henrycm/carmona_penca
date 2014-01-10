@@ -28,7 +28,7 @@ public class ReporteListaAfiliadoPorNivel extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
-			HashMap<Object, Object> mapParametrosReporte = new HashMap();
+			HashMap<String, Object> mapParametrosReporte = new HashMap<String, Object>();
 			List<Object> listaAfiliados = null;
 			listaAfiliados = this.afiliadoService.listarPorNivel(request.getParameter("red"));
 			mapParametrosReporte.put("totalAfiliados", Integer.valueOf(listaAfiliados.size()));

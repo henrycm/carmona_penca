@@ -29,7 +29,7 @@ public class ReporteConstanciaConsumo extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
-			HashMap<Object, Object> mapParametrosReporte = new HashMap();
+			HashMap<String, Object> mapParametrosReporte = new HashMap<String, Object>();
 			List<Object> listaConsumo = null;
 			Consumo pedido = new Consumo();
 			pedido.setCodigoConsumo(Integer.parseInt(request.getParameter("codigoConsumo")));

@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="inscripcionAfiliado.jasper" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="382"/>
+	<property name="ireport.y" value="0"/>
 	<scriptlet name="scriptlet1" class="net.sf.jasperreports.engine.JRDefaultScriptlet"/>
 	<parameter name="nombre" class="java.lang.String"/>
 	<parameter name="apellido" class="java.lang.String"/>
@@ -479,6 +479,15 @@
 					<font size="6" isBold="true"/>
 				</textElement>
 				<text><![CDATA[RESIDENCIA]]></text>
+			</staticText>
+			<image>
+				<reportElement x="205" y="448" width="114" height="95"/>
+				<imageExpression class="java.lang.String"><![CDATA[$P{rutaImagenes}+"/firma.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="156" y="544" width="189" height="17"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Aprobado por Gerencia ]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="442" y="0" width="108" height="14"/>

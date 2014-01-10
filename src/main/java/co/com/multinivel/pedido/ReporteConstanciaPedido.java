@@ -29,7 +29,7 @@ public class ReporteConstanciaPedido extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
-			HashMap<Object, Object> mapParametrosReporte = new HashMap();
+			HashMap<String, Object> mapParametrosReporte = new HashMap<String, Object>();
 			List<Object> listaPedido = null;
 			Pedido pedido = new Pedido();
 			pedido.setCodigoPedido(Integer.parseInt(request.getParameter("codigoPedido")));
