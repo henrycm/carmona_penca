@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!--
+		- Application context containing authentication, channel - security
+		and web URI beans. - - Only used by "filter" artifact. -
+	-->
+
+<b:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:b="http://www.springframework.org/schema/beans"  
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd">
+
+
+
+	<http realm="Contacts Realm" access-denied-page="/accesoDenegado.jsp" >
+	    <intercept-url pattern="/login.jsp" filters="none"/>
+	    <intercept-url pattern="/cambiarClave" filters="none"/>
+	 	<intercept-url pattern="/validarUsuario"  access="ROLE_ADMIN,ROLE_DISTRIBUIDOR,ROLE_AFILIADO"/>
+	 	<intercept-url pattern="/index.jsp"  access="ROLE_ADMIN,ROLE_DISTRIBUIDOR,ROLE_AFILIADO"/>
+	 	<intercept-url pattern="/menu.jsp"  access="ROLE_ADMIN"/>
+	 	<intercept-url pattern="/menuDistribuidor.jsp"  access="ROLE_DISTRIBUIDOR"  />
+	 	<intercept-url pattern="/menuAfiliado.jsp"  access="ROLE_AFILIADO"  />
+	 	
+	 
+	 	<intercept-url pattern="/administracion/BuscadorAfiliado"  access="ROLE_ADMIN,ROLE_DISTRIBUIDOR" />
+	 	<intercept-url pattern="/administracion/*"  access="ROLE_ADMIN,ROLE_DISTRIBUIDOR" />
+	 	<intercept-url pattern="/pedido/*"  access="ROLE_ADMIN,ROLE_DISTRIBUIDOR"  />
+	 	<intercept-url pattern="/consumo/*"  access="ROLE_ADMIN,ROLE_DISTRIBUIDOR,ROLE_AFILIADO"  />
+	 	
+	 	<intercept-url pattern="/liquidacion/*"  access="ROLE_ADMIN,ROLE_DISTRIBUIDOR"  />
+	 	<intercept-url pattern="/compensacion/*"  access="ROLE_ADMIN,ROLE_DISTRIBUIDOR"  />
+	 	<intercept-url pattern="/reporte/*"  access="ROLE_ADMIN,ROLE_DISTRIBUIDOR,ROLE_AFILIADO"  />
+	 	
+	 	<form-login login-page="/login.jsp" default-target-url="/ValidarUsuario"  authentication-failure-url="/login.jsp?login_error=1"/>
+	 	
+		<!--<form-login/>
+		--><anonymous />
+		<http-basic/>
+		<logout logout-success-url="/login.jsp" />
+	</http>
+
+	<b:bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	  	<b:property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+	  	<b:property name="url" value="jdbc:mysql://localhost:3306/multinivel?autoReconnect=true"/>
+	  	<b:property name="username" value="root"/>
+	  	<b:property name="password" value=""/>
+	</b:bean>
+
+	<b:bean id="userDetailsService" class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">
+	  
+	   <b:property name="dataSource" ref="dataSource"/>
+	  <b:property name="enableGroups" value="true" />
+	</b:bean>  
+
+			
+<authentication-manager>
+	 	 <authentication-provider user-service-ref="userDetailsService"/>
+</authentication-manager>
+
+</b:beans>

@@ -1,0 +1,653 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="inscripcionAfiliado.jasper" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="459"/>
+	<scriptlet name="scriptlet1" class="net.sf.jasperreports.engine.JRDefaultScriptlet"/>
+	<parameter name="nombre" class="java.lang.String"/>
+	<parameter name="apellido" class="java.lang.String"/>
+	<parameter name="fechaNacimiento" class="java.lang.String"/>
+	<parameter name="tipoDocumento" class="java.lang.String"/>
+	<parameter name="numeroIdentificacion" class="java.lang.String"/>
+	<parameter name="ciudadIdentificacion" class="java.lang.String"/>
+	<parameter name="ciudadNacimiento" class="java.lang.String"/>
+	<parameter name="departamentoNacimiento" class="java.lang.String"/>
+	<parameter name="profesion" class="java.lang.String"/>
+	<parameter name="estadoCivil" class="java.lang.String"/>
+	<parameter name="nombreConyugue" class="java.lang.String"/>
+	<parameter name="documentoConyugue" class="java.lang.String"/>
+	<parameter name="direccion" class="java.lang.String"/>
+	<parameter name="barrio" class="java.lang.String"/>
+	<parameter name="ciudadResidencia" class="java.lang.String"/>
+	<parameter name="departamentoResidencia" class="java.lang.String"/>
+	<parameter name="telefono" class="java.lang.String"/>
+	<parameter name="celular" class="java.lang.String"/>
+	<parameter name="email" class="java.lang.String"/>
+	<parameter name="sedeInscripcion" class="java.lang.String"/>
+	<parameter name="nombreHerencia1" class="java.lang.String"/>
+	<parameter name="nombreHerencia2" class="java.lang.String"/>
+	<parameter name="parentesco1" class="java.lang.String"/>
+	<parameter name="parentesco2" class="java.lang.String"/>
+	<parameter name="fechaNacHerencia1" class="java.lang.String"/>
+	<parameter name="fechaNacHerencia2" class="java.lang.String"/>
+	<parameter name="documentoHerencia1" class="java.lang.String"/>
+	<parameter name="documentoHerencia2" class="java.lang.String"/>
+	<parameter name="porcentaje1" class="java.lang.String"/>
+	<parameter name="porcentaje2" class="java.lang.String"/>
+	<parameter name="numeroCuenta" class="java.lang.String"/>
+	<parameter name="entidadBancaria" class="java.lang.String"/>
+	<parameter name="codigo" class="java.lang.String"/>
+	<parameter name="tipoCuenta" class="java.lang.String"/>
+	<parameter name="ciudadCuenta" class="java.lang.String"/>
+	<parameter name="nombreTitular" class="java.lang.String"/>
+	<parameter name="documentoTitular" class="java.lang.String"/>
+	<parameter name="nombrePatrocinador" class="java.lang.String"/>
+	<parameter name="numeroEmpresario" class="java.lang.String"/>
+	<parameter name="vinculado" class="java.lang.String"/>
+	<parameter name="departamento" class="java.lang.String"/>
+	<parameter name="tipoDocumentoHerencia1" class="java.lang.String"/>
+	<parameter name="tipoDocumentoHerencia2" class="java.lang.String"/>
+	<parameter name="codigoEmpresario" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="101" splitType="Stretch">
+			<staticText>
+				<reportElement x="179" y="73" width="188" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[       INSCRIPCION AFILIADO]]></text>
+			</staticText>
+			<image>
+				<reportElement x="5" y="11" width="50" height="50"/>
+				<imageExpression class="java.lang.String"><![CDATA["C:\\jbossMultinivel\\reports\\pencaSabila.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="118" y="11" width="300" height="62"/>
+				<imageExpression class="java.lang.String"><![CDATA["C:\\jbossMultinivel\\reports\\MultiAloe.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="11" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="560" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Codigo Nuevo Empresario]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="100" y="0" width="108" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{codigoEmpresario}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="-1" y="61" width="52" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="51" y="61" width="100" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="274" y="61" width="82" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{apellido}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="166" y="61" width="108" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Apellidos Completos:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="393" y="61" width="71" height="20"/>
+				<textElement/>
+				<text><![CDATA[Fecha de Nac:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="466" y="61" width="102" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{fechaNacimiento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="84" y="92" width="100" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{tipoDocumento}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="92" width="84" height="20"/>
+				<textElement/>
+				<text><![CDATA[Tipo Documento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="197" y="92" width="31" height="20"/>
+				<textElement/>
+				<text><![CDATA[No.]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="228" y="92" width="129" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{numeroIdentificacion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="367" y="92" width="19" height="20"/>
+				<textElement/>
+				<text><![CDATA[De]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="386" y="92" width="128" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{ciudadIdentificacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="106" y="146" width="159" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{ciudadNacimiento}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="4" y="145" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Lugar de Nacimiento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="268" y="146" width="31" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dpto]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="331" y="125" width="226" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{profesion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="216" y="125" width="115" height="20"/>
+				<textElement/>
+				<text><![CDATA[Profesion u Ocupacion:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4" y="125" width="71" height="20"/>
+				<textElement/>
+				<text><![CDATA[Estado Civil]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="75" y="125" width="137" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{estadoCivil}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="55" y="298" width="342" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{nombreConyugue}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="41" width="121" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DATOS PERSONALES:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="399" y="297" width="23" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CC: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="423" y="297" width="129" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{documentoConyugue}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="4" y="232" width="145" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Direccion (completa): ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="150" y="232" width="179" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{direccion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="331" y="232" width="45" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Barrio:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="376" y="232" width="176" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{barrio}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="5" y="253" width="41" height="20"/>
+				<textElement/>
+				<text><![CDATA[Ciudad:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="46" y="253" width="113" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{ciudadResidencia}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="161" y="253" width="75" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Departamento: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="238" y="253" width="142" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{departamentoResidencia}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="6" y="166" width="56" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Telefono:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="64" y="166" width="110" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{telefono}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="179" y="166" width="84" height="20"/>
+				<textElement/>
+				<text><![CDATA[Celular o Beeper:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="263" y="166" width="81" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{celular}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="344" y="166" width="43" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[E-mail:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="389" y="166" width="163" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{email}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="9" y="186" width="75" height="20"/>
+				<textElement/>
+				<text><![CDATA[Sede de Insc :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="84" y="186" width="302" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{sedeInscripcion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="324" width="240" height="15"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ ESTE CONTRATO ES HEREDABLE A:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="339" width="110" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre y Apellidos:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="359" width="184" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{nombreHerencia1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="379" width="184" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{nombreHerencia2}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="184" y="339" width="87" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Parentesco:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="184" y="359" width="87" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{parentesco1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="184" y="379" width="87" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{parentesco2}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="274" y="339" width="114" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Nacimiento:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="273" y="359" width="114" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{fechaNacHerencia1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="274" y="379" width="114" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{fechaNacHerencia2}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="389" y="339" width="122" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Identificacion: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="417" y="359" width="96" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{documentoHerencia1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="514" y="339" width="41" height="20"/>
+				<textElement/>
+				<text><![CDATA[%]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="418" y="379" width="93" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{documentoHerencia2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="512" y="360" width="41" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{porcentaje1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="512" y="379" width="41" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{porcentaje2}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="407" width="484" height="21"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DATOS PARA PAGO DE RECONOCIMIENTOS MONETARIOS]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="389" y="359" width="28" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{tipoDocumentoHerencia1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="389" y="379" width="28" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{tipoDocumentoHerencia2}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="428" width="82" height="21"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cuenta Numero:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="87" y="429" width="141" height="21"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{numeroCuenta}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="231" y="430" width="44" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Entidad:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="276" y="430" width="112" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{entidadBancaria}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="394" y="430" width="40" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Codigo]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="437" y="430" width="115" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{codigo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="3" y="451" width="60" height="20"/>
+				<textElement/>
+				<text><![CDATA[Tipo de cta.]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="63" y="451" width="88" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{tipoCuenta}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="153" y="451" width="41" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ciudad:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="194" y="452" width="240" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{ciudadCuenta}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="5" y="474" width="95" height="20"/>
+				<textElement/>
+				<text><![CDATA[Nombre del titular:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="104" y="474" width="293" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{nombreTitular}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="403" y="474" width="45" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[C.C. No.]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="448" y="474" width="104" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{documentoTitular}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="502" width="163" height="16"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DATOS DEL PATROCINADOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="518" width="160" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombres y Apellidos(completos) ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="162" y="518" width="286" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{nombrePatrocinador}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="538" width="147" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Número de Empresario:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="149" y="538" width="195" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{numeroEmpresario}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="299" y="146" width="197" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{departamentoNacimiento}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="321" width="555" height="1"/>
+			</line>
+			<line>
+				<reportElement x="0" y="498" width="555" height="1"/>
+			</line>
+			<line>
+				<reportElement x="0" y="404" width="555" height="1"/>
+			</line>
+			<line>
+				<reportElement x="0" y="40" width="555" height="1"/>
+			</line>
+			<line>
+				<reportElement x="0" y="275" width="555" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="6" y="298" width="49" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombrer: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="278" width="145" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CONYUGUE O TUTOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="6" y="212" width="67" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[RESIDENCIA]]></text>
+			</staticText>
+			<line>
+				<reportElement x="-3" y="208" width="555" height="1"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="11" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="11" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="10" splitType="Stretch"/>
+	</summary>
+</jasperReport>

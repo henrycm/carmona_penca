@@ -1,0 +1,75 @@
+
+
+.tituloVerdeOscuro{
+
+  font-family:Verdana, Arial, Helvetica, sans-serif;
+  color:115A35;
+   
+  
+}
+
+.tituloVerdeClaro{
+
+  font-family:Verdana, Arial, Helvetica, sans-serif;
+  color:#84C225;
+  background-color: 
+  
+}
+.tituloGrande{
+  font-family:Verdana, Arial, Helvetica, sans-serif;
+  font-size:12px;
+   color:#115A35;
+  
+}
+.tituloPequeno{
+  font-family:Verdana, Arial, Helvetica, sans-serif;
+  font-size:10px;
+  color:#115A35;
+  
+}
+
+.tituloAzul{
+  font-family:Verdana, Arial, Helvetica, sans-serif;
+  color:#3BB3C2;
+}
+
+
+.encabezadoIzq{
+  font-size:11px;
+  font-family:Verdana, Arial, Helvetica, sans-serif;
+  
+}  
+
+
+
+input.formBoton
+{
+   background-color:#3BB3C2;
+}
+
+
+#opcion.a:link, a:visited { 
+	text-decoration: none;color=#3BB3C2
+}
+
+
+.tabla{
+	
+	background-color: #2E8E42;
+	background: #2E8E42;
+	}
+.fondo
+{ 
+	padding
+	:10px 15px; 
+	width:60%;
+	height:100%; 
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#FFFFFF, endColorstr=#2E8E42) 
+}
+
+.tituloLista{
+	width:40%;
+	height:10%;
+	background-color: #2E8E42;
+	background: #2E8E42;
+	}

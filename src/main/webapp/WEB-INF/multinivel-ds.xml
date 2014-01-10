@@ -1,0 +1,13 @@
+<datasources xmlns="http://www.jboss.org/ironjacamar/schema">
+  <datasource jndi-name="java:/multinivelDS" pool-name="MySQLPool">
+      <connection-url>jdbc:mysql://localhost:3306/multinivel</connection-url>
+      <driver>mysql-connector-java-5.1.7-bin.jar</driver>
+      <pool>
+          <max-pool-size>30</max-pool-size>
+      </pool>
+      <security>
+          <user-name>root</user-name>
+          <password></password>
+      </security>
+  </datasource>
+</datasources>

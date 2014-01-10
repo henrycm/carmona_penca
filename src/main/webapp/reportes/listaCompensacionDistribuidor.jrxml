@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="inscripcionAfiliado.jasper" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="46"/>
+	<scriptlet name="scriptlet1" class="net.sf.jasperreports.engine.JRDefaultScriptlet"/>
+	<parameter name="total" class="java.lang.Integer"/>
+	<parameter name="periodo" class="java.lang.String"/>
+	<parameter name="rutaImagenes" class="java.lang.String"/>
+	<parameter name="totalProducto" class="java.lang.Double"/>
+	<parameter name="totalDinero" class="java.lang.Double"/>
+	<field name="nombre" class="java.lang.String"/>
+	<field name="comisionProducto" class="java.math.BigDecimal"/>
+	<field name="afiliado" class="java.lang.String"/>
+	<field name="comisionDinero" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="10" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="137" splitType="Stretch">
+			<staticText>
+				<reportElement x="110" y="75" width="372" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CONSOLIDADO DE COMPENSACION POR DISTRIBUIDOR]]></text>
+			</staticText>
+			<image>
+				<reportElement x="5" y="11" width="50" height="50"/>
+				<imageExpression class="java.lang.String"><![CDATA[$P{rutaImagenes}+"/pencaSabila.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="118" y="10" width="300" height="62"/>
+				<imageExpression class="java.lang.String"><![CDATA["C:\\jbossMultinivel\\reports\\MultiAloe.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement mode="Opaque" x="73" y="115" width="197" height="20" forecolor="#FFFFFF" backcolor="#006600"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[NOMBRE DISTRIBUIDOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="115" width="73" height="20" forecolor="#FFFFFF" backcolor="#006600"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[DOC- AFLIADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="270" y="115" width="137" height="20" forecolor="#FFFFFF" backcolor="#006600"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Comision Producto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="95" width="32" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Periodo:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="34" y="95" width="310" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{periodo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="407" y="115" width="148" height="20" forecolor="#FFFFFF" backcolor="#006600"/>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Comision Dinero]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="3" width="75" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{afiliado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="270" y="3" width="137" height="20" backcolor="#CCFFCC"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{comisionProducto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="75" y="3" width="195" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="407" y="3" width="137" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{comisionDinero}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="7" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="7" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="87" height="20" forecolor="#FFFFFF" backcolor="#006600"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Total Producto:]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Opaque" x="90" y="0" width="131" height="20" backcolor="#CCFFCC"/>
+				<textElement/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{totalProducto}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="234" y="0" width="87" height="20" forecolor="#FFFFFF" backcolor="#006600"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Total  Dinero:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="321" y="0" width="131" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$P{totalDinero}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>
