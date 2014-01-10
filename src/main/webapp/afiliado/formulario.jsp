@@ -52,7 +52,7 @@
 		<a href="javascript:inscribirAfiliado();">Ingresar</a>
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </div>
-<div align="center">
+<div align="center" class="titulo">
 	FORMULARIO DE INSCRIPCIÓN E INFORMACIÓN COMERCIAL
 </div>
 <div align="left" >
@@ -300,6 +300,6 @@ honorable y que representará adecuadamente la imagen y los productos de la empre
 </div>
 
 </form>
-
+</div>
 </body>
 </html>

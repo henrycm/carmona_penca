@@ -60,7 +60,7 @@
 
 <form name="forma" action="AfiliadoFrontController" method="post">
 
-<div align="center">
+<div align="center" class="titulo">
 	CONSULTA DE DATOS DE AFILIADO
 </div>
 <div align="left">
@@ -298,6 +298,7 @@ honorable y que representará adecuadamente la imagen y los productos de la empre
 
 
 </form>
+</div>
 </body>
 </html>
 

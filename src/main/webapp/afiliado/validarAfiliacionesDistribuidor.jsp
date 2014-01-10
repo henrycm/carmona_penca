@@ -38,7 +38,7 @@
   <input name="periodo" type="hidden">
  
  <div class="demo" align="center">
-     Activar Afiliaciones por Periodo
+     <div class="titulo">Activar Afiliaciones por Periodo</div>
      <table class="tabla" width="90%">
    
      <tr>
@@ -74,11 +74,12 @@
      <td>
        
       Cantidad: <input name="cantidad" maxlength="2">
-        
-     
+             
      </td>
-     </tr> 
+     </tr>      
    </table>  
+   </div>
+   </form>
     </c:if>   
    <c:if test="${mensaje!=null}">
 	        <table class="tabla">
@@ -92,9 +93,6 @@
 	   </table>  
 	</c:if>
 
-  
- </form>
 </body>
-
 
 </html>

@@ -59,7 +59,7 @@
 
 <form name="forma" action="AfiliadoFrontController" method="post">
 
-<div align="center">
+<div align="center" class="titulo">
 	CAMBIAR DOCUMENTO DE UN AFILIADO
 </div>
 <div align="left">

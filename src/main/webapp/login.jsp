@@ -5,57 +5,76 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="StyleSheet" type="text/css" href="css/multinivel.css"></link>
+<link rel="StyleSheet" type="text/css" href="bootstrap/css/bootstrap.css"></link>
 <title>Informacion inicial</title>
 </head>
 
-<body>
-  <body onload="document.f.j_username.focus();">
-  
-    <c:if test="${not empty param.login_error}">
-      <font color="red">
-        Tienes problemas para entrar al sistema comunicate con el administrador
-        error lanzado: No te encuentras registrado o tú clave es incorrecta <c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}"/>.
-      </font>
-    </c:if>
-
-
-
-    <form name="f" action="<c:url value='j_spring_security_check'/>"  method="post" >
-    <img src="images/aloevera3.png" height="20%"/>
-    <span align="center"> APLICACION MULTINIVEL</span>
-  <br /><br /><br /><table align="center" width="938" border="0" >
-    
-    <tr>
-      <td colspan="2" height="160" align="center">&nbsp;</td>
-    </tr>
-    <tr>
-      <td width="169" height="30" class="encabezadoblan">Nombre de usuario</td>
-      <td width="211"><input class="inputtext2" type='text' name='j_username' value=''/></td>
-    </tr>
-    <tr>
-      <td height="30" class="encabezadoblan">Contraseña</td>
-      <td> <input   class="inputtext2" type='password' name='j_password'></td>
-    </tr>
-    <tr>
-      <td height="40" colspan="2">
-      	<p align="center">
-      	<input align="center" type="submit" name="Ingresar" id="Ingresar" value="Ingresar" class="formBoton" /> &nbsp;&nbsp;&nbsp;&nbsp;
-	 <input type="reset" name="Limpiar" id="Limpiar" value="Limpiar" class="formBoton" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;			</p>
-      </td>
-    </tr>
-    <tr>
-      <td height="40" colspan="2">
-       <a href="cambiarClave">Cambiar Clave</a>
-      </td>
-    </tr>
-     <tr class="encabezadoblan"><td colspan="2">
-     	<input type="checkbox" name="_spring_security_remember_me">No preguntar de nuevo de la contraseña
-      </td></tr>
-    <tr>
-      <td height="50">&nbsp;</td>
-    </tr>
-  </table>
-  <p><c:if test="${not empty param.login_error}">El usuario no tiene acceso o no esta registrado en el sistema, comuniquese con el administrador</c:if></p>
-</form>
+ <body onload="document.f.j_username.focus();">
+ <div class="container">
+		<div class="row">
+			<div class="col-md-offset-1 col-md-11">
+				<img src="images/encabezado.png" />
+			</div>
+		</div>
+		<div class="row">
+ 	<div class="col-md-offset-1 col-md-11 top-buffer">
+  	
+   	<c:if test="${not empty param.login_error}">
+		<div class="alert alert-danger">
+			Tienes problemas para entrar al sistema comunicate con el
+			administrador error lanzado: No te encuentras registrado o la clave
+			es incorrecta
+			<c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}" />
+			.
+		</div>
+	</c:if>	
+	<form name="f" action="<c:url value='j_spring_security_check'/>"
+		method="post" class="form-horizontal" role="form">
+		<fieldset>
+			<legend>Autenticación de usuarios</legend>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">Nombre de usuario:</label>
+				<div class="col-sm-3">
+					<input class="form-control" type='text' name='j_username' value='' />
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">Contraseña:</label>
+				<div class="col-sm-3">
+					<input class="form-control" type='password' name='j_password'>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-4">
+					<div class="checkbox">
+						<label> 
+							<input type="checkbox"	name="j_spring_security_remember_me">
+							No preguntar de nuevo de la contraseña
+						</label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-4">
+					<input type="submit" class="btn btn-default" name="Ingresar"
+						id="Ingresar" value="Ingresar" /> <input type="reset"
+						class="btn btn-default" name="Limpiar" id="Limpiar"
+						value="Limpiar" />
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-6">
+					<a href="cambiarClave">Cambiar Clave</a> 
+				</div>
+			</div>
+		</fieldset>
+		<c:if test="${not empty param.login_error}">
+			<div class="alert alert-danger">El usuario no tiene acceso o no
+				esta registrado en el sistema, comuniquese con el administrador</div>
+		</c:if>
+	</form>
+	</div>
+	</div>
+</div>
 </body>
 </html>

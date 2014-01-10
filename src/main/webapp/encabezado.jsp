@@ -11,7 +11,7 @@
 </head>
 
 <body>
-<div align="left">
+<div id="div_encabezado" align="left">
 <table width="100%">
   
   <tr>

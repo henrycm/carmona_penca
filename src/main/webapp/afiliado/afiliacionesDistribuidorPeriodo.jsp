@@ -31,7 +31,7 @@
   <input name="periodo" type="hidden">
  
  <div class="demo" align="center">
-    Listar Afiliaciones por distribuidor por periodo
+    <div class="titulo">Listar Afiliaciones por distribuidor por periodo</div>
      <table class="tabla" width="90%">
      <tr>
      
@@ -66,7 +66,8 @@
      </tr> 
      
    </table>  
-       
+  </div>
  </form>
+ 
 </body>
 </html>

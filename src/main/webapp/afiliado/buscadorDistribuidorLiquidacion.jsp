@@ -23,7 +23,7 @@
 
 <table width="50%" class="tabla" >
   <tr>
-    <td width="173"  > Buscar Distribuidor</td>
+    <td width="173" > Buscar Distribuidor</td>
     <td width="330"><table width="200"  align="right">
   <tr>
     <td><a href="javascript:if(asignarDocumento()){buscarDistribuidorLiquidacion();}">  Consultar </a></td>

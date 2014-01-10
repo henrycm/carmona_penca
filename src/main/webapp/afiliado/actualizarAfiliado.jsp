@@ -15,7 +15,7 @@
 	<script src="../js/jquery/jquery.ui.accordion.js"></script>
 	<script src="../js/jquery/jquery.effects.core.js"></script>
     <script src="../js/jquery/jquery.effects.drop.js"></script>
- <script src="../js/jquery/jquery.ui.datepicker.js"></script>
+ 	<script src="../js/jquery/jquery.ui.datepicker.js"></script>
  
  	<script src="../js/afiliado/afiliado.js"></script>
  	<script src="../js/generico.js"></script>
@@ -55,10 +55,10 @@
 <form name="forma" action="AfiliadoFrontController" method="post">
 
 <div align="right" id="opcion">
-		<a href="javascript:actualizarAfiliado();">Actualizar</a>
+		<a href="javascript:actualizarAfiliado();" class="btn btn-default">Actualizar</a>
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </div>
-<div align="center">
+<div align="center" class="titulo">
 	ACTUALIZACION DE DATOS DE AFILIADO
 </div>
 <div align="left">
@@ -98,7 +98,7 @@ Código Nuevo Empresario: <input name="codigoEmpresario" type="text" size="30" va
 
 						<div id="accordion">
 							<h3><a href="#">DATOS PERSONALES</a></h3>
-	<div "datosPersonales">
+	<div>
 			<input type="hidden" name="rol" value="<c:out value='${afiliado.tipoAfiliado}'/>" >			
 	<table width="100%"  >
     <tr align="left">
@@ -303,6 +303,7 @@ honorable y que representará adecuadamente la imagen y los productos de la empre
 </div>
 
 </form>
+</div>
 </body>
 </html>
 

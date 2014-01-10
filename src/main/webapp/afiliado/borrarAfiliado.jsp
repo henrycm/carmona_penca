@@ -58,7 +58,7 @@
 		<a href="javascript:eliminarAfiliado();">Eliminar</a>
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </div>
-<div align="center">
+<div align="center" class="titulo">
 	BORRAR AFILIADO
 </div>
 <div align="left">
@@ -305,6 +305,7 @@ honorable y que representará adecuadamente la imagen y los productos de la empre
 </div>
 
 </form>
+</div>
 </body>
 </html>
 

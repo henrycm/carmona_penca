@@ -19,7 +19,7 @@
  
    <div align="right"> <br><a href="javascript:listarAfiliado()">LISTAR AFILIADOS</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
  <div class="demo" align="center">
-     LISTAR AFILIADOS POR NIVEL
+     <div class="titulo">LISTAR AFILIADOS POR NIVEL</div>
    <table class="tabla" width="90%">
      <tr>
      

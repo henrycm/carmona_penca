@@ -16,9 +16,9 @@
 <div class="demo">
 <form>
 <input type="hidden"  name="accion" value="<c:out value="${accion}"/>"/>
- <div class="tituloLista">
+ <div class="titulo">
       LISTA DE DISTRIBUIDORES
-      </div>
+  </div>
  
 <c:if test="${listaDistribuidores!=null}"> 
  
