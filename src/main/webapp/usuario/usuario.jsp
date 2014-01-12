@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="t" tagdir="/WEB-INF/tags"%>
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -13,6 +14,7 @@
 <link rel="stylesheet" href="../css/jquery/demos.css">
 
 <link rel="stylesheet" href="../css/multinivel.css">
+<link rel="StyleSheet" type="text/css" href="${ctx}/bootstrap/css/bootstrap.css"></link>
 </head>
 
 <body class="fondo">
@@ -54,7 +56,7 @@
 </tr>
 </table>
 
-	<c:if test='${listaUsuarios!=null}'> 
+<c:if test='${listaUsuarios!=null}'> 
    <table align="center" class="table" width="81%" border="1">
      <tr>
        <td class="encabezadoiz">
@@ -74,7 +76,7 @@
 		Activado
        </td>
      </tr>
-     <c:forEach var='usuario' items='${listaUsuarios}'>
+     <c:forEach var='usuario' items='${listaUsuarios.content}'>
      
           <tr>
        <td>
@@ -100,16 +102,15 @@
        </td>
        <c:if test='${usuario.enabled==0}'>
            <c:out value='Desactivado'/>
-       </c:if>
-       </td>
+       </c:if>       
         <td>
 		<a href="javascript:cargarUsuario('<c:out value='${usuario.username}'/>','<c:out value='${usuario.password}'/>','<c:out value='${usuario.enabled}'/>')">Seleccionar</a>
        </td>
      </tr>
      </c:forEach>
      
-   </table>
-
+   </table>   
+		<t:paginacion url="${ctx}/UsuarioFrontController?accion=C" pagina="${listaUsuarios}"></t:paginacion>
 	</c:if> 
 
 </form>

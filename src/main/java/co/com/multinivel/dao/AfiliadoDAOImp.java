@@ -19,9 +19,9 @@ import javax.persistence.Query;
 import co.com.multinivel.dto.AfiliadoDTO;
 import co.com.multinivel.dto.AfiliadosNivel;
 import co.com.multinivel.dto.Nodo;
-import co.com.multinivel.dto.ParametrosEnum;
 import co.com.multinivel.exception.MultinivelDAOException;
 import co.com.multinivel.model.Afiliado;
+import co.com.multinivel.util.ParametrosEnum;
 
 @Stateless
 @Local({ AfiliadoDAO.class })

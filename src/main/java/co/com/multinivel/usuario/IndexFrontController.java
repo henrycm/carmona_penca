@@ -28,11 +28,13 @@ public class IndexFrontController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		int pagina = (Integer) (request.getParameter("numPagina") == null ? 1 : request
+				.getParameter("numPagina"));
 		RequestDispatcher rd = getServletContext().getRequestDispatcher(
 				RecursosEnum.FW_INDEX_USUARIO.getRecurso());
 		try {
 			request.setAttribute("listaRoles", this.rolService.listar());
-			request.setAttribute("listaUsuarios", this.usuarioService.listarConDistribuidor());
+			request.setAttribute("listaUsuarios", this.usuarioService.listarConDistribuidor(pagina));
 		} catch (MultinivelServiceException e) {
 			e.printStackTrace();
 		}
@@ -45,6 +47,4 @@ public class IndexFrontController extends HttpServlet {
  * D:\Dllo\multinivel\multinivelEAR.ear\multinivel.war\WEB-INF\classes\
  * 
  * Qualified Name: co.com.multinivel.usuario.IndexFrontController
- * 
- * 
  */

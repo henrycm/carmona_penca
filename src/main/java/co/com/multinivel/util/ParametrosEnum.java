@@ -1,8 +1,8 @@
-package co.com.multinivel.dto;
+package co.com.multinivel.util;
 
 public enum ParametrosEnum {
 	URL_DATABASE("jdbc:mysql://localhost/multinivel"), DRIVER_DATABASE("com.mysql.jdbc.Driver"), USUARIO(
-			"root"), PASSWORD("");
+			"root"), PASSWORD(""), TAM_PAGINA("100");
 
 	private String valor;
 
@@ -17,12 +17,9 @@ public enum ParametrosEnum {
 	public void setValor(String valor) {
 		this.valor = valor;
 	}
+	
+	public int getValorInt()
+	{
+		return Integer.parseInt(getValor());
+	}
 }
-
-/*
- * Location: D:\Dllo\multinivel\multinivelEAR.ear\multinivelEJB.jar\
- * 
- * Qualified Name: co.com.multinivel.dto.ParametrosEnum
- * 
- * 
- */

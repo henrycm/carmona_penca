@@ -1,5 +1,6 @@
 package co.com.multinivel.dao;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +13,8 @@ import javax.persistence.Query;
 import co.com.multinivel.dto.UsuarioDTO;
 import co.com.multinivel.exception.MultinivelDAOException;
 import co.com.multinivel.model.User;
+import co.com.multinivel.util.Pagina;
+import co.com.multinivel.util.ParametrosEnum;
 
 @Stateless
 @Local({ UsuarioDAO.class })
@@ -83,15 +86,20 @@ public class UsuarioDAOImp implements UsuarioDAO {
 		return usuario;
 	}
 
-	public List<UsuarioDTO> listarConDistribuidor() throws MultinivelDAOException {
+	public Pagina listarConDistribuidor(int pagina) throws MultinivelDAOException {
+		int max = ParametrosEnum.TAM_PAGINA.getValorInt() * pagina;
+		int min = ParametrosEnum.TAM_PAGINA.getValorInt() * (pagina - 1);
 		List<Object> lista = null;
-		List<UsuarioDTO> listaUsuario = new ArrayList();
+		Pagina p = new Pagina();
+		List listaUsuario = new ArrayList<UsuarioDTO>();		
 		try {
-			String sql = " SELECT  CONCAT (P.NOMBRE ,' ',IF(P.APELLIDO IS NULL,'',P.APELLIDO))distribuidor,d.username,d.password,d.enabled,claveDistribuidor FROM t_afiliados p inner join  (SELECT (select password from users where username=ceduladistribuidor  )claveDistribuidor,ceduladistribuidor,username,u.password,u.enabled FROM t_afiliados t,users u where u.username=t.cedula)d on d.ceduladistribuidor=p.cedula; ";
-
+			String st_count = " SELECT count(1) FROM t_afiliados p inner join  (SELECT (select password from users where username=ceduladistribuidor  )claveDistribuidor,ceduladistribuidor,username,u.password,u.enabled FROM t_afiliados t,users u where u.username=t.cedula)d on d.ceduladistribuidor=p.cedula; ";
+			String sql = " SELECT  CONCAT (P.NOMBRE ,' ',IF(P.APELLIDO IS NULL,'',P.APELLIDO))distribuidor,d.username,d.password,d.enabled,claveDistribuidor FROM t_afiliados p inner join  (SELECT (select password from users where username=ceduladistribuidor  )claveDistribuidor,ceduladistribuidor,username,u.password,u.enabled FROM t_afiliados t,users u where u.username=t.cedula)d on d.ceduladistribuidor=p.cedula ";
+			sql += " LIMIT " + min + "," + max;
 			Query q = this.entityManager.createNativeQuery(sql);
-
+			Query count = this.entityManager.createNativeQuery(st_count);
 			List result = q.getResultList();
+			BigInteger total = (BigInteger) count.getResultList().get(0);
 			int s = result.size();
 			if (s > 0) {
 				lista = new ArrayList();
@@ -115,18 +123,15 @@ public class UsuarioDAOImp implements UsuarioDAO {
 					listaUsuario.add(usuarioDTO);
 				}
 			}
+			
+			p.setContent(listaUsuario);
+			p.setNumber(pagina);
+			p.setTotalElements(total.intValue());
+			p.setTotalPages(total.intValue() / ParametrosEnum.TAM_PAGINA.getValorInt());
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new MultinivelDAOException("error al listar los afiliados por nivel", getClass());
 		}
-		return listaUsuario;
+		return p;
 	}
 }
-
-/*
- * Location: D:\Dllo\multinivel\multinivelEAR.ear\multinivelEJB.jar\
- * 
- * Qualified Name: co.com.multinivel.dao.UsuarioDAOImp
- * 
- * 
- */

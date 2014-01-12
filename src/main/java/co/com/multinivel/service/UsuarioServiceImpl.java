@@ -11,6 +11,7 @@ import co.com.multinivel.dto.UsuarioDTO;
 import co.com.multinivel.exception.MultinivelDAOException;
 import co.com.multinivel.exception.MultinivelServiceException;
 import co.com.multinivel.model.User;
+import co.com.multinivel.util.Pagina;
 
 @Stateless
 @Local({ UsuarioService.class })
@@ -68,21 +69,13 @@ public class UsuarioServiceImpl implements UsuarioService {
 		}
 	}
 
-	public List<UsuarioDTO> listarConDistribuidor() throws MultinivelServiceException {
-		List<UsuarioDTO> lista = null;
+	public Pagina listarConDistribuidor(int pagina) throws MultinivelServiceException {
+		Pagina lista = null;
 		try {
-			lista = this.usuarioDAO.listarConDistribuidor();
+			lista = this.usuarioDAO.listarConDistribuidor(pagina);
 		} catch (MultinivelDAOException e) {
 			throw new MultinivelServiceException(e.getMessage(), getClass());
 		}
 		return lista;
 	}
 }
-
-/*
- * Location: D:\Dllo\multinivel\multinivelEAR.ear\multinivelEJB.jar\
- * 
- * Qualified Name: co.com.multinivel.service.UsuarioServiceImpl
- * 
- * 
- */

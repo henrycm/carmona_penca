@@ -7,6 +7,10 @@
 <link rel="StyleSheet" type="text/css" href="css/multinivel.css"></link>
 <link rel="StyleSheet" type="text/css" href="bootstrap/css/bootstrap.css"></link>
 <title>Informacion inicial</title>
+
+<c:set var="ctx" value="${pageContext.request.contextPath}"
+	scope="session" />
+	
 </head>
 
  <body onload="document.f.j_username.focus();">

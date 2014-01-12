@@ -3,7 +3,6 @@ package co.com.multinivel.util;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-import co.com.multinivel.dto.ParametrosEnum;
 
 public class ConexionReporte {
 	public static Connection getConexion() {

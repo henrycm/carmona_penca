@@ -17,9 +17,9 @@ import javax.persistence.Query;
 
 import co.com.multinivel.dto.AfiliadoConsumo;
 import co.com.multinivel.dto.CompensacionAfiliadoDTO;
-import co.com.multinivel.dto.ParametrosEnum;
 import co.com.multinivel.exception.MultinivelDAOException;
 import co.com.multinivel.model.Parametro;
+import co.com.multinivel.util.ParametrosEnum;
 
 @Stateless
 @Local({ CompensacionAfiliadoDAO.class })
