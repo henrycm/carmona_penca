@@ -10,13 +10,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import co.com.multinivel.dto.UsuarioDTO;
 import co.com.multinivel.helper.UsuarioHelper;
 import co.com.multinivel.model.GroupAuthority;
 import co.com.multinivel.model.GroupMember;
 import co.com.multinivel.model.User;
 import co.com.multinivel.service.RolService;
 import co.com.multinivel.service.UsuarioService;
-import co.com.multinivel.util.Pagina;
 import co.com.multinivel.util.RecursosEnum;
 
 public class UsuarioFrontController extends HttpServlet {
@@ -32,11 +32,8 @@ public class UsuarioFrontController extends HttpServlet {
 		try {
 			char accion = request.getParameter("accion") == null ? '*' : request.getParameter(
 					"accion").charAt(0);
-			String st_pagina = (request.getParameter("numPagina") == null ? "1" : request.getParameter(
-					"numPagina"));
-			int pagina = Integer.parseInt(st_pagina);
 			User usuario = UsuarioHelper.cargarEntidad(request);
-			Pagina lista = null;
+			List<UsuarioDTO> lista = null;
 			List<GroupAuthority> listaRolList = null;
 			GroupAuthority rol = null;
 			GroupMember rolPorUsuario = null;
@@ -72,12 +69,16 @@ public class UsuarioFrontController extends HttpServlet {
 				rolPorUsuario.setGroupAuthority(rol);
 				this.rolService.borrarRolUsuario(rolPorUsuario);
 				request.setAttribute("retiro", "true");
+			case 'C':
+				String nomFiltro = request.getParameter("nomFiltro");
+				String filtro = request.getParameter("filtro");
+				if (filtro != null && nomFiltro != null) {
+					lista = this.usuarioService.buscar(nomFiltro, filtro);
+					request.setAttribute("listaUsuarios", lista);
+					System.out.println("LISTA>>>>>>" + lista.size());
+				}
 			}
-			lista = this.usuarioService.listarConDistribuidor(pagina);
-			System.err.println("LISTA>>>>>>" + lista.getContent().size());
-			listaRolList = this.rolService.listar();
-			request.setAttribute("listaUsuarios", lista);
-			request.setAttribute("listaRoles", listaRolList);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

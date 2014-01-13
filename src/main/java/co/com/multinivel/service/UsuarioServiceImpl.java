@@ -78,4 +78,15 @@ public class UsuarioServiceImpl implements UsuarioService {
 		}
 		return lista;
 	}
+
+	public List<UsuarioDTO> buscar(String nomFiltro, String filtro) throws MultinivelServiceException {
+		 List<UsuarioDTO> lista = null;
+		try {
+			lista = this.usuarioDAO.buscar(nomFiltro, filtro);
+		} catch (MultinivelDAOException e) {
+			throw new MultinivelServiceException(e.getMessage(), getClass());
+		}
+		return lista;
+	}
+		
 }

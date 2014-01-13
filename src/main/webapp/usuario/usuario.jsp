@@ -3,18 +3,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags"%>
     
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="es">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="StyleSheet" type="text/css" href="../css/multinivel.css" />
 <title>Administración de usuarios</title>
-<script language="javascript" src="../js/generico.js"></script>
-<script language="javascript" src="../js/usuario/usuario.js"></script>
-<link rel="stylesheet" href="../css/jquery/demos.css">
-
 <link rel="stylesheet" href="../css/multinivel.css">
 <link rel="StyleSheet" type="text/css" href="${ctx}/bootstrap/css/bootstrap.css"></link>
+<script src="../js/generico.js"></script>
+<script src="../js/usuario/usuario.js"></script>
 </head>
 
 <body class="fondo">
@@ -22,61 +19,76 @@
 <form id="form1" name="form1" method="post" action="UsuarioFrontController">
     <input name="accion" type="hidden" id="accion">
 
-<!-- Menú en la parte de arriba -->
-
-<!-- Fin Menú en la parte de arriba -->
-<div align="right" id="opcion">
-		<!--a href="javascript:enviarUsuaro('I');">Ingresar</a-->
-		<a href="javascript:enviarUsuaro('A');">Actualizar</a>
-		<a href="javascript:enviarUsuaro('B');">Borrar</a>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</div>
-<table align="center" class="tabla" width="81%" border="1">
-  <tr>
-    <td colspan="15" >ADMINISTRACION DE USUARIOS</td>
-  </tr>
-  <tr>
-    <td class="encabezadoiz" width="17%">&nbsp;Login:</td>
-    <td colspan="5"><input type="text" name="usuario" id="usuario"/></td>
-  </tr>
-  <tr>
-    <td class="encabezadoiz">&nbsp;Clave:</td>
-    <td colspan="2">
-    	<input type="text" class="inputtext" name="password" id= "password"/>
-    </td>
-  </tr>
- 
-   
-   
-<tr width="112">
-<td align="center"colspan="2">
+<c:if test='${listaUsuarios!=null}'> 
+	<div align="right" id="opcion">
+			<!--a href="javascript:enviarUsuaro('I');">Ingresar</a-->
+			<a href="javascript:enviarUsuaro('A');">Actualizar</a>
+			<a href="javascript:enviarUsuaro('B');">Borrar</a>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	</div>
 	
+	<table align="center" class="tabla" width="81%" border="1">
+	  <tr>
+	    <th colspan="15" >ADMINISTRACION DE USUARIOS</th>
+	  </tr>
+	  <tr>
+	    <th class="encabezadoiz" width="17%">&nbsp;Login:</th>
+	    <td colspan="5"><input type="text" name="usuario" id="usuario"/></td>
+	  </tr>
+	  <tr>
+	    <th class="encabezadoiz">&nbsp;Clave:</th>
+	    <td colspan="2">
+	    	<input type="text" class="inputtext" name="password" id= "password"/>
+	    </td>
+	  </tr>
+	<tr>
+	<td align="center" colspan="2">
+		
+	</tr>
+	</table>
+</c:if>
+</form>
 
-
-</tr>
-</table>
+<form class="form-inline" role="form" action="UsuarioFrontController" method="POST">
+  <input name="accion" type="hidden" value="C">
+  <fieldset>  
+  <div class="form-group">    
+    <select name="nomFiltro" class="form-control input-sm">
+    	<option value="Nombre">Nombre</option>
+    	<option value="Apellido">Apellido</option>
+    	<option value="Cedula">Cedula</option>
+    </select>    
+  </div>
+  <div class="form-group">
+  	<input type="text" class="form-control input-sm" name="filtro"  required="required" pattern=".{3,}" title="Minimo 3 caracteres" maxlength="50">
+  </div>
+  <div class="form-group">
+  	<button type="submit" class="btn btn-primary btn-sm" value="Check">Buscar</button>
+  </div>
+  </fieldset>
+</form>
 
 <c:if test='${listaUsuarios!=null}'> 
-   <table align="center" class="table" width="81%" border="1">
+   <table align="center" class="table table-striped" width="81%" border="1">
      <tr>
-       <td class="encabezadoiz">
+       <th class="encabezadoiz">
         Login
-       </td>
-       <td class="encabezadoiz">
+       </th>
+       <th class="encabezadoiz">
           Clave
-       </td>
-        <td class="encabezadoiz">
+       </th>
+        <th class="encabezadoiz">
           Distribuidor
-       </td>      
-        <td class="encabezadoiz">
+       </th>      
+        <th class="encabezadoiz">
           Clave Distribuidor
-       </td> 
+       </th> 
 
-       <td class="encabezadoiz" colspan=2>
+       <th class="encabezadoiz" colspan=2>
 		Activado
-       </td>
+       </th>
      </tr>
-     <c:forEach var='usuario' items='${listaUsuarios.content}'>
+     <c:forEach var='usuario' items='${listaUsuarios}'>
      
           <tr>
        <td>
@@ -110,10 +122,8 @@
      </c:forEach>
      
    </table>   
-		<t:paginacion url="${ctx}/UsuarioFrontController?accion=C" pagina="${listaUsuarios}"></t:paginacion>
+		
 	</c:if> 
-
-</form>
 </div>
 </body>
 </html>	

@@ -41,10 +41,3 @@ public class IndexFrontController extends HttpServlet {
 		rd.forward(request, response);
 	}
 }
-
-/*
- * Location:
- * D:\Dllo\multinivel\multinivelEAR.ear\multinivel.war\WEB-INF\classes\
- * 
- * Qualified Name: co.com.multinivel.usuario.IndexFrontController
- */

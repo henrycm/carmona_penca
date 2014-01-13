@@ -10,6 +10,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.apache.log4j.Logger;
+
 import co.com.multinivel.dto.UsuarioDTO;
 import co.com.multinivel.exception.MultinivelDAOException;
 import co.com.multinivel.model.User;
@@ -19,6 +21,8 @@ import co.com.multinivel.util.ParametrosEnum;
 @Stateless
 @Local({ UsuarioDAO.class })
 public class UsuarioDAOImp implements UsuarioDAO {
+	private static Logger log = Logger.getLogger(UsuarioDAOImp.class);
+	
 	@PersistenceContext(unitName = "multinivelUnit")
 	private EntityManager entityManager;
 
@@ -133,5 +137,43 @@ public class UsuarioDAOImp implements UsuarioDAO {
 			throw new MultinivelDAOException("error al listar los afiliados por nivel", getClass());
 		}
 		return p;
+	}
+
+	public List<UsuarioDTO> buscar(String nomFiltro, String filtro) throws MultinivelDAOException {
+		List<Object> lista = null;		
+		List<UsuarioDTO> listaUsuario = new ArrayList<UsuarioDTO>();		
+		try {			
+			String sql = " SELECT  CONCAT (P.NOMBRE ,' ',IF(P.APELLIDO IS NULL,'',P.APELLIDO))distribuidor,d.username,d.password,d.enabled,claveDistribuidor FROM t_afiliados p inner join  (SELECT (select password from users where username=ceduladistribuidor  )claveDistribuidor,ceduladistribuidor,username,u.password,u.enabled FROM t_afiliados t,users u where u.username=t.cedula)d on d.ceduladistribuidor=p.cedula where p." + nomFiltro  + " like '%" + filtro + "%';";			
+			Query q = this.entityManager.createNativeQuery(sql);			
+			List result = q.getResultList();			
+			int s = result.size();
+			if (s > 0) {
+				lista = new ArrayList();
+				for (int i = 0; i < s; i++) {
+					Object obj = result.get(i);
+					Object[] objectArray = (Object[]) obj;
+
+					String distribuidor = (String) objectArray[0];
+					String usuario = (String) objectArray[1];
+					String clave = (String) objectArray[2];
+					byte enable = ((Byte) objectArray[3]).byteValue();
+					String claveDistribuidor = (String) objectArray[4];
+
+					UsuarioDTO usuarioDTO = new UsuarioDTO();
+					usuarioDTO.setDistribuidor(distribuidor);
+					usuarioDTO.setPassword(clave);
+					usuarioDTO.setUsername(usuario);
+					usuarioDTO.setEnabled(enable);
+					usuarioDTO.setPasswordDistribuidor(claveDistribuidor);
+
+					listaUsuario.add(usuarioDTO);
+				}
+			}
+						
+		} catch (Exception e) {
+			log.error(e.getMessage(),  e);
+			throw new MultinivelDAOException("Error al listar los afiliados por nivel", getClass());
+		}
+		return listaUsuario;
 	}
 }
