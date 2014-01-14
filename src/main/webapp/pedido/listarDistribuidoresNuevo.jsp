@@ -31,7 +31,7 @@
   <!--input name="periodo" type="hidden"-->
  
  <div class="demo" align="center">
-Seleccione el distribuidor para el pedido     <table class="tabla" width="90%">
+<div class="titulo">Seleccione el distribuidor para el pedido</div>     <table class="tabla" width="90%">
    
      <!--tr>
         <td>

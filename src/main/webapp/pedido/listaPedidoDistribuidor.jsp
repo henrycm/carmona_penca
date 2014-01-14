@@ -21,31 +21,27 @@
 <input type="hidden"  name="distribuidor" />
 
 <div align="center">
-
-
-
-      
-      <div class="tituloLista">
+      <div class="titulo">
       LISTA DE PEDIDOS DISTRIBUIDOR
       </div>
 <c:if test="${listaPedido!=null}"> 
-   <table align="center" class="tabla" width="90%" border="1">
+   <table align="center" class="tbl-lista" width="90%" border="1">
      <tr>
-       <td>
+       <th>
         Codigo
-       </td>
-       <td  >
+       </th>
+       <th  >
           Fecha
-       </td>
-       <td>
+       </th>
+       <th>
          Valor Pedido 
-       </td>
-       <td  >
+       </th>
+       <th  >
         Transporte
-       </td>
-         <td>
+       </th>
+         <th>
          Seleccionar 
-       </td>
+       </th>
      </tr>
      <c:forEach var='pedido'   items='${listaPedido}'>
      
@@ -74,7 +70,7 @@
    </table>
 
 </c:if>  
-
+</div>
 </form>
 </div>
 </body>

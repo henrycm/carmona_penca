@@ -30,7 +30,7 @@
   <input name="periodo" type="hidden">
  
  <div class="demo" align="center">
-    Eliminar Consumos Afiliado
+    <div class="titulo">Eliminar Consumos Afiliado</div>
      <table class="tabla" width="90%">
    
     

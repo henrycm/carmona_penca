@@ -97,9 +97,9 @@ Código Nuevo Empresario: <input name="codigoEmpresario" type="text" size="11" ma
     <td align="left">Nombres y Apellidos del distribuidor
       <input name="nombreDistribuidor" type="text" size="50" maxlength="50" value="<c:out value='${usuario.nombre}'/> <c:out value='${usuario.apellido}'/>" readonly="readonly" onclick="javascript:document.forma.nombrePatrocinador.readOnly =true;" />
      </td>
-     </tr>
-     <tr>
-      <td >
+    </tr>
+    <tr>
+      <td align="left">
       Codigo de Empresario(Distribuidor): <input name="numeroDistribuidor"  value="<c:out value='${usuario.cedula}'/>" type="text" size="15" maxlength="13" readonly="readonly" onclick="javascript:document.forma.numeroEmpresario.readOnly =true;"/> 
        <c:if test="${tipoAfiliado=='1'}">
        			<a href="javascript:abrirBuscarDistribuidor()" >Buscar Distribuidor</a>
@@ -110,15 +110,12 @@ Código Nuevo Empresario: <input name="codigoEmpresario" type="text" size="11" ma
          
       
       </td>
-  </tr>
-  </table>
-
-<table>
+  </tr>  
   <tr>
     <td align="left">Nombres y Apellidos del Patrocinador
       <input name="nombrePatrocinador" type="text" size="50" maxlength="50" readonly="readonly" onclick="javascript:document.forma.nombrePatrocinador.readOnly =true;" />
      </td>
-     </tr>
+    </tr>
      <tr>
       <td align="left">
       Número de Empresario: <input name="numeroEmpresario" type="text" size="15" maxlength="13"  readonly="readonly" onclick="javascript:document.forma.numeroEmpresario.readOnly =true;"/> <a href="javascript:abrirBuscarAfiliado()" >Buscar Afiliado</a>
@@ -136,7 +133,7 @@ honorable y que representará adecuadamente la imagen y los productos de la empre
 
 </div>
 	<h3 class="tabla">DATOS PERSONALES</h3>
-	<div "datosPersonales">
+	<div id="datosPersonales">
 
   <table width="100%"  >
     <tr align="left">

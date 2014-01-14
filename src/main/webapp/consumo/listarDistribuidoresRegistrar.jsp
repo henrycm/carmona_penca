@@ -30,7 +30,7 @@
   <input name="periodo" type="hidden">
  
  <div class="demo" align="center">
-    Registrar Consumos Afiliado
+    <div class="titulo">Registrar Consumos Afiliado</div>
      <table class="tabla" width="90%">
    
     

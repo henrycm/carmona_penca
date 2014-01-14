@@ -32,7 +32,7 @@
   <input name="periodo" type="hidden">
  
  <div class="demo" align="center">
-     Validar Distribuidor Compensacion Periodo
+     <div class="titulo">Validar Distribuidor Compensacion Periodo</div>
      <table class="tabla" width="90%">
    
      <tr>

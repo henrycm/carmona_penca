@@ -30,7 +30,7 @@
 </div>
  <input name="accion" type="hidden" value="M">
  <div class="demo" align="center">
-    LIQUIDACION MASIVA
+    <div class="titulo">LIQUIDACION MASIVA</div>
      <table class="tabla" width="90%">
      <tr>
      

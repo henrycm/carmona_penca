@@ -30,7 +30,7 @@
   <input name="periodo" type="hidden">
  
  <div class="demo" align="center">
-    Consultar Lista de consumos totales registrados  por el  distribuidor
+    <div class="titulo">Consultar Lista de consumos totales registrados  por el  distribuidor</div>
      <table class="tabla" width="90%">
    
      <tr>

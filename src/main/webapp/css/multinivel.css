@@ -1,3 +1,15 @@
+.tbl-lista,.tbl-form {
+	background-color: #E6FFCC;
+	border-collapse: collapse;
+	border: 1px solid #ddd;
+	margin-bottom: 20px;
+}
+
+.tbl-lista th,.tbl-form th {
+	background-color: #2E8E42;
+	text-align: center;
+}
+
 #div_encabezado {
 	background-image: url("../images/fondoEncabezado.png");
 }
@@ -5,13 +17,14 @@
 body {
 	padding-right: 50px;
 	padding-left: 20px;
+	background-color: #F2FFE5;
 }
 
 .titulo {
 	margin-bottom: 30px;
 	padding: 5px;
 	font-weight: bold;
-	background-color: #2E8E42;	
+	background-color: #2E8E42;
 	text-transform: uppercase;
 }
 
@@ -57,8 +70,8 @@ a:link,a:visited {
 }
 
 a:HOVER {
-	background-color: #115A35;
-	color: white;
+	font-size: large;
+	font-weight: bold;
 }
 
 .tabla {
@@ -66,12 +79,15 @@ a:HOVER {
 	background: #2E8E42;
 }
 
+table.tabla {
+	background-color: #E6FFCC;	
+	border: 1px solid #ddd;
+}
+
 .fondo {
 	padding: 10px 15px;
 	width: 60%;
-	height: 100%;
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#FFFFFF,
-		endColorstr=#2E8E42)
+	height: 100%;	
 }
 
 .tituloLista {
@@ -80,3 +96,5 @@ a:HOVER {
 	background-color: #2E8E42;
 	background: #2E8E42;
 }
+
+@import url("../bootstrap/css/bootstrap.css");

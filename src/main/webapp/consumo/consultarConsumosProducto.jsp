@@ -8,7 +8,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Aplicacion MultiALOE</title>
-<link rel="stylesheet" href="014/css/jquery/jquery.ui.all.css">
+<link rel="stylesheet" href="../css/jquery/jquery.ui.all.css">
 	
  	<script src="../js/consumo/consumo.js"></script>
  	<script src="../js/generico.js"></script>
@@ -31,7 +31,7 @@
   <input name="periodo" type="hidden">
  
  <div class="demo" align="center">
-    Consultar Consumos por Producto
+    <div class="titulo">Consultar Consumos por Producto</div>
      <table class="tabla" width="90%">
     
      <tr>

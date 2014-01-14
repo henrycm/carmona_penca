@@ -27,16 +27,16 @@
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	</div>
 	
-	<table align="center" class="tabla" width="81%" border="1">
+	<table align="center" class="tbl-form" width="81%" border="1">
 	  <tr>
 	    <th colspan="15" >ADMINISTRACION DE USUARIOS</th>
 	  </tr>
 	  <tr>
-	    <th class="encabezadoiz" width="17%">&nbsp;Login:</th>
+	    <td class="encabezadoiz" width="17%">&nbsp;Login:</td>
 	    <td colspan="5"><input type="text" name="usuario" id="usuario"/></td>
 	  </tr>
 	  <tr>
-	    <th class="encabezadoiz">&nbsp;Clave:</th>
+	    <td class="encabezadoiz">&nbsp;Clave:</td>
 	    <td colspan="2">
 	    	<input type="text" class="inputtext" name="password" id= "password"/>
 	    </td>
@@ -69,7 +69,7 @@
 </form>
 
 <c:if test='${listaUsuarios!=null}'> 
-   <table align="center" class="table table-striped" width="81%" border="1">
+   <table align="center" class="tbl-lista" width="81%" border="1">
      <tr>
        <th class="encabezadoiz">
         Login

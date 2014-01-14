@@ -31,7 +31,7 @@
   <input name="periodo" type="hidden">
  
  <div class="demo" align="center">
-    Consultar Consumo de producto por periodo
+    <div class="titulo">Consultar Consumo de producto por periodo</div>
      <table class="tabla" width="90%">
      <tr>
      

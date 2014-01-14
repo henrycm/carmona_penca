@@ -29,7 +29,7 @@
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </div>
  <div class="demo" align="center">
-    LIQUIDACION POR RED DE DISTRIBUCION
+    <div class="titulo">LIQUIDACION POR RED DE DISTRIBUCION</div>
     
     <c:if test="${liquidacionExitosa==null ||liquidacionExitosa==''}"> 
     

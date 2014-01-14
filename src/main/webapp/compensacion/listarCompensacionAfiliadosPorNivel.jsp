@@ -30,7 +30,7 @@
   <input name="periodo" type="hidden">
  
  <div class="demo" align="center">
-    Consultar Lista de compensacion del distribuidor por Periodo
+    <div class="titulo">Consultar Lista de compensacion del distribuidor por Periodo</div>
      <table class="tabla" width="90%">
    
      <tr>

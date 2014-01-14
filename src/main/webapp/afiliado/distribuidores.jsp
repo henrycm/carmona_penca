@@ -23,14 +23,14 @@
 <c:if test="${listaDistribuidores!=null}"> 
  
      
-   <table align="center" class="tabla" width="90%" border="1">
+   <table align="center" class="tbl-lista" width="90%" border="1">
      <tr>
-       <td>
+       <th>
         Codigo Empresario
-       </td>
-       <td  >
+       </th>
+       <th  >
           Nombre
-       </td>
+       </th>
     
      </tr>
      <c:forEach var='distribuidor'   items='${listaDistribuidores}'>

@@ -30,9 +30,8 @@
 			href="javascript:consultarProducto()"> Consultar </a></td>
 	</tr>
 </table>
-
-Administración de Productos
-<table width="90%" class="tabla">
+<div class="titulo">Administración de Productos</div>
+<table width="90%" class="tbl-form">
 
 	<tr>
 		<td width="15%" align="left">Codigo(*):</td>
@@ -69,17 +68,17 @@ Administración de Productos
 <br />
 
 
-<div class="tituloLista">LISTA DE PRODUCTOS</div>
+<div class="titulo">LISTA DE PRODUCTOS</div>
 <c:if test="${listaProductos!=null}">
-	<table align="center" class="tabla" width="90%" border="1">
+	<table align="center" class="tbl-lista" width="90%" border="1">
 		<tr>
-			<td>Codigo</td>
-			<td>Nombre</td>
-			<td>Tipo</td>
-			<td>Precio Distribuidor</td>
-			<td>Precio Afiliado</td>
+			<th>Codigo</th>
+			<th>Nombre</th>
+			<th>Tipo</th>
+			<th>Precio Distribuidor</th>
+			<th>Precio Afiliado</th>
 
-			<td>Seleccionar</td>
+			<th>Seleccionar</th>
 		</tr>
 		<c:forEach var='producto' items='${listaProductos}'>
 
@@ -99,6 +98,7 @@ Administración de Productos
 	</table>
 
 </c:if>
+</div>
 </form>
 </div>
 </body>

@@ -49,7 +49,7 @@
 
 <form name="forma" action="IndexArbolController" method="post">
 
-<div align="center">
+<div class="titulo">
 	CONSULTA DE DATOS DE JERARQUIA
 </div>
 <div align="left">
