@@ -1,3 +1,24 @@
+#div_login {
+    width: 100%;
+    height: 100%;
+    padding-left: 20px;
+	background-color: #F2FFE5;
+}
+
+#form_caja {
+    width: 70%;
+    height: 100%
+    padding-top: 8px;
+    padding-bottom: 15px;
+    margin: 0 auto 20px auto;
+    background-color: #2E8E42;
+     border-radius: 15px;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    color: #2E8E42;
+    padding:10px;
+}
+
 .tbl-lista,.tbl-form {
 	background-color: #E6FFCC;
 	border-collapse: collapse;
@@ -15,8 +36,6 @@
 }
 
 body {
-	padding-right: 50px;
-	padding-left: 20px;
 	background-color: #F2FFE5;
 }
 
@@ -69,8 +88,7 @@ a:link,a:visited {
 	color: #3BB3C2;
 }
 
-a:HOVER {
-	font-size: large;
+a:HOVER {	
 	font-weight: bold;
 }
 

@@ -5,114 +5,87 @@
 <title>Insert title here</title>
 <link rel="StyleSheet" type="text/css" href="bootstrap/css/bootstrap.css"></link>
 <link rel="stylesheet" href="css/multinivel.css">
+<script type="text/javascript" src="bootstrap/js/jquery.js"></script>
+<script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
 </head>
 <body>
- <div align="right" id="opcion">
-		<a href="javascript:actualizarAfiliado();" class="btn btn-default">Actualizar</a>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<nav class="navbar navbar-default" role="navigation">
+    <!-- Collect the nav links, forms, and other content for toggling -->
+  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav">      
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administración <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+	    <li><a href="administracion/IndexAfiliado?accion=I" >Ingresar Afiliado</a></li>
+		<li><a href="administracion/IndexAfiliado?accion=C" >Actualizar Afiliado</a></li>
+		<li><a href="administracion/IndexAfiliado?accion=X" >Eliminar Afiliado</a></li>
+		<li><a href="administracion/IndexAfiliado?accion=N" >Listar Afiliados por distribuidor</a></li>
+		<li><a href="administracion/IndexAfiliado?accion=E" >Cons. Afiliado por Codigo</a></li>
+		<li><a href="administracion/IndexAfiliado?accion=D" >Actualizar Afiliado a Distribuidor</a></li>
+		<li><a href="administracion/IndexAfiliado?accion=F" >Listar Distribuidores</a></li>
+		<li><a href="administracion/IndexAfiliado?accion=W" >Activar Afiliac. por Distribuidor</a></li>
+		<li><a href="administracion/IndexAfiliado?accion=U" >Cambiar Documento Afiliado</a></li>
+		<li><a href="administracion/IndexAfiliado?accion=U" >Cambiar Cantidad Afiliaciones Distribuidor</a></li>
+		<li><a href="administracion/IndexAfiliado?accion=Z" > Afiliaciones por distribuidor Periodo</a></li> 
+        </ul>
+      </li>
+    </ul>
+
+	<ul class="nav navbar-nav">
+		<li class="dropdown"><a href="#" class="dropdown-toggle"
+		data-toggle="dropdown">Productos <b class="caret"></b></a>
+			<ul class="dropdown-menu">
+ 				<li><a href="administracion/producto/IndexProducto?accion=I" >Administrar Productos</a></li>	
+				<li><a href="administracion/producto/IndexProducto?accion=P" >Productos Consumidos Periodo</a></li>
+			</ul>
+		</li>
+	</ul>
+
+	<ul class="nav navbar-nav">
+		<li class="dropdown"><a href="#" class="dropdown-toggle"
+		data-toggle="dropdown">Usuario <b class="caret"></b></a>
+			<ul class="dropdown-menu">
+ 				<li><a href="administracion/UsuarioFrontController?accion=C" >Administrar de Usuarios</a></li>
+			</ul>
+		</li>
+	</ul>
+
+	<ul class="nav navbar-nav">
+		<li class="dropdown"><a href="#" class="dropdown-toggle"
+		data-toggle="dropdown">Pedidos y Consumos <b class="caret"></b></a>
+			<ul class="dropdown-menu">
+ 					<li><a href="pedido/IndexPedido?accion=C" >Realizar Pedido</a></li>		
+					<li><a href="pedido/IndexPedido?accion=S" >OPCION NUEVA PARA Realizar Pedido</a></li>
+					<li><a href="pedido/ListaPedidoController?accion=L" >Actualizar Transporte Pedido</a></li>   
+				    <li><a href="consumo/IndexConsumo?accion=C" >Consumos Totales por Distribuidor</a></li>	
+					<li><a href="consumo/IndexConsumo?accion=E" >Eliminar Consumo Afiliado</a></li>	
+					<li><a href="consumo/IndexConsumo?accion=Y" >Registrar Consumo Afiliado</a></li>	
+					<li><a href="consumo/IndexConsumo?accion=X" >Eliminar Consumo Afiliado Por Distribuidor</a></li>	
+					<li><a href="consumo/IndexConsumo?accion=Z" >Reporte de totales por producto por periodo</a></li>
+			</ul>
+		</li>
+	</ul>
+
+	<ul class="nav navbar-nav">
+		<li class="dropdown"><a href="#" class="dropdown-toggle"
+		data-toggle="dropdown">Liquidación <b class="caret"></b></a>
+			<ul class="dropdown-menu">
+ 				<li><a href="liquidacion/IndexLiquidacion" >Liquidacion Por Red</a></li>	
+				<li><a href="liquidacion/IndexLiquidacion?accion=M" >Liquidacion Masiva</a></li>
+			</ul>
+		</li>
+	</ul>
+
+	<ul class="nav navbar-nav">
+		<li class="dropdown"><a href="#" class="dropdown-toggle"
+		data-toggle="dropdown">Arbol <b class="caret"></b></a>
+			<ul class="dropdown-menu">
+ 				<li><a href="jerarquia/IndexArbolController" >Consultar Jerarquia</a></li>
+			</ul>
+		</li>
+	</ul>
+					
 </div>
-
-<div align="center" class="titulo">
-	ACTUALIZACION DE DATOS DE AFILIADO
-</div>
-
-<table align="center" width="81%" border="1">
-     <tr>
-       <th class="encabezadoiz">
-        Login
-       </th>
-       <th class="encabezadoiz">
-          Clave
-       </th>
-        <th class="encabezadoiz">
-          Distribuidor
-       </th>      
-        <th class="encabezadoiz">
-          Clave Distribuidor
-       </th> 
-
-       <th class="encabezadoiz" colspan=2>
-		Activado
-       </th>
-     </tr>
-     
-     
-          <tr>
-       <td>
-         15443904-A
-       </td>
-       <td>
-            15443904-A
-
-       </td>
-         <td>
-            LINA CECILIA BOTERO MARIN 
-
-       </td>
-	   
-	        <td>
-            43210158-A_aloe*
-
-       </td>
-       <td>
-       
-           Activado
-       
-       </td>
-              
-        <td>
-		<a href="javascript:cargarUsuario('15443904-A','15443904-A','1')">Seleccionar</a>
-       </td>
-     </tr>
-     
-     
-          <tr>
-       <td>
-         39444167-A
-       </td>
-       <td>
-            39444167-A
-
-       </td>
-         <td>
-            LINA CECILIA BOTERO MARIN 
-
-       </td>
-	   
-	        <td>
-            43210158-A_aloe*
-
-       </td>
-       <td>
-       
-           Activado
-       
-       </td>
-              
-        <td>
-		<a href="javascript:cargarUsuario('39444167-A','39444167-A','1')">Seleccionar</a>
-       </td>
-     </tr>
-</table>
-
-	<table align="center" class="tbl-form" width="81%" border="1">
-	  <tr>
-	    <th colspan="15" >ADMINISTRACION DE USUARIOS</th>
-	  </tr>
-	  <tr>
-	    <td class="encabezadoiz" width="17%">&nbsp;Login:</td>
-	    <td colspan="5"><input type="text" name="usuario" id="usuario"/></td>
-	  </tr>
-	  <tr>
-	    <td class="encabezadoiz">&nbsp;Clave:</td>
-	    <td colspan="2">
-	    	<input type="text" class="inputtext" name="password" id= "password"/>
-	    </td>
-	  </tr>
-	<tr>
-	<td align="center" colspan="2">
-		
-	</tr>
-	</table>
+</nav>
 </body>
 </html>

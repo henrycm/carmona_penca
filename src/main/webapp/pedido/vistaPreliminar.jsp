@@ -53,7 +53,7 @@
 </div>
 <p>&nbsp;</p>
 <form action="../pedido/VistaPreliminarPedido" method="post">
-<input type="hidden" name="accion" value="<c:out value="${accion}"/>" />"/>
+<input type="hidden" name="accion" value='<c:out value="${accion}"/>' />
 <table width="53%">
 
   <tr>
@@ -70,7 +70,7 @@
   </tr>
    <tr>
     <td>Fecha:    </td>
-    <td colspan="3"> <c:out value="${fechaActual}"/>"</td>
+    <td colspan="3"> <c:out value="${fechaActual}"/></td>
   </tr>
 </table>
 Linea de Alimentos
