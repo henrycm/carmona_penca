@@ -18,6 +18,4 @@ public abstract interface CantidadAfiliacionesDistribuidorService {
  * 
  * Qualified Name:
  * co.com.multinivel.service.CantidadAfiliacionesDistribuidorService
- * 
- * 
  */

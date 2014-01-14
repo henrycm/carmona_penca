@@ -3,8 +3,8 @@ package co.com.multinivel.service;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.ejb.Local;
-import javax.ejb.Stateless;
+
+import org.springframework.stereotype.Service;
 
 import co.com.multinivel.dao.ProductoDAO;
 import co.com.multinivel.dto.ProductoDTO;
@@ -12,8 +12,7 @@ import co.com.multinivel.exception.MultinivelDAOException;
 import co.com.multinivel.exception.MultinivelServiceException;
 import co.com.multinivel.model.Producto;
 
-@Stateless
-@Local({ ProductoService.class })
+@Service
 public class ProductoServiceImpl implements ProductoService {
 	@EJB
 	private ProductoDAO productoDAO;
@@ -96,6 +95,4 @@ public class ProductoServiceImpl implements ProductoService {
  * Location: D:\Dllo\multinivel\multinivelEAR.ear\multinivelEJB.jar\
  * 
  * Qualified Name: co.com.multinivel.service.ProductoServiceImpl
- * 
- * 
  */

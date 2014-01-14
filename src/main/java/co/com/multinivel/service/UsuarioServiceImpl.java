@@ -3,8 +3,8 @@ package co.com.multinivel.service;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.ejb.Local;
-import javax.ejb.Stateless;
+
+import org.springframework.stereotype.Service;
 
 import co.com.multinivel.dao.UsuarioDAO;
 import co.com.multinivel.dto.UsuarioDTO;
@@ -13,8 +13,7 @@ import co.com.multinivel.exception.MultinivelServiceException;
 import co.com.multinivel.model.User;
 import co.com.multinivel.util.Pagina;
 
-@Stateless
-@Local({ UsuarioService.class })
+@Service
 public class UsuarioServiceImpl implements UsuarioService {
 	@EJB
 	private UsuarioDAO usuarioDAO;
@@ -79,8 +78,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 		return lista;
 	}
 
-	public List<UsuarioDTO> buscar(String nomFiltro, String filtro) throws MultinivelServiceException {
-		 List<UsuarioDTO> lista = null;
+	public List<UsuarioDTO> buscar(String nomFiltro, String filtro)
+			throws MultinivelServiceException {
+		List<UsuarioDTO> lista = null;
 		try {
 			lista = this.usuarioDAO.buscar(nomFiltro, filtro);
 		} catch (MultinivelDAOException e) {
@@ -88,5 +88,5 @@ public class UsuarioServiceImpl implements UsuarioService {
 		}
 		return lista;
 	}
-		
+
 }

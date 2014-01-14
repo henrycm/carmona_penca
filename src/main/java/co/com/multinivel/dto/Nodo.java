@@ -95,6 +95,4 @@ public class Nodo {
  * Location: D:\Dllo\multinivel\multinivelEAR.ear\multinivelEJB.jar\
  * 
  * Qualified Name: co.com.multinivel.dto.Nodo
- * 
- * 
  */

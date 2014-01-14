@@ -50,6 +50,4 @@ public abstract interface ConsumoDAO {
  * Location: D:\Dllo\multinivel\multinivelEAR.ear\multinivelEJB.jar\
  * 
  * Qualified Name: co.com.multinivel.dao.ConsumoDAO
- * 
- * 
  */

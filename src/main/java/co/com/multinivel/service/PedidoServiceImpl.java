@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.ejb.Local;
-import javax.ejb.Stateless;
+
+import org.springframework.stereotype.Service;
 
 import co.com.multinivel.dao.PedidoDAO;
 import co.com.multinivel.dto.PedidoDTO;
@@ -13,8 +13,7 @@ import co.com.multinivel.exception.MultinivelDAOException;
 import co.com.multinivel.exception.MultinivelServiceException;
 import co.com.multinivel.model.Pedido;
 
-@Stateless
-@Local({ PedidoService.class })
+@Service
 public class PedidoServiceImpl implements PedidoService {
 	@EJB
 	private PedidoDAO pedidoDAO;
@@ -119,6 +118,4 @@ public class PedidoServiceImpl implements PedidoService {
  * Location: D:\Dllo\multinivel\multinivelEAR.ear\multinivelEJB.jar\
  * 
  * Qualified Name: co.com.multinivel.service.PedidoServiceImpl
- * 
- * 
  */

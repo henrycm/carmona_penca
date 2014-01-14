@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.ejb.Local;
-import javax.ejb.Stateless;
+
+import org.springframework.stereotype.Service;
 
 import co.com.multinivel.dao.ConsumoDAO;
 import co.com.multinivel.dto.ConsumoDTO;
@@ -14,8 +14,7 @@ import co.com.multinivel.exception.MultinivelServiceException;
 import co.com.multinivel.model.Afiliado;
 import co.com.multinivel.model.Consumo;
 
-@Stateless
-@Local({ ConsumoService.class })
+@Service
 public class ConsumoServiceImpl implements ConsumoService {
 	@EJB
 	private ConsumoDAO consumoDAO;
@@ -184,6 +183,4 @@ public class ConsumoServiceImpl implements ConsumoService {
  * Location: D:\Dllo\multinivel\multinivelEAR.ear\multinivelEJB.jar\
  * 
  * Qualified Name: co.com.multinivel.service.ConsumoServiceImpl
- * 
- * 
  */

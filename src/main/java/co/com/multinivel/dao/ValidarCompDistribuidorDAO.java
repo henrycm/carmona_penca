@@ -21,6 +21,4 @@ public abstract interface ValidarCompDistribuidorDAO {
  * Location: D:\Dllo\multinivel\multinivelEAR.ear\multinivelEJB.jar\
  * 
  * Qualified Name: co.com.multinivel.dao.ValidarCompDistribuidorDAO
- * 
- * 
  */

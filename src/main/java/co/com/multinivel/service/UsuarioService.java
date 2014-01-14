@@ -21,6 +21,7 @@ public abstract interface UsuarioService {
 	public abstract User consultar(User paramUser) throws MultinivelServiceException;
 
 	public abstract Pagina listarConDistribuidor(int pagina) throws MultinivelServiceException;
-	
-	public abstract List<UsuarioDTO> buscar(String nomFiltro, String filtro) throws MultinivelServiceException;
+
+	public abstract List<UsuarioDTO> buscar(String nomFiltro, String filtro)
+			throws MultinivelServiceException;
 }

@@ -15,6 +15,4 @@ public abstract interface ParametroDAO {
  * Location: D:\Dllo\multinivel\multinivelEAR.ear\multinivelEJB.jar\
  * 
  * Qualified Name: co.com.multinivel.dao.ParametroDAO
- * 
- * 
  */

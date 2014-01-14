@@ -14,6 +14,4 @@ public abstract interface PremioAfiliadoService {
  * Location: D:\Dllo\multinivel\multinivelEAR.ear\multinivelEJB.jar\
  * 
  * Qualified Name: co.com.multinivel.service.PremioAfiliadoService
- * 
- * 
  */

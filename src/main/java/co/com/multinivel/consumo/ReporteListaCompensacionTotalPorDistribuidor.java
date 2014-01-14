@@ -8,12 +8,15 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import co.com.multinivel.dto.AfiliadoConsumo;
 import co.com.multinivel.dto.AfiliadoDTO;
@@ -27,10 +30,16 @@ import co.com.multinivel.util.RutasUtil;
 
 public class ReporteListaCompensacionTotalPorDistribuidor extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	@EJB
+	@Autowired
 	CompensacionAfiliadoService compensacionAfiliadoService;
-	@EJB
+	@Autowired
 	AfiliadoService afiliadoService;
+
+	public void init(ServletConfig config) throws ServletException {
+		super.init(config);
+		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
+				config.getServletContext());
+	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -132,6 +141,4 @@ public class ReporteListaCompensacionTotalPorDistribuidor extends HttpServlet {
  * 
  * Qualified Name:
  * co.com.multinivel.consumo.ReporteListaCompensacionTotalPorDistribuidor
- * 
- * 
  */

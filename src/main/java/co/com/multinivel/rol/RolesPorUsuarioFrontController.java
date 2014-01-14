@@ -3,12 +3,15 @@ package co.com.multinivel.rol;
 import java.io.IOException;
 import java.util.List;
 
-import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import co.com.multinivel.exception.MultinivelServiceException;
 import co.com.multinivel.model.GroupAuthority;
@@ -20,9 +23,9 @@ import co.com.multinivel.util.RecursosEnum;
 
 public class RolesPorUsuarioFrontController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	@EJB
+	@Autowired
 	private RolService rolService;
-	@EJB
+	@Autowired
 	private UsuarioService usuarioService;
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -84,6 +87,12 @@ public class RolesPorUsuarioFrontController extends HttpServlet {
 		rd.forward(request, response);
 	}
 
+	public void init(ServletConfig config) throws ServletException {
+		super.init(config);
+		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
+				config.getServletContext());
+	}
+
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
 			IOException {
 		doPost(req, resp);
@@ -95,6 +104,4 @@ public class RolesPorUsuarioFrontController extends HttpServlet {
  * D:\Dllo\multinivel\multinivelEAR.ear\multinivel.war\WEB-INF\classes\
  * 
  * Qualified Name: co.com.multinivel.rol.RolesPorUsuarioFrontController
- * 
- * 
  */

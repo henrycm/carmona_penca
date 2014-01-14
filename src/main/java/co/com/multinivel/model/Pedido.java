@@ -93,6 +93,4 @@ public class Pedido implements Serializable {
  * Location: D:\Dllo\multinivel\multinivelEAR.ear\multinivelEJB.jar\
  * 
  * Qualified Name: co.com.multinivel.model.Pedido
- * 
- * 
  */

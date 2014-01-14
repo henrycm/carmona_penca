@@ -3,16 +3,15 @@ package co.com.multinivel.service;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.ejb.Local;
-import javax.ejb.Stateless;
+
+import org.springframework.stereotype.Service;
 
 import co.com.multinivel.dao.ParametroDAO;
 import co.com.multinivel.exception.MultinivelDAOException;
 import co.com.multinivel.exception.MultinivelServiceException;
 import co.com.multinivel.model.Parametro;
 
-@Stateless
-@Local({ ParametroService.class })
+@Service
 public class ParametroServiceImpl implements ParametroService {
 	@EJB
 	private ParametroDAO parametroDAO;
@@ -41,6 +40,4 @@ public class ParametroServiceImpl implements ParametroService {
  * Location: D:\Dllo\multinivel\multinivelEAR.ear\multinivelEJB.jar\
  * 
  * Qualified Name: co.com.multinivel.service.ParametroServiceImpl
- * 
- * 
  */

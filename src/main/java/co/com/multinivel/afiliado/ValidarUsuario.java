@@ -27,7 +27,7 @@ public class ValidarUsuario extends HttpServlet {
 		char rol = UsuarioHelper.getRol();
 		log.info("Rol: " + rol);
 		String recurso = RecursosEnum.FW_INDEX.getRecurso();
-		request.setAttribute("rol", rol);
+		request.setAttribute("rol", "" + rol);
 		RequestDispatcher rd = getServletContext().getRequestDispatcher(recurso);
 		rd.forward(request, response);
 	}

@@ -3,12 +3,15 @@ package co.com.multinivel.afiliado;
 import java.io.IOException;
 import java.util.List;
 
-import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import co.com.multinivel.dto.AfiliadoDTO;
 import co.com.multinivel.helper.AfiliadoHelper;
@@ -29,19 +32,19 @@ import co.com.multinivel.util.RecursosEnum;
 
 public class AfiliadoFrontController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	@EJB
+	@Autowired
 	private AfiliadoService afiliadoService;
-	@EJB
+	@Autowired
 	private BancoService bancoService;
-	@EJB
+	@Autowired
 	private DepartamentoService departamentoService;
-	@EJB
+	@Autowired
 	private UsuarioService usuarioService;
-	@EJB
+	@Autowired
 	private RolService rolService;
-	@EJB
+	@Autowired
 	private RedService redService;
-	@EJB
+	@Autowired
 	private CantidadAfiliacionesDistribuidorService cantidaAfiliacionesDistribuidorService;
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -258,6 +261,12 @@ public class AfiliadoFrontController extends HttpServlet {
 		}
 		rd = getServletContext().getRequestDispatcher(recurso);
 		rd.forward(request, response);
+	}
+
+	public void init(ServletConfig config) throws ServletException {
+		super.init(config);
+		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
+				config.getServletContext());
 	}
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException,

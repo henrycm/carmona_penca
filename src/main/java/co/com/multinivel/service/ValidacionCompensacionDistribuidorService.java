@@ -22,6 +22,4 @@ public abstract interface ValidacionCompensacionDistribuidorService {
  * 
  * Qualified Name:
  * co.com.multinivel.service.ValidacionCompensacionDistribuidorService
- * 
- * 
  */

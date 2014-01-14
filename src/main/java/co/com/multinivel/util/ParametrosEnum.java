@@ -17,9 +17,8 @@ public enum ParametrosEnum {
 	public void setValor(String valor) {
 		this.valor = valor;
 	}
-	
-	public int getValorInt()
-	{
+
+	public int getValorInt() {
 		return Integer.parseInt(getValor());
 	}
 }

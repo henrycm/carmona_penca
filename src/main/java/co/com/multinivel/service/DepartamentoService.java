@@ -13,6 +13,4 @@ public abstract interface DepartamentoService {
  * Location: D:\Dllo\multinivel\multinivelEAR.ear\multinivelEJB.jar\
  * 
  * Qualified Name: co.com.multinivel.service.DepartamentoService
- * 
- * 
  */

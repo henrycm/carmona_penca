@@ -3,7 +3,7 @@
   <display-name>multinivel</display-name>
   <context-param>
     <param-name>contextConfigLocation</param-name>
-    <param-value>/WEB-INF/multinivel-security.xml</param-value>
+    <param-value>/WEB-INF/spring/multinivel-beans.xml</param-value>
   </context-param>
   <filter>
     <filter-name>springSecurityFilterChain</filter-name>

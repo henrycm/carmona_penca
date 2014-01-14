@@ -1,18 +1,17 @@
 package co.com.multinivel.dao;
 
-import javax.ejb.Local;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.springframework.stereotype.Component;
+
 import co.com.multinivel.exception.MultinivelDAOException;
 import co.com.multinivel.model.ValidacionCompensacionDistribuidor;
 
-@Stateless
-@Local({ ValidarCompDistribuidorDAO.class })
+@Component
 public class ValidacionCompensacionDistribuidorDAOImp implements ValidarCompDistribuidorDAO {
-	@PersistenceContext(unitName = "multinivelUnit")
+	@PersistenceContext
 	private EntityManager entityManager;
 
 	public ValidacionCompensacionDistribuidor consultar(
@@ -53,6 +52,4 @@ public class ValidacionCompensacionDistribuidorDAOImp implements ValidarCompDist
  * 
  * Qualified Name:
  * co.com.multinivel.dao.ValidacionCompensacionDistribuidorDAOImp
- * 
- * 
  */

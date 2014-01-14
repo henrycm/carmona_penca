@@ -25,6 +25,4 @@ public enum CorreoEnum {
  * D:\Dllo\multinivel\multinivelEAR.ear\multinivel.war\WEB-INF\classes\
  * 
  * Qualified Name: co.com.multinivel.util.CorreoEnum
- * 
- * 
  */

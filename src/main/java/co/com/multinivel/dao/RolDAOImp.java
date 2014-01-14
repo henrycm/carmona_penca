@@ -2,21 +2,20 @@ package co.com.multinivel.dao;
 
 import java.util.List;
 
-import javax.ejb.Local;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+
+import org.springframework.stereotype.Component;
 
 import co.com.multinivel.exception.MultinivelDAOException;
 import co.com.multinivel.model.GroupAuthority;
 import co.com.multinivel.model.GroupMember;
 import co.com.multinivel.model.User;
 
-@Stateless
-@Local({ RolDAO.class })
+@Component
 public class RolDAOImp implements RolDAO {
-	@PersistenceContext(unitName = "multinivelUnit")
+	@PersistenceContext
 	private EntityManager entityManager;
 
 	public GroupAuthority consultar(String codigo) throws MultinivelDAOException {
@@ -151,6 +150,4 @@ public class RolDAOImp implements RolDAO {
  * Location: D:\Dllo\multinivel\multinivelEAR.ear\multinivelEJB.jar\
  * 
  * Qualified Name: co.com.multinivel.dao.RolDAOImp
- * 
- * 
  */

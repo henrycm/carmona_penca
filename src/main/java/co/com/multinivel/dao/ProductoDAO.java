@@ -30,6 +30,4 @@ public abstract interface ProductoDAO {
  * Location: D:\Dllo\multinivel\multinivelEAR.ear\multinivelEJB.jar\
  * 
  * Qualified Name: co.com.multinivel.dao.ProductoDAO
- * 
- * 
  */

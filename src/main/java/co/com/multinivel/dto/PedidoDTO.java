@@ -162,6 +162,4 @@ public class PedidoDTO {
  * Location: D:\Dllo\multinivel\multinivelEAR.ear\multinivelEJB.jar\
  * 
  * Qualified Name: co.com.multinivel.dto.PedidoDTO
- * 
- * 
  */

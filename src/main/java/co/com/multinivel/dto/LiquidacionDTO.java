@@ -61,6 +61,4 @@ public class LiquidacionDTO {
  * Location: D:\Dllo\multinivel\multinivelEAR.ear\multinivelEJB.jar\
  * 
  * Qualified Name: co.com.multinivel.dto.LiquidacionDTO
- * 
- * 
  */

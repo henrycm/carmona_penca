@@ -1,16 +1,15 @@
 package co.com.multinivel.service;
 
 import javax.ejb.EJB;
-import javax.ejb.Local;
-import javax.ejb.Stateless;
+
+import org.springframework.stereotype.Service;
 
 import co.com.multinivel.dao.CantidadAfiliacionesDistribuidorDAO;
 import co.com.multinivel.exception.MultinivelDAOException;
 import co.com.multinivel.exception.MultinivelServiceException;
 import co.com.multinivel.model.CantidadAfiliacionesDistribuidor;
 
-@Stateless
-@Local({ CantidadAfiliacionesDistribuidorService.class })
+@Service
 public class CantidadAfiliacionesDistribuidorServiceImpl implements
 		CantidadAfiliacionesDistribuidorService {
 	@EJB
@@ -47,6 +46,4 @@ public class CantidadAfiliacionesDistribuidorServiceImpl implements
  * 
  * Qualified Name:
  * co.com.multinivel.service.CantidadAfiliacionesDistribuidorServiceImpl
- * 
- * 
  */

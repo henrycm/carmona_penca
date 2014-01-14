@@ -3,16 +3,15 @@ package co.com.multinivel.service;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.ejb.Local;
-import javax.ejb.Stateless;
+
+import org.springframework.stereotype.Service;
 
 import co.com.multinivel.dao.BancoDAO;
 import co.com.multinivel.exception.MultinivelDAOException;
 import co.com.multinivel.exception.MultinivelServiceException;
 import co.com.multinivel.model.Banco;
 
-@Stateless
-@Local({ BancoService.class })
+@Service
 public class BancoServiceImpl implements BancoService {
 	@EJB
 	private BancoDAO bancoDAO;
@@ -42,6 +41,4 @@ public class BancoServiceImpl implements BancoService {
  * Location: D:\Dllo\multinivel\multinivelEAR.ear\multinivelEJB.jar\
  * 
  * Qualified Name: co.com.multinivel.service.BancoServiceImpl
- * 
- * 
  */

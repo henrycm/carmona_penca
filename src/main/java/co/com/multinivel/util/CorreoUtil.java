@@ -46,6 +46,4 @@ public class CorreoUtil {
  * D:\Dllo\multinivel\multinivelEAR.ear\multinivel.war\WEB-INF\classes\
  * 
  * Qualified Name: co.com.multinivel.util.CorreoUtil
- * 
- * 
  */

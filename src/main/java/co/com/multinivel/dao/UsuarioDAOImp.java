@@ -4,13 +4,12 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.ejb.Local;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Component;
 
 import co.com.multinivel.dto.UsuarioDTO;
 import co.com.multinivel.exception.MultinivelDAOException;
@@ -18,12 +17,11 @@ import co.com.multinivel.model.User;
 import co.com.multinivel.util.Pagina;
 import co.com.multinivel.util.ParametrosEnum;
 
-@Stateless
-@Local({ UsuarioDAO.class })
+@Component
 public class UsuarioDAOImp implements UsuarioDAO {
 	private static Logger log = Logger.getLogger(UsuarioDAOImp.class);
-	
-	@PersistenceContext(unitName = "multinivelUnit")
+
+	@PersistenceContext
 	private EntityManager entityManager;
 
 	public User consultar(String codigo) throws MultinivelDAOException {
@@ -95,7 +93,7 @@ public class UsuarioDAOImp implements UsuarioDAO {
 		int min = ParametrosEnum.TAM_PAGINA.getValorInt() * (pagina - 1);
 		List<Object> lista = null;
 		Pagina p = new Pagina();
-		List listaUsuario = new ArrayList<UsuarioDTO>();		
+		List listaUsuario = new ArrayList<UsuarioDTO>();
 		try {
 			String st_count = " SELECT count(1) FROM t_afiliados p inner join  (SELECT (select password from users where username=ceduladistribuidor  )claveDistribuidor,ceduladistribuidor,username,u.password,u.enabled FROM t_afiliados t,users u where u.username=t.cedula)d on d.ceduladistribuidor=p.cedula; ";
 			String sql = " SELECT  CONCAT (P.NOMBRE ,' ',IF(P.APELLIDO IS NULL,'',P.APELLIDO))distribuidor,d.username,d.password,d.enabled,claveDistribuidor FROM t_afiliados p inner join  (SELECT (select password from users where username=ceduladistribuidor  )claveDistribuidor,ceduladistribuidor,username,u.password,u.enabled FROM t_afiliados t,users u where u.username=t.cedula)d on d.ceduladistribuidor=p.cedula ";
@@ -127,7 +125,7 @@ public class UsuarioDAOImp implements UsuarioDAO {
 					listaUsuario.add(usuarioDTO);
 				}
 			}
-			
+
 			p.setContent(listaUsuario);
 			p.setNumber(pagina);
 			p.setTotalElements(total.intValue());
@@ -140,12 +138,13 @@ public class UsuarioDAOImp implements UsuarioDAO {
 	}
 
 	public List<UsuarioDTO> buscar(String nomFiltro, String filtro) throws MultinivelDAOException {
-		List<Object> lista = null;		
-		List<UsuarioDTO> listaUsuario = new ArrayList<UsuarioDTO>();		
-		try {			
-			String sql = " SELECT  CONCAT (P.NOMBRE ,' ',IF(P.APELLIDO IS NULL,'',P.APELLIDO))distribuidor,d.username,d.password,d.enabled,claveDistribuidor FROM t_afiliados p inner join  (SELECT (select password from users where username=ceduladistribuidor  )claveDistribuidor,ceduladistribuidor,username,u.password,u.enabled FROM t_afiliados t,users u where u.username=t.cedula)d on d.ceduladistribuidor=p.cedula where p." + nomFiltro  + " like '%" + filtro + "%';";			
-			Query q = this.entityManager.createNativeQuery(sql);			
-			List result = q.getResultList();			
+		List<Object> lista = null;
+		List<UsuarioDTO> listaUsuario = new ArrayList<UsuarioDTO>();
+		try {
+			String sql = " SELECT  CONCAT (P.NOMBRE ,' ',IF(P.APELLIDO IS NULL,'',P.APELLIDO))distribuidor,d.username,d.password,d.enabled,claveDistribuidor FROM t_afiliados p inner join  (SELECT (select password from users where username=ceduladistribuidor  )claveDistribuidor,ceduladistribuidor,username,u.password,u.enabled FROM t_afiliados t,users u where u.username=t.cedula)d on d.ceduladistribuidor=p.cedula where p."
+					+ nomFiltro + " like '%" + filtro + "%';";
+			Query q = this.entityManager.createNativeQuery(sql);
+			List result = q.getResultList();
 			int s = result.size();
 			if (s > 0) {
 				lista = new ArrayList();
@@ -169,9 +168,9 @@ public class UsuarioDAOImp implements UsuarioDAO {
 					listaUsuario.add(usuarioDTO);
 				}
 			}
-						
+
 		} catch (Exception e) {
-			log.error(e.getMessage(),  e);
+			log.error(e.getMessage(), e);
 			throw new MultinivelDAOException("Error al listar los afiliados por nivel", getClass());
 		}
 		return listaUsuario;

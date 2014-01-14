@@ -18,6 +18,4 @@ public class RolHelper {
  * D:\Dllo\multinivel\multinivelEAR.ear\multinivel.war\WEB-INF\classes\
  * 
  * Qualified Name: co.com.multinivel.helper.RolHelper
- * 
- * 
  */

@@ -15,10 +15,12 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 		<spring.core.version>3.2.0.RELEASE</spring.core.version>
-		<spring.security.core.version>3.1.0.RELEASE</spring.security.core.version>			
+		<spring.security.core.version>3.1.0.RELEASE</spring.security.core.version>
+		<spring.data.jpa.version>1.1.0.RELEASE</spring.data.jpa.version>
 		<commons.beanutils.version>1.8.3</commons.beanutils.version>
 		<mysql.connector.version>5.1.21</mysql.connector.version>
-		<hibernate.version>4.1.6.Final</hibernate.version>				
+		<hibernate.version>4.1.6.Final</hibernate.version>
+		<c3p0.version>0.9.1.2</c3p0.version>
 		<log4j.version>1.2.14</log4j.version>
 		<aspectj.version>1.6.12</aspectj.version>
 		<javax.servlet-api.version>2.5</javax.servlet-api.version>
@@ -99,7 +101,16 @@
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
-
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-jpa</artifactId>
+			<version>${spring.data.jpa.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${spring.core.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
@@ -159,7 +170,13 @@
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
-
+		<dependency>
+			<groupId>c3p0</groupId>
+			<artifactId>c3p0</artifactId>
+			<version>${c3p0.version}</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>

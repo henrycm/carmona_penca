@@ -15,6 +15,4 @@ public class MultinivelDAOException extends Exception {
  * Location: D:\Dllo\multinivel\multinivelEAR.ear\multinivelEJB.jar\
  * 
  * Qualified Name: co.com.multinivel.exception.MultinivelDAOException
- * 
- * 
  */

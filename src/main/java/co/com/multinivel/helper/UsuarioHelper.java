@@ -60,12 +60,12 @@ public class UsuarioHelper {
 
 	public static char getRol() {
 		Authentication principal = SecurityContextHolder.getContext().getAuthentication();
-		Collection< ? extends GrantedAuthority> roles = null;
-		char roleRetornado = '3';		
+		Collection<? extends GrantedAuthority> roles = null;
+		char roleRetornado = '3';
 		roles = principal.getAuthorities();
-		
+
 		if (roles != null) {
-			Iterator< ? extends GrantedAuthority> listaRoles = roles.iterator();
+			Iterator<? extends GrantedAuthority> listaRoles = roles.iterator();
 
 			boolean bandera = true;
 			while ((listaRoles.hasNext()) && (bandera)) {

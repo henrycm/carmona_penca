@@ -3,16 +3,15 @@ package co.com.multinivel.service;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.ejb.Local;
-import javax.ejb.Stateless;
+
+import org.springframework.stereotype.Service;
 
 import co.com.multinivel.dao.PremioDAO;
 import co.com.multinivel.exception.MultinivelDAOException;
 import co.com.multinivel.exception.MultinivelServiceException;
 import co.com.multinivel.model.Premio;
 
-@Stateless
-@Local({ PremioService.class })
+@Service
 public class PremioServiceImpl implements PremioService {
 	@EJB
 	private PremioDAO premioDAO;
@@ -30,6 +29,4 @@ public class PremioServiceImpl implements PremioService {
  * Location: D:\Dllo\multinivel\multinivelEAR.ear\multinivelEJB.jar\
  * 
  * Qualified Name: co.com.multinivel.service.PremioServiceImpl
- * 
- * 
  */

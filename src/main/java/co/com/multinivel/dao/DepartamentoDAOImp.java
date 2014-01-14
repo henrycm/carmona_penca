@@ -2,19 +2,18 @@ package co.com.multinivel.dao;
 
 import java.util.List;
 
-import javax.ejb.Local;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.springframework.stereotype.Component;
+
 import co.com.multinivel.exception.MultinivelDAOException;
 import co.com.multinivel.model.Departamento;
 
-@Stateless
-@Local({ DepartamentoDAO.class })
+@Component
 public class DepartamentoDAOImp implements DepartamentoDAO {
-	@PersistenceContext(unitName = "multinivelUnit")
+	@PersistenceContext
 	private EntityManager entityManager;
 
 	public List<Departamento> listar() throws MultinivelDAOException {
@@ -28,6 +27,4 @@ public class DepartamentoDAOImp implements DepartamentoDAO {
  * Location: D:\Dllo\multinivel\multinivelEAR.ear\multinivelEJB.jar\
  * 
  * Qualified Name: co.com.multinivel.dao.DepartamentoDAOImp
- * 
- * 
  */

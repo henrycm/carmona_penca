@@ -4,20 +4,19 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.ejb.Local;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+
+import org.springframework.stereotype.Component;
 
 import co.com.multinivel.dto.PedidoDTO;
 import co.com.multinivel.exception.MultinivelDAOException;
 import co.com.multinivel.model.Pedido;
 
-@Stateless
-@Local({ PedidoDAO.class })
+@Component
 public class PedidoDAOImp implements PedidoDAO {
-	@PersistenceContext(unitName = "multinivelUnit")
+	@PersistenceContext
 	private EntityManager entityManager;
 
 	public boolean ingresarPedido(Pedido pedido) throws MultinivelDAOException {
@@ -334,6 +333,4 @@ public class PedidoDAOImp implements PedidoDAO {
  * Location: D:\Dllo\multinivel\multinivelEAR.ear\multinivelEJB.jar\
  * 
  * Qualified Name: co.com.multinivel.dao.PedidoDAOImp
- * 
- * 
  */

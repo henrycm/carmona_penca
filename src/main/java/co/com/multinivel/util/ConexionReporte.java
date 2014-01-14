@@ -3,7 +3,6 @@ package co.com.multinivel.util;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-
 public class ConexionReporte {
 	public static Connection getConexion() {
 		Connection conexion = null;
@@ -33,6 +32,4 @@ public class ConexionReporte {
  * D:\Dllo\multinivel\multinivelEAR.ear\multinivel.war\WEB-INF\classes\
  * 
  * Qualified Name: co.com.multinivel.util.ConexionReporte
- * 
- * 
  */

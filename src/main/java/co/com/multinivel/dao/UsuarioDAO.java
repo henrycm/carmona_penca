@@ -21,6 +21,7 @@ public abstract interface UsuarioDAO {
 	public abstract List<User> listar() throws MultinivelDAOException;
 
 	public abstract Pagina listarConDistribuidor(int Pagina) throws MultinivelDAOException;
-	
-	public abstract List<UsuarioDTO> buscar(String nomFiltro, String filtro) throws MultinivelDAOException;
+
+	public abstract List<UsuarioDTO> buscar(String nomFiltro, String filtro)
+			throws MultinivelDAOException;
 }

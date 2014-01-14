@@ -3,16 +3,15 @@ package co.com.multinivel.service;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.ejb.Local;
-import javax.ejb.Stateless;
+
+import org.springframework.stereotype.Service;
 
 import co.com.multinivel.dao.DepartamentoDAO;
 import co.com.multinivel.exception.MultinivelDAOException;
 import co.com.multinivel.exception.MultinivelServiceException;
 import co.com.multinivel.model.Departamento;
 
-@Stateless
-@Local({ DepartamentoService.class })
+@Service
 public class DepartamentoServiceImpl implements DepartamentoService {
 	@EJB
 	private DepartamentoDAO departamentoDAO;
@@ -32,6 +31,4 @@ public class DepartamentoServiceImpl implements DepartamentoService {
  * Location: D:\Dllo\multinivel\multinivelEAR.ear\multinivelEJB.jar\
  * 
  * Qualified Name: co.com.multinivel.service.DepartamentoServiceImpl
- * 
- * 
  */

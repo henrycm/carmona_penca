@@ -1,18 +1,17 @@
 package co.com.multinivel.dao;
 
-import javax.ejb.Local;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.springframework.stereotype.Component;
+
 import co.com.multinivel.exception.MultinivelDAOException;
 import co.com.multinivel.model.CantidadAfiliacionesDistribuidor;
 
-@Stateless
-@Local({ CantidadAfiliacionesDistribuidorDAO.class })
+@Component
 public class CantidadAfiliacionesDistribuidorDAOImp implements CantidadAfiliacionesDistribuidorDAO {
-	@PersistenceContext(unitName = "multinivelUnit")
+	@PersistenceContext
 	private EntityManager entityManager;
 
 	public boolean ingresar(CantidadAfiliacionesDistribuidor cantidadAfiliacionesDistribuidor)
@@ -53,6 +52,4 @@ public class CantidadAfiliacionesDistribuidorDAOImp implements CantidadAfiliacio
  * Location: D:\Dllo\multinivel\multinivelEAR.ear\multinivelEJB.jar\
  * 
  * Qualified Name: co.com.multinivel.dao.CantidadAfiliacionesDistribuidorDAOImp
- * 
- * 
  */

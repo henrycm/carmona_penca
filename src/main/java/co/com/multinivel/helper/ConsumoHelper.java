@@ -101,6 +101,4 @@ public class ConsumoHelper {
  * D:\Dllo\multinivel\multinivelEAR.ear\multinivel.war\WEB-INF\classes\
  * 
  * Qualified Name: co.com.multinivel.helper.ConsumoHelper
- * 
- * 
  */

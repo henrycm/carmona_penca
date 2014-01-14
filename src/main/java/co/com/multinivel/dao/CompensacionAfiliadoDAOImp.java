@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.ejb.Local;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+
+import org.springframework.stereotype.Component;
 
 import co.com.multinivel.dto.AfiliadoConsumo;
 import co.com.multinivel.dto.CompensacionAfiliadoDTO;
@@ -21,10 +21,9 @@ import co.com.multinivel.exception.MultinivelDAOException;
 import co.com.multinivel.model.Parametro;
 import co.com.multinivel.util.ParametrosEnum;
 
-@Stateless
-@Local({ CompensacionAfiliadoDAO.class })
+@Component
 public class CompensacionAfiliadoDAOImp implements CompensacionAfiliadoDAO {
-	@PersistenceContext(unitName = "multinivelUnit")
+	@PersistenceContext
 	private EntityManager entityManager;
 	@EJB
 	ParametroDAO parametroDAO;
@@ -772,6 +771,4 @@ public class CompensacionAfiliadoDAOImp implements CompensacionAfiliadoDAO {
  * Location: D:\Dllo\multinivel\multinivelEAR.ear\multinivelEJB.jar\
  * 
  * Qualified Name: co.com.multinivel.dao.CompensacionAfiliadoDAOImp
- * 
- * 
  */

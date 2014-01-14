@@ -3,16 +3,15 @@ package co.com.multinivel.service;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.ejb.Local;
-import javax.ejb.Stateless;
+
+import org.springframework.stereotype.Service;
 
 import co.com.multinivel.dao.RedDAO;
 import co.com.multinivel.exception.MultinivelDAOException;
 import co.com.multinivel.exception.MultinivelServiceException;
 import co.com.multinivel.model.Red;
 
-@Stateless
-@Local({ RedService.class })
+@Service
 public class RedServiceImpl implements RedService {
 	@EJB
 	private RedDAO redDAO;
@@ -52,6 +51,4 @@ public class RedServiceImpl implements RedService {
  * Location: D:\Dllo\multinivel\multinivelEAR.ear\multinivelEJB.jar\
  * 
  * Qualified Name: co.com.multinivel.service.RedServiceImpl
- * 
- * 
  */

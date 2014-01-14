@@ -3,16 +3,15 @@ package co.com.multinivel.service;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.ejb.Local;
-import javax.ejb.Stateless;
+
+import org.springframework.stereotype.Service;
 
 import co.com.multinivel.dao.TipoProductoDAO;
 import co.com.multinivel.exception.MultinivelDAOException;
 import co.com.multinivel.exception.MultinivelServiceException;
 import co.com.multinivel.model.TiposProducto;
 
-@Stateless
-@Local({ TipoProductoService.class })
+@Service
 public class TipoProductoServiceImpl implements TipoProductoService {
 	@EJB
 	private TipoProductoDAO tipoProductoDAO;

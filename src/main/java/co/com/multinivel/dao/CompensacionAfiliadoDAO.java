@@ -26,6 +26,4 @@ public abstract interface CompensacionAfiliadoDAO {
  * Location: D:\Dllo\multinivel\multinivelEAR.ear\multinivelEJB.jar\
  * 
  * Qualified Name: co.com.multinivel.dao.CompensacionAfiliadoDAO
- * 
- * 
  */

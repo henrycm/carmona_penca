@@ -3,16 +3,15 @@ package co.com.multinivel.service;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.ejb.Local;
-import javax.ejb.Stateless;
+
+import org.springframework.stereotype.Service;
 
 import co.com.multinivel.dao.CompensacionAfiliadoDAO;
 import co.com.multinivel.dto.CompensacionAfiliadoDTO;
 import co.com.multinivel.exception.MultinivelDAOException;
 import co.com.multinivel.exception.MultinivelServiceException;
 
-@Stateless
-@Local({ CompensacionAfiliadoService.class })
+@Service
 public class CompensacionAfiliadoServiceImpl implements CompensacionAfiliadoService {
 	@EJB
 	private CompensacionAfiliadoDAO compensacionAfiliadoDAO;
@@ -75,6 +74,4 @@ public class CompensacionAfiliadoServiceImpl implements CompensacionAfiliadoServ
  * Location: D:\Dllo\multinivel\multinivelEAR.ear\multinivelEJB.jar\
  * 
  * Qualified Name: co.com.multinivel.service.CompensacionAfiliadoServiceImpl
- * 
- * 
  */

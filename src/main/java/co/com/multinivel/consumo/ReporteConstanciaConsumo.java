@@ -4,11 +4,14 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.ejb.EJB;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import co.com.multinivel.helper.UsuarioHelper;
 import co.com.multinivel.model.Consumo;
@@ -19,8 +22,14 @@ import co.com.multinivel.util.RutasUtil;
 
 public class ReporteConstanciaConsumo extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	@EJB
+	@Autowired
 	ConsumoService consumoService;
+
+	public void init(ServletConfig config) throws ServletException {
+		super.init(config);
+		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
+				config.getServletContext());
+	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -59,6 +68,4 @@ public class ReporteConstanciaConsumo extends HttpServlet {
  * D:\Dllo\multinivel\multinivelEAR.ear\multinivel.war\WEB-INF\classes\
  * 
  * Qualified Name: co.com.multinivel.consumo.ReporteConstanciaConsumo
- * 
- * 
  */

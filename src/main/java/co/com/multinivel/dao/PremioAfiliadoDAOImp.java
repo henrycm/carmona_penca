@@ -3,20 +3,19 @@ package co.com.multinivel.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.ejb.Local;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+
+import org.springframework.stereotype.Component;
 
 import co.com.multinivel.dto.PremioAfiliadoDTO;
 import co.com.multinivel.exception.MultinivelDAOException;
 import co.com.multinivel.model.PremioAfiliado;
 
-@Stateless
-@Local({ PremioAfiliadoDAO.class })
+@Component
 public class PremioAfiliadoDAOImp implements PremioAfiliadoDAO {
-	@PersistenceContext(unitName = "multinivelUnit")
+	@PersistenceContext
 	private EntityManager entityManager;
 
 	public List<Object> consultar(PremioAfiliado premioAfiliado) throws MultinivelDAOException {
@@ -54,6 +53,4 @@ public class PremioAfiliadoDAOImp implements PremioAfiliadoDAO {
  * Location: D:\Dllo\multinivel\multinivelEAR.ear\multinivelEJB.jar\
  * 
  * Qualified Name: co.com.multinivel.dao.PremioAfiliadoDAOImp
- * 
- * 
  */

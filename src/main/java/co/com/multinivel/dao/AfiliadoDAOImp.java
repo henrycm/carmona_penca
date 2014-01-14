@@ -9,12 +9,12 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.ejb.Local;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+
+import org.springframework.stereotype.Component;
 
 import co.com.multinivel.dto.AfiliadoDTO;
 import co.com.multinivel.dto.AfiliadosNivel;
@@ -23,10 +23,9 @@ import co.com.multinivel.exception.MultinivelDAOException;
 import co.com.multinivel.model.Afiliado;
 import co.com.multinivel.util.ParametrosEnum;
 
-@Stateless
-@Local({ AfiliadoDAO.class })
+@Component
 public class AfiliadoDAOImp implements AfiliadoDAO {
-	@PersistenceContext(unitName = "multinivelUnit")
+	@PersistenceContext
 	private EntityManager entityManager;
 
 	public Afiliado consultar(String codigo) throws MultinivelDAOException {
@@ -1241,6 +1240,4 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
  * Location: D:\Dllo\multinivel\multinivelEAR.ear\multinivelEJB.jar\
  * 
  * Qualified Name: co.com.multinivel.dao.AfiliadoDAOImp
- * 
- * 
  */

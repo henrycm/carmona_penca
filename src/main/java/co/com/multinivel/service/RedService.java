@@ -17,6 +17,4 @@ public abstract interface RedService {
  * Location: D:\Dllo\multinivel\multinivelEAR.ear\multinivelEJB.jar\
  * 
  * Qualified Name: co.com.multinivel.service.RedService
- * 
- * 
  */

@@ -4,20 +4,19 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.ejb.Local;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+
+import org.springframework.stereotype.Component;
 
 import co.com.multinivel.dto.ProductoDTO;
 import co.com.multinivel.exception.MultinivelDAOException;
 import co.com.multinivel.model.Producto;
 
-@Stateless
-@Local({ ProductoDAO.class })
+@Component
 public class ProductoDAOImp implements ProductoDAO {
-	@PersistenceContext(unitName = "multinivelUnit")
+	@PersistenceContext
 	private EntityManager entityManager;
 
 	public Producto consultar(String codigo) throws MultinivelDAOException {
@@ -205,6 +204,4 @@ public class ProductoDAOImp implements ProductoDAO {
  * Location: D:\Dllo\multinivel\multinivelEAR.ear\multinivelEJB.jar\
  * 
  * Qualified Name: co.com.multinivel.dao.ProductoDAOImp
- * 
- * 
  */
