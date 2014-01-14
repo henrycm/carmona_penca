@@ -23,7 +23,7 @@
     <description></description>
     <display-name>UsuarioFrontController</display-name>
     <servlet-name>UsuarioFrontController</servlet-name>
-    <servlet-class>co.com.multinivel.usuario.UsuarioFrontController</servlet-class>
+    <servlet-class>co.com.multinivel.frontend.usuario.UsuarioFrontController</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>UsuarioFrontController</servlet-name>
@@ -33,7 +33,7 @@
     <description></description>
     <display-name>CambiarClaveFrontController</display-name>
     <servlet-name>CambiarClaveFrontController</servlet-name>
-    <servlet-class>co.com.multinivel.usuario.CambiarClaveFrontController</servlet-class>
+    <servlet-class>co.com.multinivel.frontend.usuario.CambiarClaveFrontController</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>CambiarClaveFrontController</servlet-name>
@@ -43,7 +43,7 @@
     <description></description>
     <display-name>RolFrontController</display-name>
     <servlet-name>RolFrontController</servlet-name>
-    <servlet-class>co.com.multinivel.rol.RolFrontController</servlet-class>
+    <servlet-class>co.com.multinivel.frontend.rol.RolFrontController</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>RolFrontController</servlet-name>
@@ -53,7 +53,7 @@
     <description></description>
     <display-name>IndexFrontController</display-name>
     <servlet-name>IndexFrontController</servlet-name>
-    <servlet-class>co.com.multinivel.usuario.IndexFrontController</servlet-class>
+    <servlet-class>co.com.multinivel.frontend.usuario.IndexFrontController</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>IndexFrontController</servlet-name>
@@ -63,7 +63,7 @@
     <description></description>
     <display-name>IndexFrontControllerAfiliado</display-name>
     <servlet-name>IndexFrontControllerAfiliado</servlet-name>
-    <servlet-class>co.com.multinivel.afiliado.IndexFrontController</servlet-class>
+    <servlet-class>co.com.multinivel.frontend.afiliado.IndexFrontController</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>IndexFrontControllerAfiliado</servlet-name>
@@ -73,7 +73,7 @@
     <description></description>
     <display-name>AfiliadoFrontController</display-name>
     <servlet-name>AfiliadoFrontController</servlet-name>
-    <servlet-class>co.com.multinivel.afiliado.AfiliadoFrontController</servlet-class>
+    <servlet-class>co.com.multinivel.frontend.afiliado.AfiliadoFrontController</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>AfiliadoFrontController</servlet-name>
@@ -83,7 +83,7 @@
     <description></description>
     <display-name>IndexFrontControllerProducto</display-name>
     <servlet-name>IndexFrontControllerProducto</servlet-name>
-    <servlet-class>co.com.multinivel.producto.IndexFrontController</servlet-class>
+    <servlet-class>co.com.multinivel.frontend.producto.IndexFrontController</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>IndexFrontControllerProducto</servlet-name>
@@ -93,7 +93,7 @@
     <description></description>
     <display-name>ProductoFrontController</display-name>
     <servlet-name>ProductoFrontController</servlet-name>
-    <servlet-class>co.com.multinivel.producto.ProductoFrontController</servlet-class>
+    <servlet-class>co.com.multinivel.frontend.producto.ProductoFrontController</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ProductoFrontController</servlet-name>
@@ -103,7 +103,7 @@
     <description></description>
     <display-name>ReporteInscripcion</display-name>
     <servlet-name>ReporteInscripcion</servlet-name>
-    <servlet-class>co.com.multinivel.afiliado.ReporteInscripcion</servlet-class>
+    <servlet-class>co.com.multinivel.frontend.afiliado.ReporteInscripcion</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ReporteInscripcion</servlet-name>
@@ -113,7 +113,7 @@
     <description></description>
     <display-name>ReporteListaAfiliadoPorNivel</display-name>
     <servlet-name>ReporteListaAfiliadoPorNivel</servlet-name>
-    <servlet-class>co.com.multinivel.afiliado.ReporteListaAfiliadoPorNivel</servlet-class>
+    <servlet-class>co.com.multinivel.frontend.afiliado.ReporteListaAfiliadoPorNivel</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ReporteListaAfiliadoPorNivel</servlet-name>
@@ -131,7 +131,7 @@
     <description></description>
     <display-name>BuscadorAfiliado</display-name>
     <servlet-name>BuscadorAfiliado</servlet-name>
-    <servlet-class>co.com.multinivel.afiliado.BuscadorAfiliado</servlet-class>
+    <servlet-class>co.com.multinivel.frontend.afiliado.BuscadorAfiliado</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>BuscadorAfiliado</servlet-name>
@@ -141,7 +141,7 @@
     <description></description>
     <display-name>BuscadorDistribuidor</display-name>
     <servlet-name>BuscadorDistribuidor</servlet-name>
-    <servlet-class>co.com.multinivel.afiliado.BuscadorDistribuidor</servlet-class>
+    <servlet-class>co.com.multinivel.frontend.afiliado.BuscadorDistribuidor</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>BuscadorDistribuidor</servlet-name>
@@ -151,7 +151,7 @@
     <description></description>
     <display-name>ValidarUsuario</display-name>
     <servlet-name>ValidarUsuario</servlet-name>
-    <servlet-class>co.com.multinivel.afiliado.ValidarUsuario</servlet-class>
+    <servlet-class>co.com.multinivel.frontend.afiliado.ValidarUsuario</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ValidarUsuario</servlet-name>
@@ -161,7 +161,7 @@
     <description></description>
     <display-name>VistaPreliminarPedido</display-name>
     <servlet-name>VistaPreliminarPedido</servlet-name>
-    <servlet-class>co.com.multinivel.pedido.VistaPreliminarPedido</servlet-class>
+    <servlet-class>co.com.multinivel.frontend.pedido.VistaPreliminarPedido</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>VistaPreliminarPedido</servlet-name>
@@ -171,7 +171,7 @@
     <description></description>
     <display-name>ReporteConstanciaPedido</display-name>
     <servlet-name>ReporteConstanciaPedido</servlet-name>
-    <servlet-class>co.com.multinivel.pedido.ReporteConstanciaPedido</servlet-class>
+    <servlet-class>co.com.multinivel.frontend.pedido.ReporteConstanciaPedido</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ReporteConstanciaPedido</servlet-name>
@@ -181,7 +181,7 @@
     <description></description>
     <display-name>ListaPedidoController</display-name>
     <servlet-name>ListaPedidoController</servlet-name>
-    <servlet-class>co.com.multinivel.pedido.ListaPedidoController</servlet-class>
+    <servlet-class>co.com.multinivel.frontend.pedido.ListaPedidoController</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ListaPedidoController</servlet-name>
@@ -191,7 +191,7 @@
     <description></description>
     <display-name>IndexPedido</display-name>
     <servlet-name>IndexPedido</servlet-name>
-    <servlet-class>co.com.multinivel.pedido.IndexPedido</servlet-class>
+    <servlet-class>co.com.multinivel.frontend.pedido.IndexPedido</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>IndexPedido</servlet-name>
@@ -201,7 +201,7 @@
     <description></description>
     <display-name>RealizarPedido</display-name>
     <servlet-name>RealizarPedido</servlet-name>
-    <servlet-class>co.com.multinivel.pedido.RealizarPedido</servlet-class>
+    <servlet-class>co.com.multinivel.frontend.pedido.RealizarPedido</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>RealizarPedido</servlet-name>
@@ -211,7 +211,7 @@
     <description></description>
     <display-name>VistaPreliminarConsumo</display-name>
     <servlet-name>VistaPreliminarConsumo</servlet-name>
-    <servlet-class>co.com.multinivel.consumo.VistaPreliminarConsumo</servlet-class>
+    <servlet-class>co.com.multinivel.frontend.consumo.VistaPreliminarConsumo</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>VistaPreliminarConsumo</servlet-name>
@@ -221,7 +221,7 @@
     <description></description>
     <display-name>ReporteConstanciaConsumo</display-name>
     <servlet-name>ReporteConstanciaConsumo</servlet-name>
-    <servlet-class>co.com.multinivel.consumo.ReporteConstanciaConsumo</servlet-class>
+    <servlet-class>co.com.multinivel.frontend.consumo.ReporteConstanciaConsumo</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ReporteConstanciaConsumo</servlet-name>
@@ -231,7 +231,7 @@
     <description></description>
     <display-name>IndexConsumo</display-name>
     <servlet-name>IndexConsumo</servlet-name>
-    <servlet-class>co.com.multinivel.consumo.IndexConsumo</servlet-class>
+    <servlet-class>co.com.multinivel.frontend.consumo.IndexConsumo</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>IndexConsumo</servlet-name>
@@ -241,7 +241,7 @@
     <description></description>
     <display-name>RealizarConsumo</display-name>
     <servlet-name>RealizarConsumo</servlet-name>
-    <servlet-class>co.com.multinivel.consumo.RealizarConsumo</servlet-class>
+    <servlet-class>co.com.multinivel.frontend.consumo.RealizarConsumo</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>RealizarConsumo</servlet-name>
@@ -251,7 +251,7 @@
     <description></description>
     <display-name>IndexRed</display-name>
     <servlet-name>IndexRed</servlet-name>
-    <servlet-class>co.com.multinivel.red.Index</servlet-class>
+    <servlet-class>co.com.multinivel.frontend.red.Index</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>IndexRed</servlet-name>
@@ -261,7 +261,7 @@
     <description></description>
     <display-name>IndexLiquidacion</display-name>
     <servlet-name>IndexLiquidacion</servlet-name>
-    <servlet-class>co.com.multinivel.liquidacion.IndexLiquidacion</servlet-class>
+    <servlet-class>co.com.multinivel.frontend.liquidacion.IndexLiquidacion</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>IndexLiquidacion</servlet-name>
@@ -271,7 +271,7 @@
     <description></description>
     <display-name>ControlLiquidacion</display-name>
     <servlet-name>ControlLiquidacion</servlet-name>
-    <servlet-class>co.com.multinivel.liquidacion.ControlLiquidacion</servlet-class>
+    <servlet-class>co.com.multinivel.frontend.liquidacion.ControlLiquidacion</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ControlLiquidacion</servlet-name>
@@ -281,7 +281,7 @@
     <description></description>
     <display-name>ListrarPremiacionPorRed</display-name>
     <servlet-name>ListrarPremiacionPorRed</servlet-name>
-    <servlet-class>co.com.multinivel.premiacion.ListrarPremiacionPorRed</servlet-class>
+    <servlet-class>co.com.multinivel.frontend.premiacion.ListrarPremiacionPorRed</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ListrarPremiacionPorRed</servlet-name>
@@ -291,7 +291,7 @@
     <description></description>
     <display-name>ControlCompensacion</display-name>
     <servlet-name>ControlCompensacion</servlet-name>
-    <servlet-class>co.com.multinivel.compensacion.ControlCompensacion</servlet-class>
+    <servlet-class>co.com.multinivel.frontend.compensacion.ControlCompensacion</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ControlCompensacion</servlet-name>
@@ -301,7 +301,7 @@
     <description></description>
     <display-name>ReportePremiosAfiliadoPeriodo</display-name>
     <servlet-name>ReportePremiosAfiliadoPeriodo</servlet-name>
-    <servlet-class>co.com.multinivel.liquidacion.ReportePremiosAfiliadoPeriodo</servlet-class>
+    <servlet-class>co.com.multinivel.frontend.liquidacion.ReportePremiosAfiliadoPeriodo</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ReportePremiosAfiliadoPeriodo</servlet-name>
@@ -311,7 +311,7 @@
     <description></description>
     <display-name>ReporteCompensacionAfiliadoPeriodo</display-name>
     <servlet-name>ReporteCompensacionAfiliadoPeriodo</servlet-name>
-    <servlet-class>co.com.multinivel.liquidacion.ReporteCompensacionAfiliadoPeriodo</servlet-class>
+    <servlet-class>co.com.multinivel.frontend.liquidacion.ReporteCompensacionAfiliadoPeriodo</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ReporteCompensacionAfiliadoPeriodo</servlet-name>
@@ -321,7 +321,7 @@
     <description></description>
     <display-name>ControlReporteLiquidacion</display-name>
     <servlet-name>ControlReporteLiquidacion</servlet-name>
-    <servlet-class>co.com.multinivel.liquidacion.ControlReporteLiquidacion</servlet-class>
+    <servlet-class>co.com.multinivel.frontend.liquidacion.ControlReporteLiquidacion</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ControlReporteLiquidacion</servlet-name>
@@ -331,7 +331,7 @@
     <description></description>
     <display-name>ReportePorcentajeProducto</display-name>
     <servlet-name>ReportePorcentajeProducto</servlet-name>
-    <servlet-class>co.com.multinivel.pedido.ReportePorcentajeProducto</servlet-class>
+    <servlet-class>co.com.multinivel.frontend.pedido.ReportePorcentajeProducto</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ReportePorcentajeProducto</servlet-name>
@@ -341,7 +341,7 @@
     <description></description>
     <display-name>ReportePorcentajeProductoHtml</display-name>
     <servlet-name>ReportePorcentajeProductoHtml</servlet-name>
-    <servlet-class>co.com.multinivel.pedido.ReportePorcentajeProductoHtml</servlet-class>
+    <servlet-class>co.com.multinivel.frontend.pedido.ReportePorcentajeProductoHtml</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ReportePorcentajeProductoHtml</servlet-name>
@@ -349,7 +349,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>ReportePorcentajeProductoXLS</servlet-name>
-    <servlet-class>co.com.multinivel.pedido.ReportePorcentajeProductoXLS</servlet-class>
+    <servlet-class>co.com.multinivel.frontend.pedido.ReportePorcentajeProductoXLS</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ReportePorcentajeProductoXLS</servlet-name>
@@ -359,7 +359,7 @@
     <description></description>
     <display-name>IndexReporteCompensacion</display-name>
     <servlet-name>IndexReporteCompensacion</servlet-name>
-    <servlet-class>co.com.multinivel.compensacion.IndexReporteCompensacion</servlet-class>
+    <servlet-class>co.com.multinivel.frontend.compensacion.IndexReporteCompensacion</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>IndexReporteCompensacion</servlet-name>
@@ -369,7 +369,7 @@
     <description></description>
     <display-name>ReporteCompensacionDistribuidorPeriodo</display-name>
     <servlet-name>ReporteCompensacionDistribuidorPeriodo</servlet-name>
-    <servlet-class>co.com.multinivel.compensacion.ReporteCompensacionDistribuidorPeriodo</servlet-class>
+    <servlet-class>co.com.multinivel.frontend.compensacion.ReporteCompensacionDistribuidorPeriodo</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ReporteCompensacionDistribuidorPeriodo</servlet-name>
@@ -379,7 +379,7 @@
     <description></description>
     <display-name>ReporteCompensacionAfiliadosRedPeriodo</display-name>
     <servlet-name>ReporteCompensacionAfiliadosRedPeriodo</servlet-name>
-    <servlet-class>co.com.multinivel.compensacion.ReporteCompensacionAfiliadosRedPeriodo</servlet-class>
+    <servlet-class>co.com.multinivel.frontend.compensacion.ReporteCompensacionAfiliadosRedPeriodo</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ReporteCompensacionAfiliadosRedPeriodo</servlet-name>
@@ -389,7 +389,7 @@
     <description></description>
     <display-name>IndexPremiacion</display-name>
     <servlet-name>IndexPremiacion</servlet-name>
-    <servlet-class>co.com.multinivel.premiacion.IndexPremiacion</servlet-class>
+    <servlet-class>co.com.multinivel.frontend.premiacion.IndexPremiacion</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>IndexPremiacion</servlet-name>
@@ -399,7 +399,7 @@
     <description></description>
     <display-name>ReporteListaPedidoPorDistribuidor</display-name>
     <servlet-name>ReporteListaPedidoPorDistribuidor</servlet-name>
-    <servlet-class>co.com.multinivel.pedido.ReporteListaPedidoPorDistribuidor</servlet-class>
+    <servlet-class>co.com.multinivel.frontend.pedido.ReporteListaPedidoPorDistribuidor</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ReporteListaPedidoPorDistribuidor</servlet-name>
@@ -409,7 +409,7 @@
     <description></description>
     <display-name>ReporteListaConsumosPorDistribuidor</display-name>
     <servlet-name>ReporteListaConsumosPorDistribuidor</servlet-name>
-    <servlet-class>co.com.multinivel.consumo.ReporteListaConsumosPorDistribuidor</servlet-class>
+    <servlet-class>co.com.multinivel.frontend.consumo.ReporteListaConsumosPorDistribuidor</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ReporteListaConsumosPorDistribuidor</servlet-name>
@@ -419,7 +419,7 @@
     <description></description>
     <display-name>ReporteListaConsumosTotalPorDistribuidor</display-name>
     <servlet-name>ReporteListaConsumosTotalPorDistribuidor</servlet-name>
-    <servlet-class>co.com.multinivel.consumo.ReporteListaConsumosTotalPorDistribuidor</servlet-class>
+    <servlet-class>co.com.multinivel.frontend.consumo.ReporteListaConsumosTotalPorDistribuidor</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ReporteListaConsumosTotalPorDistribuidor</servlet-name>
@@ -429,7 +429,7 @@
     <description></description>
     <display-name>ReporteListaCompensacionTotalPorDistribuidor</display-name>
     <servlet-name>ReporteListaCompensacionTotalPorDistribuidor</servlet-name>
-    <servlet-class>co.com.multinivel.consumo.ReporteListaCompensacionTotalPorDistribuidor</servlet-class>
+    <servlet-class>co.com.multinivel.frontend.consumo.ReporteListaCompensacionTotalPorDistribuidor</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ReporteListaCompensacionTotalPorDistribuidor</servlet-name>
@@ -439,7 +439,7 @@
     <description></description>
     <display-name>ReporteConsumosAfiliado</display-name>
     <servlet-name>ReporteConsumosAfiliado</servlet-name>
-    <servlet-class>co.com.multinivel.consumo.ReporteConsumosAfiliado</servlet-class>
+    <servlet-class>co.com.multinivel.frontend.consumo.ReporteConsumosAfiliado</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ReporteConsumosAfiliado</servlet-name>
@@ -449,7 +449,7 @@
     <description></description>
     <display-name>ListaPedidosAEliminar</display-name>
     <servlet-name>ListaPedidosAEliminar</servlet-name>
-    <servlet-class>co.com.multinivel.pedido.ListaPedidosAEliminar</servlet-class>
+    <servlet-class>co.com.multinivel.frontend.pedido.ListaPedidosAEliminar</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ListaPedidosAEliminar</servlet-name>
@@ -459,7 +459,7 @@
     <description></description>
     <display-name>EliminarPedido</display-name>
     <servlet-name>EliminarPedido</servlet-name>
-    <servlet-class>co.com.multinivel.pedido.EliminarPedido</servlet-class>
+    <servlet-class>co.com.multinivel.frontend.pedido.EliminarPedido</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>EliminarPedido</servlet-name>
@@ -469,7 +469,7 @@
     <description></description>
     <display-name>ListaConsumosAEliminar</display-name>
     <servlet-name>ListaConsumosAEliminar</servlet-name>
-    <servlet-class>co.com.multinivel.consumo.ListaConsumosAEliminar</servlet-class>
+    <servlet-class>co.com.multinivel.frontend.consumo.ListaConsumosAEliminar</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ListaConsumosAEliminar</servlet-name>
@@ -479,7 +479,7 @@
     <description></description>
     <display-name>ReporteConsumosProducto</display-name>
     <servlet-name>ReporteConsumosProducto</servlet-name>
-    <servlet-class>co.com.multinivel.consumo.ReporteConsumosProducto</servlet-class>
+    <servlet-class>co.com.multinivel.frontend.consumo.ReporteConsumosProducto</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ReporteConsumosProducto</servlet-name>
@@ -489,7 +489,7 @@
     <description></description>
     <display-name>EliminarConsumo</display-name>
     <servlet-name>EliminarConsumo</servlet-name>
-    <servlet-class>co.com.multinivel.consumo.EliminarConsumo</servlet-class>
+    <servlet-class>co.com.multinivel.frontend.consumo.EliminarConsumo</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>EliminarConsumo</servlet-name>
@@ -499,7 +499,7 @@
     <description></description>
     <display-name>ValidarCompensacionDistribuidor</display-name>
     <servlet-name>ValidarCompensacionDistribuidor</servlet-name>
-    <servlet-class>co.com.multinivel.compensacion.ValidarCompensacionDistribuidor</servlet-class>
+    <servlet-class>co.com.multinivel.frontend.compensacion.ValidarCompensacionDistribuidor</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ValidarCompensacionDistribuidor</servlet-name>
@@ -509,7 +509,7 @@
     <description></description>
     <display-name>ReporteAfiliadosPorDistribuidores</display-name>
     <servlet-name>ReporteAfiliadosPorDistribuidores</servlet-name>
-    <servlet-class>co.com.multinivel.afiliado.ReporteAfiliadosPorDistribuidores</servlet-class>
+    <servlet-class>co.com.multinivel.frontend.afiliado.ReporteAfiliadosPorDistribuidores</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ReporteAfiliadosPorDistribuidores</servlet-name>
@@ -519,7 +519,7 @@
     <description></description>
     <display-name>ReporteAfiliacionesPorDistribuidoresPeriodo</display-name>
     <servlet-name>ReporteAfiliacionesPorDistribuidoresPeriodo</servlet-name>
-    <servlet-class>co.com.multinivel.afiliado.ReporteAfiliacionesPorDistribuidoresPeriodo</servlet-class>
+    <servlet-class>co.com.multinivel.frontend.afiliado.ReporteAfiliacionesPorDistribuidoresPeriodo</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ReporteAfiliacionesPorDistribuidoresPeriodo</servlet-name>
@@ -529,7 +529,7 @@
     <description></description>
     <display-name>IndexArbolController</display-name>
     <servlet-name>IndexArbolController</servlet-name>
-    <servlet-class>co.com.multinivel.arbol.IndexArbolController</servlet-class>
+    <servlet-class>co.com.multinivel.frontend.arbol.IndexArbolController</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>IndexArbolController</servlet-name>

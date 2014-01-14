@@ -21,7 +21,7 @@
 	<tx:annotation-driven transaction-manager="transactionManager" />
 
 	<!-- Activate Spring Data JPA repository support -->
-	<jpa:repositories base-package="co.com.multinivel.dao" />
+	<jpa:repositories base-package="co.com.multinivel.backend.dao" />
 
 	<!-- Declare a datasource that has pooling capabilities -->
 	<bean id="jpaDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
@@ -42,7 +42,7 @@
 				</prop>
 			</props>
 		</property>
-		<property name="packagesToScan" value="co.com.multinivel.model" />
+		<property name="packagesToScan" value="co.com.multinivel.backend.model" />
 	</bean>
 
 	<!-- Specify our ORM vendor -->

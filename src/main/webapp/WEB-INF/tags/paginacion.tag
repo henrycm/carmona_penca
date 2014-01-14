@@ -1,7 +1,7 @@
 <%@tag description="Paginacion generica" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<%@attribute name="pagina" type="co.com.multinivel.util.Pagina" required="true" %>
+<%@attribute name="pagina" type="co.com.multinivel.shared.util.Pagina" required="true" %>
 <%@attribute name="etiqueta"%>
 <%@attribute name="url" required="true" %>
 

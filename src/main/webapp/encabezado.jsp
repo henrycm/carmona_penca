@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import="co.com.multinivel.helper.UsuarioHelper"%>
+    pageEncoding="ISO-8859-1" import="co.com.multinivel.shared.helper.UsuarioHelper"%>
         <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
         
 <div id="div_encabezado" align="left">
