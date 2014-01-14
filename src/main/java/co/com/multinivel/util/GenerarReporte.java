@@ -29,8 +29,8 @@ public class GenerarReporte {
 			Map<String, Object> map, List<Object> lista) {
 		try {
 			JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(lista);
-			JasperReport reporte = (JasperReport) JRLoader.loadObjectFromFile(contexto
-					.getInitParameter("rutaReportes") + nombreRerpoteJasper);
+			JasperReport reporte = (JasperReport) JRLoader.loadObjectFromFile(RutasUtil
+					.getRutaReportes(contexto) + nombreRerpoteJasper);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, map, ds);
 			response.setContentType("application/pdf");
 			response.addHeader("Content-Disposition", "attachment;filename=" + nombreReporte);
@@ -50,8 +50,8 @@ public class GenerarReporte {
 			ServletContext contexto, String nombreReporte, String nombreRerpoteJasper) {
 		try {
 			Connection conexion = ConexionReporte.getConexion();
-			JasperReport reporte = (JasperReport) JRLoader.loadObjectFromFile(contexto
-					.getInitParameter("rutaReportes") + nombreRerpoteJasper);
+			JasperReport reporte = (JasperReport) JRLoader.loadObjectFromFile(RutasUtil
+					.getRutaReportes(contexto) + nombreRerpoteJasper);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, null, conexion);
 
 			PrintWriter out = response.getWriter();
@@ -69,8 +69,8 @@ public class GenerarReporte {
 			ServletContext contexto, String nombreReporte, String nombreRerpoteJasper) {
 		try {
 			Connection conexion = ConexionReporte.getConexion();
-			JasperReport reporte = (JasperReport) JRLoader.loadObjectFromFile(contexto
-					.getInitParameter("rutaReportes") + nombreRerpoteJasper);
+			JasperReport reporte = (JasperReport) JRLoader.loadObjectFromFile(RutasUtil
+					.getRutaReportes(contexto) + nombreRerpoteJasper);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, null, conexion);
 
 			response.setContentType("application/xls");
@@ -90,8 +90,8 @@ public class GenerarReporte {
 			ServletContext contexto, String nombreReporte, String nombreRerpoteJasper) {
 		try {
 			Connection conexion = ConexionReporte.getConexion();
-			JasperReport reporte = (JasperReport) JRLoader.loadObjectFromFile(contexto
-					.getInitParameter("rutaReportes") + nombreRerpoteJasper);
+			JasperReport reporte = (JasperReport) JRLoader.loadObjectFromFile(RutasUtil
+					.getRutaReportes(contexto) + nombreRerpoteJasper);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, null, conexion);
 			response.setContentType("application/pdf");
 			response.addHeader("Content-Disposition", "attachment;filename=" + nombreReporte);
@@ -111,8 +111,8 @@ public class GenerarReporte {
 			ServletContext contexto, String nombreReporte, String nombreRerpoteJasper,
 			HashMap<String, Object> map, List<Object> lista) {
 		try {
-			JasperReport reporte = (JasperReport) JRLoader.loadObjectFromFile(contexto
-					.getInitParameter("rutaReportes") + nombreRerpoteJasper);
+			JasperReport reporte = (JasperReport) JRLoader.loadObjectFromFile(RutasUtil
+					.getRutaReportes(contexto) + nombreRerpoteJasper);
 			JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(lista);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, map, ds);
 			response.setContentType("application/xls");
@@ -132,8 +132,8 @@ public class GenerarReporte {
 			ServletContext contexto, String nombreReporte, String nombreRerpoteJasper,
 			HashMap<String, Object> map, List<Object> lista) {
 		try {
-			JasperReport reporte = (JasperReport) JRLoader.loadObjectFromFile(contexto
-					.getInitParameter("rutaReportes") + nombreRerpoteJasper);
+			JasperReport reporte = (JasperReport) JRLoader.loadObjectFromFile(RutasUtil
+					.getRutaReportes(contexto) + nombreRerpoteJasper);
 			JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(lista);
 			JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, map, ds);
 

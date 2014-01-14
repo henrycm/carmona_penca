@@ -14,6 +14,7 @@ import co.com.multinivel.dto.AfiliadoDTO;
 import co.com.multinivel.service.AfiliadoService;
 import co.com.multinivel.util.GenerarReporte;
 import co.com.multinivel.util.RecursosEnum;
+import co.com.multinivel.util.RutasUtil;
 
 public class ReporteListaAfiliadoPorNivel extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -45,7 +46,7 @@ public class ReporteListaAfiliadoPorNivel extends HttpServlet {
 								+ afiliado.getApellido());
 
 				mapParametrosReporte.put("rutaImagenes",
-						getServletContext().getInitParameter("rutaImagenes"));
+						RutasUtil.getRutaImagenes(getServletContext()));
 				mapParametrosReporte.put("tituloCompania", "ALOE DE COLOMBIA");
 				String formato = request.getParameter("formato") == null ? "P" : request
 						.getParameter("formato");

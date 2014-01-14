@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import co.com.multinivel.service.AfiliadoService;
 import co.com.multinivel.util.GenerarReporte;
 import co.com.multinivel.util.RecursosEnum;
+import co.com.multinivel.util.RutasUtil;
 
 public class ReporteAfiliadosPorDistribuidores extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -40,7 +41,7 @@ public class ReporteAfiliadosPorDistribuidores extends HttpServlet {
 					.getParameter("periodo");
 			map.put("titulo", "COMPESACION AFIALIDO POR PERIODO");
 			map.put("periodo", periodo);
-			map.put("rutaImagenes", getServletContext().getInitParameter("rutaImagenes"));
+			map.put("rutaImagenes", RutasUtil.getRutaImagenes(getServletContext()));
 
 			List<Object> lista = this.afiliadoService.listaAfiliadosPorDistribuidor(periodo);
 			if ((lista != null) && (lista.size() > 0)) {

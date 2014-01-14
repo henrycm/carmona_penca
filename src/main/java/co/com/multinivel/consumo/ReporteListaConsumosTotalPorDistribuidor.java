@@ -20,6 +20,7 @@ import co.com.multinivel.service.AfiliadoService;
 import co.com.multinivel.service.ConsumoService;
 import co.com.multinivel.util.GenerarReporte;
 import co.com.multinivel.util.RecursosEnum;
+import co.com.multinivel.util.RutasUtil;
 
 public class ReporteListaConsumosTotalPorDistribuidor extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -51,7 +52,7 @@ public class ReporteListaConsumosTotalPorDistribuidor extends HttpServlet {
 
 			periodo = mes + "/" + ano;
 			map.put("periodo", periodo);
-			map.put("rutaImagenes", getServletContext().getInitParameter("rutaImagenes"));
+			map.put("rutaImagenes", RutasUtil.getRutaImagenes(getServletContext()));
 			ConsumoDTO consumo = new ConsumoDTO();
 			consumo.setPeriodo(periodo);
 			consumo.setCedulaDistribuidor(distribuidor);

@@ -20,6 +20,7 @@ import co.com.multinivel.service.AfiliadoService;
 import co.com.multinivel.service.PedidoService;
 import co.com.multinivel.util.GenerarReporte;
 import co.com.multinivel.util.RecursosEnum;
+import co.com.multinivel.util.RutasUtil;
 
 public class ReporteListaPedidoPorDistribuidor extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -49,7 +50,7 @@ public class ReporteListaPedidoPorDistribuidor extends HttpServlet {
 			String ano = request.getParameter("ano");
 			periodo = mes + "/" + ano;
 			map.put("periodo", periodo);
-			map.put("rutaImagenes", getServletContext().getInitParameter("rutaImagenes"));
+			map.put("rutaImagenes", RutasUtil.getRutaImagenes(getServletContext()));
 			PedidoDTO pedido = new PedidoDTO();
 			pedido.setPeriodo(cadenaFecha);
 			pedido.setCedulaDistribuidor(distribuidor);

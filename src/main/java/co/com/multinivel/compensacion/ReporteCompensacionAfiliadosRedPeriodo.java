@@ -22,6 +22,7 @@ import co.com.multinivel.service.ConsumoService;
 import co.com.multinivel.service.ValidacionCompensacionDistribuidorService;
 import co.com.multinivel.util.GenerarReporte;
 import co.com.multinivel.util.RecursosEnum;
+import co.com.multinivel.util.RutasUtil;
 
 public class ReporteCompensacionAfiliadosRedPeriodo extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -52,7 +53,7 @@ public class ReporteCompensacionAfiliadosRedPeriodo extends HttpServlet {
 
 			map.put("titulo", "PAGO DE COMPESACION AFILAIDOS POR PERIODO");
 			map.put("periodo", periodo);
-			map.put("rutaImagenes", getServletContext().getInitParameter("rutaImagenes"));
+			map.put("rutaImagenes", RutasUtil.getRutaImagenes(getServletContext()));
 			Afiliado dist = this.afiliadoService.consultar(distribuidor);
 			ValidacionCompensacionDistribuidor vd = new ValidacionCompensacionDistribuidor();
 			ValidacionCompensacionDistribuidorPK validacionCompensacionDistribuidorPK = new ValidacionCompensacionDistribuidorPK();

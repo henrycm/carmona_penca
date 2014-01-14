@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import co.com.multinivel.service.ProductoService;
 import co.com.multinivel.util.GenerarReporte;
 import co.com.multinivel.util.RecursosEnum;
+import co.com.multinivel.util.RutasUtil;
 
 public class ReportePorcentajeProducto extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -42,7 +43,7 @@ public class ReportePorcentajeProducto extends HttpServlet {
 			String ano = request.getParameter("ano");
 			periodo = mes + "/" + ano;
 			map.put("periodo", periodo);
-			map.put("rutaImagenes", getServletContext().getInitParameter("rutaImagenes"));
+			map.put("rutaImagenes", RutasUtil.getRutaImagenes(getServletContext()));
 			List<Object> lista = this.productoService.listarProductoPorcentaje(periodo);
 			if ((lista != null) && (lista.size() > 0)) {
 				if ("PDF".equals(tipoReporte)) {

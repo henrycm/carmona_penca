@@ -15,6 +15,7 @@ import co.com.multinivel.model.Consumo;
 import co.com.multinivel.service.ConsumoService;
 import co.com.multinivel.util.GenerarReporte;
 import co.com.multinivel.util.RecursosEnum;
+import co.com.multinivel.util.RutasUtil;
 
 public class ReporteConstanciaConsumo extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -37,7 +38,7 @@ public class ReporteConstanciaConsumo extends HttpServlet {
 			mapParametrosReporte.put("totalAfiliados", listaConsumo.size());
 			if ((listaConsumo != null) && (listaConsumo.size() > 0)) {
 				mapParametrosReporte.put("rutaImagenes",
-						getServletContext().getInitParameter("rutaImagenes"));
+						RutasUtil.getRutaImagenes(getServletContext()));
 				mapParametrosReporte.put("codigoPedido", request.getParameter("codigoConsumo"));
 				mapParametrosReporte.put("tituloCompania", "ALOE DE COLOMBIA");
 

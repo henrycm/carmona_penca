@@ -20,6 +20,7 @@ import co.com.multinivel.service.BancoService;
 import co.com.multinivel.service.RedService;
 import co.com.multinivel.util.GenerarReporte;
 import co.com.multinivel.util.RecursosEnum;
+import co.com.multinivel.util.RutasUtil;
 
 public class ReporteInscripcion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -44,7 +45,7 @@ public class ReporteInscripcion extends HttpServlet {
 					.getParameter("documento");
 
 			map.put("titulo", "Inscripcion Afiliado");
-			map.put("rutaImagenes", getServletContext().getInitParameter("rutaImagenes"));
+			map.put("rutaImagenes", RutasUtil.getRutaImagenes(getServletContext()));
 
 			List<Object> lista = new ArrayList<Object>();
 
