@@ -4,11 +4,14 @@ import java.util.List;
 
 import javax.ejb.EJB;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import co.com.multinivel.backend.dao.AfiliadoDAO;
+import co.com.multinivel.backend.dao.ArbolDAO;
 import co.com.multinivel.backend.model.Afiliado;
 import co.com.multinivel.shared.dto.AfiliadoDTO;
+import co.com.multinivel.shared.dto.DatosArbol;
 import co.com.multinivel.shared.dto.Nodo;
 import co.com.multinivel.shared.exception.MultinivelDAOException;
 import co.com.multinivel.shared.exception.MultinivelServiceException;
@@ -17,6 +20,9 @@ import co.com.multinivel.shared.exception.MultinivelServiceException;
 public class AfiliadoServiceImpl implements AfiliadoService {
 	@EJB
 	private AfiliadoDAO afiliadoDAO;
+
+	@Autowired
+	private ArbolDAO arbolDAO;
 
 	public void actualizar(Afiliado afiliado) throws MultinivelServiceException {
 		try {
@@ -34,11 +40,11 @@ public class AfiliadoServiceImpl implements AfiliadoService {
 		}
 	}
 
-	public Afiliado consultar(String codigo) throws MultinivelServiceException {
+	public Afiliado consultar(String codigo) {
 		try {
 			return this.afiliadoDAO.consultar(codigo);
 		} catch (MultinivelDAOException e) {
-			throw new MultinivelServiceException(e.getMessage(), getClass());
+			return null;
 		}
 	}
 
@@ -174,6 +180,10 @@ public class AfiliadoServiceImpl implements AfiliadoService {
 			throw new MultinivelServiceException(e.getMessage(), getClass());
 		}
 		return lista;
+	}
+
+	public DatosArbol ArbolAfiliado(String paramString) throws Exception {
+		return this.arbolDAO.getArbol(paramString);
 	}
 }
 

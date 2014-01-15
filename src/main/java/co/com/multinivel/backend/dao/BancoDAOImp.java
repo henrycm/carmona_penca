@@ -25,7 +25,7 @@ public class BancoDAOImp implements BancoDAO {
 	}
 
 	public Banco consultar(String codigo) throws MultinivelDAOException {
-		return (Banco) this.entityManager.find(Banco.class, codigo);
+		return this.entityManager.find(Banco.class, codigo);
 	}
 }
 

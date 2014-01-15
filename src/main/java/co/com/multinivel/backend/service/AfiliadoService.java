@@ -4,6 +4,7 @@ import java.util.List;
 
 import co.com.multinivel.backend.model.Afiliado;
 import co.com.multinivel.shared.dto.AfiliadoDTO;
+import co.com.multinivel.shared.dto.DatosArbol;
 import co.com.multinivel.shared.dto.Nodo;
 import co.com.multinivel.shared.exception.MultinivelServiceException;
 
@@ -14,7 +15,7 @@ public abstract interface AfiliadoService {
 
 	public abstract boolean borrar(Afiliado paramAfiliado) throws MultinivelServiceException;
 
-	public abstract Afiliado consultar(String paramString) throws MultinivelServiceException;
+	public abstract Afiliado consultar(String paramString);
 
 	public abstract List<Afiliado> listar() throws MultinivelServiceException;
 
@@ -49,6 +50,8 @@ public abstract interface AfiliadoService {
 
 	public abstract List<Object> listarAfiliadosDistribuidorPorPeriodo(String paramString)
 			throws MultinivelServiceException;
+
+	public DatosArbol ArbolAfiliado(String paramString) throws Exception;
 }
 
 /*
