@@ -61,19 +61,18 @@
 
 	<ul class="nav navbar-nav">
 		<li class="dropdown"><a target="mainFrame" href="#" class="dropdown-toggle"
-		data-toggle="dropdown">Liquidación <b class="caret"></b></a>
+		data-toggle="dropdown">Compensación<b class="caret"></b></a>
 			<ul class="dropdown-menu">
+				<li><a href="reporte/IndexReporteCompensacion?accion=C" target="mainFrame">Compensación afiliados Por Red</a></li>
+				<li><a href="compensacion/ValidarCompensacionDistribuidor?accion=*" target="mainFrame">Verificar Compensacion Distribuidor</a></li>
+				<li><a href="reporte/IndexReporteCompensacion?accion=F" target="mainFrame">Compensación total Por Distribuidor</a></li>
+				<li role="presentation" class="divider"></li>
+				<li class="dropdown-header">Liquidación</li>				
  				<li><a target="mainFrame" href="liquidacion/IndexLiquidacion" >Liquidacion Por Red</a></li>	
 				<li><a target="mainFrame" href="liquidacion/IndexLiquidacion?accion=M" >Liquidacion Masiva</a></li>
-			</ul>
-		</li>
-	</ul>
-
-	<ul class="nav navbar-nav">
-		<li class="dropdown"><a target="mainFrame" href="#" class="dropdown-toggle"
-		data-toggle="dropdown">Arbol <b class="caret"></b></a>
-			<ul class="dropdown-menu">
- 				<li><a target="mainFrame" href="jerarquia/IndexArbolController" >Consultar Jerarquia</a></li>
+				<li role="presentation" class="divider"></li>
+				<li class="dropdown-header" >Arbol</li>				
+				<li><a target="mainFrame" href="jerarquia/IndexArbolController" >Consultar Jerarquia</a></li>
 			</ul>
 		</li>
 	</ul>

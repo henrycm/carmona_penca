@@ -63,7 +63,7 @@ public class IndexFrontController extends HttpServlet {
 
 			request.setAttribute("periodo", periodo);
 
-			request.setAttribute("tipoAfiliado", UsuarioHelper.getRol());
+			request.setAttribute("tipoAfiliado", "" + UsuarioHelper.getRol());
 
 			List<AfiliadoDTO> listaAfiliado = null;
 			switch (accion) {

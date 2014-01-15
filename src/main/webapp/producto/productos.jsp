@@ -6,10 +6,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Maestro Producto</title>
-	<link rel="stylesheet" href="../../css/multinivel.css">
+	<link rel="StyleSheet" type="text/css"	href="../../bootstrap/css/bootstrap.css" />
+	<link rel="stylesheet" href="../../css/multinivel.css" />
 	<script src="../../js/generico.js"></script>
-	<script src="../../js/producto/producto.js"></script>
-    <link rel="stylesheet" href="../../css/jquery/demos.css">
+	<script src="../../js/producto/producto.js"></script>    
 
 </head>
 
@@ -18,19 +18,14 @@
 <form action="ProductoFrontController" name="producto" method="post">
 <input type="hidden" name="accion" value="<c:out value="${accion}"/>" />
 <input type="hidden" name="actualizar" />
-<div align="center"><BR>
-<BR>
-<table width="35%" align="right">
-	<tr>
-		<td height="34">&nbsp;</td>
-		<td width="75%" align="right"><a
-			href="javascript:ingresarProducto()">Ingresar </a>&nbsp;&nbsp;<a
-			href="javascript:actualizarProducto()">Actualizar</a>&nbsp;&nbsp;<a
-			href="javascript:eliminarProducto()">Eliminar </a>&nbsp;&nbsp;<a
-			href="javascript:consultarProducto()"> Consultar </a></td>
-	</tr>
-</table>
-<div class="titulo">Administración de Productos</div>
+<div align="center">
+<div class="btn-group">
+				<a class="btn btn-sm btn-default" href="javascript:ingresarProducto()">Ingresar </a>
+				<a class="btn btn-sm btn-default" href="javascript:actualizarProducto()">Actualizar</a>
+				<a class="btn btn-sm btn-default" href="javascript:eliminarProducto()">Eliminar </a>
+				<a class="btn btn-sm btn-default" href="javascript:consultarProducto()"> Consultar </a>
+</div>
+				<div class="titulo">Administración de Productos</div>
 <table width="90%" class="tbl-form">
 
 	<tr>
@@ -61,7 +56,7 @@
 				<option value="<c:out value='${tipoProducto.codigo}'/>"><c:out
 					value='${tipoProducto.tipoProducto}' /></option>
 			</c:forEach>
-		</select> </select></td>
+		</select></td>
 	</tr>
 </table>
 <br />
