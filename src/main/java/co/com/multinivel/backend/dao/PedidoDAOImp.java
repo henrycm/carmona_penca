@@ -8,13 +8,15 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import co.com.multinivel.backend.model.Pedido;
 import co.com.multinivel.shared.dto.PedidoDTO;
 import co.com.multinivel.shared.exception.MultinivelDAOException;
 
-@Component
+@Repository
+@Transactional
 public class PedidoDAOImp implements PedidoDAO {
 	@PersistenceContext
 	private EntityManager entityManager;

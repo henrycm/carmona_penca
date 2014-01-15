@@ -7,13 +7,15 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import co.com.multinivel.backend.model.PremioAfiliado;
 import co.com.multinivel.shared.dto.PremioAfiliadoDTO;
 import co.com.multinivel.shared.exception.MultinivelDAOException;
 
-@Component
+@Repository
+@Transactional
 public class PremioAfiliadoDAOImp implements PremioAfiliadoDAO {
 	@PersistenceContext
 	private EntityManager entityManager;

@@ -9,7 +9,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.apache.log4j.Logger;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import co.com.multinivel.backend.model.User;
 import co.com.multinivel.shared.dto.UsuarioDTO;
@@ -17,7 +18,8 @@ import co.com.multinivel.shared.exception.MultinivelDAOException;
 import co.com.multinivel.shared.util.Pagina;
 import co.com.multinivel.shared.util.ParametrosEnum;
 
-@Component
+@Repository
+@Transactional
 public class UsuarioDAOImp implements UsuarioDAO {
 	private static Logger log = Logger.getLogger(UsuarioDAOImp.class);
 

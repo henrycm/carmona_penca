@@ -4,12 +4,14 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import co.com.multinivel.backend.model.CantidadAfiliacionesDistribuidor;
 import co.com.multinivel.shared.exception.MultinivelDAOException;
 
-@Component
+@Repository
+@Transactional
 public class CantidadAfiliacionesDistribuidorDAOImp implements CantidadAfiliacionesDistribuidorDAO {
 	@PersistenceContext
 	private EntityManager entityManager;
@@ -51,5 +53,6 @@ public class CantidadAfiliacionesDistribuidorDAOImp implements CantidadAfiliacio
 /*
  * Location: D:\Dllo\multinivel\multinivelEAR.ear\multinivelEJB.jar\
  * 
- * Qualified Name: co.com.multinivel.backend.dao.CantidadAfiliacionesDistribuidorDAOImp
+ * Qualified Name:
+ * co.com.multinivel.backend.dao.CantidadAfiliacionesDistribuidorDAOImp
  */

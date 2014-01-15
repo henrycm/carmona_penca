@@ -11,7 +11,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import co.com.multinivel.backend.model.Afiliado;
 import co.com.multinivel.backend.model.Consumo;
@@ -21,7 +22,8 @@ import co.com.multinivel.shared.dto.AfiliadosNivel;
 import co.com.multinivel.shared.dto.ConsumoDTO;
 import co.com.multinivel.shared.exception.MultinivelDAOException;
 
-@Component
+@Repository
+@Transactional
 public class ConsumoDAOImp implements ConsumoDAO {
 	@PersistenceContext
 	private EntityManager entityManager;

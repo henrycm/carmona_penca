@@ -14,7 +14,8 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import co.com.multinivel.backend.model.Afiliado;
 import co.com.multinivel.shared.dto.AfiliadoDTO;
@@ -23,7 +24,8 @@ import co.com.multinivel.shared.dto.Nodo;
 import co.com.multinivel.shared.exception.MultinivelDAOException;
 import co.com.multinivel.shared.util.ParametrosEnum;
 
-@Component
+@Repository
+@Transactional
 public class AfiliadoDAOImp implements AfiliadoDAO {
 	@PersistenceContext
 	private EntityManager entityManager;
