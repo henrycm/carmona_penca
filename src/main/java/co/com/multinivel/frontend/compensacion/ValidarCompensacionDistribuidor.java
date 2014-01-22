@@ -46,12 +46,14 @@ public class ValidarCompensacionDistribuidor extends HttpServlet {
 			Date fechaActual = new Date();
 			SimpleDateFormat formato = new SimpleDateFormat("MM/yyyy");
 			String cadenaFecha = formato.format(fechaActual);
-			String mes = request.getParameter("mes");
-			String ano = request.getParameter("ano");
-			String periodo = mes + "/" + ano;
+
+			String periodo = cadenaFecha;
 			request.setAttribute("periodo", periodo);
 			switch (accion) {
 			case 'I':
+				String mes = request.getParameter("mes");
+				String ano = request.getParameter("ano");
+				periodo = mes + "/" + ano;
 				ValidacionCompensacionDistribuidor validacionCompensacionDistribuidor = new ValidacionCompensacionDistribuidor();
 				ValidacionCompensacionDistribuidorPK validacionCompensacionDistribuidorPK = new ValidacionCompensacionDistribuidorPK();
 				validacionCompensacionDistribuidorPK.setPeriodo(periodo);
