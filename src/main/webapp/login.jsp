@@ -16,8 +16,8 @@
 
 <body onload="document.f.j_username.focus();">
 	<div id="form_caja">
-	<img src="images/encabezado.png" style="width: 100%;"/>
-		<div id="div_login">			
+		<jsp:include page="encabezado.jsp"></jsp:include>
+		<div id="div_login">
 			<div style="height: 30px;"></div>
 			<c:if test="${not empty param.login_error}">
 				<div class="alert alert-danger">
@@ -31,7 +31,8 @@
 			<form name="f" action="<c:url value='j_spring_security_check'/>"
 				method="post" class="form-horizontal" role="form">
 				<fieldset>
-					<legend>Autenticación de usuarios</legend>
+					<h4>INGRESO A LA PLATAFORMA MULTINIVEL</h4>
+					<br></br>
 					<div class="form-group">
 						<label class="col-sm-3 control-label">Nombre de usuario:</label>
 						<div class="col-sm-3">
@@ -50,16 +51,16 @@
 							<div class="checkbox">
 								<label> <input type="checkbox"
 									name="j_spring_security_remember_me"> No preguntar de
-										nuevo de la contraseña </label>
+									nuevo de la contraseña
+								</label>
 							</div>
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-4">
-							<input type="submit" class="btn btn-primary btn-sm" name="Ingresar"
-								id="Ingresar" value="Ingresar" /> <input type="reset"
-								class="btn btn-primary btn-sm" name="Limpiar" id="Limpiar"
-								value="Limpiar" />
+							<input type="submit" class="boton"
+								name="Ingresar" id="Ingresar" value="Ingresar" />
+							<input type="reset" class="boton" name="Limpiar" id="Limpiar" value="Limpiar" />								
 						</div>
 					</div>
 					<div class="form-group">

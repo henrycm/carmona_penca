@@ -1,22 +1,32 @@
+.demo{
+	text-align: center;
+}
+ul.nav li.dropdown:hover ul.dropdown-menu {
+	display: block;
+}
+
+.boton {
+	color: #486F29;
+	font-weight: bold;
+	background-color: #A3BD31;
+}
+
 #div_login {
-    width: 100%;
-    height: 100%;
-    padding-left: 20px;
-	background-color: #F2FFE5;
+	width: 100%;
+	height: 100%;
+	padding-left: 20px;
+	background-color: #333333;
+	color: white;
 }
 
 #form_caja {
-    width: 70%;
-    height: 100%
-    padding-top: 8px;
-    padding-bottom: 15px;
-    margin: 0 auto 20px auto;
-    background-color: #2E8E42;
-     border-radius: 15px;
-    -moz-border-radius: 15px;
-    -webkit-border-radius: 15px;
-    color: #2E8E42;
-    padding:10px;
+	width: 70%;
+	height: 100%;
+	padding-top: 8px;
+	padding-bottom: 15px;
+	margin: 0 auto 20px auto;
+	padding: 2px;
+	border: 1px solid;
 }
 
 .tbl-lista,.tbl-form {
@@ -27,12 +37,16 @@
 }
 
 .tbl-lista th,.tbl-form th {
-	background-color: #2E8E42;
+	background-color: #65B039;
 	text-align: center;
 }
 
 #div_encabezado {
-	background-image: url("../images/fondoEncabezado.png");
+	background-image: url("../images/cabeza.png");
+	height: 168px;
+	padding: 5px;
+	padding-top: 20px;
+	border: 1px solid;
 }
 
 body {
@@ -43,7 +57,7 @@ body {
 	margin-bottom: 30px;
 	padding: 5px;
 	font-weight: bold;
-	background-color: #2E8E42;
+	background-color: #65B039;
 	text-transform: uppercase;
 	text-align: center;
 }
@@ -89,31 +103,29 @@ a:link,a:visited {
 	color: #3BB3C2;
 }
 
-a:HOVER {	
+a:HOVER {
 	font-weight: bold;
 }
 
 .tabla {
-	background-color: #2E8E42;
-	background: #2E8E42;
+	background-color: #65B039;
 }
 
 table.tabla {
-	background-color: #E6FFCC;	
+	background-color: #E6FFCC;
 	border: 1px solid #ddd;
 }
 
 .fondo {
 	padding: 10px 15px;
 	width: 60%;
-	height: 100%;	
+	height: 100%;
 }
 
 .tituloLista {
 	width: 40%;
 	height: 10%;
-	background-color: #2E8E42;
-	background: #2E8E42;
+	background-color: #65B039;
 }
 
 @import url("../bootstrap/css/bootstrap.css");

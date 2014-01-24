@@ -7,7 +7,7 @@
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     <ul class="nav navbar-nav">      
       <li class="dropdown">
-        <a target="mainFrame" href="#" class="dropdown-toggle" data-toggle="dropdown">Administración <b class="caret"></b></a>
+        <a target="mainFrame" href="#" class="dropdown-toggle" data-toggle="dropdown">Administración </b></a>
         <ul class="dropdown-menu">
 	    <li><a target="mainFrame" href="administracion/IndexAfiliado?accion=I" >Ingresar Afiliado</a></li>
 		<li><a target="mainFrame" href="administracion/IndexAfiliado?accion=C" >Actualizar Afiliado</a></li>
@@ -26,7 +26,7 @@
 
 	<ul class="nav navbar-nav">
 		<li class="dropdown"><a target="mainFrame" href="#" class="dropdown-toggle"
-		data-toggle="dropdown">Productos <b class="caret"></b></a>
+		data-toggle="dropdown">Productos </b></a>
 			<ul class="dropdown-menu">
  				<li><a target="mainFrame" href="administracion/producto/IndexProducto?accion=I" >Administrar Productos</a></li>	
 				<li><a target="mainFrame" href="administracion/producto/IndexProducto?accion=P" >Productos Consumidos Periodo</a></li>
@@ -36,7 +36,7 @@
 
 	<ul class="nav navbar-nav">
 		<li class="dropdown"><a target="mainFrame" href="#" class="dropdown-toggle"
-		data-toggle="dropdown">Usuario <b class="caret"></b></a>
+		data-toggle="dropdown">Usuario </b></a>
 			<ul class="dropdown-menu">
  				<li><a target="mainFrame" href="administracion/UsuarioFrontController?accion=C" >Administrar de Usuarios</a></li>
 			</ul>
@@ -45,7 +45,7 @@
 
 	<ul class="nav navbar-nav">
 		<li class="dropdown"><a target="mainFrame" href="#" class="dropdown-toggle"
-		data-toggle="dropdown">Pedidos y Consumos <b class="caret"></b></a>
+		data-toggle="dropdown">Pedidos y Consumos </b></a>
 			<ul class="dropdown-menu">
  					<li><a target="mainFrame" href="pedido/IndexPedido?accion=C" >Realizar Pedido</a></li>		
 					<li><a target="mainFrame" href="pedido/IndexPedido?accion=S" >OPCION NUEVA PARA Realizar Pedido</a></li>
@@ -61,7 +61,7 @@
 
 	<ul class="nav navbar-nav">
 		<li class="dropdown"><a target="mainFrame" href="#" class="dropdown-toggle"
-		data-toggle="dropdown">Compensación<b class="caret"></b></a>
+		data-toggle="dropdown">Compensación</b></a>
 			<ul class="dropdown-menu">
 				<li><a href="reporte/IndexReporteCompensacion?accion=C" target="mainFrame">Compensación afiliados Por Red</a></li>
 				<li><a href="compensacion/ValidarCompensacionDistribuidor?accion=*" target="mainFrame">Verificar Compensacion Distribuidor</a></li>

@@ -22,8 +22,7 @@ public class ArbolController
   private TreeNode selectedNode;
   
   public ArbolController()
-  {
-    System.err.println("probandooooooooo arsbol");
+  {    
     this.root = new DefaultTreeNode("Root", null);
     List<?> localList = this.root.getChildren();
     for (Iterator<?> localIterator = localList.iterator(); localIterator.hasNext();)
