@@ -24,7 +24,8 @@
 	 	<intercept-url pattern="/compensacion/*"  access="hasAnyRole('ROLE_ADMIN','ROLE_DISTRIBUIDOR')"  />
 	 	<intercept-url pattern="/reporte/*"  access="hasAnyRole('ROLE_ADMIN','ROLE_DISTRIBUIDOR','ROLE_AFILIADO')"  />
 	 	
-	 	<form-login login-page="/login.jsp" default-target-url="/ValidarUsuario"  authentication-failure-url="/login.jsp?login_error=1"/>
+	 	<form-login login-page="/login.jsp" default-target-url="/ValidarUsuario"
+	always-use-default-target="true" authentication-failure-url="/login.jsp?login_error=1" />
 	 	
 		<!--<form-login/>
 		--><anonymous />
