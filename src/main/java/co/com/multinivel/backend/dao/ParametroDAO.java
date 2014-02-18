@@ -9,6 +9,8 @@ public abstract interface ParametroDAO {
 	public abstract List<Parametro> listar() throws MultinivelDAOException;
 
 	public abstract Parametro obtenerValor(String paramString) throws MultinivelDAOException;
+	
+	public void guardar(Parametro p) throws MultinivelDAOException;
 }
 
 /*

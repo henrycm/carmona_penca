@@ -8,7 +8,6 @@ import javax.persistence.Embeddable;
 public class CantidadAfiliacionesDistribuidorPK implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String distribuidor;
-	private String periodo;
 
 	public String getDistribuidor() {
 		return this.distribuidor;
@@ -16,14 +15,6 @@ public class CantidadAfiliacionesDistribuidorPK implements Serializable {
 
 	public void setDistribuidor(String distribuidor) {
 		this.distribuidor = distribuidor;
-	}
-
-	public String getPeriodo() {
-		return this.periodo;
-	}
-
-	public void setPeriodo(String periodo) {
-		this.periodo = periodo;
 	}
 
 	public boolean equals(Object other) {
@@ -35,16 +26,12 @@ public class CantidadAfiliacionesDistribuidorPK implements Serializable {
 		}
 		CantidadAfiliacionesDistribuidorPK castOther = (CantidadAfiliacionesDistribuidorPK) other;
 
-		return (this.distribuidor.equals(castOther.distribuidor))
-				&& (this.periodo.equals(castOther.periodo));
+		return (this.distribuidor.equals(castOther.distribuidor));
 	}
 
 	public int hashCode() {
-		int prime = 31;
 		int hash = 17;
 		hash = hash * 31 + this.distribuidor.hashCode();
-		hash = hash * 31 + this.periodo.hashCode();
-
 		return hash;
 	}
 }

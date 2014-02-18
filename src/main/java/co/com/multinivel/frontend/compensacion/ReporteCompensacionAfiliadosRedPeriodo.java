@@ -21,6 +21,7 @@ import co.com.multinivel.backend.model.ValidacionCompensacionDistribuidor;
 import co.com.multinivel.backend.model.ValidacionCompensacionDistribuidorPK;
 import co.com.multinivel.backend.service.AfiliadoService;
 import co.com.multinivel.backend.service.ConsumoService;
+import co.com.multinivel.backend.service.ParametroService;
 import co.com.multinivel.backend.service.ValidacionCompensacionDistribuidorService;
 import co.com.multinivel.shared.helper.UsuarioHelper;
 import co.com.multinivel.shared.util.GenerarReporte;
@@ -35,7 +36,8 @@ public class ReporteCompensacionAfiliadosRedPeriodo extends HttpServlet {
 	private ConsumoService consumoService;
 	@Autowired
 	private ValidacionCompensacionDistribuidorService validacionCompensacionDistribuidorService;
-
+	@Autowired
+	private ParametroService parService;
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
 		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
@@ -57,6 +59,9 @@ public class ReporteCompensacionAfiliadosRedPeriodo extends HttpServlet {
 			String cadenaFecha = formato.format(fechaActual);
 			String periodo = request.getParameter("periodo") == null ? cadenaFecha : request
 					.getParameter("periodo");
+			String st_detalle = request.getParameter("detalle") == null ? "false" : request
+					.getParameter("detalle");
+			boolean imp_detalle = Boolean.parseBoolean(st_detalle);
 			String distribuidor = request.getParameter("distribuidor") == null ? UsuarioHelper
 					.getUsuario() : request.getParameter("distribuidor");
 
@@ -75,7 +80,10 @@ public class ReporteCompensacionAfiliadosRedPeriodo extends HttpServlet {
 				if (dist != null) {
 					List<Object> lista = this.consumoService.listarConsumosRed(dist, periodo);
 					if ((lista != null) && (lista.size() > 0)) {
-						map.put("totalAfiliados", Integer.valueOf(lista.size()));
+						double par_min = Double.parseDouble(parService.obtenerValor(
+								"CONSUMO_MINIMO_ABRIR_RED").getValor());
+						map.put("CONSUMO_MINIMO_ABRIR_RED", par_min);
+						map.put("IMPRIMIR_DETALLE", imp_detalle);						
 						map.put("distribuidor", dist.getCedula() + "  " + dist.getNombre() + " "
 								+ dist.getApellido());
 

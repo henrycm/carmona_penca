@@ -379,8 +379,7 @@ function validarAfiliacionesDistribuidor(){
 		alert('La cantidad debe ser un valor entero mayor a cero');
         return;
 
-	}
-	forma.periodo.value=forma.mes.options[forma.mes.selectedIndex].value+"/"+forma.ano.options[forma.ano.selectedIndex].value;
+	}	
 	document.forms[0].submit();
 }
 

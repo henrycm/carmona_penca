@@ -20,6 +20,8 @@ public abstract interface CompensacionAfiliadoDAO {
 
 	public abstract int liquidar(String paramString1, String paramString2)
 			throws MultinivelDAOException;
+
+	public void calcularArbol(String cedula, String tipoUsuario) throws MultinivelDAOException;
 }
 
 /*

@@ -55,6 +55,14 @@
 <div align="center" class="titulo">
 	FORMULARIO DE INSCRIPCIÓN E INFORMACIÓN COMERCIAL
 </div>
+<c:choose>
+	<c:when
+		test="${(rol!='1') && (usuario.numeroAfiliados >= usuario.nmAfiliadosPermitidos)}">
+			<h3 style="color:red">No puede afiliar mas personas, No. Afiliados:
+			${usuario.numeroAfiliados}, No. Afiliados permitidos:
+			${usuario.nmAfiliadosPermitidos}</h3>
+	</c:when>
+<c:otherwise>
 <div align="left" >
 <input name="accion" type="hidden" value="<c:out value='${accion}'/>" />
 Código Nuevo Empresario: <input name="codigoEmpresario" type="text" size="11" maxlength="11" /><select name="letra">
@@ -97,9 +105,9 @@ Código Nuevo Empresario: <input name="codigoEmpresario" type="text" size="11" ma
     <td align="left">Nombres y Apellidos del distribuidor
       <input name="nombreDistribuidor" type="text" size="50" maxlength="50" value="<c:out value='${usuario.nombre}'/> <c:out value='${usuario.apellido}'/>" readonly="readonly" onclick="javascript:document.forma.nombrePatrocinador.readOnly =true;" />
      </td>
-    </tr>
-    <tr>
-      <td align="left">
+     </tr>
+     <tr>
+      <td >
       Codigo de Empresario(Distribuidor): <input name="numeroDistribuidor"  value="<c:out value='${usuario.cedula}'/>" type="text" size="15" maxlength="13" readonly="readonly" onclick="javascript:document.forma.numeroEmpresario.readOnly =true;"/> 
        <c:if test="${tipoAfiliado=='1'}">
        			<a href="javascript:abrirBuscarDistribuidor()" >Buscar Distribuidor</a>
@@ -110,7 +118,10 @@ Código Nuevo Empresario: <input name="codigoEmpresario" type="text" size="11" ma
          
       
       </td>
-  </tr>  
+  </tr>
+  </table>
+
+<table>
   <tr>
     <td align="left">Nombres y Apellidos del Patrocinador
       <input name="nombrePatrocinador" type="text" size="50" maxlength="50" readonly="readonly" onclick="javascript:document.forma.nombrePatrocinador.readOnly =true;" />
@@ -295,7 +306,8 @@ honorable y que representará adecuadamente la imagen y los productos de la empre
 </div>
 
 </div>
-
+	</c:otherwise>
+</c:choose>
 </form>
 </div>
 </body>

@@ -2,12 +2,15 @@ package co.com.multinivel.backend.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
 public class ValidacionCompensacionDistribuidorPK implements Serializable {
 	private static final long serialVersionUID = 1L;
+	@Column(name = "distribuidor")
 	private String distribuidor;
+	@Column(name = "periodo")
 	private String periodo;
 
 	public String getDistribuidor() {
@@ -52,5 +55,6 @@ public class ValidacionCompensacionDistribuidorPK implements Serializable {
 /*
  * Location: D:\Dllo\multinivel\multinivelEAR.ear\multinivelEJB.jar\
  * 
- * Qualified Name: co.com.multinivel.backend.model.ValidacionCompensacionDistribuidorPK
+ * Qualified Name:
+ * co.com.multinivel.backend.model.ValidacionCompensacionDistribuidorPK
  */

@@ -59,6 +59,14 @@ public class CompensacionAfiliadoServiceImpl implements CompensacionAfiliadoServ
 		return retorno;
 	}
 
+	public void calcularArbol(String cedula, String tipoUsuario) throws MultinivelServiceException {
+		try {
+			this.compensacionAfiliadoDAO.calcularArbol(cedula, tipoUsuario);
+		} catch (MultinivelDAOException e) {
+			throw new MultinivelServiceException(e.getMessage(), getClass());
+		}
+	}
+
 	public List<Object> consultar(String cedula, String periodo) throws MultinivelServiceException {
 		List<Object> retorno = null;
 		try {

@@ -1,9 +1,7 @@
 package co.com.multinivel.backend.dao;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -16,10 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import co.com.multinivel.backend.model.Afiliado;
 import co.com.multinivel.backend.model.Consumo;
-import co.com.multinivel.backend.model.Parametro;
-import co.com.multinivel.shared.dto.AfiliadoConsumo;
-import co.com.multinivel.shared.dto.AfiliadosNivel;
 import co.com.multinivel.shared.dto.ConsumoDTO;
+import co.com.multinivel.shared.dto.ReporteConsumoDTO;
 import co.com.multinivel.shared.exception.MultinivelDAOException;
 
 @Repository
@@ -236,623 +232,54 @@ public class ConsumoDAOImp implements ConsumoDAO {
 
 	public List<Object> listarConsumosRed(Afiliado distribuidor, String periodo)
 			throws MultinivelDAOException {
-		List<Object> lista = null;
+		List<Object> lista = new ArrayList<Object>();
 		try {
-			lista = new ArrayList();
 
-			List<Object> listaAfiliadosDistribuidor = this.afiliadoDAO.listarPorNivel(distribuidor
-					.getCedula());
+			String sql = "SELECT c.periodo,\r\n"
+					+ " c.distribuidor,\r\n"
+					+ " concat(d.nombre, ' ', d.apellido) nom_distribuidor,\r\n"
+					+ " c.papa,\r\n"
+					+ " concat(p.nombre, ' ', p.apellido) nom_patrocinador,\r\n"
+					+ " c.afiliado,\r\n"
+					+ " concat(h.nombre, ' ', h.apellido) nom_afiliado,\r\n"
+					+ " c.nivel,\r\n"
+					+ " c.consumoAfiliado,\r\n"
+					+ " c.comision\r\n"
+					+ "FROM t_comision_afiliado_periodo c,\r\n"
+					+ " t_afiliados d,\r\n"
+					+ " t_afiliados p,\r\n"
+					+ " t_afiliados h\r\n"
+					+ "WHERE c.periodo = ?\r\n"
+					+ " AND c.distribuidor = ? AND c.distribuidor = d.cedula\r\n"
+					+ " AND c.papa = p.cedula\r\n"
+					+ " AND c.afiliado = h.cedula "
+					+ " Order By nom_patrocinador, c.nivel, nom_afiliado Asc ;";
 
-			Parametro pconsumoMinimo = this.parametroDAO.obtenerValor("CONSUMO_MINIMO");
-			double consumoMinimo = Double.parseDouble(pconsumoMinimo.getValor());
-			double totDisDinero = 0.0D;
-			double totDisProducto = 0.0D;
-			String cedulaAnt = "";
-			for (Iterator iterator = listaAfiliadosDistribuidor.iterator(); iterator.hasNext();) {
-				AfiliadosNivel afiliado = (AfiliadosNivel) iterator.next();
-				String cedula = afiliado.getCedula();
+			String cedula_distribuidor = distribuidor.getCedula();
 
-				String nombreAfiliadoComp = afiliado.getNombre();
-				StringBuffer sql = new StringBuffer();
-				sql.append("   SELECT H.NOMBRE_AFILIADO, H.AFILIADO,H.NIVEL, H.COMISION,H.DISTRIBUIDOR,H.CONSUMO, H.AFILIADOCOMISION ");
-				sql.append("  FROM ( ");
-				sql.append(" SELECT CONCAT(A.NOMBRE,' ', A.APELLIDO)NOMBRE_AFILIADO, CALC.AFILIADO,CALC.NIVEL, CALC.COMISION,CALC.DISTRIBUIDOR,CALC.CONSUMO,AFILIADOCOMISION ");
-				sql.append(" FROM ");
-				sql.append("(SELECT '" + cedula
-						+ "' AFILIADOCOMISION,AFILIADO, DISTRIBUIDOR,NIVEL,CONSUMO, ");
-				sql.append("\tROUND(CASE WHEN NIVEL=1 THEN ");
-				sql.append("\t\t(((CONSUMO/(SELECT VALOR FROM T_PARAMETROS WHERE NOMBRE_PARAMETRO='IVA'))* ");
-				sql.append("\t\t(SELECT VALOR FROM T_PARAMETROS WHERE NOMBRE_PARAMETRO='PORCENTAJE_NIVEL1'))/100) - ");
-				sql.append("\t  CASE WHEN CONSUMO>=(SELECT VALOR FROM T_PARAMETROS WHERE NOMBRE_PARAMETRO='VALOR_RETEFUENTE') THEN  ");
-				sql.append("\t\t(((CONSUMO/(SELECT VALOR FROM T_PARAMETROS WHERE NOMBRE_PARAMETRO='IVA'))* ");
-				sql.append("\t\t(SELECT VALOR FROM T_PARAMETROS WHERE NOMBRE_PARAMETRO='PORCENTAJE_NIVEL1'))/100)* ");
-				sql.append("\t\t(SELECT VALOR FROM T_PARAMETROS WHERE NOMBRE_PARAMETRO='RETEFUENTE')/100 ");
-				sql.append("\t  ELSE 0 END ");
-				sql.append("\t\tWHEN NIVEL=2 THEN ");
-				sql.append("\t\t(((CONSUMO/(SELECT VALOR FROM T_PARAMETROS WHERE NOMBRE_PARAMETRO='IVA'))* ");
-				sql.append("\t\t(SELECT VALOR FROM T_PARAMETROS WHERE NOMBRE_PARAMETRO='PORCENTAJE_NIVEL2'))/100) - ");
-				sql.append("\t  CASE WHEN CONSUMO>=(SELECT VALOR FROM T_PARAMETROS WHERE NOMBRE_PARAMETRO='VALOR_RETEFUENTE') THEN ");
-				sql.append("\t\t(((CONSUMO/(SELECT VALOR FROM T_PARAMETROS WHERE NOMBRE_PARAMETRO='IVA'))* ");
-				sql.append("\t\t(SELECT VALOR FROM T_PARAMETROS WHERE NOMBRE_PARAMETRO='PORCENTAJE_NIVEL2'))/100)* ");
-				sql.append("\t\t(SELECT VALOR FROM T_PARAMETROS WHERE NOMBRE_PARAMETRO='RETEFUENTE')/100 ");
-				sql.append("\t  ELSE 0 END ");
-				sql.append("\t\tWHEN NIVEL=3 THEN ");
-				sql.append("\t\t(((CONSUMO/(SELECT VALOR FROM T_PARAMETROS WHERE NOMBRE_PARAMETRO='IVA'))* ");
-				sql.append("\t\t(SELECT VALOR FROM T_PARAMETROS WHERE NOMBRE_PARAMETRO='PORCENTAJE_NIVEL3'))/100) - ");
-				sql.append("\t  CASE WHEN CONSUMO>=(SELECT VALOR FROM T_PARAMETROS WHERE NOMBRE_PARAMETRO='VALOR_RETEFUENTE') THEN ");
-				sql.append("\t\t(((CONSUMO/(SELECT VALOR FROM T_PARAMETROS WHERE NOMBRE_PARAMETRO='IVA'))* ");
-				sql.append("\t\t(SELECT VALOR FROM T_PARAMETROS WHERE NOMBRE_PARAMETRO='PORCENTAJE_NIVEL3'))/100)* ");
-				sql.append("\t\t(SELECT VALOR FROM T_PARAMETROS WHERE NOMBRE_PARAMETRO='RETEFUENTE')/100 ");
-				sql.append("\t  ELSE 0 END ");
-				sql.append("\t\tWHEN NIVEL=4 THEN ");
-				sql.append("\t\t(((CONSUMO/(SELECT VALOR FROM T_PARAMETROS WHERE NOMBRE_PARAMETRO='IVA'))* ");
-				sql.append("\t\t(SELECT VALOR FROM T_PARAMETROS WHERE NOMBRE_PARAMETRO='PORCENTAJE_NIVEL4'))/100) - ");
-				sql.append("\t  CASE WHEN CONSUMO>=(SELECT VALOR FROM T_PARAMETROS WHERE NOMBRE_PARAMETRO='VALOR_RETEFUENTE') THEN ");
-				sql.append("\t\t(((CONSUMO/(SELECT VALOR FROM T_PARAMETROS WHERE NOMBRE_PARAMETRO='IVA'))* ");
-				sql.append("\t\t(SELECT VALOR FROM T_PARAMETROS WHERE NOMBRE_PARAMETRO='PORCENTAJE_NIVEL4'))/100)* ");
-				sql.append("\t\t(SELECT VALOR FROM T_PARAMETROS WHERE NOMBRE_PARAMETRO='RETEFUENTE')/100 ");
-				sql.append("\t  ELSE 0 END ");
-				sql.append("\t\tWHEN NIVEL=5 THEN ");
-				sql.append("\t\t(((CONSUMO/(SELECT VALOR FROM T_PARAMETROS WHERE NOMBRE_PARAMETRO='IVA'))* ");
-				sql.append("\t\t(SELECT VALOR FROM T_PARAMETROS WHERE NOMBRE_PARAMETRO='PORCENTAJE_NIVEL5'))/100) - ");
-				sql.append("\t  CASE WHEN CONSUMO>=(SELECT VALOR FROM T_PARAMETROS WHERE NOMBRE_PARAMETRO='VALOR_RETEFUENTE') THEN ");
-				sql.append("\t\t(((CONSUMO/(SELECT VALOR FROM T_PARAMETROS WHERE NOMBRE_PARAMETRO='IVA'))* ");
-				sql.append("\t\t(SELECT VALOR FROM T_PARAMETROS WHERE NOMBRE_PARAMETRO='PORCENTAJE_NIVEL5'))/100)* ");
-				sql.append("\t\t(SELECT VALOR FROM T_PARAMETROS WHERE NOMBRE_PARAMETRO='RETEFUENTE')/100 ");
-				sql.append("\t  ELSE 0 END ");
-				sql.append("\t\tWHEN NIVEL>5 THEN ");
-				sql.append("\t\t(((CONSUMO/(SELECT VALOR FROM T_PARAMETROS WHERE NOMBRE_PARAMETRO='IVA'))* ");
-				sql.append("\t\t(SELECT VALOR FROM T_PARAMETROS WHERE NOMBRE_PARAMETRO='PORCENTAJE_OTROS'))/100) - ");
-				sql.append("\t  CASE WHEN CONSUMO>=(SELECT VALOR FROM T_PARAMETROS WHERE NOMBRE_PARAMETRO='VALOR_RETEFUENTE') THEN ");
-				sql.append("\t\t(((CONSUMO/(SELECT VALOR FROM T_PARAMETROS WHERE NOMBRE_PARAMETRO='IVA'))* ");
-				sql.append("\t\t(SELECT VALOR FROM T_PARAMETROS WHERE NOMBRE_PARAMETRO='PORCENTAJE_OTROS'))/100)* ");
-				sql.append("\t\t(SELECT VALOR FROM T_PARAMETROS WHERE NOMBRE_PARAMETRO='RETEFUENTE')/100 ");
-				sql.append("\t  ELSE 0 END ");
-				sql.append("\t  END,2)COMISION ");
-				sql.append("  FROM ");
-				sql.append(" (SELECT  CEDULA_PAPA PATROCINADOR,AFI.CEDULA AFILIADO, CEDULADISTRIBUIDOR DISTRIBUIDOR,NIVEL,VALOR, VALOR CONSUMO ");
-				sql.append(" FROM ");
-				sql.append(" (SELECT P.CEDULA,P.CEDULA_PAPA, 1 NIVEL, H.CEDULADISTRIBUIDOR ");
-				sql.append("\tFROM T_AFILIADOS H INNER JOIN T_AFILIADOS P ");
-				sql.append("\tON H.CEDULA=P.CEDULA_PAPA ");
-				sql.append("  AND H.CEDULA='" + cedula + "' ");
-				sql.append("  UNION ALL ");
-				sql.append(" SELECT  A.CEDULA,A.CEDULA_PAPA, 2 NIVEL,A.CEDULADISTRIBUIDOR FROM ");
-				sql.append(" (SELECT P.CEDULA CEDULA_PAPA ");
-				sql.append("\tFROM T_AFILIADOS H INNER JOIN T_AFILIADOS P ");
-				sql.append("\tON H.CEDULA=P.CEDULA_PAPA ");
-				sql.append("  AND H.CEDULA='" + cedula + "')NIVEL1 INNER JOIN T_AFILIADOS A ");
-				sql.append("\tON NIVEL1.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" UNION ALL ");
-				sql.append(" SELECT  A.CEDULA,A.CEDULA_PAPA, 3 NIVEL,A.CEDULADISTRIBUIDOR  FROM ");
-				sql.append("  (SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("      (SELECT P.CEDULA CEDULA_PAPA ");
-				sql.append("       FROM T_AFILIADOS H INNER JOIN T_AFILIADOS P ");
-				sql.append("\t     ON H.CEDULA=P.CEDULA_PAPA ");
-				sql.append("       AND H.CEDULA='" + cedula + "' ");
-				sql.append("       )NIVEL1 INNER JOIN T_AFILIADOS A ");
-				sql.append("       ON NIVEL1.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append("  ) NIVEL2 INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL2.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" UNION ALL ");
-				sql.append(" SELECT  A.CEDULA,A.CEDULA_PAPA, 4 NIVEL,A.CEDULADISTRIBUIDOR  FROM ");
-				sql.append(" (SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("  (SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("      (SELECT P.CEDULA CEDULA_PAPA ");
-				sql.append("       FROM T_AFILIADOS H INNER JOIN T_AFILIADOS P ");
-				sql.append("\t     ON H.CEDULA=P.CEDULA_PAPA ");
-				sql.append("       AND H.CEDULA='" + cedula + "' ");
-				sql.append("      )NIVEL1 INNER JOIN T_AFILIADOS A ");
-				sql.append("\t      ON NIVEL1.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append("  ) NIVEL2 INNER JOIN T_AFILIADOS A ");
-				sql.append("  ON NIVEL2.CEDULA_PAPA=A.CEDULA_PAPA) NIVEL3 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL3.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" UNION ALL ");
-				sql.append(" SELECT  A.CEDULA,A.CEDULA_PAPA, 5 NIVEL,A.CEDULADISTRIBUIDOR  FROM ");
-				sql.append(" (SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append(" (SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append(" (SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append(" (SELECT P.CEDULA CEDULA_PAPA ");
-				sql.append(" FROM T_AFILIADOS H INNER JOIN T_AFILIADOS P ");
-				sql.append(" ON H.CEDULA=P.CEDULA_PAPA ");
-				sql.append("       AND H.CEDULA='" + cedula + "'  ");
-				sql.append("      )NIVEL1 INNER JOIN T_AFILIADOS A ");
-				sql.append("\t      ON NIVEL1.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append("  ) NIVEL2 INNER JOIN T_AFILIADOS A ");
-				sql.append("  ON NIVEL2.CEDULA_PAPA=A.CEDULA_PAPA) NIVEL3 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL3.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" ) NIVEL4 ");
-				sql.append("INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL4.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" UNION ALL ");
-				sql.append(" SELECT  A.CEDULA,A.CEDULA_PAPA, 6 NIVEL,A.CEDULADISTRIBUIDOR  FROM ");
-				sql.append(" (SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append(" (SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append(" (SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("  (SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("      (SELECT P.CEDULA CEDULA_PAPA ");
-				sql.append("       FROM T_AFILIADOS H INNER JOIN T_AFILIADOS P ");
-				sql.append("\t     ON H.CEDULA=P.CEDULA_PAPA ");
-				sql.append("       AND H.CEDULA='" + cedula + "' ");
-				sql.append("      )NIVEL1 INNER JOIN T_AFILIADOS A ");
-				sql.append("\t      ON NIVEL1.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" ) NIVEL2 INNER JOIN T_AFILIADOS A ");
-				sql.append("  ON NIVEL2.CEDULA_PAPA=A.CEDULA_PAPA) NIVEL3 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL3.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" ) NIVEL4 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL4.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" )NIVEL5 INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL5.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" ");
-				sql.append(" UNION ALL ");
-				sql.append(" SELECT  A.CEDULA,A.CEDULA_PAPA, 7 NIVEL,A.CEDULADISTRIBUIDOR  FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT P.CEDULA CEDULA_PAPA ");
-				sql.append("      FROM T_AFILIADOS H INNER JOIN T_AFILIADOS P ");
-				sql.append("\t     ON H.CEDULA=P.CEDULA_PAPA ");
-				sql.append("       AND H.CEDULA='" + cedula + "' ");
-				sql.append("      )NIVEL1 INNER JOIN T_AFILIADOS A ");
-				sql.append("\t      ON NIVEL1.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append("  ) NIVEL2 INNER JOIN T_AFILIADOS A ");
-				sql.append("  ON NIVEL2.CEDULA_PAPA=A.CEDULA_PAPA) NIVEL3 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL3.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" ) NIVEL4 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL4.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(")NIVEL5 INNER JOIN T_AFILIADOS A ");
-				sql.append("ON NIVEL5.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(")NIVEL6 ");
-				sql.append("INNER JOIN T_AFILIADOS A ");
-				sql.append("ON NIVEL6.CEDULA_PAPA=A.CEDULA_PAPA ");
+			Query q = this.entityManager.createNativeQuery(sql).setParameter(1, periodo)
+					.setParameter(2, cedula_distribuidor);
 
-				sql.append("UNION ALL ");
+			for (Object obj : q.getResultList()) {
+				Object[] objectArray = (Object[]) obj;
 
-				sql.append("SELECT  A.CEDULA,A.CEDULA_PAPA, 8 NIVEL,A.CEDULADISTRIBUIDOR  FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT P.CEDULA CEDULA_PAPA ");
-				sql.append("      FROM T_AFILIADOS H INNER JOIN T_AFILIADOS P ");
-				sql.append("\t     ON H.CEDULA=P.CEDULA_PAPA ");
-				sql.append("       AND H.CEDULA='" + cedula + "' ");
-				sql.append("      )NIVEL1 INNER JOIN T_AFILIADOS A  ");
-				sql.append("\t      ON NIVEL1.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append("  ) NIVEL2 INNER JOIN T_AFILIADOS A ");
-				sql.append("  ON NIVEL2.CEDULA_PAPA=A.CEDULA_PAPA) NIVEL3 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL3.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" ) NIVEL4 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL4.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" )NIVEL5 INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL5.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" )NIVEL6 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL6.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" )NIVEL7 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL7.CEDULA_PAPA=A.CEDULA_PAPA ");
+				ReporteConsumoDTO dto = new ReporteConsumoDTO();
+				dto.setDistribuidor((String) objectArray[1]);
+				dto.setNom_distribuidor((String) objectArray[2]);
+				dto.setPapa((String) objectArray[3]);
+				dto.setNom_patrocinador((String) objectArray[4]);
+				dto.setAfiliado((String) objectArray[5]);
+				dto.setNom_afiliado((String) objectArray[6]);
+				dto.setNivel((Integer) objectArray[7]);
+				dto.setConsumoAfiliado(((BigDecimal) objectArray[8]).doubleValue());
+				dto.setComision(((BigDecimal) objectArray[9]).doubleValue());
+				lista.add(dto);
 
-				sql.append(" UNION ALL ");
-				sql.append("SELECT  A.CEDULA,A.CEDULA_PAPA, 9 NIVEL,A.CEDULADISTRIBUIDOR  FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT P.CEDULA CEDULA_PAPA ");
-				sql.append("      FROM T_AFILIADOS H INNER JOIN T_AFILIADOS P ");
-				sql.append("\t     ON H.CEDULA=P.CEDULA_PAPA ");
-				sql.append("       AND H.CEDULA='" + cedula + "' ");
-				sql.append("      )NIVEL1 INNER JOIN T_AFILIADOS A ");
-				sql.append("\t      ON NIVEL1.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append("  ) NIVEL2 INNER JOIN T_AFILIADOS A ");
-				sql.append("  ON NIVEL2.CEDULA_PAPA=A.CEDULA_PAPA) NIVEL3 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL3.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(") NIVEL4 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL4.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" )NIVEL5 INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL5.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" )NIVEL6 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL6.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(")NIVEL7 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL7.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" )NIVEL8 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL8.CEDULA_PAPA=A.CEDULA_PAPA ");
-
-				sql.append(" UNION ALL ");
-				sql.append(" SELECT  A.CEDULA,A.CEDULA_PAPA, 10 NIVEL,A.CEDULADISTRIBUIDOR  FROM ");
-				sql.append(" (SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append(" (SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append(" (SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append(" (SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append(" (SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append(" (SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append(" (SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append(" (SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append(" (SELECT P.CEDULA CEDULA_PAPA ");
-				sql.append("      FROM T_AFILIADOS H INNER JOIN T_AFILIADOS P ");
-				sql.append("\t     ON H.CEDULA=P.CEDULA_PAPA ");
-				sql.append("       AND H.CEDULA='" + cedula + "' ");
-				sql.append("      )NIVEL1 INNER JOIN T_AFILIADOS A ");
-				sql.append("\t      ON NIVEL1.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append("  ) NIVEL2 INNER JOIN T_AFILIADOS A ");
-				sql.append("  ON NIVEL2.CEDULA_PAPA=A.CEDULA_PAPA) NIVEL3 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL3.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" ) NIVEL4 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL4.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" )NIVEL5 INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL5.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(")NIVEL6 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL6.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" )NIVEL7 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL7.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" )NIVEL8 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL8.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" )NIVEL9 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL9.CEDULA_PAPA=A.CEDULA_PAPA ");
-
-				sql.append(" UNION ALL ");
-
-				sql.append(" SELECT  A.CEDULA,A.CEDULA_PAPA, 11 NIVEL,A.CEDULADISTRIBUIDOR  FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append(" (SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append(" (SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append(" (SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT P.CEDULA CEDULA_PAPA ");
-				sql.append("      FROM T_AFILIADOS H INNER JOIN T_AFILIADOS P ");
-				sql.append("\t     ON H.CEDULA=P.CEDULA_PAPA ");
-				sql.append("       AND H.CEDULA='" + cedula + "' ");
-				sql.append("      )NIVEL1 INNER JOIN T_AFILIADOS A ");
-				sql.append("\t      ON NIVEL1.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append("  ) NIVEL2 INNER JOIN T_AFILIADOS A ");
-				sql.append("  ON NIVEL2.CEDULA_PAPA=A.CEDULA_PAPA) NIVEL3 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL3.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" ) NIVEL4 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL4.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" )NIVEL5 INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL5.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" )NIVEL6 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL6.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(")NIVEL7 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL7.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(")NIVEL8 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL8.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(")NIVEL9 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append("  ON NIVEL9.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" )NIVEL10 ");
-				sql.append("INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL10.CEDULA_PAPA=A.CEDULA_PAPA ");
-
-				sql.append(" UNION ALL ");
-
-				sql.append(" SELECT  A.CEDULA,A.CEDULA_PAPA, 12 NIVEL,A.CEDULADISTRIBUIDOR  FROM ");
-				sql.append(" (SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT P.CEDULA CEDULA_PAPA ");
-				sql.append("      FROM T_AFILIADOS H INNER JOIN T_AFILIADOS P ");
-				sql.append("\t     ON H.CEDULA=P.CEDULA_PAPA ");
-				sql.append("       AND H.CEDULA='" + cedula + "' ");
-				sql.append("      )NIVEL1 INNER JOIN T_AFILIADOS A ");
-				sql.append("\t      ON NIVEL1.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append("  ) NIVEL2 INNER JOIN T_AFILIADOS A ");
-				sql.append("  ON NIVEL2.CEDULA_PAPA=A.CEDULA_PAPA) NIVEL3 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL3.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" ) NIVEL4 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL4.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" )NIVEL5 INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL5.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" )NIVEL6 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL6.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" )NIVEL7 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL7.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" )NIVEL8 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL8.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" )NIVEL9 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL9.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" )NIVEL10 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL10.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" )NIVEL11 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL11.CEDULA_PAPA=A.CEDULA_PAPA ");
-
-				sql.append(" UNION ALL ");
-
-				sql.append(" SELECT  A.CEDULA,A.CEDULA_PAPA, 13 NIVEL,A.CEDULADISTRIBUIDOR  FROM ");
-				sql.append(" (SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append(" (SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append(" (SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append(" (SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append(" (SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append(" (SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append(" (SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append(" (SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append(" (SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append(" (SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append(" (SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append(" (SELECT P.CEDULA CEDULA_PAPA ");
-				sql.append("      FROM T_AFILIADOS H INNER JOIN T_AFILIADOS P ");
-				sql.append("\t     ON H.CEDULA=P.CEDULA_PAPA ");
-				sql.append("       AND H.CEDULA='" + cedula + "' ");
-				sql.append("      )NIVEL1 INNER JOIN T_AFILIADOS A ");
-				sql.append("\t      ON NIVEL1.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append("  ) NIVEL2 INNER JOIN T_AFILIADOS A ");
-				sql.append("  ON NIVEL2.CEDULA_PAPA=A.CEDULA_PAPA) NIVEL3 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL3.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(") NIVEL4 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL4.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(")NIVEL5 INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL5.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" )NIVEL6 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL6.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" )NIVEL7 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL7.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" )NIVEL8 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL8.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(")NIVEL9 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL9.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" )NIVEL10 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL10.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" )NIVEL11 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL11.CEDULA_PAPA=A.CEDULA_PAPA ");
-
-				sql.append(" )NIVEL12 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL12.CEDULA_PAPA=A.CEDULA_PAPA ");
-
-				sql.append(" UNION ALL ");
-
-				sql.append(" SELECT  A.CEDULA,A.CEDULA_PAPA, 14 NIVEL,A.CEDULADISTRIBUIDOR  FROM ");
-				sql.append(" (SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append(" (SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT P.CEDULA CEDULA_PAPA ");
-				sql.append("      FROM T_AFILIADOS H INNER JOIN T_AFILIADOS P ");
-				sql.append("\t     ON H.CEDULA=P.CEDULA_PAPA ");
-				sql.append("       AND H.CEDULA='" + cedula + "' ");
-				sql.append("     )NIVEL1 INNER JOIN T_AFILIADOS A ");
-				sql.append("\t      ON NIVEL1.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append("  ) NIVEL2 INNER JOIN T_AFILIADOS A ");
-				sql.append("  ON NIVEL2.CEDULA_PAPA=A.CEDULA_PAPA) NIVEL3 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL3.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" ) NIVEL4 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL4.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" )NIVEL5 INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL5.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" )NIVEL6 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL6.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" )NIVEL7 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL7.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" )NIVEL8 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL8.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" )NIVEL9 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL9.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(")NIVEL10 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append("ON NIVEL10.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(")NIVEL11 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL11.CEDULA_PAPA=A.CEDULA_PAPA ");
-
-				sql.append(" )NIVEL12 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL12.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" )NIVEL13 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL13.CEDULA_PAPA=A.CEDULA_PAPA ");
-
-				sql.append(" UNION ALL ");
-
-				sql.append("SELECT  A.CEDULA,A.CEDULA_PAPA, 15 NIVEL,A.CEDULADISTRIBUIDOR  FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT  A.CEDULA CEDULA_PAPA FROM ");
-				sql.append("(SELECT P.CEDULA CEDULA_PAPA ");
-				sql.append("      FROM T_AFILIADOS H INNER JOIN T_AFILIADOS P ");
-				sql.append("\t     ON H.CEDULA=P.CEDULA_PAPA ");
-				sql.append("       AND H.CEDULA='" + cedula + "' ");
-				sql.append("      )NIVEL1 INNER JOIN T_AFILIADOS A ");
-				sql.append("\t      ON NIVEL1.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append("  ) NIVEL2 INNER JOIN T_AFILIADOS A ");
-				sql.append("  ON NIVEL2.CEDULA_PAPA=A.CEDULA_PAPA) NIVEL3 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL3.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" ) NIVEL4 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL4.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" )NIVEL5 INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL5.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" )NIVEL6 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL6.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" )NIVEL7 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL7.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" )NIVEL8 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL8.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(")NIVEL9 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL9.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" )NIVEL10 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL10.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(")NIVEL11 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL11.CEDULA_PAPA=A.CEDULA_PAPA ");
-
-				sql.append(")NIVEL12 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append("ON NIVEL12.CEDULA_PAPA=A.CEDULA_PAPA ");
-				sql.append(" )NIVEL13 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL13.CEDULA_PAPA=A.CEDULA_PAPA ");
-
-				sql.append(" )NIVEL14 ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON NIVEL14.CEDULA_PAPA=A.CEDULA_PAPA)AFI ");
-				sql.append(" INNER JOIN ( ");
-				sql.append("          SELECT P.CEDULA CEDULA, SUM(C.TOTALPEDIDO)VALOR FROM T_AFILIADOS P INNER JOIN T_CONSUMOS C ");
-				sql.append("\t        ON P.CEDULA=C.AFILIADO ");
-				sql.append("          WHERE P.ACTIVO='SI' AND DATE_FORMAT(C.FECHA,'%m/%Y')='"
-						+ periodo + "' ");
-				sql.append("\t        GROUP BY C.AFILIADO ");
-
-				sql.append(" )ABRE_RED ");
-				sql.append(" ON AFI.CEDULA=ABRE_RED.CEDULA ");
-				sql.append(" ORDER BY NIVEL ASC ");
-				sql.append(" )CONSUMXNIVEL ) CALC ");
-				sql.append(" INNER JOIN T_AFILIADOS A ");
-				sql.append(" ON A.CEDULA = CALC.AFILIADO ");
-				sql.append(" )H INNER JOIN (SELECT '"
-						+ cedula
-						+ "' CEDULA, SUM(C.TOTALPEDIDO)VALOR FROM T_AFILIADOS P INNER JOIN T_CONSUMOS C ");
-				sql.append("       ON P.CEDULA=C.AFILIADO ");
-				sql.append("       WHERE P.ACTIVO='SI' AND DATE_FORMAT(C.FECHA,'%m/%Y')='"
-						+ periodo + "' AND C.AFILIADO='" + cedula + "' ");
-				sql.append("      GROUP BY C.AFILIADO ");
-				sql.append("       HAVING SUM(C.TOTALPEDIDO)>=(SELECT VALOR FROM T_PARAMETROS WHERE NOMBRE_PARAMETRO='CONSUMO_MINIMO')) A ");
-				sql.append("        ON H.AFILIADOCOMISION =A.CEDULA ");
-
-				Query q = this.entityManager.createNativeQuery(sql.toString());
-				List result = q.getResultList();
-				int s = result.size();
-				if (s > 0) {
-					double total = 0.0D;
-					for (int i = 0; i < s; i++) {
-						Object obj = result.get(i);
-						Object[] objectArray = (Object[]) obj;
-
-						String nombre = (String) objectArray[0];
-						String cedulaAfiliado = (String) objectArray[1];
-						int nivel = ((BigInteger) objectArray[2]).intValue();
-						double comision = ((Double) objectArray[3]).doubleValue();
-						String ceduladistribuidor = (String) objectArray[4];
-						double consumoTotal = ((BigDecimal) objectArray[5]).doubleValue();
-						total += comision;
-
-						AfiliadoConsumo afiliadoConsumo = new AfiliadoConsumo();
-						afiliadoConsumo.setNombre(nombre);
-						afiliadoConsumo.setAfiliado(cedulaAfiliado);
-						afiliadoConsumo.setNivel(nivel);
-						afiliadoConsumo.setComision(comision);
-						afiliadoConsumo.setConsumoTotal(consumoTotal);
-						afiliadoConsumo.setAfiliadoCompensacion(cedula);
-						afiliadoConsumo.setNombreAfiliadoCompensacion(nombreAfiliadoComp);
-						afiliadoConsumo.setTotal(total);
-
-						double consumoProducto = 0.0D;
-						double consumoDinero = 0.0D;
-						if (total > 0.0D) {
-							consumoProducto = total - consumoMinimo;
-							if (consumoProducto < 0.0D) {
-								consumoProducto = total;
-							} else {
-								consumoDinero = consumoProducto;
-								consumoProducto = consumoMinimo;
-							}
-						}
-						if (i + 1 == s) {
-							totDisDinero += consumoDinero;
-							totDisProducto += consumoProducto;
-							afiliadoConsumo.setComDistrDinero(totDisDinero);
-							afiliadoConsumo.setComDistrProducto(totDisProducto);
-						}
-						afiliadoConsumo.setComisionDinero(consumoDinero);
-						afiliadoConsumo.setComisionProducto(consumoProducto);
-
-						lista.add(afiliadoConsumo);
-					}
-				}
-				sql = null;
 			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new MultinivelDAOException("error al listar los afiliados por nivel", getClass());
+			throw new MultinivelDAOException("Error en el reporte de consumo", getClass());
 		}
 		return lista;
 	}

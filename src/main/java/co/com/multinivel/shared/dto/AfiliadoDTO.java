@@ -55,6 +55,15 @@ public class AfiliadoDTO implements Serializable {
 	private String cedulaDistribuidor;
 	private String nombreDistribuidor;
 	private int numeroAfiliados;
+	private int nmAfiliadosPermitidos;
+
+	public int getNmAfiliadosPermitidos() {
+		return nmAfiliadosPermitidos;
+	}
+
+	public void setNmAfiliadosPermitidos(int nmAfiliadosPermitidos) {
+		this.nmAfiliadosPermitidos = nmAfiliadosPermitidos;
+	}
 
 	public String getCedulaDistribuidor() {
 		return this.cedulaDistribuidor;

@@ -24,14 +24,17 @@
 </head>
 <body class="fondo" onload="javascript:cargarPeriodo('<c:out value="${periodo}"/>')">
  <form name="liquidacion" method="post" action="ControlLiquidacion">
- <div align="right" id="opcion">
-		<a href="javascript:enviarRed();">Generar Liquidacion</a>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</div>
+ 
+ <c:if test="${empty mensaje}">
+	 <div align="right" id="opcion">
+			<a href="javascript:enviarRed();">Generar Liquidacion</a>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	</div>
+</c:if>
  <div class="demo" align="center">
-    <div class="titulo">LIQUIDACION POR RED DE DISTRIBUCION</div>
+    LIQUIDACION POR RED DE DISTRIBUCION
     
-    <c:if test="${liquidacionExitosa==null ||liquidacionExitosa==''}"> 
+  <c:if test="${liquidacionExitosa==null ||liquidacionExitosa==''}"> 
     
    <table class="tabla" width="90%">
      <tr>
@@ -65,7 +68,7 @@
    
 <c:if test="${liquidacionExitosa!=null}"> 
      
-   <table align="center" class="tabla" width="90%" border="1">
+   <table class="tabla" width="90%">
      <tr>
      
        <td  width="10%" >
@@ -78,6 +81,16 @@
    </table>
 
 </c:if>  
+
+<c:if test="${not empty mensaje}">
+	<table class="tabla" width="90%">
+     <tr>     
+       <td  width="10%" >
+         <c:out value="${mensaje}"></c:out>
+       </td>        
+     </tr>     
+   </table>
+</c:if>
  </form>
 </body>
 </html>

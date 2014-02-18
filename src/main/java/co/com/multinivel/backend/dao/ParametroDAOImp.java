@@ -27,6 +27,11 @@ public class ParametroDAOImp implements ParametroDAO {
 	public Parametro obtenerValor(String parametro) throws MultinivelDAOException {
 		return (Parametro) this.entityManager.find(Parametro.class, parametro);
 	}
+
+	public void guardar(Parametro p) throws MultinivelDAOException {
+		this.entityManager.merge(p);
+		entityManager.flush();
+	}
 }
 
 /*

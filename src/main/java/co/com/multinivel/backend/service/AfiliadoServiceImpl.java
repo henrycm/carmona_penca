@@ -40,11 +40,11 @@ public class AfiliadoServiceImpl implements AfiliadoService {
 		}
 	}
 
-	public Afiliado consultar(String codigo) {
+	public Afiliado consultar(String codigo) throws MultinivelServiceException {
 		try {
 			return this.afiliadoDAO.consultar(codigo);
 		} catch (MultinivelDAOException e) {
-			return null;
+			throw new MultinivelServiceException(e.getMessage(), getClass());
 		}
 	}
 

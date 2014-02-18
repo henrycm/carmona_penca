@@ -42,7 +42,7 @@ public class IndexFrontController extends HttpServlet {
 		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
 				config.getServletContext());
 	}
-
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doPost(request, response);
@@ -63,7 +63,7 @@ public class IndexFrontController extends HttpServlet {
 
 			request.setAttribute("periodo", periodo);
 
-			request.setAttribute("tipoAfiliado", "" + UsuarioHelper.getRol());
+			request.setAttribute("tipoAfiliado", UsuarioHelper.getRol());
 
 			List<AfiliadoDTO> listaAfiliado = null;
 			switch (accion) {
@@ -75,6 +75,8 @@ public class IndexFrontController extends HttpServlet {
 				}
 				request.setAttribute("listaBancos", this.bancoService.listar());
 				request.setAttribute("listaDepartamentos", this.departamentoService.listar());
+				char rol = UsuarioHelper.getRol();
+				request.setAttribute("rol", rol);
 
 				recurso = RecursosEnum.FW_INGRESO_AFILIADO.getRecurso();
 				break;
@@ -137,8 +139,7 @@ public class IndexFrontController extends HttpServlet {
 					cantidadAfiliacionesDistribuidor.setCantidad(cantidad);
 					CantidadAfiliacionesDistribuidorPK cantidadAfiliacionesDistribuidorPK = new CantidadAfiliacionesDistribuidorPK();
 					cantidadAfiliacionesDistribuidorPK.setDistribuidor(request
-							.getParameter("distribuidor"));
-					cantidadAfiliacionesDistribuidorPK.setPeriodo(request.getParameter("periodo"));
+							.getParameter("distribuidor"));					
 					cantidadAfiliacionesDistribuidor.setId(cantidadAfiliacionesDistribuidorPK);
 					boolean retorno = this.cantidaAfiliacionesDistribuidorService
 							.ingresar(cantidadAfiliacionesDistribuidor);
@@ -149,8 +150,7 @@ public class IndexFrontController extends HttpServlet {
 						request.setAttribute("mensaje",
 								"no se ingresaron las cantidas porque ya existen unas cantidades ingresadas para este distribuidor");
 					}
-				}
-				request.setAttribute("periodo", periodo);
+				}				
 				request.setAttribute("listaDistribuidores",
 						this.afiliadoService.listarDistribuidores());
 			}

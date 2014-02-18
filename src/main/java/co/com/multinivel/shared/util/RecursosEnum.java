@@ -87,7 +87,7 @@ public enum RecursosEnum {
 			"listaCompensacionDistribuidor.jasper"), FW_JASPER_AFILIADOSXDISTRIBUIDORESXPERIODO(
 			"listaAfiliadoPorDistribuidoresPeriodo.jasper"), FW_JASPER_REPORTE_LISTA_CONSUMOS_PRODUCTO(
 			"Reporte_lista_consumo_producto_periodo.jasper"), FW_ADMINISTRACION(
-			"/administracion/index.jsp");
+			"/administracion/index.jsp"), FW_INICIO_CALCULO_ARBOL("/liquidacion/calcularArbol.jsp");
 
 	private String recurso;
 

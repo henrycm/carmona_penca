@@ -4,6 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,7 +16,8 @@ import co.com.multinivel.shared.exception.MultinivelDAOException;
 public class ValidacionCompensacionDistribuidorDAOImp implements ValidarCompDistribuidorDAO {
 	@PersistenceContext
 	private EntityManager entityManager;
-
+	private static Logger log = Logger.getLogger(ValidacionCompensacionDistribuidorDAOImp.class);
+	
 	public ValidacionCompensacionDistribuidor consultar(
 			ValidacionCompensacionDistribuidor validacionCompensacionDistribuidor)
 			throws MultinivelDAOException {
@@ -27,6 +29,7 @@ public class ValidacionCompensacionDistribuidorDAOImp implements ValidarCompDist
 		try {
 			valida = (ValidacionCompensacionDistribuidor) query.getResultList().get(0);
 		} catch (Exception e) {
+			log.error(e);
 			valida = null;
 		}
 		return valida;

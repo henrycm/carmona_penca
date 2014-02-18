@@ -20,17 +20,19 @@
 
 
 </head>
+<body class="fondo" onload="javascript:cargarPeriodo('<c:out value="${periodo}"/>')">
 <c:if test="${liquidacionExitosa==null || liquidacionExitosa==''}"> 
 
-<body class="fondo" onload="javascript:cargarPeriodo('<c:out value="${periodo}"/>')">
  <form name="liquidacion" method="post" action="ControlLiquidacion">
- <div align="right" id="opcion">
-		<a href="javascript:enviarMasivo();">Generar Liquidacion</a>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</div>
+ <c:if test="${empty mensaje}">
+	 <div align="right" id="opcion">
+			<a href="javascript:enviarMasivo();">Generar Liquidacion</a>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	</div>
+</c:if>
  <input name="accion" type="hidden" value="M">
  <div class="demo" align="center">
-    <div class="titulo">LIQUIDACION MASIVA</div>
+    LIQUIDACION MASIVA
      <table class="tabla" width="90%">
      <tr>
      
@@ -52,7 +54,7 @@
      </td>
      </tr>  
    </table>  
-     
+  </form>
 </c:if>   
   
    
@@ -103,6 +105,16 @@
 
 </c:if>  
 
- </form>
+<c:if test="${not empty mensaje}">
+	   <table align="center" class="tabla" width="90%" border="1">
+     <tr>     
+       <td  width="10%" >
+         <c:out value="${mensaje}"></c:out>
+       </td>        
+     </tr>     
+   </table>
+</c:if>
+
+ 
 </body>
 </html>

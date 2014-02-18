@@ -20,7 +20,7 @@ import javax.persistence.TemporalType;
 public class Pedido implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "codigo_pedido")
 	private int codigoPedido;
 	private String afiliado;

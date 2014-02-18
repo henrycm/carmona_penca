@@ -20,11 +20,8 @@ public class CantidadAfiliacionesDistribuidorDAOImp implements CantidadAfiliacio
 			throws MultinivelDAOException {
 		boolean retorno = false;
 		try {
-			CantidadAfiliacionesDistribuidor productoConsultado = consultar(cantidadAfiliacionesDistribuidor);
-			if (productoConsultado == null) {
-				this.entityManager.persist(cantidadAfiliacionesDistribuidor);
-				retorno = true;
-			}
+			this.entityManager.merge(cantidadAfiliacionesDistribuidor);
+			retorno = true;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new MultinivelDAOException("Error ingresando el producto -" + e.getMessage(),
@@ -37,9 +34,8 @@ public class CantidadAfiliacionesDistribuidorDAOImp implements CantidadAfiliacio
 			CantidadAfiliacionesDistribuidor cantidadAfiliacionesDistribuidor)
 			throws MultinivelDAOException {
 		Query query = this.entityManager
-				.createQuery("from CantidadAfiliacionesDistribuidor v where v.id.periodo=? and v.id.distribuidor=?");
-		query.setParameter(1, cantidadAfiliacionesDistribuidor.getId().getPeriodo());
-		query.setParameter(2, cantidadAfiliacionesDistribuidor.getId().getDistribuidor());
+				.createQuery("from CantidadAfiliacionesDistribuidor v where v.id.distribuidor=?");
+		query.setParameter(1, cantidadAfiliacionesDistribuidor.getId().getDistribuidor());
 		CantidadAfiliacionesDistribuidor valida = null;
 		try {
 			valida = (CantidadAfiliacionesDistribuidor) query.getResultList().get(0);

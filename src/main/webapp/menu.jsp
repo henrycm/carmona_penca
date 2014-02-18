@@ -67,8 +67,9 @@
 				<li><a href="compensacion/ValidarCompensacionDistribuidor?accion=*" target="mainFrame">Verificar Compensacion Distribuidor</a></li>
 				<li><a href="reporte/IndexReporteCompensacion?accion=F" target="mainFrame">Compensación total Por Distribuidor</a></li>
 				<li role="presentation" class="divider"></li>
-				<li class="dropdown-header">Liquidación</li>				
- 				<li><a target="mainFrame" href="liquidacion/IndexLiquidacion" >Liquidacion Por Red</a></li>	
+				<li class="dropdown-header">Liquidación</li>
+				<li><a target="mainFrame" href="liquidacion/ControlLiquidacion?accion=I" >Calcular Arbol</a></li>
+ 				<li><a target="mainFrame" href="liquidacion/IndexLiquidacion" >Liquidacion Por Red</a></li>
 				<li><a target="mainFrame" href="liquidacion/IndexLiquidacion?accion=M" >Liquidacion Masiva</a></li>
 				<li role="presentation" class="divider"></li>
 				<li class="dropdown-header" >Arbol</li>				

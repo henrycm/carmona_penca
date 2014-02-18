@@ -15,12 +15,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import co.com.multinivel.backend.service.AfiliadoService;
+import co.com.multinivel.backend.service.ParametroService;
+import co.com.multinivel.shared.util.FechasUtil;
 import co.com.multinivel.shared.util.RecursosEnum;
 
 public class IndexLiquidacion extends HttpServlet {
 	@Autowired
 	private AfiliadoService afiliadoService;
 	private static final long serialVersionUID = 1L;
+	@Autowired
+	private ParametroService parametroService;
 
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
@@ -42,7 +46,13 @@ public class IndexLiquidacion extends HttpServlet {
 			Date fechaActual = new Date();
 			SimpleDateFormat formato = new SimpleDateFormat("MM/yyyy");
 			String cadenaFecha = formato.format(fechaActual);
-
+			String mensaje = "";
+			String st_fecha = parametroService.obtenerValor("FECHA_ARBOL").getValor();
+			Date fecha = FechasUtil.parse(st_fecha);
+			if (FechasUtil.getDias(fecha, new Date()) > 1) {
+				mensaje = "Es necesario calcular el arbol. Ultima fecha de calculo: " + st_fecha;
+				request.setAttribute("mensaje", mensaje);
+			}
 			request.setAttribute("periodo", cadenaFecha);
 			switch (accion) {
 			case 'M':

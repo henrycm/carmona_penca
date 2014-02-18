@@ -40,18 +40,12 @@ public class BuscadorAfiliado extends HttpServlet {
 			recurso = RecursosEnum.FW_EMERGENTE_AFILIADO.getRecurso();
 			switch (accion) {
 			case 'C':
-				if (UsuarioHelper.getRol() == '2') {
-					request.setAttribute(
-							"listaAfiliados",
-							this.afiliadoService.buscar(request.getParameter("documento"),
-									request.getParameter("nombre"), UsuarioHelper.getUsuario()));
-				} else {
-					request.setAttribute(
-							"listaAfiliados",
-							this.afiliadoService.buscar(request.getParameter("documento"),
-									request.getParameter("nombre"),
-									request.getParameter("distribuidor")));
-				}
+
+				request.setAttribute(
+						"listaAfiliados",
+						this.afiliadoService.buscar(request.getParameter("documento"),
+								request.getParameter("nombre"), null));
+
 				recurso = RecursosEnum.FW_EMERGENTE_AFILIADO.getRecurso();
 				break;
 			case 'P':

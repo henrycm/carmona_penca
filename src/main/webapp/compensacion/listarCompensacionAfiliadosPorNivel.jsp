@@ -51,7 +51,13 @@
          <input type="radio" name="tipoReporte" value="PDF" checked="checked"> PDF
    		<input type="radio" name="tipoReporte" value="Excel"> Excel
        
-         </td>
+         </td>        
+          </tr>
+          <tr>
+            <td>
+         		¿Imprimir detalle?
+         		<input type="checkbox" name="detalle" value="true">  		     
+     		</td>  
           </tr>
           <tr>
      

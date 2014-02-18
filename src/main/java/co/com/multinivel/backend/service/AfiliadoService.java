@@ -15,7 +15,7 @@ public abstract interface AfiliadoService {
 
 	public abstract boolean borrar(Afiliado paramAfiliado) throws MultinivelServiceException;
 
-	public abstract Afiliado consultar(String paramString);
+	public abstract Afiliado consultar(String paramString) throws MultinivelServiceException;
 
 	public abstract List<Afiliado> listar() throws MultinivelServiceException;
 

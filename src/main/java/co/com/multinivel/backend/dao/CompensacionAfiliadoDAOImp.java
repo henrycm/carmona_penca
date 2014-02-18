@@ -6,13 +6,14 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-import javax.ejb.EJB;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +21,7 @@ import co.com.multinivel.backend.model.Parametro;
 import co.com.multinivel.shared.dto.AfiliadoConsumo;
 import co.com.multinivel.shared.dto.CompensacionAfiliadoDTO;
 import co.com.multinivel.shared.exception.MultinivelDAOException;
+import co.com.multinivel.shared.util.FechasUtil;
 import co.com.multinivel.shared.util.ParametrosEnum;
 
 @Repository
@@ -27,14 +29,14 @@ import co.com.multinivel.shared.util.ParametrosEnum;
 public class CompensacionAfiliadoDAOImp implements CompensacionAfiliadoDAO {
 	@PersistenceContext
 	private EntityManager entityManager;
-	@EJB
-	ParametroDAO parametroDAO;
+	@Autowired
+	private ParametroDAO parametroDAO;
 
 	public List<Object> consultar(String cedula, String periodo) throws MultinivelDAOException {
 		List<Object> lista = null;
 		try {
 			lista = new ArrayList();
-			Parametro pconsumoMinimo = this.parametroDAO.obtenerValor("CONSUMO_MINIMO");
+			Parametro pconsumoMinimo = this.parametroDAO.obtenerValor("CONSUMO_MINIMO_ABRIR_RED");
 			double consumoMinimo = Double.parseDouble(pconsumoMinimo.getValor());
 
 			StringBuffer sql = new StringBuffer();
@@ -750,22 +752,46 @@ public class CompensacionAfiliadoDAOImp implements CompensacionAfiliadoDAO {
 					ParametrosEnum.URL_DATABASE.getValor(), ParametrosEnum.USUARIO.getValor(),
 					ParametrosEnum.PASSWORD.getValor());
 
-			String command1 = "{call SP_LIQUIDAR(?,?,?)}";
+			String command1 = "{call SP_LIQUIDAR(?,?)}";
 			CallableStatement cstmt1 = conexion.prepareCall(command1);
 			cstmt1.setString(1, distribuidor);
 			cstmt1.setString(2, periodo);
-			cstmt1.registerOutParameter(3, 4);
 
 			cstmt1.execute();
-			param1 = cstmt1.getInt(3);
-
 			cstmt1.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-
 			throw new MultinivelDAOException("error al realizar la busqueda", getClass());
 		}
 		return param1;
+	}
+
+	public void calcularArbol(String cedula, String tipoUsuario) throws MultinivelDAOException {
+		try {
+			Parametro p = new Parametro();
+			p.setNombreParametro("FECHA_ARBOL");
+			p.setValor("");
+			parametroDAO.guardar(p);
+
+			Class.forName(ParametrosEnum.DRIVER_DATABASE.getValor());
+			Connection conexion = DriverManager.getConnection(
+					ParametrosEnum.URL_DATABASE.getValor(), ParametrosEnum.USUARIO.getValor(),
+					ParametrosEnum.PASSWORD.getValor());
+
+			String command = "{call Sp_Arbol(?,?)}";
+			CallableStatement cstmt = conexion.prepareCall(command);
+			cstmt.setString(1, cedula);
+			cstmt.setString(2, tipoUsuario);
+			cstmt.execute();
+
+			cstmt.close();
+			p.setValor(FechasUtil.format(new Date()));
+			parametroDAO.guardar(p);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new MultinivelDAOException("Error al calcular el arbol", getClass());
+		}
 	}
 }
 

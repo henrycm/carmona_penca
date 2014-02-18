@@ -18,6 +18,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import co.com.multinivel.backend.model.Afiliado;
 import co.com.multinivel.backend.service.AfiliadoService;
 import co.com.multinivel.shared.dto.DatosArbol;
+import co.com.multinivel.shared.exception.MultinivelServiceException;
 
 @ManagedBean
 @ViewScoped
@@ -125,7 +126,7 @@ public class TreeBean implements Serializable {
 		}
 	}
 
-	public void setSelectedNode(TreeNode paramTreeNode) {
+	public void setSelectedNode(TreeNode paramTreeNode) throws MultinivelServiceException {
 		this.selectedNode = paramTreeNode;
 
 		String[] arrayOfString = paramTreeNode.toString().split(",\\s*");

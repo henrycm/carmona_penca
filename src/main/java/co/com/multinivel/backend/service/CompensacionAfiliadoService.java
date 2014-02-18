@@ -20,6 +20,8 @@ public abstract interface CompensacionAfiliadoService {
 
 	public abstract int liquidar(String paramString1, String paramString2)
 			throws MultinivelServiceException;
+
+	public void calcularArbol(String cedula, String tipoUsuario) throws MultinivelServiceException;
 }
 
 /*
