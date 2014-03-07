@@ -44,7 +44,8 @@ public class ConsumoDAOImp implements ConsumoDAO {
 		return true;
 	}
 
-	public List<Object> consultar(Consumo pConsumo) throws MultinivelDAOException {
+	public List<Object> consultar(Consumo pConsumo)
+			throws MultinivelDAOException {
 		List<Object> lista = null;
 		int filtros = 0;
 		try {
@@ -68,7 +69,8 @@ public class ConsumoDAOImp implements ConsumoDAO {
 				int cantidad = Integer.parseInt(objectArray[7].toString());
 				String nombreAfiliado = (String) objectArray[8];
 				String nombreDistribuidor = (String) objectArray[9];
-				String telefono = objectArray[10] == null ? "" : (String) objectArray[10];
+				String telefono = objectArray[10] == null ? ""
+						: (String) objectArray[10];
 				String ciudadEmpresario = (String) objectArray[11];
 				String fecha = ((java.sql.Date) objectArray[12]).toString();
 
@@ -92,7 +94,8 @@ public class ConsumoDAOImp implements ConsumoDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new MultinivelDAOException("error al realizar la busqueda", getClass());
+			throw new MultinivelDAOException("error al realizar la busqueda",
+					getClass());
 		}
 		return lista;
 	}
@@ -110,7 +113,8 @@ public class ConsumoDAOImp implements ConsumoDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new MultinivelDAOException(
-					"error al realizar la consulta del ultimo pedido del afiliado", getClass());
+					"error al realizar la consulta del ultimo pedido del afiliado",
+					getClass());
 		}
 		return retorno;
 	}
@@ -129,7 +133,8 @@ public class ConsumoDAOImp implements ConsumoDAO {
 			totalConsumos = (BigDecimal) q.getSingleResult();
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new MultinivelDAOException("error al realizar la busqueda", getClass());
+			throw new MultinivelDAOException("error al realizar la busqueda",
+					getClass());
 		}
 		return totalConsumos;
 	}
@@ -147,7 +152,8 @@ public class ConsumoDAOImp implements ConsumoDAO {
 			totalConsumos = (BigDecimal) q.getSingleResult();
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new MultinivelDAOException("error al realizar la consultar saldo de afiliados",
+			throw new MultinivelDAOException(
+					"error al realizar la consultar saldo de afiliados",
 					getClass());
 		}
 		if (totalConsumos == null) {
@@ -235,29 +241,31 @@ public class ConsumoDAOImp implements ConsumoDAO {
 		List<Object> lista = new ArrayList<Object>();
 		try {
 
-			String sql = "SELECT c.periodo,\r\n"
-					+ " c.distribuidor,\r\n"
-					+ " concat(d.nombre, ' ', d.apellido) nom_distribuidor,\r\n"
-					+ " c.papa,\r\n"
-					+ " concat(p.nombre, ' ', p.apellido) nom_patrocinador,\r\n"
-					+ " c.afiliado,\r\n"
-					+ " concat(h.nombre, ' ', h.apellido) nom_afiliado,\r\n"
-					+ " c.nivel,\r\n"
-					+ " c.consumoAfiliado,\r\n"
-					+ " c.comision\r\n"
-					+ "FROM t_comision_afiliado_periodo c,\r\n"
-					+ " t_afiliados d,\r\n"
-					+ " t_afiliados p,\r\n"
-					+ " t_afiliados h\r\n"
-					+ "WHERE c.periodo = ?\r\n"
-					+ " AND c.distribuidor = ? AND c.distribuidor = d.cedula\r\n"
-					+ " AND c.papa = p.cedula\r\n"
-					+ " AND c.afiliado = h.cedula "
-					+ " Order By nom_patrocinador, c.nivel, nom_afiliado Asc ;";
+			String sql = " SELECT c.periodo, \n"
+					+ "       c.distribuidor, \n"
+					+ "       Concat(d.nombre, ' ', d.apellido) nom_distribuidor, \n"
+					+ "       c.papa, \n"
+					+ "       Concat(p.nombre, ' ', p.apellido) nom_patrocinador, \n"
+					+ "       c.afiliado, \n"
+					+ "       Concat(h.nombre, ' ', h.apellido) nom_afiliado, \n"
+					+ "       c.nivel, \n" + "       c.consumoafiliado, \n"
+					+ "       c.comision \n"
+					+ "FROM   t_comision_afiliado_periodo c, \n"
+					+ "       t_afiliados d, \n" + "       t_afiliados p, \n"
+					+ "       t_afiliados h \n" + "WHERE  c.periodo = ? \n"
+					+ "       AND c.distribuidor = ? \n"
+					+ "       AND c.distribuidor = d.cedula \n"
+					+ "       AND c.papa = p.cedula \n"
+					+ "       AND c.afiliado = h.cedula \n"
+					+ "ORDER  BY p.cedula, \n"
+					+ "          nom_patrocinador, \n"
+					+ "          c.nivel, \n" 
+					+ "          nom_afiliado ASC ";
 
 			String cedula_distribuidor = distribuidor.getCedula();
 
-			Query q = this.entityManager.createNativeQuery(sql).setParameter(1, periodo)
+			Query q = this.entityManager.createNativeQuery(sql)
+					.setParameter(1, periodo)
 					.setParameter(2, cedula_distribuidor);
 
 			for (Object obj : q.getResultList()) {
@@ -271,7 +279,8 @@ public class ConsumoDAOImp implements ConsumoDAO {
 				dto.setAfiliado((String) objectArray[5]);
 				dto.setNom_afiliado((String) objectArray[6]);
 				dto.setNivel((Integer) objectArray[7]);
-				dto.setConsumoAfiliado(((BigDecimal) objectArray[8]).doubleValue());
+				dto.setConsumoAfiliado(((BigDecimal) objectArray[8])
+						.doubleValue());
 				dto.setComision(((BigDecimal) objectArray[9]).doubleValue());
 				lista.add(dto);
 
@@ -279,12 +288,14 @@ public class ConsumoDAOImp implements ConsumoDAO {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new MultinivelDAOException("Error en el reporte de consumo", getClass());
+			throw new MultinivelDAOException("Error en el reporte de consumo",
+					getClass());
 		}
 		return lista;
 	}
 
-	public List<Object> listarConsumosPeriodo(ConsumoDTO consumo) throws MultinivelDAOException {
+	public List<Object> listarConsumosPeriodo(ConsumoDTO consumo)
+			throws MultinivelDAOException {
 		List<Object> listaPedido = new ArrayList();
 		try {
 			String sql = " select p.codigo_consumo,  p.totalPedido,  p.fecha,  t.codigo_producto,  r.nombre_producto,  t.valorUnitario,  t.cantidad,  t.totalProducto,  p.afiliado,(  SELECT CONCAT (a.NOMBRE ,' ',IF(a.APELLIDO IS NULL,'',a.APELLIDO))) NOMBRE_PADRE from t_consumos p inner join t_det_consumos t on  DATE_FORMAT(P.FECHA,'%m/%Y')='"
@@ -292,9 +303,11 @@ public class ConsumoDAOImp implements ConsumoDAO {
 
 					consumo.getPeriodo() + "' ";
 			if (consumo.getCedulaDistribuidor() != null) {
-				sql = sql + " and p.distribuidor='" + consumo.getCedulaDistribuidor() + "' ";
+				sql = sql + " and p.distribuidor='"
+						+ consumo.getCedulaDistribuidor() + "' ";
 			} else {
-				sql = sql + " and p.afiliado='" + consumo.getCedulaAfiliado() + "' ";
+				sql = sql + " and p.afiliado='" + consumo.getCedulaAfiliado()
+						+ "' ";
 			}
 			sql = sql
 					+ " and  t.codigo_consumo=p.codigo_consumo inner join t_productos r  on r.codigo=t.codigo_producto inner join t_afiliados a ON a.cedula=p.afiliado ";
@@ -339,7 +352,8 @@ public class ConsumoDAOImp implements ConsumoDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new MultinivelDAOException("error listando pedidos:" + e.getMessage(), getClass());
+			throw new MultinivelDAOException("error listando pedidos:"
+					+ e.getMessage(), getClass());
 		}
 		return listaPedido;
 	}
@@ -400,12 +414,14 @@ public class ConsumoDAOImp implements ConsumoDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new MultinivelDAOException("error listando pedidos:" + e.getMessage(), getClass());
+			throw new MultinivelDAOException("error listando pedidos:"
+					+ e.getMessage(), getClass());
 		}
 		return listaPedido;
 	}
 
-	public List<Object> listarConsumosAfiliado(ConsumoDTO consumo) throws MultinivelDAOException {
+	public List<Object> listarConsumosAfiliado(ConsumoDTO consumo)
+			throws MultinivelDAOException {
 		List<Object> listaPedido = new ArrayList();
 		try {
 			String sql = "select distinct p.codigo_consumo,  p.totalPedido,  \tp.fecha,  \t p.afiliado,  (  SELECT CONCAT (a.NOMBRE ,' ',IF(a.APELLIDO IS NULL,'',a.APELLIDO))) NOMBRE_PADRE  \t from t_consumos p  \t  inner join t_afiliados a ON a.cedula=p.afiliado   and  a.nombre like '"
@@ -456,13 +472,15 @@ public class ConsumoDAOImp implements ConsumoDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new MultinivelDAOException("error listando pedidos:" + e.getMessage(), getClass());
+			throw new MultinivelDAOException("error listando pedidos:"
+					+ e.getMessage(), getClass());
 		}
 		System.err.println(listaPedido.size());
 		return listaPedido;
 	}
 
-	public List<Object> listarConsumosProducto(ConsumoDTO consumo) throws MultinivelDAOException {
+	public List<Object> listarConsumosProducto(ConsumoDTO consumo)
+			throws MultinivelDAOException {
 		List<Object> listaPedido = new ArrayList();
 		try {
 			String sql = " select p.codigo,p.nombre_producto, x.valorunitario valorUnitario,x.totalProducto,x.cantidad  from  t_productos p,  (select round(sum( cantidad * valorunitario),0)totalProducto         ,codigo_producto, sum(cantidad) cantidad,valorunitario  \t\t\t\t  FROM t_consumos p INNER JOIN t_det_consumos a  \t\t\t\t  ON a.codigo_consumo=p.codigo_consumo  \t\t\t\t  AND DATE_FORMAT(P.FECHA,'%m/%Y')='"
@@ -471,7 +489,8 @@ public class ConsumoDAOImp implements ConsumoDAO {
 					consumo.getPeriodo()
 					+ "' "
 					+ " group by codigo_producto) x "
-					+ " where p.codigo= x.codigo_producto " + " order by x.cantidad desc ";
+					+ " where p.codigo= x.codigo_producto "
+					+ " order by x.cantidad desc ";
 
 			Query query = this.entityManager.createNativeQuery(sql);
 
@@ -502,8 +521,9 @@ public class ConsumoDAOImp implements ConsumoDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new MultinivelDAOException("error listando consumos por producto:"
-					+ e.getMessage(), getClass());
+			throw new MultinivelDAOException(
+					"error listando consumos por producto:" + e.getMessage(),
+					getClass());
 		}
 		System.err.println(listaPedido.size());
 		return listaPedido;
@@ -513,5 +533,5 @@ public class ConsumoDAOImp implements ConsumoDAO {
 /*
  * Location: D:\Dllo\multinivel\multinivelEAR.ear\multinivelEJB.jar\
  * 
- * Qualified Name: co.com.multinivel.backend.dao.ConsumoDAOImp
+ * Qualified Name: co.com.multinivel.dao.ConsumoDAOImp
  */

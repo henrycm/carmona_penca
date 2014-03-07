@@ -36,8 +36,10 @@ public class CompensacionAfiliadoDAOImp implements CompensacionAfiliadoDAO {
 		List<Object> lista = null;
 		try {
 			lista = new ArrayList();
-			Parametro pconsumoMinimo = this.parametroDAO.obtenerValor("CONSUMO_MINIMO_ABRIR_RED");
-			double consumoMinimo = Double.parseDouble(pconsumoMinimo.getValor());
+			Parametro pconsumoMinimo = this.parametroDAO
+					.obtenerValor("CONSUMO_MINIMO_ABRIR_RED");
+			double consumoMinimo = Double
+					.parseDouble(pconsumoMinimo.getValor());
 
 			StringBuffer sql = new StringBuffer();
 			sql.append("   SELECT H.NOMBRE_AFILIADO, H.AFILIADO,H.NIVEL, H.COMISION,H.DISTRIBUIDOR,H.CONSUMO, H.AFILIADOCOMISION ");
@@ -45,7 +47,8 @@ public class CompensacionAfiliadoDAOImp implements CompensacionAfiliadoDAO {
 
 			sql.append(" SELECT CONCAT(A.NOMBRE,' ', A.APELLIDO)NOMBRE_AFILIADO, CALC.AFILIADO,CALC.NIVEL, CALC.COMISION,CALC.DISTRIBUIDOR,CALC.CONSUMO,AFILIADOCOMISION ");
 			sql.append(" FROM ");
-			sql.append("(SELECT '" + cedula
+			sql.append("(SELECT '"
+					+ cedula
 					+ "' AFILIADOCOMISION,AFILIADO, DISTRIBUIDOR,NIVEL,CONSUMO, ");
 			sql.append("\tROUND(CASE WHEN NIVEL=1 THEN ");
 			sql.append("\t\t(((CONSUMO/(SELECT VALOR FROM T_PARAMETROS WHERE NOMBRE_PARAMETRO='IVA'))* ");
@@ -108,7 +111,8 @@ public class CompensacionAfiliadoDAOImp implements CompensacionAfiliadoDAO {
 			sql.append(" (SELECT P.CEDULA CEDULA_PAPA ");
 			sql.append("\tFROM T_AFILIADOS H INNER JOIN T_AFILIADOS P ");
 			sql.append("\tON H.CEDULA=P.CEDULA_PAPA ");
-			sql.append("  AND H.CEDULA='" + cedula + "')NIVEL1 INNER JOIN T_AFILIADOS A ");
+			sql.append("  AND H.CEDULA='" + cedula
+					+ "')NIVEL1 INNER JOIN T_AFILIADOS A ");
 			sql.append("\tON NIVEL1.CEDULA_PAPA=A.CEDULA_PAPA ");
 			sql.append(" UNION ALL ");
 			sql.append(" SELECT  A.CEDULA,A.CEDULA_PAPA, 3 NIVEL,A.CEDULADISTRIBUIDOR  FROM ");
@@ -565,8 +569,8 @@ public class CompensacionAfiliadoDAOImp implements CompensacionAfiliadoDAO {
 			sql.append(" INNER JOIN ( ");
 			sql.append("          SELECT P.CEDULA CEDULA, SUM(C.TOTALPEDIDO)VALOR FROM T_AFILIADOS P INNER JOIN T_CONSUMOS C ");
 			sql.append("\t        ON P.CEDULA=C.AFILIADO ");
-			sql.append("          WHERE P.ACTIVO='SI' AND DATE_FORMAT(C.FECHA,'%m/%Y')='" + periodo
-					+ "' ");
+			sql.append("          WHERE P.ACTIVO='SI' AND DATE_FORMAT(C.FECHA,'%m/%Y')='"
+					+ periodo + "' ");
 			sql.append("\t        GROUP BY C.AFILIADO ");
 
 			sql.append(" )ABRE_RED ");
@@ -579,8 +583,8 @@ public class CompensacionAfiliadoDAOImp implements CompensacionAfiliadoDAO {
 					+ cedula
 					+ "' CEDULA, SUM(C.TOTALPEDIDO)VALOR FROM T_AFILIADOS P INNER JOIN T_CONSUMOS C ");
 			sql.append("       ON P.CEDULA=C.AFILIADO ");
-			sql.append("       WHERE P.ACTIVO='SI' AND DATE_FORMAT(C.FECHA,'%m/%Y')='" + periodo
-					+ "' AND C.AFILIADO='" + cedula + "' ");
+			sql.append("       WHERE P.ACTIVO='SI' AND DATE_FORMAT(C.FECHA,'%m/%Y')='"
+					+ periodo + "' AND C.AFILIADO='" + cedula + "' ");
 			sql.append("      GROUP BY C.AFILIADO ");
 			sql.append("       HAVING SUM(C.TOTALPEDIDO)>=(SELECT VALOR FROM T_PARAMETROS WHERE NOMBRE_PARAMETRO='CONSUMO_MINIMO')) A ");
 			sql.append("        ON H.AFILIADOCOMISION =A.CEDULA ");
@@ -598,7 +602,8 @@ public class CompensacionAfiliadoDAOImp implements CompensacionAfiliadoDAO {
 					String cedulaAfiliado = (String) objectArray[1];
 					int nivel = ((BigInteger) objectArray[2]).intValue();
 					double comision = ((Double) objectArray[3]).doubleValue();
-					double consumoTotal = ((BigDecimal) objectArray[5]).doubleValue();
+					double consumoTotal = ((BigDecimal) objectArray[5])
+							.doubleValue();
 					total += comision;
 
 					AfiliadoConsumo afiliadoConsumo = new AfiliadoConsumo();
@@ -627,12 +632,14 @@ public class CompensacionAfiliadoDAOImp implements CompensacionAfiliadoDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new MultinivelDAOException("error al listar los afiliados por nivel", getClass());
+			throw new MultinivelDAOException(
+					"error al listar los afiliados por nivel", getClass());
 		}
 		return lista;
 	}
 
-	public List<Object> consultar(CompensacionAfiliadoDTO compensacionAfiliadoDTO)
+	public List<Object> consultar(
+			CompensacionAfiliadoDTO compensacionAfiliadoDTO)
 			throws MultinivelDAOException {
 		List<Object> listaCompensacion = new ArrayList();
 		try {
@@ -664,7 +671,8 @@ public class CompensacionAfiliadoDAOImp implements CompensacionAfiliadoDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new MultinivelDAOException("error al realizar la busqueda", getClass());
+			throw new MultinivelDAOException("error al realizar la busqueda",
+					getClass());
 		}
 		return listaCompensacion;
 	}
@@ -688,12 +696,14 @@ public class CompensacionAfiliadoDAOImp implements CompensacionAfiliadoDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new MultinivelDAOException("error al realizar la busqueda", getClass());
+			throw new MultinivelDAOException("error al realizar la busqueda",
+					getClass());
 		}
 		return comision;
 	}
 
-	public List<Object> listarPagoAfiliados(CompensacionAfiliadoDTO compensacionAfiliadoDTO)
+	public List<Object> listarPagoAfiliados(
+			CompensacionAfiliadoDTO compensacionAfiliadoDTO)
 			throws MultinivelDAOException {
 		List<Object> listaCompensacion = new ArrayList();
 		try {
@@ -722,8 +732,10 @@ public class CompensacionAfiliadoDAOImp implements CompensacionAfiliadoDAO {
 				double consumoProducto = 0.0D;
 				double consumoDinero = 0.0D;
 				if (comision > 0.0D) {
-					Parametro pconsumoMinimo = this.parametroDAO.obtenerValor("CONSUMO_MINIMO");
-					consumoMinimo = Double.parseDouble(pconsumoMinimo.getValor());
+					Parametro pconsumoMinimo = this.parametroDAO
+							.obtenerValor("CONSUMO_MINIMO_ABRIR_RED");
+					consumoMinimo = Double.parseDouble(pconsumoMinimo
+							.getValor());
 					consumoProducto = comision - consumoMinimo;
 					if (consumoProducto < 0.0D) {
 						consumoProducto = comision;
@@ -732,50 +744,52 @@ public class CompensacionAfiliadoDAOImp implements CompensacionAfiliadoDAO {
 						consumoProducto = consumoMinimo;
 					}
 				}
-				compensacionAfiliadoDTOTemp.setComisionProducto(consumoProducto);
+				compensacionAfiliadoDTOTemp
+						.setComisionProducto(consumoProducto);
 				compensacionAfiliadoDTOTemp.setComisionDinero(consumoDinero);
 				compensacionAfiliadoDTOTemp.setComisionTotal(comision);
 				listaCompensacion.add(compensacionAfiliadoDTOTemp);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new MultinivelDAOException("error al realizar la busqueda", getClass());
+			throw new MultinivelDAOException("error al realizar la busqueda",
+					getClass());
 		}
 		return listaCompensacion;
 	}
 
-	public int liquidar(String distribuidor, String periodo) throws MultinivelDAOException {
+	public int liquidar(String distribuidor, String periodo)
+			throws MultinivelDAOException {
 		int param1 = 0;
 		try {
 			Class.forName(ParametrosEnum.DRIVER_DATABASE.getValor());
 			Connection conexion = DriverManager.getConnection(
-					ParametrosEnum.URL_DATABASE.getValor(), ParametrosEnum.USUARIO.getValor(),
+					ParametrosEnum.URL_DATABASE.getValor(),
+					ParametrosEnum.USUARIO.getValor(),
 					ParametrosEnum.PASSWORD.getValor());
 
-			String command1 = "{call SP_LIQUIDAR(?,?)}";
+			String command1 = "{call Sp_Liquidar(?,?)}";
 			CallableStatement cstmt1 = conexion.prepareCall(command1);
 			cstmt1.setString(1, distribuidor);
 			cstmt1.setString(2, periodo);
-
 			cstmt1.execute();
+			
 			cstmt1.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new MultinivelDAOException("error al realizar la busqueda", getClass());
+			throw new MultinivelDAOException("error al realizar la busqueda",
+					getClass());
 		}
 		return param1;
 	}
 
-	public void calcularArbol(String cedula, String tipoUsuario) throws MultinivelDAOException {
+	public void calcularArbol(String cedula, String tipoUsuario)
+			throws MultinivelDAOException {
 		try {
-			Parametro p = new Parametro();
-			p.setNombreParametro("FECHA_ARBOL");
-			p.setValor("");
-			parametroDAO.guardar(p);
-
 			Class.forName(ParametrosEnum.DRIVER_DATABASE.getValor());
 			Connection conexion = DriverManager.getConnection(
-					ParametrosEnum.URL_DATABASE.getValor(), ParametrosEnum.USUARIO.getValor(),
+					ParametrosEnum.URL_DATABASE.getValor(),
+					ParametrosEnum.USUARIO.getValor(),
 					ParametrosEnum.PASSWORD.getValor());
 
 			String command = "{call Sp_Arbol(?,?)}";
@@ -785,12 +799,10 @@ public class CompensacionAfiliadoDAOImp implements CompensacionAfiliadoDAO {
 			cstmt.execute();
 
 			cstmt.close();
-			p.setValor(FechasUtil.format(new Date()));
-			parametroDAO.guardar(p);
-
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new MultinivelDAOException("Error al calcular el arbol", getClass());
+			throw new MultinivelDAOException("Error al calcular el arbol",
+					getClass());
 		}
 	}
 }

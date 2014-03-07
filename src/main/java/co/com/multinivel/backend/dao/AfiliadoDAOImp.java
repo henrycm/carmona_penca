@@ -401,7 +401,8 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
 				a.setCuentaNro(numeroCta);
 				a.setBanco(banco);
 				a.setNumeroAfiliados(Integer.parseInt(objectArray[6].toString()));
-				a.setNmAfiliadosPermitidos(Integer.parseInt(objectArray[7].toString()));
+				a.setNmAfiliadosPermitidos(Integer.parseInt(objectArray[7]
+						.toString()));
 
 				lista.add(a);
 			}
@@ -451,7 +452,7 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
 				String tipoCta = (String) objectArray[3];
 				String numeroCta = (String) objectArray[4];
 				String banco = (String) objectArray[5];
-				
+
 				AfiliadoDTO a = new AfiliadoDTO();
 				a.setCedula(cedulaPadre);
 				a.setNombre(nombrePadre);
@@ -460,8 +461,9 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
 				a.setCuentaNro(numeroCta);
 				a.setBanco(banco);
 				a.setNumeroAfiliados(Integer.parseInt(objectArray[6].toString()));
-				a.setNmAfiliadosPermitidos(Integer.parseInt(objectArray[7].toString()));
-				
+				a.setNmAfiliadosPermitidos(Integer.parseInt(objectArray[7]
+						.toString()));
+
 				lista.add(a);
 			}
 		} catch (Exception e) {
@@ -627,7 +629,7 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
 		int retorno = 0;
 		int s = 0;
 		try {
-			String sql = " SELECT max(idafiliaciondist)+1  FROM multinivel.t_afiliados where ceduladistribuidor='"
+			String sql = " SELECT Coalesce(max(idafiliaciondist)+1,1)  FROM multinivel.t_afiliados where ceduladistribuidor='"
 					+
 
 					distribuidor + "'";
@@ -638,8 +640,7 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
 			s = result.size();
 			for (int i = 0; i < s; i++) {
 				Object obj = result.get(i);
-				BigInteger objectArray = (BigInteger) obj;
-				retorno = objectArray.intValue();
+				retorno = Integer.parseInt(obj.toString());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
