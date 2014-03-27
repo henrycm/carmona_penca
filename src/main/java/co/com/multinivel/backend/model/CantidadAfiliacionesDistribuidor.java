@@ -2,28 +2,31 @@ package co.com.multinivel.backend.model;
 
 import java.io.Serializable;
 
-import javax.persistence.EmbeddedId;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "t_cantidad_afiliaciones_distribuidor")
 public class CantidadAfiliacionesDistribuidor implements Serializable {
 	private static final long serialVersionUID = 1L;
-	@EmbeddedId
-	private CantidadAfiliacionesDistribuidorPK id;
+	@Id
+	@Column(name = "Distribuidor")
+	private String distribuidor;
+	@Column(name = "Cantidad")
 	private int cantidad;
 
-	public CantidadAfiliacionesDistribuidorPK getId() {
-		return this.id;
+	public String getDistribuidor() {
+		return distribuidor;
 	}
 
-	public void setId(CantidadAfiliacionesDistribuidorPK id) {
-		this.id = id;
+	public void setDistribuidor(String distribuidor) {
+		this.distribuidor = distribuidor;
 	}
 
 	public int getCantidad() {
-		return this.cantidad;
+		return cantidad;
 	}
 
 	public void setCantidad(int cantidad) {
@@ -34,5 +37,6 @@ public class CantidadAfiliacionesDistribuidor implements Serializable {
 /*
  * Location: D:\Dllo\multinivel\multinivelEAR.ear\multinivelEJB.jar\
  * 
- * Qualified Name: co.com.multinivel.backend.model.CantidadAfiliacionesDistribuidor
+ * Qualified Name:
+ * co.com.multinivel.backend.model.CantidadAfiliacionesDistribuidor
  */

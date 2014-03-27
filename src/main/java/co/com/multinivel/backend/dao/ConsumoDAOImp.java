@@ -203,7 +203,7 @@ public class ConsumoDAOImp implements ConsumoDAO {
 	public List<Object> calcularConsumosPeriodo(String periodo, String red)
 			throws MultinivelDAOException {
 		List<Object> listaPedido = new ArrayList();
-		String sql = " SELECT c.codigo_consumo,c.totalpedido,c.fecha ,      CONCAT(a.nombre,' ',a.apellido),a.cedula  FROM  multinivel.t_afiliados a,  multinivel.t_consumos c  WHERE   c.afiliado=a.cedula  and c.Distribuidor=?  and Date_format(c.fecha,'%m/%Y')=?";
+		String sql = " SELECT c.codigo_consumo,c.totalpedido,c.fecha ,      CONCAT(a.nombre,' ',a.apellido),a.cedula  FROM t_afiliados a, t_consumos c  WHERE   c.afiliado=a.cedula  and c.Distribuidor=?  and Date_format(c.fecha,'%m/%Y')=?";
 
 		Query query = this.entityManager.createNativeQuery(sql);
 		query.setParameter(1, red);
@@ -259,8 +259,7 @@ public class ConsumoDAOImp implements ConsumoDAO {
 					+ "       AND c.afiliado = h.cedula \n"
 					+ "ORDER  BY p.cedula, \n"
 					+ "          nom_patrocinador, \n"
-					+ "          c.nivel, \n" 
-					+ "          nom_afiliado ASC ";
+					+ "          c.nivel, \n" + "          nom_afiliado ASC ";
 
 			String cedula_distribuidor = distribuidor.getCedula();
 

@@ -12,11 +12,13 @@ import co.com.multinivel.shared.exception.MultinivelDAOException;
 
 @Repository
 @Transactional
-public class CantidadAfiliacionesDistribuidorDAOImp implements CantidadAfiliacionesDistribuidorDAO {
+public class CantidadAfiliacionesDistribuidorDAOImp implements
+		CantidadAfiliacionesDistribuidorDAO {
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	public boolean ingresar(CantidadAfiliacionesDistribuidor cantidadAfiliacionesDistribuidor)
+	public boolean ingresar(
+			CantidadAfiliacionesDistribuidor cantidadAfiliacionesDistribuidor)
 			throws MultinivelDAOException {
 		boolean retorno = false;
 		try {
@@ -24,8 +26,8 @@ public class CantidadAfiliacionesDistribuidorDAOImp implements CantidadAfiliacio
 			retorno = true;
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new MultinivelDAOException("Error ingresando el producto -" + e.getMessage(),
-					getClass());
+			throw new MultinivelDAOException("Error ingresando el producto -"
+					+ e.getMessage(), getClass());
 		}
 		return retorno;
 	}
@@ -35,10 +37,12 @@ public class CantidadAfiliacionesDistribuidorDAOImp implements CantidadAfiliacio
 			throws MultinivelDAOException {
 		Query query = this.entityManager
 				.createQuery("from CantidadAfiliacionesDistribuidor v where v.id.distribuidor=?");
-		query.setParameter(1, cantidadAfiliacionesDistribuidor.getId().getDistribuidor());
+		query.setParameter(1,
+				cantidadAfiliacionesDistribuidor.getDistribuidor());
 		CantidadAfiliacionesDistribuidor valida = null;
 		try {
-			valida = (CantidadAfiliacionesDistribuidor) query.getResultList().get(0);
+			valida = (CantidadAfiliacionesDistribuidor) query.getResultList()
+					.get(0);
 		} catch (Exception e) {
 			valida = null;
 		}

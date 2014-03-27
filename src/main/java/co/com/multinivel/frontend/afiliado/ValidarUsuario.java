@@ -17,18 +17,19 @@ public class ValidarUsuario extends HttpServlet {
 	private static Logger log = Logger.getLogger(ValidarUsuario.class);
 	private static final long serialVersionUID = 1L;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		char rol = UsuarioHelper.getRol();
 		log.info("Rol: " + rol);
 		String recurso = RecursosEnum.FW_INDEX.getRecurso();
 		request.setAttribute("rol", "" + rol);
-		RequestDispatcher rd = getServletContext().getRequestDispatcher(recurso);
+		RequestDispatcher rd = getServletContext()
+				.getRequestDispatcher(recurso);
 		rd.forward(request, response);
 	}
 }

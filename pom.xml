@@ -45,6 +45,13 @@
 		<faces-version>2.1.2</faces-version>
 		<prime-faces-version>3.5</prime-faces-version>
 
+		<pkgArtifactId>jtds</pkgArtifactId>
+		<pkgVersion>1.2.4</pkgVersion>
+		<osgiVersion>${pkgVersion}.0010</osgiVersion>
+		<pkgVendor>The jTDS Project</pkgVendor>
+		<pkgDocUrl>http://jtds.sourceforge.net/</pkgDocUrl>
+		<pkgLicense>http://jtds.sourceforge.net/license.html</pkgLicense>
+
 		<maven.compiler.plugin.version>3.1</maven.compiler.plugin.version>
 		<maven.war.plugin.version>2.4</maven.war.plugin.version>
 		<maven.dependency.plugin.version>2.8</maven.dependency.plugin.version>
@@ -190,6 +197,13 @@
 			<version>${mysql.connector.version}</version>
 			<type>jar</type>
 			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>net.sourceforge.jtds</groupId>
+			<artifactId>${pkgArtifactId}</artifactId>
+			<version>${pkgVersion}</version>
+			<optional>true</optional>
 		</dependency>
 
 		<dependency>

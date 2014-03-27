@@ -1,8 +1,9 @@
 package co.com.multinivel.shared.util;
 
 public enum ParametrosEnum {
-	URL_DATABASE("jdbc:mysql://localhost/multinivel"), DRIVER_DATABASE("com.mysql.jdbc.Driver"), USUARIO(
-			"root"), PASSWORD("root"), TAM_PAGINA("100");
+	URL_DATABASE("jdbc:jtds:sqlserver://10.10.10.251:1433/KamiloPruebas"), DRIVER_DATABASE(
+			"net.sourceforge.jtds.jdbc.Driver"), USUARIO("sa"), PASSWORD(
+			"890938755"), TAM_PAGINA("100");
 
 	private String valor;
 

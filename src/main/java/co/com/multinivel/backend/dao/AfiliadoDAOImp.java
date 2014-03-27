@@ -68,10 +68,10 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
 				String banco = (String) objectArray[21];
 				String documentoConyugue = (String) objectArray[22];
 				String nombreConyugue = (String) objectArray[23];
-				String tipoAfiliado = (String) objectArray[24];
-				String distribuidor = (String) objectArray[25];
-				String distribuidorPago = (String) objectArray[26];
-				String tipoDocumento = (String) objectArray[27];
+				String tipoAfiliado = objectArray[24].toString();
+				String distribuidor = objectArray[25].toString();
+				String distribuidorPago = objectArray[26].toString();
+				String tipoDocumento = objectArray[27].toString();
 				int consecutivoAfiliaciondis = ((Integer) objectArray[28])
 						.intValue();
 
@@ -281,14 +281,14 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
 				sql = sql + " and a.cedula = '" + codigo + "'";
 			}
 			if ((nombre != null) && (!nombre.equals(""))) {
-				sql = sql + " and  CONCAT(a.nombre,' ',a.apellido) LIKE '%"
-						+ nombre + "%'";
+				sql = sql + " and  a.nombre +' '+ a.apellido LIKE '%" + nombre
+						+ "%'";
 			}
 			Query q = this.entityManager.createNativeQuery(sql);
 
 			List result = q.getResultList();
 			int s = result.size();
-			lista = new ArrayList();
+			lista = new ArrayList<AfiliadoDTO>();
 			for (int i = 0; i < s; i++) {
 				Object obj = result.get(i);
 				Object[] objectArray = (Object[]) obj;
@@ -527,7 +527,7 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
 		List<Object> lista = null;
 		int filtros = 0;
 		try {
-			String sql = " SELECT  a.cedula,CONCAT (A.NOMBRE ,' ',IF(A.APELLIDO IS NULL,'',A.APELLIDO)), count(t.cedula)  FROM multinivel.t_afiliados t,multinivel.t_afiliados a where t.cedulaDistribuidor =a.cedula and DATE_FORMAT(t.FECHAingreso,'%m/%Y')=?group by a.cedula order by t.fechaingreso, a.nombre";
+			String sql = " SELECT  a.cedula,CONCAT (A.NOMBRE ,' ',IF(A.APELLIDO IS NULL,'',A.APELLIDO)), count(t.cedula)  FROM t_afiliados t,t_afiliados a where t.cedulaDistribuidor =a.cedula and DATE_FORMAT(t.FECHAingreso,'%m/%Y')=?group by a.cedula order by t.fechaingreso, a.nombre";
 
 			Query q = this.entityManager.createNativeQuery(sql);
 			q.setParameter(1, periodo);
@@ -629,7 +629,7 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
 		int retorno = 0;
 		int s = 0;
 		try {
-			String sql = " SELECT Coalesce(max(idafiliaciondist)+1,1)  FROM multinivel.t_afiliados where ceduladistribuidor='"
+			String sql = " SELECT Coalesce(max(idafiliaciondist)+1,1)  FROM t_afiliados where ceduladistribuidor='"
 					+
 
 					distribuidor + "'";

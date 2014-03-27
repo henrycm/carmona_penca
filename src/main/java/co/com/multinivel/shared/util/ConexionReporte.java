@@ -8,8 +8,10 @@ public class ConexionReporte {
 		Connection conexion = null;
 		try {
 			Class.forName(ParametrosEnum.DRIVER_DATABASE.getValor());
-			conexion = DriverManager.getConnection(ParametrosEnum.URL_DATABASE.getValor(),
-					ParametrosEnum.USUARIO.getValor(), ParametrosEnum.PASSWORD.getValor());
+			conexion = DriverManager.getConnection(
+					ParametrosEnum.URL_DATABASE.getValor(),
+					ParametrosEnum.USUARIO.getValor(),
+					ParametrosEnum.PASSWORD.getValor());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

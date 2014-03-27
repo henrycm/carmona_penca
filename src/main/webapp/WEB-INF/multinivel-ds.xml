@@ -1,13 +1,14 @@
 <datasources xmlns="http://www.jboss.org/ironjacamar/schema">
-  <datasource jndi-name="java:/multinivelDS" pool-name="MySQLPool">
-      <connection-url>jdbc:mysql://localhost:3306/multinivel</connection-url>
-      <driver>mysql-connector-java-5.1.17.jar</driver>
-      <pool>
-          <max-pool-size>30</max-pool-size>
-      </pool>
-      <security>
-          <user-name>root</user-name>
-          <password>root</password>
-      </security>
-  </datasource>
+	<datasource jndi-name="java:/multinivelDS" pool-name="MySQLPool">
+		<connection-url>jdbc:jtds:sqlserver://10.10.10.251:1433/KamiloPruebas
+		</connection-url>
+		<driver>net.sourceforge.jtds.jdbc.Driver</driver>
+		<pool>
+			<max-pool-size>30</max-pool-size>
+		</pool>
+		<security>
+			<user-name>sa</user-name>
+			<password>890938755</password>
+		</security>
+	</datasource>
 </datasources>

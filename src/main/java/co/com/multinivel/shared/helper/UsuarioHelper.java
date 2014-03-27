@@ -19,8 +19,8 @@ public class UsuarioHelper {
 		usuario.setUsername(request.getParameter("usuario"));
 		usuario.setPassword(request.getParameter("password"));
 		byte activado = (request.getParameter("activado") == null)
-				|| (!"N".equals(request.getParameter("activado"))) ? Byte.valueOf("0").byteValue()
-				: Byte.valueOf("1").byteValue();
+				|| (!"N".equals(request.getParameter("activado"))) ? Byte
+				.valueOf("0").byteValue() : Byte.valueOf("1").byteValue();
 		usuario.setEnabled(activado);
 		return usuario;
 	}
@@ -34,7 +34,8 @@ public class UsuarioHelper {
 		return usuario;
 	}
 
-	public static User cargarEntidad(Afiliado afiliado, HttpServletRequest request) {
+	public static User cargarEntidad(Afiliado afiliado,
+			HttpServletRequest request) {
 		User usuario = new User();
 		usuario.setUsername(afiliado.getCedula());
 		if ("3".equals(request.getParameter("rol"))) {
@@ -48,7 +49,8 @@ public class UsuarioHelper {
 	}
 
 	public static String getUsuario() {
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Object principal = SecurityContextHolder.getContext()
+				.getAuthentication().getPrincipal();
 		String usuario = null;
 		if ((principal instanceof UserDetails)) {
 			usuario = ((UserDetails) principal).getUsername();
@@ -59,7 +61,8 @@ public class UsuarioHelper {
 	}
 
 	public static char getRol() {
-		Authentication principal = SecurityContextHolder.getContext().getAuthentication();
+		Authentication principal = SecurityContextHolder.getContext()
+				.getAuthentication();
 		Collection<? extends GrantedAuthority> roles = null;
 		char roleRetornado = '3';
 		roles = principal.getAuthorities();
@@ -69,7 +72,8 @@ public class UsuarioHelper {
 
 			boolean bandera = true;
 			while ((listaRoles.hasNext()) && (bandera)) {
-				GrantedAuthority grantedAuthority = (GrantedAuthority) listaRoles.next();
+				GrantedAuthority grantedAuthority = (GrantedAuthority) listaRoles
+						.next();
 				if ("ROLE_ADMIN".equals(grantedAuthority.getAuthority())) {
 					return '1';
 				}

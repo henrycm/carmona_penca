@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="1.0">
-	<persistence-unit name="multinivelUnit" transaction-type="RESOURCE_LOCAL">
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	version="1.0">
+	<persistence-unit name="multinivelUnit"
+		transaction-type="RESOURCE_LOCAL">
 		<properties>
-			<property name="hibernate.show_sql" value = "true" />
+			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.hbm2ddl.auto" value="validate" />
-			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.SQLServerDialect" />
 			<property name="hibernate.c3p0.max_size">5</property>
 		</properties>
 		<mapping-file>./WEB-INF/spring/orm.xml</mapping-file>
