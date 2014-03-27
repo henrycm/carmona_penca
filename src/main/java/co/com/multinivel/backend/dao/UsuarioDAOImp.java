@@ -90,15 +90,15 @@ public class UsuarioDAOImp implements UsuarioDAO {
 		return usuario;
 	}
 
-	public Pagina listarConDistribuidor(int pagina) throws MultinivelDAOException {
+	public Pagina listarConDistribuidor(int pagina)
+			throws MultinivelDAOException {
 		int max = ParametrosEnum.TAM_PAGINA.getValorInt() * pagina;
 		int min = ParametrosEnum.TAM_PAGINA.getValorInt() * (pagina - 1);
-		List<Object> lista = null;
 		Pagina p = new Pagina();
 		List listaUsuario = new ArrayList<UsuarioDTO>();
 		try {
 			String st_count = " SELECT count(1) FROM t_afiliados p inner join  (SELECT (select password from users where username=ceduladistribuidor  )claveDistribuidor,ceduladistribuidor,username,u.password,u.enabled FROM t_afiliados t,users u where u.username=t.cedula)d on d.ceduladistribuidor=p.cedula; ";
-			String sql = " SELECT  CONCAT (P.NOMBRE ,' ',IF(P.APELLIDO IS NULL,'',P.APELLIDO))distribuidor,d.username,d.password,d.enabled,claveDistribuidor FROM t_afiliados p inner join  (SELECT (select password from users where username=ceduladistribuidor  )claveDistribuidor,ceduladistribuidor,username,u.password,u.enabled FROM t_afiliados t,users u where u.username=t.cedula)d on d.ceduladistribuidor=p.cedula ";
+			String sql = " SELECT P.NOMBRE +' '+ Case When P.APELLIDO IS NULL Then '' Else P.APELLIDO End distribuidor,d.username,d.password,d.enabled,claveDistribuidor FROM t_afiliados p inner join  (SELECT (select password from users where username=ceduladistribuidor  )claveDistribuidor,ceduladistribuidor,username,u.password,u.enabled FROM t_afiliados t,users u where u.username=t.cedula)d on d.ceduladistribuidor=p.cedula ";
 			sql += " LIMIT " + min + "," + max;
 			Query q = this.entityManager.createNativeQuery(sql);
 			Query count = this.entityManager.createNativeQuery(st_count);
@@ -106,7 +106,6 @@ public class UsuarioDAOImp implements UsuarioDAO {
 			BigInteger total = (BigInteger) count.getResultList().get(0);
 			int s = result.size();
 			if (s > 0) {
-				lista = new ArrayList();
 				for (int i = 0; i < s; i++) {
 					Object obj = result.get(i);
 					Object[] objectArray = (Object[]) obj;
@@ -131,25 +130,26 @@ public class UsuarioDAOImp implements UsuarioDAO {
 			p.setContent(listaUsuario);
 			p.setNumber(pagina);
 			p.setTotalElements(total.intValue());
-			p.setTotalPages(total.intValue() / ParametrosEnum.TAM_PAGINA.getValorInt());
+			p.setTotalPages(total.intValue()
+					/ ParametrosEnum.TAM_PAGINA.getValorInt());
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new MultinivelDAOException("error al listar los afiliados por nivel", getClass());
+			throw new MultinivelDAOException(
+					"error al listar los afiliados por nivel", getClass());
 		}
 		return p;
 	}
 
-	public List<UsuarioDTO> buscar(String nomFiltro, String filtro) throws MultinivelDAOException {
-		List<Object> lista = null;
+	public List<UsuarioDTO> buscar(String nomFiltro, String filtro)
+			throws MultinivelDAOException {
 		List<UsuarioDTO> listaUsuario = new ArrayList<UsuarioDTO>();
 		try {
-			String sql = " SELECT  CONCAT (P.NOMBRE ,' ',IF(P.APELLIDO IS NULL,'',P.APELLIDO))distribuidor,d.username,d.password,d.enabled,claveDistribuidor FROM t_afiliados p inner join  (SELECT (select password from users where username=ceduladistribuidor  )claveDistribuidor,ceduladistribuidor,username,u.password,u.enabled FROM t_afiliados t,users u where u.username=t.cedula)d on d.ceduladistribuidor=p.cedula where p."
+			String sql = " SELECT  P.NOMBRE +' '+ Case When P.APELLIDO IS NULL Then '' Else P.APELLIDO End distribuidor,d.username,d.password,d.enabled,claveDistribuidor FROM t_afiliados p inner join  (SELECT (select password from users where username=ceduladistribuidor  )claveDistribuidor,ceduladistribuidor,username,u.password,u.enabled FROM t_afiliados t,users u where u.username=t.cedula)d on d.ceduladistribuidor=p.cedula where p."
 					+ nomFiltro + " like '%" + filtro + "%';";
 			Query q = this.entityManager.createNativeQuery(sql);
 			List result = q.getResultList();
 			int s = result.size();
 			if (s > 0) {
-				lista = new ArrayList();
 				for (int i = 0; i < s; i++) {
 					Object obj = result.get(i);
 					Object[] objectArray = (Object[]) obj;
@@ -173,7 +173,8 @@ public class UsuarioDAOImp implements UsuarioDAO {
 
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
-			throw new MultinivelDAOException("Error al listar los afiliados por nivel", getClass());
+			throw new MultinivelDAOException(
+					"Error al listar los afiliados por nivel", getClass());
 		}
 		return listaUsuario;
 	}
