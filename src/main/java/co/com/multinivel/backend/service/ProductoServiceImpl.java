@@ -59,7 +59,8 @@ public class ProductoServiceImpl implements ProductoService {
 		return lista;
 	}
 
-	public List<ProductoDTO> listar(String tipoProducto) throws MultinivelServiceException {
+	public List<ProductoDTO> listar(String tipoProducto)
+			throws MultinivelServiceException {
 		List<ProductoDTO> lista = null;
 		try {
 			lista = this.productoDAO.listar(tipoProducto);
@@ -80,7 +81,8 @@ public class ProductoServiceImpl implements ProductoService {
 		return lista;
 	}
 
-	public List<Object> listarProductoPorcentaje(String periodo) throws MultinivelServiceException {
+	public List<Object> listarProductoPorcentaje(String periodo)
+			throws MultinivelServiceException {
 		List<Object> lista = null;
 		try {
 			lista = this.productoDAO.listarProductoPorcentaje(periodo);

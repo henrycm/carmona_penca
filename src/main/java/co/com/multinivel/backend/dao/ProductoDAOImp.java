@@ -33,8 +33,8 @@ public class ProductoDAOImp implements ProductoDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new MultinivelDAOException("Error borrando el producto -" + e.getMessage(),
-					getClass());
+			throw new MultinivelDAOException("Error borrando el producto -"
+					+ e.getMessage(), getClass());
 		}
 	}
 
@@ -46,8 +46,8 @@ public class ProductoDAOImp implements ProductoDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new MultinivelDAOException("Error ingresando el producto -" + e.getMessage(),
-					getClass());
+			throw new MultinivelDAOException("Error ingresando el producto -"
+					+ e.getMessage(), getClass());
 		}
 	}
 
@@ -59,20 +59,26 @@ public class ProductoDAOImp implements ProductoDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new MultinivelDAOException("Error actualizando el producto -" + e.getMessage(),
-					getClass());
+			throw new MultinivelDAOException("Error actualizando el producto -"
+					+ e.getMessage(), getClass());
 		}
 	}
 
 	public List<ProductoDTO> listar() throws MultinivelDAOException {
 		List<ProductoDTO> lista = null;
 		try {
-			String sql = " SELECT  P.CODIGO,      P.NOMBRE_PRODUCTO,   TRUNCATE((P.PRECIO_AFILIADO)-(P.PRECIO_AFILIADO *  (CAST(A.VALOR AS DECIMAL(10,0))/100)),0),    P.PRECIO_AFILIADO,    T.TIPOPRODUCTO,P.TIPO      FROM T_PRODUCTOS P,    T_TIPOS_PRODUCTOS T,  (SELECT VALOR FROM T_PARAMETROS WHERE NOMBRE_PARAMETRO='PORC_GAN_PDTO_PROVEE')A    WHERE T.CODIGO  = P.TIPO ORDER BY T.TIPOPRODUCTO";
+			String sql = " Select  Pr.Codigo, Pr.Nombre_Producto, \n"
+					+ "Cast(Round((Pr.Precio_Afiliado)-(Pr.Precio_Afiliado * (Cast(p.Valor As Numeric(11,2))/100)),0) As Numeric(11,0))PrecioDist,\n"
+					+ "Cast(Round(Pr.Precio_Afiliado,0)As Numeric(11,0))PrecioAfiliado, t.TipoProducto, Pr.Tipo\n"
+					+ "From T_Productos Pr\n"
+					+ "Inner Join T_Tipos_Productos t On Pr.Tipo=t.Codigo\n"
+					+ "Inner Join T_Parametros p On p.Nombre_Parametro='PORC_GAN_PDTO_PROVEE'\n"
+					+ "Order By t.TipoProducto Asc ";
 
 			Query q = this.entityManager.createNativeQuery(sql);
-			List result = q.getResultList();
+			List<ProductoDTO> result = q.getResultList();
 			int s = result.size();
-			lista = new ArrayList();
+			lista = new ArrayList<ProductoDTO>();
 			for (int i = 0; i < s; i++) {
 				Object obj = result.get(i);
 				Object[] objectArray = (Object[]) obj;
@@ -98,7 +104,8 @@ public class ProductoDAOImp implements ProductoDAO {
 		return lista;
 	}
 
-	public List<ProductoDTO> listar(String tipoProducto) throws MultinivelDAOException {
+	public List<ProductoDTO> listar(String tipoProducto)
+			throws MultinivelDAOException {
 		List<ProductoDTO> lista = null;
 		try {
 			String sql = "SELECT  P.CODIGO, P.NOMBRE_PRODUCTO, TRUNCATE((P.PRECIO_AFILIADO)-(P.PRECIO_AFILIADO *  (CAST(A.VALOR AS DECIMAL(10,2))/100)),0), P.PRECIO_AFILIADO, T.TIPOPRODUCTO,P.TIPO   FROM T_PRODUCTOS P,  T_TIPOS_PRODUCTOS T , (SELECT VALOR FROM T_PARAMETROS WHERE NOMBRE_PARAMETRO='PORC_GAN_PDTO_PROVEE')A   WHERE T.CODIGO= P.TIPO   AND T.CODIGO=?   ORDER BY T.TIPOPRODUCTO ";
@@ -140,9 +147,9 @@ public class ProductoDAOImp implements ProductoDAO {
 
 			Query q = this.entityManager.createNativeQuery(sql);
 			q.setParameter(1, tipoProducto);
-			List result = q.getResultList();
+			List<ProductoDTO> result = q.getResultList();
 			int s = result.size();
-			lista = new ArrayList();
+			lista = new ArrayList<ProductoDTO>();
 			for (int i = 0; i < s; i++) {
 				Object obj = result.get(i);
 				Object[] objectArray = (Object[]) obj;
@@ -167,25 +174,43 @@ public class ProductoDAOImp implements ProductoDAO {
 		return lista;
 	}
 
-	public List<Object> listarProductoPorcentaje(String periodo) throws MultinivelDAOException {
+	public List<Object> listarProductoPorcentaje(String periodo)
+			throws MultinivelDAOException {
 		List<Object> lista = null;
 		try {
-			String sql = "SELECT X.CODIGO,X.PRODUCTO,X.CANTIDAD,X.VALOR,X.PORCCANT,X.PORCVAL     FROM  (SELECT TXP.CODIGO_CONSUMO,TXP.CODIGO,TXP.PRODUCTO,TXP.CANTIDAD,TXP.VALOR,ROUND((TXP.CANTIDAD/TOTAL.CANTIDADT)*100,2)PORCCANT,ROUND((TXP.VALOR/TOTAL.VALORT)*100,2)PORCVAL   FROM  (SELECT C.CODIGO_CONSUMO,C.CODIGO_PRODUCTO CODIGO, P.NOMBRE_PRODUCTO PRODUCTO,SUM(C.CANTIDAD)CANTIDAD,SUM(C.TOTALPRODUCTO)VALOR    FROM T_DET_CONSUMOS C INNER JOIN T_PRODUCTOS P    ON C.CODIGO_PRODUCTO=P.CODIGO  GROUP BY C.CODIGO_PRODUCTO, P.NOMBRE_PRODUCTO  ORDER BY SUM(C.CANTIDAD) DESC)TXP,  (SELECT SUM(CANTIDAD)CANTIDADT,SUM(TOTALPRODUCTO)VALORT FROM T_DET_CONSUMOS)TOTAL)X INNER JOIN T_CONSUMOS CM  ON CM.CODIGO_CONSUMO =X.CODIGO_CONSUMO AND  (DATE_FORMAT(CM.FECHA,'%m/%Y')=?) ";
+			String sql = " Select TotProPer.Codigo_Producto, TotProPer.Nombre_Producto, TotProPer.Cantidad, TotProPer.Valor, \n"
+					+ "Cast(Cast(TotProPer.Cantidad As Numeric(11,2))/Cast(TotPer.CantidadTot As Numeric(11,2))*100 As Numeric(5,2)) PorcCant, \n"
+					+ "Cast(Cast(TotProPer.Valor As Numeric(11,2))/Cast(TotPer.ValorTot As Numeric(11,2))*100 As Numeric(5,2)) PorcVal\n"
+					+ "From\n"
+					+ "(Select h.Fecha, d.Codigo_Producto, p.Nombre_Producto, Sum(d.Cantidad)Cantidad, Sum(d.TotalProducto)Valor \n"
+					+ "From T_Consumos h\n"
+					+ "Inner Join T_Det_Consumos d On h.Codigo_Consumo=d.Codigo_Consumo\n"
+					+ "Left Join T_Productos p On d.Codigo_Producto=p.Codigo\n"
+					+ "Group By h.Fecha, d.Codigo_Producto, p.Nombre_Producto)TotProPer\n"
+					+ "Inner Join \n"
+					+ "(Select h.Fecha, Sum(d.Cantidad)CantidadTot, Sum(d.TotalProducto)ValorTot \n"
+					+ "From T_Consumos h\n"
+					+ "Inner Join T_Det_Consumos d On h.Codigo_Consumo=d.Codigo_Consumo\n"
+					+ "Group By h.Fecha)TotPer On TotProPer.Fecha=TotPer.Fecha\n"
+					+ "Where Right('00'+Cast(Month(TotProPer.Fecha) As Varchar(2)),2)+'/'+Cast(Year(TotProPer.Fecha) As Varchar(4))=? \n"
+					+ "Order by PorcCant Desc, PorcVal Desc ";
 
 			Query q = this.entityManager.createNativeQuery(sql);
 			q.setParameter(1, periodo);
-			List result = q.getResultList();
+			List<Object> result = q.getResultList();
 			int s = result.size();
-			lista = new ArrayList();
+			lista = new ArrayList<Object>();
 			for (int i = 0; i < s; i++) {
 				Object obj = result.get(i);
 				Object[] objectArray = (Object[]) obj;
-				String codigo = (String) objectArray[0];
-				String nombre = (String) objectArray[1];
-				int cantidad = ((BigDecimal) objectArray[2]).intValue();
-				long valor = ((BigDecimal) objectArray[3]).longValue();
-				double porcentajeCantidad = ((BigDecimal) objectArray[4]).doubleValue();
-				double porcentajeValor = ((BigDecimal) objectArray[5]).doubleValue();
+				String codigo = objectArray[0].toString();
+				String nombre = objectArray[1].toString();
+				int cantidad = Integer.parseInt(objectArray[2].toString());
+				double valor = Double.parseDouble(objectArray[3].toString());
+				double porcentajeCantidad = Double.parseDouble(objectArray[4]
+						.toString());
+				double porcentajeValor = Double.parseDouble(objectArray[5]
+						.toString());
 				ProductoDTO p = new ProductoDTO();
 				p.setCodigo(codigo);
 				p.setNombreProducto(nombre);

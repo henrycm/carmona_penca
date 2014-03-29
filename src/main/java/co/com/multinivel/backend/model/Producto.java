@@ -1,7 +1,6 @@
 package co.com.multinivel.backend.model;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,7 +16,7 @@ public class Producto implements Serializable {
 	@Column(name = "nombre_producto")
 	private String nombreProducto;
 	@Column(name = "precio_afiliado")
-	private BigDecimal precioAfiliado;
+	private double precioAfiliado;
 	private String tipo;
 
 	public String getCodigo() {
@@ -36,11 +35,11 @@ public class Producto implements Serializable {
 		this.nombreProducto = nombreProducto;
 	}
 
-	public BigDecimal getPrecioAfiliado() {
+	public double getPrecioAfiliado() {
 		return this.precioAfiliado;
 	}
 
-	public void setPrecioAfiliado(BigDecimal precioAfiliado) {
+	public void setPrecioAfiliado(double precioAfiliado) {
 		this.precioAfiliado = precioAfiliado;
 	}
 

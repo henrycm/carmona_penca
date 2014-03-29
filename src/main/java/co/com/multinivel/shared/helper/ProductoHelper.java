@@ -1,7 +1,5 @@
 package co.com.multinivel.shared.helper;
 
-import java.math.BigDecimal;
-
 import javax.servlet.http.HttpServletRequest;
 
 import co.com.multinivel.backend.model.Producto;
@@ -12,10 +10,10 @@ public class ProductoHelper {
 		producto.setCodigo(request.getParameter("codigo"));
 		if ((request.getParameter("precioAfiliado") == null)
 				|| ("".equals(request.getParameter("precioAfiliado")))) {
-			producto.setPrecioAfiliado(new BigDecimal(0));
+			producto.setPrecioAfiliado(new Double(0));
 		} else {
-			producto.setPrecioAfiliado(new BigDecimal(Integer.parseInt(request
-					.getParameter("precioAfiliado"))));
+			producto.setPrecioAfiliado(Double.parseDouble(request
+					.getParameter("precioAfiliado")));
 		}
 		producto.setNombreProducto(request.getParameter("nombre"));
 		producto.setTipo(request.getParameter("tipo"));

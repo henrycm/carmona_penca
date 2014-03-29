@@ -12,7 +12,7 @@ public class ProductoDTO {
 	private String tipo;
 	private String codigoTipo;
 	private int cantidad;
-	private long valor;
+	private double valor;
 	private double porcentajeCantidad;
 	private double porcentajeValor;
 
@@ -24,11 +24,11 @@ public class ProductoDTO {
 		this.cantidad = cantidad;
 	}
 
-	public long getValor() {
+	public double getValor() {
 		return this.valor;
 	}
 
-	public void setValor(long valor) {
+	public void setValor(double valor) {
 		this.valor = valor;
 	}
 
