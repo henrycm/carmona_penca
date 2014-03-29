@@ -60,7 +60,7 @@ public class UsuarioDAOImp implements UsuarioDAO {
 
 	public void actualizar(User usuario) throws MultinivelDAOException {
 		try {
-			usuario.setEnabled(Byte.parseByte("1"));
+			//usuario.setEnabled(Byte.parseByte("1"));
 			this.entityManager.merge(usuario);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -144,8 +144,17 @@ public class UsuarioDAOImp implements UsuarioDAO {
 			throws MultinivelDAOException {
 		List<UsuarioDTO> listaUsuario = new ArrayList<UsuarioDTO>();
 		try {
-			String sql = " SELECT  P.NOMBRE +' '+ Case When P.APELLIDO IS NULL Then '' Else P.APELLIDO End distribuidor,d.username,d.password,d.enabled,claveDistribuidor FROM t_afiliados p inner join  (SELECT (select password from users where username=ceduladistribuidor  )claveDistribuidor,ceduladistribuidor,username,u.password,u.enabled FROM t_afiliados t,users u where u.username=t.cedula)d on d.ceduladistribuidor=p.cedula where p."
-					+ nomFiltro + " like '%" + filtro + "%';";
+			String sql = " Select u.UserName Usuario, \n"
+					+ "a.Nombre+' '+Case When a.Apellido Is Null Then '' Else a.Apellido End NombreUsuario,\n"
+					+ "u.Password Clave, u.Enabled\n"
+					+ "From Users u\n"
+					+ "Inner Join T_Afiliados a On u.UserName=a.Cedula\n"
+					+ "Where a. "
+					+ nomFiltro
+					+ " like '%"
+					+ filtro
+					+ "%'"
+					+ "Order By a.Nombre+' '+Case When a.Apellido Is Null Then '' Else a.Apellido End";
 			Query q = this.entityManager.createNativeQuery(sql);
 			List result = q.getResultList();
 			int s = result.size();
@@ -154,18 +163,16 @@ public class UsuarioDAOImp implements UsuarioDAO {
 					Object obj = result.get(i);
 					Object[] objectArray = (Object[]) obj;
 
-					String distribuidor = (String) objectArray[0];
-					String usuario = (String) objectArray[1];
+					String usuario = (String) objectArray[0];
+					String nombreUsuario = (String) objectArray[1];
 					String clave = (String) objectArray[2];
 					byte enable = ((Byte) objectArray[3]).byteValue();
-					String claveDistribuidor = (String) objectArray[4];
 
 					UsuarioDTO usuarioDTO = new UsuarioDTO();
-					usuarioDTO.setDistribuidor(distribuidor);
-					usuarioDTO.setPassword(clave);
 					usuarioDTO.setUsername(usuario);
+					usuarioDTO.setNombreUsuario(nombreUsuario);
+					usuarioDTO.setPassword(clave);
 					usuarioDTO.setEnabled(enable);
-					usuarioDTO.setPasswordDistribuidor(claveDistribuidor);
 
 					listaUsuario.add(usuarioDTO);
 				}

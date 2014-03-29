@@ -19,7 +19,7 @@ public class UsuarioHelper {
 		usuario.setUsername(request.getParameter("usuario"));
 		usuario.setPassword(request.getParameter("password"));
 		byte activado = (request.getParameter("activado") == null)
-				|| (!"N".equals(request.getParameter("activado"))) ? Byte
+				|| ("0".equals(request.getParameter("activado"))) ? Byte
 				.valueOf("0").byteValue() : Byte.valueOf("1").byteValue();
 		usuario.setEnabled(activado);
 		return usuario;

@@ -85,7 +85,7 @@ function calcular_edad(fecha){
 	function seleccionarListaDesplegable(dato,objeto){
 		
 		 longitud = objeto.length;
-		
+
 		 for (i=0;i<longitud;i++){
 			 if (objeto[i].value==dato){
 				 objeto[i].selected = true;

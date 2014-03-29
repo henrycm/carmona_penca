@@ -44,8 +44,7 @@ public class UsuarioFrontController extends HttpServlet {
 				User usuarioConsultado = this.usuarioService.consultar(usuario.getUsername());
 				if (usuarioConsultado != null) {
 					usuario.setGroupMembers(usuarioConsultado.getGroupMembers());
-					usuario.setEnabled(usuarioConsultado.getEnabled());
-					this.usuarioService.actualizar(usuario);
+					//usuario.setEnabled(usuarioConsultado.getEnabled());
 					this.usuarioService.actualizar(usuario);
 				}
 				request.setAttribute("actualizo", Boolean.valueOf(true));

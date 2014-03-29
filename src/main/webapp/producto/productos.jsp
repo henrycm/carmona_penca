@@ -14,13 +14,14 @@
 
 </head>
 
-<body class="fondo"
+<body
 	onload="seleccionarListaDesplegable('<c:out value="${producto.tipo}"/>',document.producto.tipo);">
-	<div class="demo">
-		<form action="ProductoFrontController" name="producto" method="post">
-			<input type="hidden" name="accion" value="<c:out value="${accion}"/>" />
-			<input type="hidden" name="actualizar" />
-			<div align="center">
+	<div align="center">
+		<div class="demo">
+			<form action="ProductoFrontController" name="producto" method="post">
+				<input type="hidden" name="accion"
+					value="<c:out value="${accion}"/>" /> <input type="hidden"
+					name="actualizar" />
 				<div class="btn-group">
 					<a class="btn btn-sm btn-default"
 						href="javascript:ingresarProducto()">Ingresar </a> <a
@@ -31,8 +32,10 @@
 						class="btn btn-sm btn-default"
 						href="javascript:consultarProducto()"> Consultar </a>
 				</div>
-				<div class="titulo">Administración de Productos</div>
-				<table width="90%" class="tbl-form">
+				<table align="center" width="50%" class="tbl-form" border="1">
+					<tr>
+						<th colspan="15">Administración de Productos</th>
+					</tr>
 					<tr>
 						<td width="15%" align="left">Codigo(*):</td>
 						<td width="85%" align="left"><input name="codigo" type="text"
@@ -62,10 +65,12 @@
 						</select></td>
 					</tr>
 				</table>
-				<br /> <br />
-				<div class="titulo">LISTA DE PRODUCTOS</div>
+				<br />
 				<c:if test="${listaProductos!=null}">
-					<table align="center" class="tbl-lista" width="98%" border="1">
+					<table align="center" class="tbl-lista" width="70%" border="1">
+						<tr>
+							<th colspan="15">Lista de Productos</th>
+						</tr>
 						<tr>
 							<th>Codigo</th>
 							<th>Nombre</th>
@@ -89,8 +94,8 @@
 						</c:forEach>
 					</table>
 				</c:if>
-			</div>
-		</form>
+			</form>
+		</div>
 	</div>
 </body>
 </html>
