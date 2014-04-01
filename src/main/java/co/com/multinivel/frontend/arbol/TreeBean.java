@@ -87,15 +87,13 @@ public class TreeBean implements Serializable {
 		try {
 			FacesContext localFacesContext = FacesContext.getCurrentInstance();
 
-			String str = (String) localFacesContext.getExternalContext().getRequestParameterMap()
-					.get("cedula");
+			String cedula = (String) localFacesContext.getExternalContext().getRequestParameterMap().get("cedula");
+			String periodo = (String) localFacesContext.getExternalContext().getRequestParameterMap().get("periodo");
 
-			ServletContext ctx = (ServletContext) localFacesContext.getExternalContext()
-					.getContext();
+			ServletContext ctx = (ServletContext) localFacesContext.getExternalContext().getContext();
 
-			afs = (AfiliadoService) WebApplicationContextUtils.getWebApplicationContext(ctx)
-					.getBean(AfiliadoService.class);
-			DatosArbol localDatosArbol = afs.ArbolAfiliado(str);
+			afs = (AfiliadoService) WebApplicationContextUtils.getWebApplicationContext(ctx).getBean(AfiliadoService.class);
+			DatosArbol localDatosArbol = afs.ArbolAfiliado(cedula, periodo);
 			this.root = localDatosArbol.getTreeNode();
 			setNumeroAfiliados(localDatosArbol.getNumeroAfiliados());
 			setNombreAfiliado(localDatosArbol.getNombreAfiliado());
@@ -119,8 +117,7 @@ public class TreeBean implements Serializable {
 				localStringBuilder.append((localObject).getData().toString());
 				localStringBuilder.append("<br />");
 			}
-			Object localObject = new FacesMessage(FacesMessage.SEVERITY_INFO, "Selected",
-					localStringBuilder.toString());
+			Object localObject = new FacesMessage(FacesMessage.SEVERITY_INFO, "Selected", localStringBuilder.toString());
 
 			FacesContext.getCurrentInstance().addMessage(null, (FacesMessage) localObject);
 		}
@@ -133,35 +130,34 @@ public class TreeBean implements Serializable {
 		this.nivel = arrayOfString[0];
 		this.cedula = arrayOfString[1];
 
-		Afiliado localAfiliado = afs.consultar(arrayOfString[1]);
+		this.cedula = this.cedula.replace("[", "").replace("]", "");
+		Afiliado localAfiliado = afs.consultar(this.cedula);
 		this.email = localAfiliado.getEmail();
 		this.telefono = localAfiliado.getTelefono();
 		this.direccion = localAfiliado.getDireccion();
 
 		this.nombre = arrayOfString[2];
+		this.nombre = this.nombre.replace("[", "").replace("]", "");
 		this.afiliados = this.selectedNode.getChildCount();
 	}
 
 	public void onNodeSelect(NodeSelectEvent paramNodeSelectEvent) {
-		FacesMessage localFacesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Selected",
-				paramNodeSelectEvent.getTreeNode().getData().toString());
-		FacesContext.getCurrentInstance().addMessage(paramNodeSelectEvent.getComponent().getId(),
-				localFacesMessage);
+		FacesMessage localFacesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Selected", paramNodeSelectEvent.getTreeNode().getData()
+				.toString());
+		FacesContext.getCurrentInstance().addMessage(paramNodeSelectEvent.getComponent().getId(), localFacesMessage);
 	}
 
 	public void onNodeExpand(NodeExpandEvent paramNodeExpandEvent) {
-		FacesMessage localFacesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Expanded",
-				paramNodeExpandEvent.getTreeNode().getData().toString());
-		FacesContext.getCurrentInstance().addMessage(paramNodeExpandEvent.getComponent().getId(),
-				localFacesMessage);
+		FacesMessage localFacesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Expanded", paramNodeExpandEvent.getTreeNode().getData()
+				.toString());
+		FacesContext.getCurrentInstance().addMessage(paramNodeExpandEvent.getComponent().getId(), localFacesMessage);
 	}
 
 	public void onNodeCollapse(NodeCollapseEvent paramNodeCollapseEvent) {
 		System.out.println("NodeCollapseEvent Fired");
-		FacesMessage localFacesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Collapsed",
-				paramNodeCollapseEvent.getTreeNode().getData().toString());
-		FacesContext.getCurrentInstance().addMessage(paramNodeCollapseEvent.getComponent().getId(),
-				localFacesMessage);
+		FacesMessage localFacesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Collapsed", paramNodeCollapseEvent.getTreeNode().getData()
+				.toString());
+		FacesContext.getCurrentInstance().addMessage(paramNodeCollapseEvent.getComponent().getId(), localFacesMessage);
 	}
 
 	public String getNivel() {

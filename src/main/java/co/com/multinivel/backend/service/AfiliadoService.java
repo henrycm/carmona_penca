@@ -19,39 +19,29 @@ public abstract interface AfiliadoService {
 
 	public abstract List<Afiliado> listar() throws MultinivelServiceException;
 
-	public abstract List<AfiliadoDTO> buscar(String paramString1, String paramString2,
-			String paramString3) throws MultinivelServiceException;
+	public abstract List<AfiliadoDTO> buscar(String paramString1, String paramString2, String paramString3) throws MultinivelServiceException;
 
-	public abstract List<Object> listarPorNivel(String paramString)
-			throws MultinivelServiceException;
+	public abstract List<Object> listarPorNivel(String paramString) throws MultinivelServiceException;
 
-	public abstract List<AfiliadoDTO> buscarDistribuidor(String paramString1, String paramString2)
-			throws MultinivelServiceException;
+	public abstract List<AfiliadoDTO> buscarDistribuidor(String paramString1, String paramString2) throws MultinivelServiceException;
 
 	public abstract List<AfiliadoDTO> listarDistribuidores() throws MultinivelServiceException;
 
-	public abstract void actualizarAfiliadoADistribuidor(Afiliado paramAfiliado)
-			throws MultinivelServiceException;
+	public abstract void actualizarAfiliadoADistribuidor(Afiliado paramAfiliado) throws MultinivelServiceException;
 
-	public abstract List<Object> listaAfiliadosPorDistribuidor(String paramString)
-			throws MultinivelServiceException;
+	public abstract List<Object> listaAfiliadosPorDistribuidor(String paramString) throws MultinivelServiceException;
 
-	public abstract boolean cambiarDocumento(String paramString1, String paramString2)
-			throws MultinivelServiceException;
+	public abstract boolean cambiarDocumento(String paramString1, String paramString2) throws MultinivelServiceException;
 
-	public abstract int contarAfiliacionesPorPeriodoDistribuidor(String paramString1,
-			String paramString2) throws MultinivelServiceException;
+	public abstract int contarAfiliacionesPorPeriodoDistribuidor(String paramString1, String paramString2) throws MultinivelServiceException;
 
-	public abstract int consultarIdDistribuidor(String paramString)
-			throws MultinivelServiceException;
+	public abstract int consultarIdDistribuidor(String paramString) throws MultinivelServiceException;
 
-	public abstract List<Nodo> generarHijosAfiliado(String paramString)
-			throws MultinivelServiceException;
+	public abstract List<Nodo> generarHijosAfiliado(String paramString) throws MultinivelServiceException;
 
-	public abstract List<Object> listarAfiliadosDistribuidorPorPeriodo(String paramString)
-			throws MultinivelServiceException;
+	public abstract List<Object> listarAfiliadosDistribuidorPorPeriodo(String paramString) throws MultinivelServiceException;
 
-	public DatosArbol ArbolAfiliado(String paramString) throws Exception;
+	public DatosArbol ArbolAfiliado(String cedula, String periodo) throws Exception;
 }
 
 /*

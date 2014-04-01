@@ -2,4 +2,4 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<c:redirect url="/arbol/arbol.xhtml?cedula=${cedula}" />
+<c:redirect url="/arbol/arbol.xhtml?cedula=${cedula}&periodo=${periodo}" />

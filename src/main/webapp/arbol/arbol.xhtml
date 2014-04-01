@@ -8,101 +8,101 @@
 	<h:outputStylesheet name="custom-tree.css" library="css" />
 </h:head>
 <h:body>
-
 	<h:form id="form1">
 		<p:panel>
 			<h:outputText style="font-family:Verdana;font-size:11px;"
-				value="El afiliado: "/>
-			<h:outputText style="font-family:Verdana;font-size:14px;font-weight:bold;"
-				value="#{treeBean.nombreAfiliado}" /><br />
+				value="El afiliado: " />
+			<h:outputText
+				style="font-family:Verdana;font-size:14px;font-weight:bold;"
+				value="#{treeBean.nombreAfiliado}" />
+			<br />
 			<h:outputText style="font-family:Verdana;font-size:11px;"
-				value="Tiene un número de afiliados de: "/>
+				value="Tiene un número de afiliados de: " />
 			<h:outputText
 				style="font-family:Verdana;font-size:14px; font-weight:bold;"
 				value="#{treeBean.numeroAfiliados}" />
 		</p:panel>
 
-		<p:panel id="panel1" header="Arbol detallado del afiliado - Multialoe" style="font-family:Verdana;font-size:12px; font-weight:bold;">
+		<p:panel id="panel1" header="Arbol detallado del afiliado - Multialoe"
+			style="font-family:Verdana;font-size:12px; font-weight:bold;">
 			<p:tree id="tree1" value="#{treeBean.model}" var="node"
 				animate="true" selectionMode="single"
 				selection="#{treeBean.selectedNode}" style="width:100%;height:100%;">
 
-				<p:ajax event="select" update=":form1:dlg" oncomplete="dlgAfiliado.show();" />
+				<p:ajax event="select" update=":form1:dlg"
+					oncomplete="dlgAfiliado.show();" />
 
 				<p:treeNode type="node">
-					<p:graphicImage value="../images/hijos.png" style="margin-right: 10px" />
+					<p:graphicImage value="../images/hijos.png"
+						style="margin-right: 10px" />
 					<h:outputText value="#{node}" />
 				</p:treeNode>
 
-				<p:treeNode type="leaf" icon="document-node">
-					<p:graphicImage value="../images/padre.png" style="margin-right: 10px" />
+				<p:treeNode type="leaf">
+					<p:graphicImage value="../images/padre.png"
+						style="margin-right: 10px" />
 					<h:outputText value="#{node}" />
 				</p:treeNode>
 			</p:tree>
 		</p:panel>
-
 		<p:dialog id="dlg" header="Información del afiliado"
 			widgetVar="dlgAfiliado" showEffect="explode" hideEffect="explode">
 			<p:panelGrid style="text-align:center;">
-				
-
 				<p:row>
-					<p:column colspan="2" style="background-color: #4B7431; color:#FFF">
+					<p:column colspan="2" style="background-color: #65B039; color:#FFF">
 						<h:outputText value="Cédula" />
 					</p:column>
 				</p:row>
 				<p:row>
-					<p:column colspan="2" style="background-color: #C5E0B3;">
+					<p:column colspan="2" style="background-color: #E6FFCC;">
 						<h:outputText styleClass="texto" value="#{treeBean.cedula}" />
 					</p:column>
 				</p:row>
 
 				<p:row>
-					<p:column colspan="2" style="background-color: #4B7431; color:#FFF">
+					<p:column colspan="2" style="background-color: #65B039; color:#FFF">
 						<h:outputText value="Nombre del afiliado" />
 					</p:column>
 				</p:row>
 				<p:row>
-					<p:column colspan="2" style="background-color: #C5E0B3;">
+					<p:column colspan="2" style="background-color: #E6FFCC;">
 						<h:outputText styleClass="texto" value="#{treeBean.nombre}" />
 					</p:column>
 				</p:row>
 
 				<p:row>
-					<p:column colspan="2" style="background-color: #4B7431; color:#FFF">
+					<p:column colspan="2" style="background-color: #65B039; color:#FFF">
 						<h:outputText value="Telefono" />
 					</p:column>
 				</p:row>
 				<p:row>
-					<p:column colspan="2" style="background-color: #C5E0B3;">
+					<p:column colspan="2" style="background-color: #E6FFCC;">
 						<h:outputText styleClass="texto" value="#{treeBean.telefono}" />
 					</p:column>
 				</p:row>
-					<p:row>
-					<p:column colspan="2" style="background-color: #4B7431; color:#FFF">
+				<p:row>
+					<p:column colspan="2" style="background-color: #65B039; color:#FFF">
 						<h:outputText value="Email" />
 					</p:column>
 				</p:row>
 				<p:row>
-					<p:column colspan="2" style="background-color: #C5E0B3;">
+					<p:column colspan="2" style="background-color: #E6FFCC;">
 						<h:outputText styleClass="texto" value="#{treeBean.email}" />
 					</p:column>
 				</p:row>
-				
-					<p:row>
-					<p:column colspan="2" style="background-color: #4B7431; color:#FFF">
+
+				<p:row>
+					<p:column colspan="2" style="background-color: #65B039; color:#FFF">
 						<h:outputText value="Direccion" />
 					</p:column>
 				</p:row>
 				<p:row>
-					<p:column colspan="2" style="background-color: #C5E0B3;">
+					<p:column colspan="2" style="background-color: #E6FFCC;">
 						<h:outputText styleClass="texto" value="#{treeBean.direccion}" />
 					</p:column>
 				</p:row>
-				
 			</p:panelGrid>
 		</p:dialog>
-
 	</h:form>
 </h:body>
 </html>

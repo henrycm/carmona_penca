@@ -21,18 +21,19 @@
 <body onload="javascript:cargarPeriodo('<c:out value="${periodo}"/>')">
 	<div align="center">
 		<div class="demo">
-			<form name="liquidacion" method="post" action="ControlLiquidacion">	
+			<form name="liquidacion" method="post" action="ControlLiquidacion">
 				<div class="btn-group">
 					<a class="btn btn-sm btn-default"
-						href="javascript:generarReporteProductoPorcentaje()">Generar Reporte</a>
+						href="javascript:generarReporteProductoPorcentaje()">Generar
+						Reporte</a>
 				</div>
 				<input name="accion" type="hidden" value="P"> <input
 					name="periodo" type="hidden">
 
 				<table align="center" class="tbl-lista" width="70%">
 					<tr>
-							<th colspan="2	">Consultar Consumo de producto por periodo</th>
-						</tr>
+						<th colspan="2	">Consultar Consumo de producto por periodo</th>
+					</tr>
 					<tr>
 						<td>Periodo: <select name="mes">
 

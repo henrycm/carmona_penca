@@ -4,6 +4,6 @@ import co.com.multinivel.shared.dto.DatosArbol;
 
 public interface ArbolDAO {
 
-	public abstract DatosArbol getArbol(String paramString) throws Exception;
+	public abstract DatosArbol getArbol(String cedula, String periodo) throws Exception;
 
 }

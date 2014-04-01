@@ -66,8 +66,7 @@ public class AfiliadoServiceImpl implements AfiliadoService {
 		return lista;
 	}
 
-	public List<AfiliadoDTO> buscar(String cedula, String nombre,
-			String cedulaDistribuidor) throws MultinivelServiceException {
+	public List<AfiliadoDTO> buscar(String cedula, String nombre, String cedulaDistribuidor) throws MultinivelServiceException {
 		List<AfiliadoDTO> lista = null;
 		try {
 			lista = this.afiliadoDAO.buscar(cedula, nombre, cedulaDistribuidor);
@@ -77,8 +76,7 @@ public class AfiliadoServiceImpl implements AfiliadoService {
 		return lista;
 	}
 
-	public List<Object> listarPorNivel(String red)
-			throws MultinivelServiceException {
+	public List<Object> listarPorNivel(String red) throws MultinivelServiceException {
 		List<Object> lista = null;
 		try {
 			lista = this.afiliadoDAO.listarPorNivel(red);
@@ -88,8 +86,7 @@ public class AfiliadoServiceImpl implements AfiliadoService {
 		return lista;
 	}
 
-	public List<AfiliadoDTO> buscarDistribuidor(String codigo, String nombre)
-			throws MultinivelServiceException {
+	public List<AfiliadoDTO> buscarDistribuidor(String codigo, String nombre) throws MultinivelServiceException {
 		List<AfiliadoDTO> lista = null;
 		try {
 			lista = this.afiliadoDAO.buscarDistribuidor(codigo, nombre);
@@ -99,8 +96,7 @@ public class AfiliadoServiceImpl implements AfiliadoService {
 		return lista;
 	}
 
-	public List<AfiliadoDTO> listarDistribuidores()
-			throws MultinivelServiceException {
+	public List<AfiliadoDTO> listarDistribuidores() throws MultinivelServiceException {
 		List<AfiliadoDTO> lista = null;
 		try {
 			lista = this.afiliadoDAO.listarDistribuidores();
@@ -110,8 +106,7 @@ public class AfiliadoServiceImpl implements AfiliadoService {
 		return lista;
 	}
 
-	public void actualizarAfiliadoADistribuidor(Afiliado afiliado)
-			throws MultinivelServiceException {
+	public void actualizarAfiliadoADistribuidor(Afiliado afiliado) throws MultinivelServiceException {
 		try {
 			this.afiliadoDAO.actualizarAfiliadoADistribuidor(afiliado);
 		} catch (MultinivelDAOException e) {
@@ -119,8 +114,7 @@ public class AfiliadoServiceImpl implements AfiliadoService {
 		}
 	}
 
-	public List<Object> listaAfiliadosPorDistribuidor(String periodo)
-			throws MultinivelServiceException {
+	public List<Object> listaAfiliadosPorDistribuidor(String periodo) throws MultinivelServiceException {
 		List<Object> lista = null;
 		try {
 			lista = this.afiliadoDAO.listaAfiliadosPorDistribuidor(periodo);
@@ -130,34 +124,27 @@ public class AfiliadoServiceImpl implements AfiliadoService {
 		return lista;
 	}
 
-	public boolean cambiarDocumento(String documentoActual,
-			String documentoNuevo) throws MultinivelServiceException {
+	public boolean cambiarDocumento(String documentoActual, String documentoNuevo) throws MultinivelServiceException {
 		boolean retorno = false;
 		try {
-			retorno = this.afiliadoDAO.cambiarDocumento(documentoActual,
-					documentoNuevo);
+			retorno = this.afiliadoDAO.cambiarDocumento(documentoActual, documentoNuevo);
 		} catch (MultinivelDAOException e) {
 			throw new MultinivelServiceException(e.getMessage(), getClass());
 		}
 		return retorno;
 	}
 
-	public int contarAfiliacionesPorPeriodoDistribuidor(
-			String cedulaDistribuidor, String periodo)
-			throws MultinivelServiceException {
+	public int contarAfiliacionesPorPeriodoDistribuidor(String cedulaDistribuidor, String periodo) throws MultinivelServiceException {
 		int retorno = 0;
 		try {
-			retorno = this.afiliadoDAO
-					.contarAfiliacionesPorPeriodoDistribuidor(
-							cedulaDistribuidor, periodo);
+			retorno = this.afiliadoDAO.contarAfiliacionesPorPeriodoDistribuidor(cedulaDistribuidor, periodo);
 		} catch (MultinivelDAOException e) {
 			throw new MultinivelServiceException(e.getMessage(), getClass());
 		}
 		return retorno;
 	}
 
-	public int consultarIdDistribuidor(String distribuidor)
-			throws MultinivelServiceException {
+	public int consultarIdDistribuidor(String distribuidor) throws MultinivelServiceException {
 		int retorno = 0;
 		try {
 			retorno = this.afiliadoDAO.consultarIdDistribuidor(distribuidor);
@@ -167,8 +154,7 @@ public class AfiliadoServiceImpl implements AfiliadoService {
 		return retorno;
 	}
 
-	public List<Nodo> generarHijosAfiliado(String afiliado)
-			throws MultinivelServiceException {
+	public List<Nodo> generarHijosAfiliado(String afiliado) throws MultinivelServiceException {
 		List<Nodo> lista = null;
 		try {
 			lista = this.afiliadoDAO.generarHijosAfiliado(afiliado);
@@ -178,20 +164,18 @@ public class AfiliadoServiceImpl implements AfiliadoService {
 		return lista;
 	}
 
-	public List<Object> listarAfiliadosDistribuidorPorPeriodo(String periodo)
-			throws MultinivelServiceException {
+	public List<Object> listarAfiliadosDistribuidorPorPeriodo(String periodo) throws MultinivelServiceException {
 		List<Object> lista = null;
 		try {
-			lista = this.afiliadoDAO
-					.listarAfiliadosDistribuidorPorPeriodo(periodo);
+			lista = this.afiliadoDAO.listarAfiliadosDistribuidorPorPeriodo(periodo);
 		} catch (MultinivelDAOException e) {
 			throw new MultinivelServiceException(e.getMessage(), getClass());
 		}
 		return lista;
 	}
 
-	public DatosArbol ArbolAfiliado(String paramString) throws Exception {
-		return this.arbolDAO.getArbol(paramString);
+	public DatosArbol ArbolAfiliado(String cedula, String periodo) throws Exception {
+		return this.arbolDAO.getArbol(cedula, periodo);
 	}
 }
 
