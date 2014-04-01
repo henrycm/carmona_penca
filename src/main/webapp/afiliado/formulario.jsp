@@ -231,20 +231,6 @@
 										</select>
 
 										</td>
-										<td>Profesion u Ocupación:<input name="profesion"
-											type="text" size="15" maxlength="20" /></td>
-										<td width="18%">Estado Civil: <select name="estadoCivil">
-
-												<option value="SOLTERO">Soltero</option>
-												<option value="CASADO">Casado</option>
-												<option value="UNION LIBRE">Unión Libre</option>
-												<option value="VIUDO">Viudo</option>
-												<option value="SEPARADO">Separado</option>
-												<option value="OTRO">Otro</option>
-										</select>
-
-										</td>
-
 									</tr>
 
 									<tr align="left">
@@ -266,28 +252,16 @@
 												</c:forEach>
 										</select></td>
 
-
-
-
 									</tr>
 
 									<tr align="left">
-
-
-
 										<td>Teléfono: <input name="telefono" type="text"
 											size="10" maxlength="10" /></td>
-										<td>Celular o Beeper: <input name="celular" type="text"
+										<td>Celular: <input name="celular" type="text"
 											size="10" maxlength="10" />
 										</td>
 										<td>E-mail: <input name="email" type="text" size="20"
 											maxlength="50" /></td>
-
-
-										<td>Nombre del Conyugue/Tutor: <input
-											name="nombreConyugue" type="text" size="20" maxlength="50" />
-										</td>
-
 									</tr>
 
 								</table>
