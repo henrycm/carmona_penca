@@ -13,10 +13,10 @@
     <param-name>javax.faces.DEFAULT_SUFFIX</param-name>
     <param-value>.xhtml</param-value>
   </context-param>
- <!-- <context-param>
+  <context-param>
       <param-name>primefaces.THEME</param-name>
       <param-value>south-street</param-value>
-   </context-param> -->
+   </context-param>
   <filter>
     <filter-name>springSecurityFilterChain</filter-name>
     <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>

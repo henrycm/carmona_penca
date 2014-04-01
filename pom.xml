@@ -4,12 +4,11 @@
 	<repositories>
 		<repository>
 			<id>prime-repo</id>
-			<name>PrimeFaces Maven Repository</name>
+			<name>Prime Repo</name>
 			<url>http://repository.primefaces.org</url>
-			<layout>default</layout>
 		</repository>
 	</repositories>
-
+	
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>co.com.multinivel</groupId>
 	<artifactId>multinivel</artifactId>
@@ -43,7 +42,8 @@
 		<groovy.version>2.0.1</groovy.version>
 		<pager-taglib-version>2.0</pager-taglib-version>
 		<faces-version>2.1.2</faces-version>
-		<prime-faces-version>3.5</prime-faces-version>
+		<prime-faces-version>4.0</prime-faces-version>
+		<prime-theme.version>1.0.10</prime-theme.version>
 
 		<pkgArtifactId>jtds</pkgArtifactId>
 		<pkgVersion>1.2.4</pkgVersion>
@@ -253,9 +253,9 @@
 			<version>${prime-faces-version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.primefaces.extensions</groupId>
+			<groupId>org.primefaces.themes</groupId>
 			<artifactId>all-themes</artifactId>
-			<version>1.0.8</version>
+			<version>${prime-theme.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>

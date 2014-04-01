@@ -154,6 +154,9 @@
     <dependent-module archiveName="mysql-connector-java-5.1.21.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/mysql/mysql-connector-java/5.1.21/mysql-connector-java-5.1.21.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
+    <dependent-module archiveName="jtds-1.2.4.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/net/sourceforge/jtds/jtds/1.2.4/jtds-1.2.4.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
     <dependent-module archiveName="hibernate-entitymanager-4.1.6.Final.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/hibernate/hibernate-entitymanager/4.1.6.Final/hibernate-entitymanager-4.1.6.Final.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
@@ -193,7 +196,10 @@
     <dependent-module archiveName="javax.servlet-api-3.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/javax/servlet/javax.servlet-api/3.0.1/javax.servlet-api-3.0.1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
-    <dependent-module archiveName="primefaces-3.5.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/primefaces/primefaces/3.5/primefaces-3.5.jar">
+    <dependent-module archiveName="primefaces-4.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/primefaces/primefaces/4.0/primefaces-4.0.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="all-themes-1.0.10.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/primefaces/themes/all-themes/1.0.10/all-themes-1.0.10.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
     <wb-resource deploy-path="/WEB-INF/classes" source-path="src/main/java"/>
