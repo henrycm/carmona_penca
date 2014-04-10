@@ -59,7 +59,8 @@
 			maxDate : '-1y',
 			changeMonth : true,
 			changeYear : true,
-			yearRange : '1940:2010'
+			yearRange : '1940:2010',
+			dateFormat: 'yy-mm-dd'
 		});
 		$("#fecha").datepicker("option", "showAnim", "drop");
 

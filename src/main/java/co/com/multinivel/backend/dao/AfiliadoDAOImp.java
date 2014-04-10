@@ -21,6 +21,7 @@ import co.com.multinivel.shared.dto.AfiliadoDTO;
 import co.com.multinivel.shared.dto.AfiliadosNivel;
 import co.com.multinivel.shared.dto.Nodo;
 import co.com.multinivel.shared.exception.MultinivelDAOException;
+import co.com.multinivel.shared.util.FechasUtil;
 import co.com.multinivel.shared.util.ParametrosEnum;
 
 @Repository
@@ -52,7 +53,8 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
 				String barrio = (String) objectArray[5];
 				String telefono = (String) objectArray[6];
 				String celular = (String) objectArray[7];
-				String fechaNacimiento = (String) objectArray[8];
+				String tmp = (String) objectArray[8];
+				Date fechaNacimiento = FechasUtil.parse(tmp);
 				String departamento = (String) objectArray[9];
 				String ciudad = (String) objectArray[10];
 				String departamentoResidencia = (String) objectArray[11];
@@ -107,12 +109,14 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new MultinivelDAOException("Error consultando el afiliado -" + e.getMessage(), getClass());
+			throw new MultinivelDAOException("Error consultando el afiliado -" + e.getMessage(),
+					getClass());
 		}
 		return afiliado;
 	}
 
-	public Afiliado consultar(String codigo, String pnombre, String papellido) throws MultinivelDAOException {
+	public Afiliado consultar(String codigo, String pnombre, String papellido)
+			throws MultinivelDAOException {
 		Afiliado afiliado = null;
 		try {
 			String sql = " SELECT a.cedula, a.nombre,a.apellido, a.nivel, a.red, a.direccion,a.barrio,a.telefono,a.celular,a.fecha_nacimiento,a.departamento,a.ciudad, a.departamentoResidencia,a.ciudadResidencia,a.email,a.estadocivil,a.ocupacion,a.cedula_Papa, a.tipo_cuenta,a.cuenta_nro,a.titular_cuenta,a.nombretitularcta,a.banco,a.documentoConyugue,a.nombreConyugue, a.tipoAfiliado,a.cedulaDistribuidor,a.cedulaDistribuidorPago,tipoDocumento from t_afiliados a  where UPPER(activo) ='SI' ";
@@ -140,7 +144,8 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
 				String barrio = (String) objectArray[6];
 				String telefono = (String) objectArray[7];
 				String celular = (String) objectArray[8];
-				String fechaNacimiento = (String) objectArray[9];
+				String tmp = (String) objectArray[9];
+				Date fechaNacimiento = FechasUtil.parse(tmp);
 				String departamento = (String) objectArray[10];
 				String ciudad = (String) objectArray[11];
 				String departamentoResidencia = (String) objectArray[12];
@@ -193,7 +198,8 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new MultinivelDAOException("Error consultando el afiliado -" + e.getMessage(), getClass());
+			throw new MultinivelDAOException("Error consultando el afiliado -" + e.getMessage(),
+					getClass());
 		}
 		return afiliado;
 	}
@@ -215,7 +221,8 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
 				Afiliado afiliadoConsultado = consultar(afiliado.getCedula());
 				System.err.println("afiliadoconsultado:" + afiliadoConsultado);
 				if (afiliadoConsultado != null) {
-					Query rs = this.entityManager.createNativeQuery("DELETE FROM T_AFILIADOS   WHERE CEDULA=? ");
+					Query rs = this.entityManager
+							.createNativeQuery("DELETE FROM T_AFILIADOS   WHERE CEDULA=? ");
 
 					rs.setParameter(1, afiliado.getCedula());
 					rs.executeUpdate();
@@ -224,7 +231,8 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new MultinivelDAOException("Error borrando el afiliado -" + e.getMessage(), getClass());
+			throw new MultinivelDAOException("Error borrando el afiliado -" + e.getMessage(),
+					getClass());
 		}
 		return retorno;
 	}
@@ -237,19 +245,26 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new MultinivelDAOException("Error ingresando el afiliado -" + e.getMessage(), getClass());
+			throw new MultinivelDAOException("Error ingresando el afiliado -" + e.getMessage(),
+					getClass());
 		}
 	}
 
 	public void actualizar(Afiliado afiliado) throws MultinivelDAOException {
 		try {
 			Afiliado afiliadoConsultado = consultar(afiliado.getCedula());
+			/**
+			 * Se corrige para no actualizar la fecha de creación.
+			 * JOHECAMA. 2014-04-09
+			 */
+			afiliado.setFechaIngreso(afiliadoConsultado.getFechaIngreso());			
 			if (afiliadoConsultado != null) {
 				this.entityManager.merge(afiliado);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new MultinivelDAOException("Error actualizando el afiliado -" + e.getMessage(), getClass());
+			throw new MultinivelDAOException("Error actualizando el afiliado -" + e.getMessage(),
+					getClass());
 		}
 	}
 
@@ -259,7 +274,8 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
 		return lista;
 	}
 
-	public List<AfiliadoDTO> buscar(String codigo, String nombre, String cedulaDistribuidor) throws MultinivelDAOException {
+	public List<AfiliadoDTO> buscar(String codigo, String nombre, String cedulaDistribuidor)
+			throws MultinivelDAOException {
 		List<AfiliadoDTO> lista = null;
 		try {
 			String sql = " SELECT a.cedula, a.nombre,a.apellido,  a.red from t_afiliados a  where UPPER(activo) ='SI'  ";
@@ -335,16 +351,24 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
 		return lista;
 	}
 
-	public List<AfiliadoDTO> buscarDistribuidor(String codigo, String nombre) throws MultinivelDAOException {
+	public List<AfiliadoDTO> buscarDistribuidor(String codigo, String nombre)
+			throws MultinivelDAOException {
 		List<AfiliadoDTO> lista = null;
 		try {
-			String sql = "SELECT a.cedula, \n" + "       a.nombre, \n" + "       a.apellido, \n" + "       a.tipo_cuenta, \n"
-					+ "       a.cuenta_nro, \n" + "       a.banco, \n" + "       COALESCE(b.nm_afiliados, 0), \n"
-					+ "       COALESCE(c.cantidad, 0)nm_cuota_afiliados \n" + "FROM   t_afiliados a \n"
-					+ "       LEFT JOIN (SELECT ceduladistribuidor, \n" + "                         Count(*)nm_afiliados \n"
-					+ "                  FROM   t_afiliados \n" + "                  GROUP  BY ceduladistribuidor)b \n"
-					+ "              ON a.cedula = b.ceduladistribuidor \n" + "       LEFT JOIN t_cantidad_afiliaciones_distribuidor c \n"
-					+ "              ON a.cedula = c.distribuidor \n" + "WHERE  a.activo = 'si' \n" + "       AND a.tipoafiliado = '2'";
+			String sql = "SELECT a.cedula, \n" + "       a.nombre, \n" + "       a.apellido, \n"
+					+ "       a.tipo_cuenta, \n"
+					+ "       a.cuenta_nro, \n" + "       a.banco, \n"
+					+ "       COALESCE(b.nm_afiliados, 0), \n"
+					+ "       COALESCE(c.cantidad, 0)nm_cuota_afiliados \n"
+					+ "FROM   t_afiliados a \n"
+					+ "       LEFT JOIN (SELECT ceduladistribuidor, \n"
+					+ "                         Count(*)nm_afiliados \n"
+					+ "                  FROM   t_afiliados \n"
+					+ "                  GROUP  BY ceduladistribuidor)b \n"
+					+ "              ON a.cedula = b.ceduladistribuidor \n"
+					+ "       LEFT JOIN t_cantidad_afiliaciones_distribuidor c \n"
+					+ "              ON a.cedula = c.distribuidor \n" + "WHERE  a.activo = 'si' \n"
+					+ "       AND a.tipoafiliado = '2'";
 			if ((codigo != null) && (!"".equals(codigo))) {
 				sql = sql + " AND  a.cedula ='" + codigo + "'";
 			}
@@ -388,13 +412,20 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
 	public List<AfiliadoDTO> listarDistribuidores() throws MultinivelDAOException {
 		List<AfiliadoDTO> lista = null;
 		try {
-			String sql = "SELECT a.cedula, \n" + "       a.nombre, \n" + "       a.apellido, \n" + "       a.tipo_cuenta, \n"
-					+ "       a.cuenta_nro, \n" + "       a.banco, \n" + "       COALESCE(b.nm_afiliados, 0), \n"
-					+ "       COALESCE(c.cantidad, 0)nm_cuota_afiliados \n" + "FROM   t_afiliados a \n"
-					+ "       LEFT JOIN (SELECT ceduladistribuidor, \n" + "                         Count(*)nm_afiliados \n"
-					+ "                  FROM   t_afiliados \n" + "                  GROUP  BY ceduladistribuidor)b \n"
-					+ "              ON a.cedula = b.ceduladistribuidor \n" + "       LEFT JOIN t_cantidad_afiliaciones_distribuidor c \n"
-					+ "              ON a.cedula = c.distribuidor \n" + "WHERE  a.activo = 'si' \n" + "       AND a.tipoafiliado = '2' \n"
+			String sql = "SELECT a.cedula, \n" + "       a.nombre, \n" + "       a.apellido, \n"
+					+ "       a.tipo_cuenta, \n"
+					+ "       a.cuenta_nro, \n" + "       a.banco, \n"
+					+ "       COALESCE(b.nm_afiliados, 0), \n"
+					+ "       COALESCE(c.cantidad, 0)nm_cuota_afiliados \n"
+					+ "FROM   t_afiliados a \n"
+					+ "       LEFT JOIN (SELECT ceduladistribuidor, \n"
+					+ "                         Count(*)nm_afiliados \n"
+					+ "                  FROM   t_afiliados \n"
+					+ "                  GROUP  BY ceduladistribuidor)b \n"
+					+ "              ON a.cedula = b.ceduladistribuidor \n"
+					+ "       LEFT JOIN t_cantidad_afiliaciones_distribuidor c \n"
+					+ "              ON a.cedula = c.distribuidor \n" + "WHERE  a.activo = 'si' \n"
+					+ "       AND a.tipoafiliado = '2' \n"
 					+ "ORDER BY a.nombre";
 
 			Query q = this.entityManager.createNativeQuery(sql);
@@ -446,16 +477,18 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new MultinivelDAOException("Error actualizando el afiliado -" + e.getMessage(), getClass());
+			throw new MultinivelDAOException("Error actualizando el afiliado -" + e.getMessage(),
+					getClass());
 		}
 	}
 
-	public boolean validarNivelesRed(Afiliado afiliado, String Distribuidor) throws MultinivelDAOException {
+	public boolean validarNivelesRed(Afiliado afiliado, String Distribuidor)
+			throws MultinivelDAOException {
 		boolean retorno = false;
 		try {
 			String sql = " SELECT a.cedula  from t_afiliados a  where    a.cedula = '" +
 
-			afiliado.getCedula() + "'";
+					afiliado.getCedula() + "'";
 
 			Query q = this.entityManager.createNativeQuery(sql);
 
@@ -507,12 +540,14 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
 		return lista;
 	}
 
-	public boolean cambiarDocumento(String documentoActual, String documentoNuevo) throws MultinivelDAOException {
+	public boolean cambiarDocumento(String documentoActual, String documentoNuevo)
+			throws MultinivelDAOException {
 		boolean retorno = false;
 		int param1 = 0;
 		try {
 			Class.forName(ParametrosEnum.DRIVER_DATABASE.getValor());
-			Connection conexion = DriverManager.getConnection(ParametrosEnum.URL_DATABASE.getValor(), ParametrosEnum.USUARIO.getValor(),
+			Connection conexion = DriverManager.getConnection(
+					ParametrosEnum.URL_DATABASE.getValor(), ParametrosEnum.USUARIO.getValor(),
 					ParametrosEnum.PASSWORD.getValor());
 
 			System.err.println(documentoActual);
@@ -532,18 +567,24 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 
-			throw new MultinivelDAOException("error al realizar el cambio de documento:" + e.getMessage(), getClass());
+			throw new MultinivelDAOException("error al realizar el cambio de documento:"
+					+ e.getMessage(), getClass());
 		}
 		return retorno;
 	}
 
-	public int contarAfiliacionesPorPeriodoDistribuidor(String cedulaDistribuidor, String periodo) throws MultinivelDAOException {
+	public int contarAfiliacionesPorPeriodoDistribuidor(String cedulaDistribuidor, String periodo)
+			throws MultinivelDAOException {
 		int s = 0;
 		int registros = 0;
 		try {
-			String sql = " SELECT count(*)   from t_afiliados a  where UPPER(activo) ='SI'   and a.cedulaDistribuidor='" +
+			String sql = " SELECT count(*)   from t_afiliados a  where UPPER(activo) ='SI'   and a.cedulaDistribuidor='"
+					+
 
-			cedulaDistribuidor + "'" + " and DATE_FORMAT(a.FECHAingreso,'%m/%Y')='" + periodo + "'";
+					cedulaDistribuidor
+					+ "'"
+					+ " and DATE_FORMAT(a.FECHAingreso,'%m/%Y')='"
+					+ periodo + "'";
 
 			Query q = this.entityManager.createNativeQuery(sql);
 
@@ -565,9 +606,10 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
 		int retorno = 0;
 		int s = 0;
 		try {
-			String sql = " SELECT Coalesce(max(idafiliaciondist)+1,1)  FROM t_afiliados where ceduladistribuidor='" +
+			String sql = " SELECT Coalesce(max(idafiliaciondist)+1,1)  FROM t_afiliados where ceduladistribuidor='"
+					+
 
-			distribuidor + "'";
+					distribuidor + "'";
 
 			Query q = this.entityManager.createNativeQuery(sql);
 
@@ -579,7 +621,8 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new MultinivelDAOException("error al consultar el consecutivo de distribuidor", getClass());
+			throw new MultinivelDAOException("error al consultar el consecutivo de distribuidor",
+					getClass());
 		}
 		return retorno;
 	}
@@ -1186,7 +1229,8 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
 		}
 	}
 
-	public List<Object> listarAfiliadosDistribuidorPorPeriodo(String periodo) throws MultinivelDAOException {
+	public List<Object> listarAfiliadosDistribuidorPorPeriodo(String periodo)
+			throws MultinivelDAOException {
 		List<Object> lista = null;
 		try {
 			String sql = " select a.cedula ,CONCAT(A.NOMBRE,' ', A.APELLIDO)NOMBRE_AFILIADO, a.fechaIngreso,a.cedulaDistribuidor,d.nombreDistribuidor   from t_afiliados a ,  ( SELECT DISTINCT CONCAT(A.NOMBRE,' ', A.APELLIDO)nombreDistribuidor ,a.cedula     FROM t_afiliados a,t_afiliados b    where b.cedula= a.ceduladistribuidor AND a.tipoAfiliado='2' order by b.nombre)d  where d.cedula =a.cedulaDistribuidor  and DATE_FORMAT(FECHAINGRESO,'%m/%Y')=?  order by nombreDistribuidor ";
@@ -1218,7 +1262,8 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new MultinivelDAOException("error al listar los afiliados por distribuidor periodo", getClass());
+			throw new MultinivelDAOException(
+					"error al listar los afiliados por distribuidor periodo", getClass());
 		}
 		return lista;
 	}

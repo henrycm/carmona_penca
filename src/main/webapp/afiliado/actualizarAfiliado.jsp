@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -31,7 +32,7 @@
 	<script>
  
  $(function() {
-		$( "#fecha" ).datepicker({maxDate: '-18y'});
+		$( "#fecha" ).datepicker({maxDate: '-18y', dateFormat: 'yy-mm-dd'});
 		$( "#fecha" ).datepicker( "option", "showAnim", "drop" );
 		
 	});
@@ -116,7 +117,8 @@ Código Nuevo Empresario: <input name="codigoEmpresario" type="text" size="30" va
          <input name="numeroIdentificacion" type="text" size="13" value="<c:out value='${afiliado.cedula}'/>" maxlength="13" /> 
        </td>
     <td width="25%">Fecha de Nac: 
-        <input name="fechaNacimiento" type="text" class="ui-datepicker-calendar" id="fecha" size="15" value="<c:out value='${afiliado.fechaNacimiento}'/>"/></td>
+        <input name="fechaNacimiento" type="text" class="ui-datepicker-calendar" id="fecha" size="15" value="<fmt:formatDate pattern='yyyy-MM-dd' 
+            value='${afiliado.fechaNacimiento}' />"/></td>
     </tr>
     <tr align="left">
       <td>

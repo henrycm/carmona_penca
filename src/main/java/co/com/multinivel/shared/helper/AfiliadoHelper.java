@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import co.com.multinivel.backend.model.Afiliado;
 import co.com.multinivel.shared.dto.Nodo;
+import co.com.multinivel.shared.util.FechasUtil;
 
 public class AfiliadoHelper {
 	public static Afiliado cargarEntidad(HttpServletRequest request) {
@@ -22,7 +23,8 @@ public class AfiliadoHelper {
 		afiliado.setNombre(request.getParameter("nombre").toUpperCase());
 		afiliado.setApellido(request.getParameter("apellido").toUpperCase());
 
-		afiliado.setFechaNacimiento(request.getParameter("fechaNacimiento"));
+		String tmp = request.getParameter("fechaNacimiento");
+		afiliado.setFechaNacimiento(FechasUtil.parse(tmp));
 		afiliado.setActivo("si");
 		afiliado.setTipoDocumento(request.getParameter("tipoDocumento"));
 		afiliado.setCiudad(request.getParameter("ciudadNacimiento").toUpperCase());

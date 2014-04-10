@@ -1,6 +1,5 @@
 package co.com.multinivel.shared.util;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -15,8 +14,7 @@ public class FechasUtil {
 	public static Date parse(String fecha) {
 		try {
 			return sdf.parse(fecha);
-		} catch (ParseException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
 			return null;
 		}
 	}

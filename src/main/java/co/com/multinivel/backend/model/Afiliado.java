@@ -7,6 +7,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "t_afiliados")
@@ -34,7 +36,8 @@ public class Afiliado implements Serializable {
 	private String email;
 	private String estadoCivil;
 	@Column(name = "FECHA_NACIMIENTO")
-	private String fechaNacimiento;
+	@Temporal(TemporalType.DATE)
+	private Date fechaNacimiento;
 	private String documentoConyugue;
 	private String nombre;
 	private String nombreConyugue;
@@ -46,6 +49,7 @@ public class Afiliado implements Serializable {
 	private String tipoCuenta;
 	private String tipoDocumento;
 	private String tipoDocumentoConyugue;
+	@Temporal(TemporalType.DATE)
 	private Date fechaIngreso;
 	private String tipoAfiliado;
 	private String usuarioIngreso;
@@ -188,11 +192,11 @@ public class Afiliado implements Serializable {
 		this.estadoCivil = estadoCivil;
 	}
 
-	public String getFechaNacimiento() {
+	public Date getFechaNacimiento() {
 		return this.fechaNacimiento;
 	}
 
-	public void setFechaNacimiento(String fechaNacimiento) {
+	public void setFechaNacimiento(Date fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 
