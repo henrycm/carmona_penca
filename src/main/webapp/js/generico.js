@@ -1,18 +1,22 @@
 function validarRequerido() {
+	var valido = true;
 	$("input[required],select[required]").each(function() {
-		if ($(this).val() == "") {			
+		if ($(this).val() == "") {
 			centrar(this);
 			alert("Este campo es requerido!");
+			valido = false;
 			return false;
 		}
 	});
+	return valido;
 }
 
-function centrar(elemento)
-{
-	var height = $( window ).height()
+function centrar(elemento) {
+	var height = $(window).height()
 	var offset = $(elemento).offset().top - (height / 3);
-	$('html, body').animate({scrollTop:offset}, 600);
+	$('html, body').animate({
+		scrollTop : offset
+	}, 600);
 	$(elemento).focus();
 }
 
@@ -59,11 +63,11 @@ function calcular_edad(fecha) {
 
 		// resto los años de las dos fechas
 		edad = hoy.getUTCFullYear() - ano - 1; // -1 porque no se si ha
-												// cumplido años ya este año
+		// cumplido años ya este año
 		// si resto los meses y me da menor que 0 entonces no ha cumplido años.
 		// Si da mayor si ha cumplido
 		if (hoy.getMonth() + 1 - mes < 0) // + 1 porque los meses empiezan en
-											// 0
+			// 0
 			return edad;
 		if (hoy.getMonth() + 1 - mes > 0)
 			return edad + 1;
@@ -155,27 +159,24 @@ function validarEnteros(campo) {
  * forma.mes.options[0].text="0"+(mes-2);
  * forma.mes.options[0].value="0"+(mes-2);
  * 
- * }else{ forma.mes.options[0].text=(mes-2); forma.mes.options[0].value=(mes-2);
- *  } forma.mes.options[1]= new Option();
+ * }else{ forma.mes.options[0].text=(mes-2); forma.mes.options[0].value=(mes-2); }
+ * forma.mes.options[1]= new Option();
  * 
  * if((mes-1)<10){ forma.mes.options[1].text="0"+(mes-1);
  * forma.mes.options[1].value="0"+(mes-1);
  * 
- * }else{ forma.mes.options[1].text=(mes-1); forma.mes.options[1].value=(mes-1);
- *  } forma.mes.options[2]= new Option();
+ * }else{ forma.mes.options[1].text=(mes-1); forma.mes.options[1].value=(mes-1); }
+ * forma.mes.options[2]= new Option();
  * 
  * if((mes)<10){ forma.mes.options[2].text="0"+(mes);
  * forma.mes.options[2].value="0"+(mes);
  * 
- * }else{ forma.mes.options[2].text=(mes); forma.mes.options[2].value=(mes);
- *  }
+ * }else{ forma.mes.options[2].text=(mes); forma.mes.options[2].value=(mes); }
  * 
  * forma.mes.options[2].selected=true;
  * 
  * forma.ano.options[0]=new Option(); forma.ano.options[0].text=(year);
- * forma.ano.options[0].value=(year); forma.ano.options[0].selected=true;
- *  }
- * 
+ * forma.ano.options[0].value=(year); forma.ano.options[0].selected=true; }
  *  }
  */
 
@@ -316,19 +317,17 @@ function cargarPeriodoConsumo(periodo) {
  * forma.mes.options[0].text="0"+(mes-1);
  * forma.mes.options[0].value="0"+(mes-1);
  * 
- * }else{ forma.mes.options[0].text=(mes-1); forma.mes.options[0].value=(mes-1);
- *  } forma.mes.options[1]= new Option();
+ * }else{ forma.mes.options[0].text=(mes-1); forma.mes.options[0].value=(mes-1); }
+ * forma.mes.options[1]= new Option();
  * 
  * if((mes-1)<10){ forma.mes.options[1].text="0"+(mes);
  * forma.mes.options[1].value="0"+(mes);
  * 
- * }else{ forma.mes.options[1].text=(mes); forma.mes.options[1].value=(mes);
- *  }
+ * }else{ forma.mes.options[1].text=(mes); forma.mes.options[1].value=(mes); }
  * 
  * 
  * forma.mes.options[0].selected=true;
  * 
  * forma.ano.options[0]=new Option(); forma.ano.options[0].text=(year);
- * forma.ano.options[0].value=(year); forma.ano.options[0].selected=true;
- *  } }
+ * forma.ano.options[0].value=(year); forma.ano.options[0].selected=true; } }
  */
