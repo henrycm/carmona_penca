@@ -13,7 +13,7 @@
 		<li><a target="mainFrame" href="administracion/IndexAfiliado?accion=C" >Actualizar Afiliado</a></li>
 		<li><a target="mainFrame" href="administracion/IndexAfiliado?accion=X" >Eliminar Afiliado</a></li>
 		<li><a target="mainFrame" href="administracion/IndexAfiliado?accion=N" >Listar Afiliados por distribuidor</a></li>
-		<li><a target="mainFrame" href="administracion/IndexAfiliado?accion=E" >Cons. Afiliado por Codigo</a></li>
+		<li><a target="mainFrame" href="administracion/IndexAfiliado?accion=E" >Cons. Afiliado</a></li>
 		<li><a target="mainFrame" href="administracion/IndexAfiliado?accion=D" >Actualizar Afiliado a Distribuidor</a></li>
 		<li><a target="mainFrame" href="administracion/IndexAfiliado?accion=F" >Listar Distribuidores</a></li>
 		<li><a target="mainFrame" href="administracion/IndexAfiliado?accion=W" >Activar Afiliac. por Distribuidor</a></li>

@@ -65,29 +65,37 @@ public class AfiliadoFrontController extends HttpServlet {
 			recurso = RecursosEnum.FW_INDEX_AFILIADO.getRecurso();
 			switch (accion) {
 			case 'E':
-				afiliadoConsulta = this.afiliadoService.consultar(request
-						.getParameter("codigoEmpresario")
-						+ "-"
-						+ request.getParameter("letra"));
 				recurso = RecursosEnum.FW_CONSULTAR_AFILIADO.getRecurso();
-				request.setAttribute("afiliado", afiliadoConsulta);
-				request.setAttribute("banco", this.bancoService
-						.consultar(afiliadoConsulta.getBanco()));
-				if ((afiliadoConsulta != null)
-						&& (afiliadoConsulta.getCedula() != null)) {
-					request.setAttribute("patrocinador", this.afiliadoService
-							.consultar(afiliadoConsulta.getCedulaPapa()));
-					List<AfiliadoDTO> listaAfiliado = this.afiliadoService
-							.buscarDistribuidor(
-									afiliadoConsulta.getCedulaDistribuidor(),
-									null);
-					if ((listaAfiliado != null) && (listaAfiliado.size() > 0)) {
-						request.setAttribute("distribuidor",
-								listaAfiliado.get(0));
+				String nomFiltro = request.getParameter("nomFiltro");
+				String filtro = request.getParameter("filtro");
+				if (filtro != null && nomFiltro != null) {
+					lista = this.afiliadoService.buscar(nomFiltro, filtro);
+					request.setAttribute("listaAfiliados", lista);
+					System.out.println("LISTA>>>>>>" + lista.size());
+				}
+				else
+				{
+					afiliadoConsulta = this.afiliadoService.consultar(request
+							.getParameter("codigoEmpresario"));
+					request.setAttribute("afiliado", afiliadoConsulta);
+					request.setAttribute("banco", this.bancoService
+							.consultar(afiliadoConsulta.getBanco()));
+					if ((afiliadoConsulta != null)
+							&& (afiliadoConsulta.getCedula() != null)) {
+						request.setAttribute("patrocinador", this.afiliadoService
+								.consultar(afiliadoConsulta.getCedulaPapa()));
+						List<AfiliadoDTO> listaAfiliado = this.afiliadoService
+								.buscarDistribuidor(
+										afiliadoConsulta.getCedulaDistribuidor(),
+										null);
+						if ((listaAfiliado != null) && (listaAfiliado.size() > 0)) {
+							request.setAttribute("distribuidor",
+									listaAfiliado.get(0));
+						}
+					} else {
+						request.setAttribute("noExisteAfiliado",
+								Boolean.valueOf(true));
 					}
-				} else {
-					request.setAttribute("noExisteAfiliado",
-							Boolean.valueOf(true));
 				}
 				request.setAttribute("accion", "E");
 

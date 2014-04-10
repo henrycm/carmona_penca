@@ -10,7 +10,7 @@
 		data-toggle="dropdown">Afiliación</a>
 			<ul class="dropdown-menu">
  				<li><a href="administracion/IndexAfiliado?accion=C" target="mainFrame">Actualizar Afiliado</a></li>		
- 				<li><a href="administracion/IndexAfiliado?accion=E" target="mainFrame">Cons. Afiliado por Codigo</a></li>
+ 				<li><a href="administracion/IndexAfiliado?accion=E" target="mainFrame">Cons. Afiliado</a></li>
 			</ul>
 		</li>
 	</ul>

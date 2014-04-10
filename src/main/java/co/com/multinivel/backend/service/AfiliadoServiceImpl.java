@@ -66,7 +66,8 @@ public class AfiliadoServiceImpl implements AfiliadoService {
 		return lista;
 	}
 
-	public List<AfiliadoDTO> buscar(String cedula, String nombre, String cedulaDistribuidor) throws MultinivelServiceException {
+	public List<AfiliadoDTO> buscar(String cedula, String nombre, String cedulaDistribuidor)
+			throws MultinivelServiceException {
 		List<AfiliadoDTO> lista = null;
 		try {
 			lista = this.afiliadoDAO.buscar(cedula, nombre, cedulaDistribuidor);
@@ -86,7 +87,8 @@ public class AfiliadoServiceImpl implements AfiliadoService {
 		return lista;
 	}
 
-	public List<AfiliadoDTO> buscarDistribuidor(String codigo, String nombre) throws MultinivelServiceException {
+	public List<AfiliadoDTO> buscarDistribuidor(String codigo, String nombre)
+			throws MultinivelServiceException {
 		List<AfiliadoDTO> lista = null;
 		try {
 			lista = this.afiliadoDAO.buscarDistribuidor(codigo, nombre);
@@ -106,7 +108,8 @@ public class AfiliadoServiceImpl implements AfiliadoService {
 		return lista;
 	}
 
-	public void actualizarAfiliadoADistribuidor(Afiliado afiliado) throws MultinivelServiceException {
+	public void actualizarAfiliadoADistribuidor(Afiliado afiliado)
+			throws MultinivelServiceException {
 		try {
 			this.afiliadoDAO.actualizarAfiliadoADistribuidor(afiliado);
 		} catch (MultinivelDAOException e) {
@@ -114,7 +117,8 @@ public class AfiliadoServiceImpl implements AfiliadoService {
 		}
 	}
 
-	public List<Object> listaAfiliadosPorDistribuidor(String periodo) throws MultinivelServiceException {
+	public List<Object> listaAfiliadosPorDistribuidor(String periodo)
+			throws MultinivelServiceException {
 		List<Object> lista = null;
 		try {
 			lista = this.afiliadoDAO.listaAfiliadosPorDistribuidor(periodo);
@@ -124,7 +128,8 @@ public class AfiliadoServiceImpl implements AfiliadoService {
 		return lista;
 	}
 
-	public boolean cambiarDocumento(String documentoActual, String documentoNuevo) throws MultinivelServiceException {
+	public boolean cambiarDocumento(String documentoActual, String documentoNuevo)
+			throws MultinivelServiceException {
 		boolean retorno = false;
 		try {
 			retorno = this.afiliadoDAO.cambiarDocumento(documentoActual, documentoNuevo);
@@ -134,10 +139,12 @@ public class AfiliadoServiceImpl implements AfiliadoService {
 		return retorno;
 	}
 
-	public int contarAfiliacionesPorPeriodoDistribuidor(String cedulaDistribuidor, String periodo) throws MultinivelServiceException {
+	public int contarAfiliacionesPorPeriodoDistribuidor(String cedulaDistribuidor, String periodo)
+			throws MultinivelServiceException {
 		int retorno = 0;
 		try {
-			retorno = this.afiliadoDAO.contarAfiliacionesPorPeriodoDistribuidor(cedulaDistribuidor, periodo);
+			retorno = this.afiliadoDAO.contarAfiliacionesPorPeriodoDistribuidor(cedulaDistribuidor,
+					periodo);
 		} catch (MultinivelDAOException e) {
 			throw new MultinivelServiceException(e.getMessage(), getClass());
 		}
@@ -164,7 +171,8 @@ public class AfiliadoServiceImpl implements AfiliadoService {
 		return lista;
 	}
 
-	public List<Object> listarAfiliadosDistribuidorPorPeriodo(String periodo) throws MultinivelServiceException {
+	public List<Object> listarAfiliadosDistribuidorPorPeriodo(String periodo)
+			throws MultinivelServiceException {
 		List<Object> lista = null;
 		try {
 			lista = this.afiliadoDAO.listarAfiliadosDistribuidorPorPeriodo(periodo);
@@ -177,10 +185,16 @@ public class AfiliadoServiceImpl implements AfiliadoService {
 	public DatosArbol ArbolAfiliado(String cedula, String periodo) throws Exception {
 		return this.arbolDAO.getArbol(cedula, periodo);
 	}
-}
 
-/*
- * Location: D:\Dllo\multinivel\multinivelEAR.ear\multinivelEJB.jar\
- * 
- * Qualified Name: co.com.multinivel.backend.service.AfiliadoServiceImpl
- */
+	public List<Afiliado> buscar(String nomFiltro, String filtro)
+			throws MultinivelServiceException
+	{
+		List<Afiliado> lista = null;
+		try {
+			lista = afiliadoDAO.buscar(nomFiltro, filtro);
+		} catch (MultinivelDAOException e) {
+			throw new MultinivelServiceException(e.getMessage(), getClass());
+		}
+		return lista;
+	}
+}

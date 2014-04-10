@@ -11,14 +11,6 @@ function inscribirAfiliado() {
 	document.forms[0].submit();
 }
 
-function consultarAfiliado() {
-	if (document.forms[0].codigoEmpresario.value == '') {
-		alert('El codigo del empresario debe ser ingresado');
-		return;
-	}
-	document.forms[0].submit();
-
-}
 
 function actualizarAfiliado() {
 	document.forms[0].accion.value = 'A';

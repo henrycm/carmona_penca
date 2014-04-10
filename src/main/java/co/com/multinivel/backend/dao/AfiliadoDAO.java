@@ -55,6 +55,9 @@ public abstract interface AfiliadoDAO {
 
 	public abstract List<Object> listarAfiliadosDistribuidorPorPeriodo(String paramString)
 			throws MultinivelDAOException;
+
+	public abstract List<Afiliado> buscar(String nomFiltro, String filtro)
+			throws MultinivelDAOException;
 }
 
 /*

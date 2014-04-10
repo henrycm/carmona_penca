@@ -20,6 +20,7 @@ import co.com.multinivel.backend.model.Afiliado;
 import co.com.multinivel.shared.dto.AfiliadoDTO;
 import co.com.multinivel.shared.dto.AfiliadosNivel;
 import co.com.multinivel.shared.dto.Nodo;
+import co.com.multinivel.shared.dto.UsuarioDTO;
 import co.com.multinivel.shared.exception.MultinivelDAOException;
 import co.com.multinivel.shared.util.FechasUtil;
 import co.com.multinivel.shared.util.ParametrosEnum;
@@ -254,10 +255,10 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
 		try {
 			Afiliado afiliadoConsultado = consultar(afiliado.getCedula());
 			/**
-			 * Se corrige para no actualizar la fecha de creación.
-			 * JOHECAMA. 2014-04-09
+			 * Se corrige para no actualizar la fecha de creación. JOHECAMA.
+			 * 2014-04-09
 			 */
-			afiliado.setFechaIngreso(afiliadoConsultado.getFechaIngreso());			
+			afiliado.setFechaIngreso(afiliadoConsultado.getFechaIngreso());
 			if (afiliadoConsultado != null) {
 				this.entityManager.merge(afiliado);
 			}
@@ -1266,5 +1267,13 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
 					"error al listar los afiliados por distribuidor periodo", getClass());
 		}
 		return lista;
+	}
+
+	public List<Afiliado> buscar(String nomFiltro, String filtro)
+			throws MultinivelDAOException {
+		String query = "from Afiliado a where a." + nomFiltro + " like :filtro order by a.nombre";
+		Query q = entityManager.createQuery(query);
+		q.setParameter("filtro", "%" + filtro + "%");
+		return q.getResultList();
 	}
 }
