@@ -19,7 +19,7 @@ public class BancoDAOImp implements BancoDAO {
 	private EntityManager entityManager;
 
 	public List<Banco> listar() throws MultinivelDAOException {
-		Query query = this.entityManager.createQuery("from Banco");
+		Query query = this.entityManager.createQuery("from Banco b order by descripcion");
 		List<Banco> lista = query.getResultList();
 		return lista;
 	}

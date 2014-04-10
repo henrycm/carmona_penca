@@ -14,7 +14,6 @@
     <link rel="stylesheet" href="../css/jquery/demos.css">
 </head>
 <body>
-<div class="demo">
 
 <form action="../administracion/BuscadorAfiliado" name="buscarAfiliado" method="get">
 <input type="hidden"  name="accion" value="A"/>
@@ -24,7 +23,7 @@
 <table width="50%" class="tabla" >
   <tr>
     <td width="173" > Buscar Distribuidor</td>
-    <td width="330"><table width="200"  align="right">
+    <td width="330"><table width="200" >
   <tr>
     <td><a href="javascript:if(asignarDocumento()){buscarDistribuidorLiquidacion();}">  Consultar </a></td>
   </tr>
@@ -90,6 +89,5 @@ LISTA AFILIADOS
 </c:if> 
 
 </form>
-</div>
 </body>
 </html>

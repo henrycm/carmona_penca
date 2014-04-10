@@ -19,7 +19,7 @@ public class DepartamentoDAOImp implements DepartamentoDAO {
 	private EntityManager entityManager;
 
 	public List<Departamento> listar() throws MultinivelDAOException {
-		Query query = this.entityManager.createQuery("from Departamento");
+		Query query = this.entityManager.createQuery("from Departamento o order by o.descripcion");
 		List<Departamento> lista = query.getResultList();
 		return lista;
 	}

@@ -12,8 +12,6 @@
     <link rel="stylesheet" href="../css/jquery/demos.css">
 </head>
 <body>
-<div class="demo">
-
 <form action="BuscadorDistribuidor" name="buscadorDistribuidor" method="get">
 <input type="hidden"  name="accion" value="C"/>
 <input type="hidden"  name="actualizar"/>
@@ -84,6 +82,5 @@ LISTA DISTRIBUIDOR
 </c:if> 
 
 </form>
-</div>
 </body>
 </html>

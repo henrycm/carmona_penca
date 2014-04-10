@@ -2,7 +2,6 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <title>APLICACION MULTIALOE</title>
@@ -23,18 +22,19 @@
 <link rel="stylesheet" href="../css/jquery/demos.css">
 
 <link rel="stylesheet" href="../css/multinivel.css">
-<!--script>
-	$(function() {
-		$( "#accordion" ).accordion();
-	});
-	</script-->
+
 <script>
 	$(document).ready(function() {		
 		$("#codigoEmpresario").change(function() {			
-			existeAfiliado();
+			existeAfiliado();			
 		});
+		
 		$("input").attr("disabled", "disabled");
 		$("#codigoEmpresario").removeAttr("disabled");
+
+		$("input[type=text]").attr("required", "required");
+		$("select").attr("required", "required");
+		$(":required").before("<strong>*&nbsp;</strong>");
 	});
 
 	function existeAfiliado() {
@@ -55,8 +55,7 @@
 						});
 	}
 	$(function() {
-		$("#fecha").datepicker({
-			maxDate : '-1y',
+		$("#fecha").datepicker({			
 			changeMonth : true,
 			changeYear : true,
 			yearRange : '1940:2010',
@@ -95,7 +94,7 @@
 						<input name="accion" type="hidden"
 							value="<c:out value='${accion}'/>" /> Código Nuevo Empresario: <input
 							name="codigoEmpresario" type="text" size="11" maxlength="11"
-							id="codigoEmpresario" /><select name="letra" id="letra">
+							id="codigoEmpresario"/><select name="letra" id="letra">
 							<option value="A">A</option>
 							<!--       <option value="B" >B</option>
            <option value="C" >C</option>
@@ -195,7 +194,7 @@
 							<h3 class="tabla">DATOS PERSONALES</h3>
 							<div id="datosPersonales">
 
-								<table width="100%">
+								<table>
 									<tr align="left">
 										<td width="25%">Nombre: <input name="nombre" type="text"
 											size="20" maxlength="40" /></td>
@@ -225,7 +224,7 @@
 												<option value="">Elija el depart...</option>
 
 												<c:forEach var='dept' items='${listaDepartamentos}'>
-													<option value="<c:out value='${dept.descripcion}'/>">
+													<option value="<c:out value='${dept.codigo}'/>">
 														<c:out value='${dept.descripcion}' />
 													</option>
 												</c:forEach>
@@ -247,7 +246,7 @@
 											size="1">
 												<option value="">Elija el depart...</option>
 												<c:forEach var='dept' items='${listaDepartamentos}'>
-													<option value="<c:out value='${dept.descripcion}'/>">
+													<option value="<c:out value='${dept.codigo}'/>">
 														<c:out value='${dept.descripcion}' />
 													</option>
 												</c:forEach>
@@ -272,7 +271,7 @@
 								MONETARIOS.</h3>
 							<div>
 
-								<table width="100%">
+								<table>
 
 									<tr>
 

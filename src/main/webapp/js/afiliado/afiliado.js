@@ -23,7 +23,8 @@ function consultarAfiliado(){
 
 function actualizarAfiliado(){
 	document.forms[0].accion.value='A';
-	document.forms[0].submit();
+	if(validarRequerido())
+		document.forms[0].submit();
 }
 
 function validarCampos(){
