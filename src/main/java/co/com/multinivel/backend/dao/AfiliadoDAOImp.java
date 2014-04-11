@@ -20,7 +20,6 @@ import co.com.multinivel.backend.model.Afiliado;
 import co.com.multinivel.shared.dto.AfiliadoDTO;
 import co.com.multinivel.shared.dto.AfiliadosNivel;
 import co.com.multinivel.shared.dto.Nodo;
-import co.com.multinivel.shared.dto.UsuarioDTO;
 import co.com.multinivel.shared.exception.MultinivelDAOException;
 import co.com.multinivel.shared.util.FechasUtil;
 import co.com.multinivel.shared.util.ParametrosEnum;
@@ -253,7 +252,7 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
 
 	public void actualizar(Afiliado afiliado) throws MultinivelDAOException {
 		try {
-			Afiliado afiliadoConsultado = consultar(afiliado.getCedula());
+			Afiliado afiliadoConsultado = entityManager.find(Afiliado.class, afiliado.getCedula());
 			/**
 			 * Se corrige para no actualizar la fecha de creación. JOHECAMA.
 			 * 2014-04-09
