@@ -19,6 +19,7 @@
 <script src="../js/afiliado/afiliado.js"></script>
 <script src="../js/generico.js"></script>
 
+<link rel="StyleSheet" type="text/css"	href="${ctx}/bootstrap/css/bootstrap.css"></link>
 <link rel="stylesheet" href="../css/jquery/demos.css">
 
 <link rel="stylesheet" href="../css/multinivel.css">
@@ -40,11 +41,13 @@
 	function existeAfiliado() {
 		$.ajax(
 				{
-					url : "<%=pageContext.getServletContext().getContextPath()%>/AjaxServlet?accion=C&cedula="
-							+ $("#codigoEmpresario").val() + "-" +$("#letra").val(),
-					context : document.body
-				})
-				.done(
+					url : "<%=pageContext.getServletContext().getContextPath()%>
+	/AjaxServlet?accion=C&cedula="
+									+ $("#codigoEmpresario").val()
+									+ "-"
+									+ $("#letra").val(),
+							context : document.body
+						}).done(
 						function(respuesta) {
 							if (respuesta == "S")
 								alert("Afiliado con el código: "
@@ -55,11 +58,11 @@
 						});
 	}
 	$(function() {
-		$("#fecha").datepicker({			
+		$("#fecha").datepicker({
 			changeMonth : true,
 			changeYear : true,
 			yearRange : '1940:2010',
-			dateFormat: 'yy-mm-dd'
+			dateFormat : 'yy-mm-dd'
 		});
 		$("#fecha").datepicker("option", "showAnim", "drop");
 
@@ -76,9 +79,10 @@
 	<div align="center">
 
 		<form name="forma" action="AfiliadoFrontController" method="post">
-			<div align="right" id="opcion">
-				<a href="javascript:inscribirAfiliado();">Ingresar</a>
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<div class="btn-group">
+				<a class="btn btn-sm btn-default"
+					href="javascript:inscribirAfiliado();">Ingresar</a>
+				<div class="separador"></div>
 			</div>
 			<div align="center" class="titulo">FORMULARIO DE INSCRIPCIÓN E
 				INFORMACIÓN COMERCIAL</div>
@@ -94,24 +98,9 @@
 						<input name="accion" type="hidden"
 							value="<c:out value='${accion}'/>" /> Código Nuevo Empresario: <input
 							name="codigoEmpresario" type="text" size="11" maxlength="11"
-							id="codigoEmpresario"/><select name="letra" id="letra">
+							id="codigoEmpresario" /><select name="letra" id="letra">
 							<option value="A">A</option>
-							<!--       <option value="B" >B</option>
-           <option value="C" >C</option>
-           <option value="D" >D</option>
-           <option value="E" >E</option>
-           <option value="F" >F</option>
-           <option value="G" >G</option>
-           <option value="H" >H</option>
-           <option value="I" >I</option>
-           <option value="J" >J</option>
-           <option value="K" >K</option>
-           <option value="L" >L</option>
-           <option value="M" >M</option>
-           <option value="N" >N</option>
-           <option value="O" >O</option>
--->
-
+							
 						</select> Tipo de Afiliado: <select name="rol">
 							<option value="3">Afiliado</option>
 							<c:if test="${tipoAfiliado=='1'}">
@@ -257,8 +246,8 @@
 									<tr align="left">
 										<td>Teléfono: <input name="telefono" type="text"
 											size="10" maxlength="10" /></td>
-										<td>Celular: <input name="celular" type="text"
-											size="10" maxlength="10" />
+										<td>Celular: <input name="celular" type="text" size="10"
+											maxlength="10" />
 										</td>
 										<td>E-mail: <input name="email" type="text" size="20"
 											maxlength="50" /></td>

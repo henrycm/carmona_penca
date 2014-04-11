@@ -1,6 +1,12 @@
-.demo{
+.separador {
+	clear: both;
+	margin-bottom: 15px;
+}
+
+.demo {
 	text-align: center;
 }
+
 ul.nav li.dropdown:hover ul.dropdown-menu {
 	display: block;
 }

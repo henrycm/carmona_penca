@@ -17,6 +17,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import co.com.multinivel.backend.model.Afiliado;
+import co.com.multinivel.backend.model.Consumo;
 import co.com.multinivel.shared.dto.AfiliadoDTO;
 import co.com.multinivel.shared.dto.AfiliadosNivel;
 import co.com.multinivel.shared.dto.Nodo;
@@ -33,9 +34,8 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
 	public Afiliado consultar(String codigo) throws MultinivelDAOException {
 		Afiliado afiliado = null;
 		try {
-			String sql = " SELECT a.cedula, a.nombre,a.apellido,  a.red, a.direccion,a.barrio,a.telefono,a.celular,a.fecha_nacimiento,a.departamento,a.ciudad, a.departamentoResidencia,a.ciudadResidencia,a.email,a.estadocivil,a.ocupacion,a.cedula_Papa, a.tipo_cuenta,a.cuenta_nro,a.titular_cuenta,a.nombretitularcta,a.banco,a.documentoConyugue,a.nombreConyugue, a.tipoAfiliado,a.cedulaDistribuidor,a.cedulaDistribuidorPago,tipoDocumento,a.idAfiliacionDist from t_afiliados a  where UPPER(activo) ='SI' and cedula='"
+			String sql = " SELECT a.cedula, a.nombre,a.apellido,  a.red, a.direccion,a.barrio,a.telefono,a.celular,a.fecha_nacimiento,a.departamento,a.ciudad, a.departamentoResidencia,a.ciudadResidencia,a.email,a.estadocivil,a.ocupacion,a.cedula_Papa, a.tipo_cuenta,a.cuenta_nro,a.titular_cuenta,a.nombretitularcta,a.banco,a.documentoConyugue,a.nombreConyugue, a.tipoAfiliado,a.cedulaDistribuidor,a.cedulaDistribuidorPago,tipoDocumento,a.idAfiliacionDist from t_afiliados a  where cedula='"
 					+
-
 					codigo + "' ";
 
 			Query q = this.entityManager.createNativeQuery(sql);
@@ -205,36 +205,9 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
 	}
 
 	public boolean eliminar(Afiliado afiliado) throws MultinivelDAOException {
-		boolean retorno = false;
-		try {
-			String sql = " SELECT a.cedula    FROM t_afiliados a   where a.cedula_papa=? ";
-
-			Query q = this.entityManager.createNativeQuery(sql);
-			q.setParameter(1, afiliado.getCedula());
-
-			List<?> result = q.getResultList();
-			int s = result.size();
-			System.err.println("s:" + s);
-			if (s <= 0) {
-				System.err.println("cedula:" + afiliado.getCedula());
-
-				Afiliado afiliadoConsultado = consultar(afiliado.getCedula());
-				System.err.println("afiliadoconsultado:" + afiliadoConsultado);
-				if (afiliadoConsultado != null) {
-					Query rs = this.entityManager
-							.createNativeQuery("DELETE FROM T_AFILIADOS   WHERE CEDULA=? ");
-
-					rs.setParameter(1, afiliado.getCedula());
-					rs.executeUpdate();
-					retorno = true;
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new MultinivelDAOException("Error borrando el afiliado -" + e.getMessage(),
-					getClass());
-		}
-		return retorno;
+		Afiliado af = entityManager.find(Afiliado.class, afiliado.getCedula());
+		af.setActivo("no");
+		return true;
 	}
 
 	public void ingresar(Afiliado afiliado) throws MultinivelDAOException {

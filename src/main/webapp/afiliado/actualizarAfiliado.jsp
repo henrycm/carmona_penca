@@ -19,12 +19,14 @@
 <script src="../js/afiliado/afiliado.js"></script>
 <script src="../js/generico.js"></script>
 
+<link rel="StyleSheet" type="text/css"
+	href="${ctx}/bootstrap/css/bootstrap.css"></link>
 <link rel="stylesheet" href="../css/jquery/demos.css">
 
 <link rel="stylesheet" href="../css/multinivel.css">
 
 <script>
-	$(document).ready(function() {				
+	$(document).ready(function() {
 		$("input[type=text]").attr("required", "required");
 		$("select").attr("required", "required");
 		$(":required").before("<strong>*&nbsp;</strong>");
@@ -56,14 +58,16 @@ style>#accordion {
 <div align="center">
 
 	<form name="forma" action="AfiliadoFrontController" method="post">
-
-		<div align="right" id="opcion">
-			<a href="javascript:actualizarAfiliado();" class="btn btn-default">Actualizar</a>
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<input type="hidden" name="borrar">
+		<div class="btn-group">
+			<a class="btn btn-sm btn-default"
+				href="javascript:actualizarAfiliado();">Actualizar</a> <a
+				class="btn btn-sm btn-default" href="javascript:eliminarAfiliado()">Borrar</a>
+			<div class="separador"></div>
 		</div>
 		<div align="center" class="titulo">ACTUALIZACION DE DATOS DE
 			AFILIADO</div>
-		<div >
+		<div>
 			<input name="accion" type="hidden" value="<c:out value='${accion}'/>" />
 			<c:if test='${afiliado==null}'>
 
@@ -71,22 +75,6 @@ Código Nuevo Empresario: <input name="codigoEmpresario" type="text"
 					size="30" />
 				<select name="letra">
 					<option value="A">A</option>
-					<option value="B">B</option>
-					<option value="C">C</option>
-					<option value="D">D</option>
-					<option value="E">E</option>
-					<option value="F">F</option>
-					<option value="G">G</option>
-					<option value="H">H</option>
-					<option value="I">I</option>
-					<option value="J">J</option>
-					<option value="K">K</option>
-					<option value="L">L</option>
-					<option value="M">M</option>
-					<option value="N">N</option>
-					<option value="O">O</option>
-
-
 				</select>
 				<a href="javascript:consultarAfiliado();">Consultar</a>
 			</c:if>
@@ -104,30 +92,29 @@ Código Nuevo Empresario: <input name="codigoEmpresario" type="text"
 				<div id="accordion">
 					<h3 class="tabla">DATOS PERSONALES</h3>
 					<div>
-						<input type="hidden" name="rol"
-							value="<c:out value='${afiliado.tipoAfiliado}'/>">
 						<table>
-							<tr >
-								<td >Nombre: <input name="nombre" type="text"
-									size="20" maxlength="40"
-									value="<c:out value='${afiliado.nombre}'/>" /></td>
-								<td >Apellidos Completos: <input name="apellido"
-									type="text" maxlength="50" size="15"
+							<tr>
+								<td>Nombre: <input name="nombre" type="text" size="20"
+									maxlength="40" value="<c:out value='${afiliado.nombre}'/>" /></td>
+								<td>Apellidos Completos: <input name="apellido" type="text"
+									maxlength="50" size="15"
 									value="<c:out value='${afiliado.apellido}'/>" /></td>
-
-								<td >Identificación:<br> <select
-									name="tipoDocumento">
+								<td>Tipo de Afiliado: <select name="tipoAfiliado">
+										<option value="3" ${afiliado.tipoAfiliado == 3 ? 'selected' : ''}>Afiliado</option>
+										<option value="2" ${afiliado.tipoAfiliado == 2 ? 'selected' : ''}>Distribuidor</option>
+								</select></td>
+								<td>Identificación:<br> <select name="tipoDocumento">
 										<option value="C.C.">C.C.</option>
 										<option value="Nit">Nit</option>
 								</select> <input name="numeroIdentificacion" type="text" size="13"
 									value="<c:out value='${afiliado.cedula}'/>" maxlength="13" />
 								</td>
-								<td >Fecha de Nac: <input name="fechaNacimiento"
-									type="text" class="ui-datepicker-calendar" id="fecha" size="15"
+								<td>Fecha de Nac: <input name="fechaNacimiento" type="text"
+									class="ui-datepicker-calendar" id="fecha" size="15"
 									value="<fmt:formatDate pattern='yyyy-MM-dd' 
             value='${afiliado.fechaNacimiento}' />" /></td>
 							</tr>
-							<tr >
+							<tr>
 								<td>Lugar de Nac.: Ciudad <input name="ciudadNacimiento"
 									type="text" size="13"
 									value="<c:out value='${afiliado.ciudad}'/>" />
@@ -148,7 +135,7 @@ Código Nuevo Empresario: <input name="codigoEmpresario" type="text"
 								</td>
 							</tr>
 
-							<tr >
+							<tr>
 								<td>Barrio:<input name="barrio" type="text" size="25"
 									value="<c:out value='${afiliado.barrio}'/>" /></td>
 								<td height="24">Dirección Resid. (completa): <input
@@ -171,7 +158,7 @@ Código Nuevo Empresario: <input name="codigoEmpresario" type="text"
 
 							</tr>
 
-							<tr >
+							<tr>
 
 								<td>Teléfono: <input name="telefono" type="text" size="10"
 									value="<c:out value='${afiliado.telefono}'/>" /></td>
@@ -184,7 +171,7 @@ Código Nuevo Empresario: <input name="codigoEmpresario" type="text"
 
 
 
-						</table>						
+						</table>
 					</div>
 
 					<h3 class="tabla">DATOS PARA PAGO DE RECONOCIMIENTOS
@@ -192,16 +179,15 @@ Código Nuevo Empresario: <input name="codigoEmpresario" type="text"
 					<div>
 						<table>
 							<tr>
-								<td>PAGAR A DISTRIBUIDOR <input
-									name="pagarADistribuidor" type="checkbox"
-									onclick="javascript:validarChequeCta()" />
+								<td>PAGAR A DISTRIBUIDOR <input name="pagarADistribuidor"
+									type="checkbox" onclick="javascript:validarChequeCta()" />
 
 								</td>
 
 
-								<td>Cuenta Número: <input name="numeroCuenta"
-									type="text" size="20"
-									value="<c:out value='${afiliado.cuentaNro}'/>" maxlength="20" />
+								<td>Cuenta Número: <input name="numeroCuenta" type="text"
+									size="20" value="<c:out value='${afiliado.cuentaNro}'/>"
+									maxlength="20" />
 								</td>
 								<td>Entidad:<select id="entidadBancaria"
 									name="entidadBancaria">
@@ -217,29 +203,27 @@ Código Nuevo Empresario: <input name="codigoEmpresario" type="text"
 							</tr>
 							<tr>
 
-								<td >Tipo de cta. Ahorro <input
-									name="tipoCuenta" type="radio" value="AHORRO" checked="checked" />
-									Cte. <input name="tipoCuenta" type="radio" value="CRTE" />
+								<td>Tipo de cta. Ahorro <input name="tipoCuenta"
+									type="radio" value="AHORRO" checked="checked" /> Cte. <input
+									name="tipoCuenta" type="radio" value="CRTE" />
 								</td>
 								<td>&nbsp;</td>
 							</tr>
 							<tr>
-								<td>Titular de la cuenta (Si es diferente al
-									empresario)</td>
+								<td>Titular de la cuenta (Si es diferente al empresario)</td>
 							</tr>
 							<tr>
-								<td >Nombre: <input name="nombreTitular"
-									type="text" size="30" maxlength="50"
+								<td>Nombre: <input name="nombreTitular" type="text"
+									size="30" maxlength="50"
 									value="<c:out value='${afiliado.nombreTitularCta}'/>" />
 								</td>
-								<td >C.C. No.<input name="documentoTitular"
-									type="text" size="15" maxlength="15"
+								<td>C.C. No.<input name="documentoTitular" type="text"
+									size="15" maxlength="15"
 									value="<c:out value='${afiliado.titularCuenta}'/>" /></td>
 							</tr>
 							<tr>
-								<td >Autorizo que las bonificaciones generadas
-									en mi red de ALOE de COLOMBIA sean consignadas en esta cuenta.
-								</td>
+								<td>Autorizo que las bonificaciones generadas en mi red de
+									ALOE de COLOMBIA sean consignadas en esta cuenta.</td>
 							</tr>
 						</table>
 
@@ -249,16 +233,15 @@ Código Nuevo Empresario: <input name="codigoEmpresario" type="text"
 
 						<table>
 							<tr>
-								<td >Nombres y Apellidos(completos) <c:out
+								<td>Nombres y Apellidos(completos) <c:out
 										value='${patrocinador.nombre}' /> &nbsp;<c:out
 										value='${patrocinador.apellido}' />
 								</td>
 							</tr>
 							<tr>
-								<td >Número de Empresario: <input
-									name="numeroEmpresario" type="hidden"
-									value="<c:out value='${afiliado.cedulaPapa}'/>" /> <c:out
-										value='${afiliado.cedulaPapa}' /> <input type="hidden"
+								<td>Número de Empresario: <input name="numeroEmpresario"
+									type="hidden" value="<c:out value='${afiliado.cedulaPapa}'/>" />
+									<c:out value='${afiliado.cedulaPapa}' /> <input type="hidden"
 									name="red" value="<c:out value='${afiliado.red}'/>">
 
 								</td>
@@ -275,7 +258,7 @@ Código Nuevo Empresario: <input name="codigoEmpresario" type="text"
 
 						<table>
 							<tr>
-								<td >Nombres y Apellidos del distribuidor <input
+								<td>Nombres y Apellidos del distribuidor <input
 									name="nombreDistribuidor" type="text" size="50"
 									value="<c:out value='${distribuidor.nombre}'/> <c:out value='${distribuidor.apellido}'/>"
 									readonly="readonly"
@@ -283,7 +266,7 @@ Código Nuevo Empresario: <input name="codigoEmpresario" type="text"
 								</td>
 							</tr>
 							<tr>
-								<td >Codigo de Empresario(Distribuidor): <input
+								<td>Codigo de Empresario(Distribuidor): <input
 									name="numeroDistribuidor"
 									value="<c:out value='${distribuidor.cedula}'/>" type="text"
 									size="15" readonly="readonly"

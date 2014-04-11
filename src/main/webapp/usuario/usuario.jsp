@@ -29,6 +29,7 @@
 							href="javascript:enviarUsuaro('A')">Actualizar</a> <a
 							class="btn btn-sm btn-default"
 							href="javascript:enviarUsuaro('B')">Borrar </a>
+						<div class="separador"></div>
 					</div>
 					<table align="center" width="50%" class="tbl-form" border="1">
 						<tr>

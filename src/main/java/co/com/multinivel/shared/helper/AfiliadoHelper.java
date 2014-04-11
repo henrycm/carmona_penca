@@ -75,7 +75,7 @@ public class AfiliadoHelper {
 
 		afiliado.setUsuarioIngreso(UsuarioHelper.getUsuario());
 		afiliado.setFechaIngreso(new Date());
-		afiliado.setTipoAfiliado(request.getParameter("rol"));
+		afiliado.setTipoAfiliado(request.getParameter("tipoAfiliado"));
 
 		return afiliado;
 	}
