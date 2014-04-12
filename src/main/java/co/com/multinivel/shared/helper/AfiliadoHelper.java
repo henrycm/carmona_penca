@@ -76,6 +76,9 @@ public class AfiliadoHelper {
 		afiliado.setUsuarioIngreso(UsuarioHelper.getUsuario());
 		afiliado.setFechaIngreso(new Date());
 		afiliado.setTipoAfiliado(request.getParameter("tipoAfiliado"));
+		if (request.getParameter("nuevoDistribuidor") != null) {			
+			//afiliado.setCedulaDistribuidor(request.getParameter("nuevoDistribuidor"));			
+		}
 
 		return afiliado;
 	}

@@ -399,6 +399,7 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
 					+ "       LEFT JOIN t_cantidad_afiliaciones_distribuidor c \n"
 					+ "              ON a.cedula = c.distribuidor \n" + "WHERE  a.activo = 'si' \n"
 					+ "       AND a.tipoafiliado = '2' \n"
+					+ "       AND upper(a.activo) = 'SI' \n"					
 					+ "ORDER BY a.nombre";
 
 			Query q = this.entityManager.createNativeQuery(sql);

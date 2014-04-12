@@ -30,6 +30,16 @@
 		$("input[type=text]").attr("required", "required");
 		$("select").attr("required", "required");
 		$(":required").before("<strong>*&nbsp;</strong>");
+		$("#cmdDistribuidor").hide();
+		$("#tipoAfiliado").change(function() {
+			if ($(this).val() == 3) {
+				$("#cmdDistribuidor").show();
+				$("#cmdDistribuidor select").attr("required", "required");
+			} else {
+				$("#cmdDistribuidor").hide();
+				$("#cmdDistribuidor select").removeAttr("required");
+			}
+		});
 	});
 
 	$(function() {
@@ -59,12 +69,14 @@ style>#accordion {
 
 	<form name="forma" action="AfiliadoFrontController" method="post">
 		<input type="hidden" name="borrar">
-		<div class="btn-group">
-			<a class="btn btn-sm btn-default"
-				href="javascript:actualizarAfiliado();">Actualizar</a> <a
-				class="btn btn-sm btn-default" href="javascript:eliminarAfiliado()">Borrar</a>
-			<div class="separador"></div>
-		</div>
+		<c:if test='${afiliado!=null}'>
+			<div class="btn-group">
+				<a class="btn btn-sm btn-default"
+					href="javascript:actualizarAfiliado();">Actualizar</a> <a
+					class="btn btn-sm btn-default" href="javascript:eliminarAfiliado()">Borrar</a>
+				<div class="separador"></div>
+			</div>
+		</c:if>
 		<div align="center" class="titulo">ACTUALIZACION DE DATOS DE
 			AFILIADO</div>
 		<div>
@@ -90,7 +102,7 @@ Código Nuevo Empresario: <input name="codigoEmpresario" type="text"
 			<c:if test='${afiliado!=null}'>
 
 				<div id="accordion">
-					<h3 class="tabla">DATOS PERSONALES</h3>
+					<div class="titulo">DATOS PERSONALES</div>
 					<div>
 						<table>
 							<tr>
@@ -99,10 +111,22 @@ Código Nuevo Empresario: <input name="codigoEmpresario" type="text"
 								<td>Apellidos Completos: <input name="apellido" type="text"
 									maxlength="50" size="15"
 									value="<c:out value='${afiliado.apellido}'/>" /></td>
-								<td>Tipo de Afiliado: <select name="tipoAfiliado">
-										<option value="3" ${afiliado.tipoAfiliado == 3 ? 'selected' : ''}>Afiliado</option>
-										<option value="2" ${afiliado.tipoAfiliado == 2 ? 'selected' : ''}>Distribuidor</option>
-								</select></td>
+								<td>Tipo de Afiliado: <select name="tipoAfiliado"
+									id="tipoAfiliado">
+										<option value="3"
+											${afiliado.tipoAfiliado == 3 ? 'selected' : ''}>Afiliado</option>
+										<option value="2"
+											${afiliado.tipoAfiliado == 2 ? 'selected' : ''}>Distribuidor</option>
+								</select>
+									<div id="cmdDistribuidor">
+										Nuevo distribuidor:<select name="nuevoDistribuidor">
+										<option value="">Seleccionar</option>
+											<c:forEach items="${distribuidores}" var="d">
+												<option value="${d.cedula}">${d.nombre}
+													${d.apellido}</option>
+											</c:forEach>
+										</select>
+									</div></td>
 								<td>Identificación:<br> <select name="tipoDocumento">
 										<option value="C.C.">C.C.</option>
 										<option value="Nit">Nit</option>
@@ -174,8 +198,8 @@ Código Nuevo Empresario: <input name="codigoEmpresario" type="text"
 						</table>
 					</div>
 
-					<h3 class="tabla">DATOS PARA PAGO DE RECONOCIMIENTOS
-						MONETARIOS</h3>
+					<div class="titulo">DATOS PARA PAGO DE RECONOCIMIENTOS
+						MONETARIOS</div>
 					<div>
 						<table>
 							<tr>
@@ -228,7 +252,7 @@ Código Nuevo Empresario: <input name="codigoEmpresario" type="text"
 						</table>
 
 					</div>
-					<h3 class="tabla">DATOS DEL PATROCINADOR</h3>
+					<div class="titulo">DATOS DEL PATROCINADOR</div>
 					<div id="datosPatrocinador">
 
 						<table>
@@ -287,15 +311,8 @@ Código Nuevo Empresario: <input name="codigoEmpresario" type="text"
 
 					</div>
 				</div>
-
-
-
 			</c:if>
-
-
-
 		</div>
-
 	</form>
 </div>
 </body>

@@ -41,8 +41,7 @@
 	function existeAfiliado() {
 		$.ajax(
 				{
-					url : "<%=pageContext.getServletContext().getContextPath()%>
-	/AjaxServlet?accion=C&cedula="
+					url : "${ctx}/AjaxServlet?accion=C&cedula="
 									+ $("#codigoEmpresario").val()
 									+ "-"
 									+ $("#letra").val(),
@@ -102,10 +101,7 @@
 							<option value="A">A</option>
 							
 						</select> Tipo de Afiliado: <select name="rol">
-							<option value="3">Afiliado</option>
-							<c:if test="${tipoAfiliado=='1'}">
-								<option value="2">Distribuidor</option>
-							</c:if>
+							<option value="3">Afiliado</option>							
 						</select>
 
 					</div>
@@ -114,7 +110,7 @@
 
 						<div id="accordion">
 
-							<h3 class="tabla">DATOS DEL PATROCINADOR</h3>
+							<div class="titulo">DATOS DEL PATROCINADOR</div>
 							<div id="datosPatrocinador">
 
 								<table>
@@ -180,7 +176,7 @@
 
 
 							</div>
-							<h3 class="tabla">DATOS PERSONALES</h3>
+							<div class="titulo">DATOS PERSONALES</div>
 							<div id="datosPersonales">
 
 								<table>
@@ -256,23 +252,18 @@
 								</table>
 
 							</div>
-							<h3 class="tabla">DATOS PARA PAGO DE RECONOCIMIENTOS
-								MONETARIOS.</h3>
+							<div class="titulo">DATOS PARA PAGO DE RECONOCIMIENTOS
+								MONETARIOS.</div>
 							<div>
 
 								<table>
-
 									<tr>
-
 										<td colspan="2">PAGAR A DISTRIBUIDOR <input
 											name="pagarADistribuidor" type="checkbox"
 											onclick="javascript:validarChequeCta()" />
 
 										</td>
 									</tr>
-
-
-
 									<tr>
 										<td width="50%">Cuenta Número: <input name="numeroCuenta"
 											type="text" size="20" maxlength="14" />
@@ -287,7 +278,6 @@
 												</c:forEach>
 										</select>
 										</td>
-
 									</tr>
 									<tr>
 

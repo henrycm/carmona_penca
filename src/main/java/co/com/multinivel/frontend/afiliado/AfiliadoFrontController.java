@@ -196,6 +196,7 @@ public class AfiliadoFrontController extends HttpServlet {
 						+ "-"
 						+ request.getParameter("letra"));
 				recurso = RecursosEnum.FW_ACTUALIZACION_AFILIADO.getRecurso();
+				request.setAttribute("distribuidores", afiliadoService.listarDistribuidores());
 				request.setAttribute("afiliado", afiliadoConsulta);
 				request.setAttribute("banco", this.bancoService
 						.consultar(afiliadoConsulta.getBanco()));
