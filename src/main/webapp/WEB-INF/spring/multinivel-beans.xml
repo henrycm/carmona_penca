@@ -28,7 +28,7 @@
 		<property name="WaitForTasksToCompleteOnShutdown" value="true" />
 	</bean>
 	<mvc:annotation-driven />
-
+	
 	<!-- Imports datasource configuration -->
 	<import resource="multinivel-data.xml" />
 

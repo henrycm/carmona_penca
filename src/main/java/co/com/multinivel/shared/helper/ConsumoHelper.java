@@ -25,13 +25,13 @@ public class ConsumoHelper {
 			for (int i = 0; i < productos.length; i++) {
 				String[] arrayDatos = request.getParameter("datos_" + productos[i]).split("_");
 				String codigoProducto = productos[i];
-				int valorProducto = Integer.parseInt(arrayDatos[0]);
+				Double valorProducto = Double.parseDouble(arrayDatos[0]);
 
 				int cantidad = Integer.parseInt(request.getParameter("cantidad_" + productos[i]));
 				BigDecimal valor = new BigDecimal(valorProducto);
 
 				String nombreProducto = arrayDatos[1];
-				totalProducto = valorProducto * cantidad;
+				totalProducto = valorProducto.intValue() * cantidad;
 				totalConsumo += totalProducto;
 
 				DetConsumo dp = new DetConsumo();
@@ -73,10 +73,10 @@ public class ConsumoHelper {
 			pedido.setTotalpedido(new BigDecimal(totalConsumo));
 			for (int j = 0; j < productos.length; j++) {
 				String codigoProducto = productos[j];
-				int valorProducto = Integer.parseInt(valorUnitario[j]);
+				Double valorProducto = Double.parseDouble(valorUnitario[j]);
 				BigDecimal valor = new BigDecimal(valorProducto);
 				int cantidad = Integer.parseInt(cantidades[j]);
-				totalProducto = valorProducto * cantidad;
+				totalProducto = valorProducto.intValue() * cantidad;
 
 				DetConsumo dp = new DetConsumo();
 

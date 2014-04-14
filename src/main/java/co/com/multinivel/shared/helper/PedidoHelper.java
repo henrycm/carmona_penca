@@ -37,14 +37,14 @@ public class PedidoHelper {
 								String[] arrayDatos = nombreParametro.split("_");
 
 								String codigoProducto = productos[i];
-								int valorProducto = Integer.parseInt(arrayDatos[2]);
+								Double valorProducto = Double.parseDouble(arrayDatos[2]);
 
 								int cantidad = Integer.parseInt(request
 										.getParameter(nombreParametro));
 								BigDecimal valor = new BigDecimal(arrayDatos[2]);
 
 								String nombreProducto = arrayDatos[3];
-								totalProducto = valorProducto * cantidad;
+								totalProducto = valorProducto.intValue() * cantidad;
 								totalPedido += totalProducto;
 								DetallePedido dp = new DetallePedido();
 
@@ -91,10 +91,10 @@ public class PedidoHelper {
 			pedido.setTotalPedido(new BigDecimal(totalPedido));
 			for (int j = 0; j < productos.length; j++) {
 				String codigoProducto = productos[j];
-				int valorProducto = Integer.parseInt(valorUnitario[j]);
+				Double valorProducto = Double.parseDouble(valorUnitario[j]);
 				BigDecimal valor = new BigDecimal(valorProducto);
 				int cantidad = Integer.parseInt(cantidades[j]);
-				totalProducto = valorProducto * cantidad;
+				totalProducto = valorProducto.intValue() * cantidad;
 
 				DetallePedido dp = new DetallePedido();
 

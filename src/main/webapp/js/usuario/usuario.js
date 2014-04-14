@@ -17,10 +17,10 @@ function enviarUsuaro(accion) {
 		alert('Debe seleccionar un estado');
 		return;
 	}
-	/* if (forma.rol.selectedIndex==0){
-	   alert('Debe seleccionar un rol para el usuario');
-	   return;
-	 }  */
+	if (forma.rol.selectedIndex == 0) {
+		alert('Debe seleccionar un rol para el usuario');
+		return;
+	}
 	forma.accion.value = accion;
 	forma.submit();
 }
@@ -31,18 +31,13 @@ function limpiarUsuario() {
 	forma.usuario.value = '';
 }
 
-function cargarUsuario(usuario, clave, activado) {
+function cargarUsuario(usuario, clave, activado, rol) {
 
 	forma = document.forms[0];
 	forma.usuario.value = usuario;
 	forma.password.value = clave;
 	seleccionarListaDesplegable(activado, forma.activado);
-
-	/* for (i=0;i<forma.activado.length;i++){ 
-	     if (forma.activado[i].value == activado ){ 
-	  	   forma.activado[i].checked; 
-	     }	   
-	  } */
+	seleccionarListaDesplegable(rol, forma.rol);
 }
 
 function cambiarClave(accion) {

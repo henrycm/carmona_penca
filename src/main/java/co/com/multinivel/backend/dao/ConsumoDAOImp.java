@@ -144,7 +144,7 @@ public class ConsumoDAOImp implements ConsumoDAO {
 		BigDecimal totalConsumos = null;
 		int filtros = 0;
 		try {
-			String sql = " SELECT SUM(X.TOTALPEDIDO)       FROM (SELECT       EXTRACT(YEAR_MONTH FROM p.FECHA)PERIODO, P.*        FROM t_CONSUMOS P   WHERE DISTRIBUIDOR=? )X  WHERE X.PERIODO=  EXTRACT(YEAR_MONTH FROM NOW())";
+			String sql = "SELECT SUM(X.TOTALPEDIDO)  FROM (SELECT month(p.FECHA)PERIODO, P.*  FROM t_CONSUMOS P   WHERE DISTRIBUIDOR=? )X  WHERE X.PERIODO=  month(getdate())";
 
 			Query q = this.entityManager.createNativeQuery(sql);
 			q.setParameter(1, pedido.getDistribuidor());

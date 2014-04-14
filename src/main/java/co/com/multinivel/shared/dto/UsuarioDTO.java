@@ -7,39 +7,60 @@ public class UsuarioDTO {
 	private String distribuidor;
 	private byte enabled;
 	private String passwordDistribuidor;
+	private String rol;
+
+	public String getRol() {
+		return rol;
+	}
+
+	public void setRol(String rol) {
+		this.rol = rol;
+	}
+
 	public String getUsername() {
 		return username;
 	}
+
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
 	public String getNombreUsuario() {
 		return nombreUsuario;
 	}
+
 	public void setNombreUsuario(String nombreUsuario) {
 		this.nombreUsuario = nombreUsuario;
 	}
+
 	public String getPassword() {
 		return password;
 	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
 	public String getDistribuidor() {
 		return distribuidor;
 	}
+
 	public void setDistribuidor(String distribuidor) {
 		this.distribuidor = distribuidor;
 	}
+
 	public byte getEnabled() {
 		return enabled;
 	}
+
 	public void setEnabled(byte enabled) {
 		this.enabled = enabled;
 	}
+
 	public String getPasswordDistribuidor() {
 		return passwordDistribuidor;
 	}
+
 	public void setPasswordDistribuidor(String passwordDistribuidor) {
 		this.passwordDistribuidor = passwordDistribuidor;
 	}

@@ -53,6 +53,15 @@
 									<option value='0'>Inactivo</option>
 							</select></td>
 						</tr>
+						<tr>
+							<td align="left">Tol:</td>
+							<td align="left"><select name="rol" id="rol">
+									<option value=''>--Seleccione--</option>
+									<c:forEach items="${roles}" var="r">
+										<option value='${r.groupId}'>${r.authority}</option>
+									</c:forEach>
+							</select></td>
+						</tr>
 					</table>
 				</c:if>
 			</form>
@@ -100,7 +109,7 @@
 										<c:out value='Inactivo' />
 									</c:if></td>
 								<td><a
-									href="javascript:cargarUsuario('<c:out value='${usuario.username}'/>','<c:out value='${usuario.password}'/>','<c:out value='${usuario.enabled}'/>');">Seleccionar</a>
+									href="javascript:cargarUsuario('${usuario.username}','${usuario.password}','${usuario.enabled}', '${usuario.enabled}');">Seleccionar</a>
 								</td>
 							</tr>
 						</c:forEach>

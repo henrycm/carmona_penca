@@ -44,7 +44,11 @@ public class UsuarioFrontController extends HttpServlet {
 				User usuarioConsultado = this.usuarioService.consultar(usuario.getUsername());
 				if (usuarioConsultado != null) {
 					usuario.setGroupMembers(usuarioConsultado.getGroupMembers());
-					//usuario.setEnabled(usuarioConsultado.getEnabled());
+					for (GroupMember gm : usuarioConsultado.getGroupMembers())
+					{
+						gm.getGroupAuthority().setGroupId(request.getParameter("rol"));
+						rolService.actualizar(gm.getGroupAuthority());
+					}
 					this.usuarioService.actualizar(usuario);
 				}
 				request.setAttribute("actualizo", Boolean.valueOf(true));
@@ -76,6 +80,7 @@ public class UsuarioFrontController extends HttpServlet {
 				if (filtro != null && nomFiltro != null) {
 					lista = this.usuarioService.buscar(nomFiltro, filtro);
 					request.setAttribute("listaUsuarios", lista);
+					request.setAttribute("roles", rolService.listar());
 					System.out.println("LISTA>>>>>>" + lista.size());
 				}
 			}

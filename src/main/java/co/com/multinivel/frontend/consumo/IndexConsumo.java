@@ -14,7 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
+import co.com.multinivel.backend.model.Afiliado;
 import co.com.multinivel.backend.service.AfiliadoService;
+import co.com.multinivel.backend.service.MovimientosContablesService;
 import co.com.multinivel.backend.service.ProductoService;
 import co.com.multinivel.shared.helper.UsuarioHelper;
 import co.com.multinivel.shared.util.RecursosEnum;
@@ -25,6 +27,8 @@ public class IndexConsumo extends HttpServlet {
 	ProductoService productoService;
 	@Autowired
 	private AfiliadoService afiliadoService;
+	@Autowired
+	private MovimientosContablesService mvtosService;
 
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
@@ -52,16 +56,27 @@ public class IndexConsumo extends HttpServlet {
 			switch (accion) {
 			case 'I':
 				recurso = RecursosEnum.FW_INGRESO_CONSUMO.getRecurso();
-				request.setAttribute("afiliado",
-						this.afiliadoService.consultar(UsuarioHelper.getUsuario()));
-				request.setAttribute("listaAlimentos", this.productoService.listar("1"));
-				request.setAttribute("listaPiel", this.productoService.listar("2"));
-				request.setAttribute("listaCapilar", this.productoService.listar("3"));
-				request.setAttribute("listaAseoPersonal", this.productoService.listar("4"));
-				request.setAttribute("listaFisioterapia", this.productoService.listar("5"));
-				request.setAttribute("listaAseoHogar", this.productoService.listar("6"));
-				request.setAttribute("listaVeterinaria", this.productoService.listar("7"));
-				request.setAttribute("listaExtractos", this.productoService.listar("8"));
+				Afiliado a = this.afiliadoService.consultar(UsuarioHelper.getUsuario());
+				request.setAttribute("afiliado", a);
+				String ced_dist = a.getCedulaDistribuidor();
+				request.setAttribute("saldoMvtos",
+						mvtosService.consultarSaldo(ced_dist));
+				request.setAttribute("listaAlimentos",
+						this.productoService.listarParaDistribuidor("1", ced_dist));
+				request.setAttribute("listaPiel",
+						this.productoService.listarParaDistribuidor("2", ced_dist));
+				request.setAttribute("listaCapilar",
+						this.productoService.listarParaDistribuidor("3", ced_dist));
+				request.setAttribute("listaAseoPersonal",
+						this.productoService.listarParaDistribuidor("4", ced_dist));
+				request.setAttribute("listaFisioterapia",
+						this.productoService.listarParaDistribuidor("5", ced_dist));
+				request.setAttribute("listaAseoHogar",
+						this.productoService.listarParaDistribuidor("6", ced_dist));
+				request.setAttribute("listaVeterinaria",
+						this.productoService.listarParaDistribuidor("7", ced_dist));
+				request.setAttribute("listaExtractos",
+						this.productoService.listarParaDistribuidor("8", ced_dist));
 
 				break;
 			case 'A':
@@ -70,16 +85,27 @@ public class IndexConsumo extends HttpServlet {
 				request.setAttribute("afiliado",
 						this.afiliadoService.consultar(request.getParameter("cedula")));
 				request.setAttribute("fechaConsumo", request.getParameter("fechaConsumo"));
-				request.setAttribute("distribuidor", request.getParameter("distribuidor"));
+				ced_dist = request.getParameter("distribuidor");
+				request.setAttribute("distribuidor", ced_dist);
 
-				request.setAttribute("listaAlimentos", this.productoService.listar("1"));
-				request.setAttribute("listaPiel", this.productoService.listar("2"));
-				request.setAttribute("listaCapilar", this.productoService.listar("3"));
-				request.setAttribute("listaAseoPersonal", this.productoService.listar("4"));
-				request.setAttribute("listaFisioterapia", this.productoService.listar("5"));
-				request.setAttribute("listaAseoHogar", this.productoService.listar("6"));
-				request.setAttribute("listaVeterinaria", this.productoService.listar("7"));
-				request.setAttribute("listaExtractos", this.productoService.listar("8"));
+				request.setAttribute("saldoMvtos",
+						mvtosService.consultarSaldo(ced_dist));
+				request.setAttribute("listaAlimentos",
+						this.productoService.listarParaDistribuidor("1", ced_dist));
+				request.setAttribute("listaPiel",
+						this.productoService.listarParaDistribuidor("2", ced_dist));
+				request.setAttribute("listaCapilar",
+						this.productoService.listarParaDistribuidor("3", ced_dist));
+				request.setAttribute("listaAseoPersonal",
+						this.productoService.listarParaDistribuidor("4", ced_dist));
+				request.setAttribute("listaFisioterapia",
+						this.productoService.listarParaDistribuidor("5", ced_dist));
+				request.setAttribute("listaAseoHogar",
+						this.productoService.listarParaDistribuidor("6", ced_dist));
+				request.setAttribute("listaVeterinaria",
+						this.productoService.listarParaDistribuidor("7", ced_dist));
+				request.setAttribute("listaExtractos",
+						this.productoService.listarParaDistribuidor("8", ced_dist));
 
 				break;
 			case 'L':

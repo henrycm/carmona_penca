@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import co.com.multinivel.backend.service.AfiliadoService;
+import co.com.multinivel.backend.service.MovimientosContablesService;
 import co.com.multinivel.backend.service.ProductoService;
 import co.com.multinivel.shared.helper.UsuarioHelper;
 import co.com.multinivel.shared.util.RecursosEnum;
@@ -25,6 +26,8 @@ public class IndexPedido extends HttpServlet {
 	ProductoService productoService;
 	@Autowired
 	private AfiliadoService afiliadoService;
+	@Autowired
+	private MovimientosContablesService movService;
 
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
@@ -87,13 +90,15 @@ public class IndexPedido extends HttpServlet {
 				break;
 			case 'Q':
 				recurso = RecursosEnum.FW_NUEVO_INGRESO_PEDIDO.getRecurso();
+				String st_dist = "";
 				if (UsuarioHelper.getRol() == '2') {
-					request.setAttribute("afiliado",
-							this.afiliadoService.consultar(UsuarioHelper.getUsuario()));
+					st_dist = UsuarioHelper.getUsuario();
 				} else {
-					request.setAttribute("afiliado",
-							this.afiliadoService.consultar(request.getParameter("distribuidor")));
+					st_dist = request.getParameter("distribuidor");
 				}
+				request.setAttribute("afiliado",
+						this.afiliadoService.consultar(st_dist));
+				request.setAttribute("saldoMvtos", movService.consultarSaldo(st_dist));
 				request.setAttribute("listaAlimentos", this.productoService.listar("1"));
 				request.setAttribute("listaPiel", this.productoService.listar("2"));
 				request.setAttribute("listaCapilar", this.productoService.listar("3"));

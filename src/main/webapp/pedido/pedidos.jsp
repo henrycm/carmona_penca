@@ -64,10 +64,13 @@
     <td>Telefono:    </td>
     <td><input name="telefono" type="text" size="15" value="<c:out value="${afiliado.telefono}"/>" /></td>
     <td>Ciudad: </td>
-    <td><input name="ciudad" type="text" size="20" value="<c:out value="${afiliado.ciudad}"/>" /></td>
-   
+    <td><input name="ciudad" type="text" size="20" value="<c:out value="${afiliado.ciudad}"/>" /></td>   
   </tr>
-  
+   <tr>
+    <td>Saldo disponible:    </td>
+    <td><input name="saldo" type="text" value="${saldoMvtos}"
+					readonly="readonly" /></td>      
+  </tr>
 </table>
  <input name="accion" type="hidden" size="20" value="<c:out value="${accion}"/>" />
 Linea de Alimentos

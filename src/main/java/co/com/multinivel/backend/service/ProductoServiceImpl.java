@@ -4,9 +4,12 @@ import java.util.List;
 
 import javax.ejb.EJB;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import co.com.multinivel.backend.dao.InventarioDistribuidorDAO;
 import co.com.multinivel.backend.dao.ProductoDAO;
+import co.com.multinivel.backend.model.InventarioDistribuidor;
 import co.com.multinivel.backend.model.Producto;
 import co.com.multinivel.shared.dto.ProductoDTO;
 import co.com.multinivel.shared.exception.MultinivelDAOException;
@@ -16,6 +19,9 @@ import co.com.multinivel.shared.exception.MultinivelServiceException;
 public class ProductoServiceImpl implements ProductoService {
 	@EJB
 	private ProductoDAO productoDAO;
+
+	@Autowired
+	private InventarioDistribuidorDAO invDAO;
 
 	public void actualizar(Producto producto) throws MultinivelServiceException {
 		try {
@@ -70,11 +76,23 @@ public class ProductoServiceImpl implements ProductoService {
 		return lista;
 	}
 
-	public List<ProductoDTO> listarParaDistribuidor(String tipoProducto)
+	public List<ProductoDTO> listarParaDistribuidor(String tipoProducto, String distribuidor)
 			throws MultinivelServiceException {
 		List<ProductoDTO> lista = null;
 		try {
 			lista = this.productoDAO.listarParaDistribuidor(tipoProducto);
+			List<InventarioDistribuidor> l = invDAO.findByPkDistribuidor(distribuidor);
+			for (ProductoDTO p : lista)
+			{
+				for (InventarioDistribuidor iv : l)
+				{
+					if (iv.getPk().getCod_producto().equals(p.getCodigo()))
+					{
+						p.setDisponibilidadDist(iv.getCantidad());
+						break;
+					}
+				}
+			}
 		} catch (MultinivelDAOException e) {
 			throw new MultinivelServiceException(e.getMessage(), getClass());
 		}

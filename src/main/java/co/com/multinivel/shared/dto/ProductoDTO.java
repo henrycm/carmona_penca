@@ -15,6 +15,15 @@ public class ProductoDTO {
 	private double valor;
 	private double porcentajeCantidad;
 	private double porcentajeValor;
+	private int disponibilidadDist;
+
+	public int getDisponibilidadDist() {
+		return disponibilidadDist;
+	}
+
+	public void setDisponibilidadDist(int disponibilidadDist) {
+		this.disponibilidadDist = disponibilidadDist;
+	}
 
 	public int getCantidad() {
 		return this.cantidad;

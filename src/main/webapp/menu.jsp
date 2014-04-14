@@ -47,7 +47,8 @@
 		<li class="dropdown"><a target="mainFrame" href="#" class="dropdown-toggle"
 		data-toggle="dropdown">Pedidos y Consumos </b></a>
 			<ul class="dropdown-menu">
- 					<li><a target="mainFrame" href="pedido/IndexPedido?accion=C" >Realizar Pedido</a></li>		
+ 					<li><a target="mainFrame" href="pedido/IndexPedido?accion=C" >Realizar Pedido</a></li>
+ 					<li><a target="mainFrame" href="${ctx}/spring/movimiento/inicio" >Realizar Abono</a></li>			
 					<li><a target="mainFrame" href="pedido/IndexPedido?accion=S" >OPCION NUEVA PARA Realizar Pedido</a></li>
 					<li><a target="mainFrame" href="pedido/ListaPedidoController?accion=L" >Actualizar Transporte Pedido</a></li>   
 				    <li><a target="mainFrame" href="consumo/IndexConsumo?accion=C" >Consumos Totales por Distribuidor</a></li>	

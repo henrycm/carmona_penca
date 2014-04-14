@@ -25,7 +25,8 @@ public abstract interface ProductoService {
 	public abstract List<ProductoDTO> listar(String paramString)
 			throws MultinivelServiceException;
 
-	public abstract List<ProductoDTO> listarParaDistribuidor(String paramString)
+	public abstract List<ProductoDTO> listarParaDistribuidor(String tipoProducto,
+			String distribuidor)
 			throws MultinivelServiceException;
 
 	public abstract List<Object> listarProductoPorcentaje(String paramString)
