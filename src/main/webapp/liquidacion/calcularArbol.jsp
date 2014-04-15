@@ -10,9 +10,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Aplicacion MultiALOE</title>
 <link rel="stylesheet" href="../css/jquery/jquery.ui.all.css">
-<link rel="StyleSheet" type="text/css" href="../bootstrap/css/bootstrap.css" />
+<link rel="StyleSheet" type="text/css"
+	href="../bootstrap/css/bootstrap.css" />
 <script src="../js/generico.js"></script>
-<script src="../js/liquidacion.js"></script>
+<script src="../js/arbol/arbol.js"></script>
 <link rel="stylesheet" href="../css/jquery/demos.css">
 <link rel="stylesheet" href="../css/multinivel.css">
 </head>
@@ -22,15 +23,17 @@
 			<c:if test="${not empty mensaje}">
 				<table align="center" class="tbl-lista" width="90%" border="1">
 					<tr>
-						<td width="10%"><c:out value="${mensaje}" /></td>
+						<td>
+							<h5 style="color: blue">
+								<c:out value="${mensaje}" />
+							</h5>
+						</td>
 					</tr>
 				</table>
 			</c:if>
 			<c:if test="${empty mensaje}">
 				<form name="calcular" method="post" action="ControlLiquidacion">
-					<input type="hidden" name="accion" value="C"> <input
-						type="submit" value="Calcular"
-						${not empty fecha ? "" : "disabled"}>
+					<input type="hidden" name="accion" value="C">
 					<div class="btn-group">
 						<a class="btn btn-sm btn-default"
 							href="javascript:calcularArbol()">Calcular</a>
@@ -44,16 +47,16 @@
 						</tr>
 						<tr>
 							<td>
-								<p>
+								<h5 style="color: blue">
 									Este proceso puede durar alrededor de una hora! <br /> Fecha
 									ultimo calculo:
 									<c:if test="${not empty fecha}">
 										<c:out value="${fecha}" />
 									</c:if>
 									<c:if test="${empty fecha}">
-					En ejecución!
-				</c:if>
-								</p>
+										En ejecución!
+									</c:if>
+								</h5>
 							</td>
 						</tr>
 					</table>
