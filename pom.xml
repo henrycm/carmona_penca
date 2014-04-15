@@ -36,7 +36,7 @@
 		<javax.jstl-taglibs.version>1.2</javax.jstl-taglibs.version>
 
 		<javaee-web-api.version>6.0</javaee-web-api.version>
-		<jasperReports.version>5.2.0</jasperReports.version>
+		<jasperReports.version>5.5.0</jasperReports.version>
 		<poi.version>3.7</poi.version>
 		<itext.version>2.1.7</itext.version>
 		<groovy.version>2.0.1</groovy.version>

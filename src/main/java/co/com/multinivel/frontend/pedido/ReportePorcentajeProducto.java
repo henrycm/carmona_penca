@@ -53,7 +53,7 @@ public class ReportePorcentajeProducto extends HttpServlet {
 					.listarProductoPorcentaje(periodo);
 			if ((lista != null) && (lista.size() > 0)) {
 				if ("PDF".equals(tipoReporte)) {
-					GenerarReporte.exportarPDF(request, response,
+					GenerarReporte.exportarHTML(request, response,
 							getServletConfig().getServletContext(),
 							"Reporte_PorcentajeProducto.pdf",
 							RecursosEnum.FW_JASPER_REPORTE_PDTO_PORC_PERIODO

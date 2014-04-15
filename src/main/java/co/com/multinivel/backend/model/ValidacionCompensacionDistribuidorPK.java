@@ -43,7 +43,6 @@ public class ValidacionCompensacionDistribuidorPK implements Serializable {
 	}
 
 	public int hashCode() {
-		int prime = 31;
 		int hash = 17;
 		hash = hash * 31 + this.distribuidor.hashCode();
 		hash = hash * 31 + this.periodo.hashCode();
