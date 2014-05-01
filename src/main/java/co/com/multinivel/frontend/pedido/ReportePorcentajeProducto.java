@@ -26,57 +26,40 @@ public class ReportePorcentajeProducto extends HttpServlet {
 
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
-		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
-				config.getServletContext());
+		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
 	}
 
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd = null;
 		String periodo = "";
-		String tipoReporte = request.getParameter("tipoReporte") == null ? "PDF"
-				: request.getParameter("tipoReporte");
+		String tipoReporte = request.getParameter("tipoReporte") == null ? "PDF" : request.getParameter("tipoReporte");
 		try {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			String mes = request.getParameter("mes");
 			String ano = request.getParameter("ano");
 			periodo = mes + "/" + ano;
 			map.put("periodo", periodo);
-			map.put("rutaImagenes",
-					RutasUtil.getRutaImagenes(getServletContext()));
-			List<Object> lista = this.productoService
-					.listarProductoPorcentaje(periodo);
+			map.put("rutaImagenes", RutasUtil.getRutaImagenes(getServletContext()));
+			List<Object> lista = this.productoService.listarProductoPorcentaje(periodo);
 			if ((lista != null) && (lista.size() > 0)) {
 				if ("PDF".equals(tipoReporte)) {
-					GenerarReporte.exportarHTML(request, response,
-							getServletConfig().getServletContext(),
-							"Reporte_PorcentajeProducto.pdf",
-							RecursosEnum.FW_JASPER_REPORTE_PDTO_PORC_PERIODO
-									.getRecurso(), map, lista);
+					GenerarReporte.exportarPDF(request, response, getServletConfig().getServletContext(), "Reporte_PorcentajeProducto.pdf",
+							RecursosEnum.FW_JASPER_REPORTE_PDTO_PORC_PERIODO.getRecurso(), map, lista);
 				} else {
-					GenerarReporte.exportarExcel(request, response,
-							getServletConfig().getServletContext(),
-							"Reporte_PorcentajeProducto.xls",
-							RecursosEnum.FW_JASPER_REPORTE_PDTO_PORC_PERIODO
-									.getRecurso(), map, lista);
+					GenerarReporte.exportarExcel(request, response, getServletConfig().getServletContext(), "Reporte_PorcentajeProducto.xls",
+							RecursosEnum.FW_JASPER_REPORTE_PDTO_PORC_PERIODO.getRecurso(), map, lista);
 				}
 			} else {
-				request.setAttribute("error",
-						"No existen datos para el periodo solicitado o no se ha liquidado:"
-								+ periodo);
-				rd = getServletContext().getRequestDispatcher(
-						RecursosEnum.FW_ERROR.getRecurso());
+				request.setAttribute("error", "No existen datos para el periodo solicitado o no se ha liquidado:" + periodo);
 				rd.forward(request, response);
 			}
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());
-			rd = getServletContext().getRequestDispatcher(
-					RecursosEnum.FW_ERROR.getRecurso());
+			rd = getServletContext().getRequestDispatcher(RecursosEnum.FW_ERROR.getRecurso());
 			rd.forward(request, response);
 		}
 	}

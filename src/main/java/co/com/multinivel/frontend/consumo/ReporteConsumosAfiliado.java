@@ -1,8 +1,6 @@
 package co.com.multinivel.frontend.consumo;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -32,36 +30,23 @@ public class ReporteConsumosAfiliado extends HttpServlet {
 
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
-		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
-				config.getServletContext());
+		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd = null;
 		String periodo = "";
-		String tipoReporte = request.getParameter("tipoReporte") == null ? "PDF" : request
-				.getParameter("tipoReporte");
+		String tipoReporte = request.getParameter("tipoReporte") == null ? "PDF" : request.getParameter("tipoReporte");
 		try {
 			HashMap<String, Object> map = new HashMap<String, Object>();
-			Date fechaActual = new Date();
 
-			System.err.println("h");
+			String nombreEmpresario = request.getParameter("nombreEmpresario") == null ? "" : request.getParameter("nombreEmpresario");
+			String apellidoEmpresario = request.getParameter("apellidoEmpresario") == null ? "" : request.getParameter("apellidoEmpresario");
 
-			String nombreEmpresario = request.getParameter("nombreEmpresario") == null ? ""
-					: request.getParameter("nombreEmpresario");
-			String apellidoEmpresario = request.getParameter("apellidoEmpresario") == null ? ""
-					: request.getParameter("apellidoEmpresario");
-			System.err.println("h2::" + nombreEmpresario);
-			System.err.println("h2::" + apellidoEmpresario);
-
-			SimpleDateFormat formato = new SimpleDateFormat("MM/yyyy");
-			String cadenaFecha = formato.format(fechaActual);
 			String mes = request.getParameter("mes");
 			String ano = request.getParameter("ano");
 			System.err.println("h3");
@@ -79,21 +64,14 @@ public class ReporteConsumosAfiliado extends HttpServlet {
 			System.err.println("h5:" + lista.size());
 			if ((lista != null) && (lista.size() > 0)) {
 				if ("PDF".equals(tipoReporte)) {
-					GenerarReporte.exportarPDF(request, response, getServletConfig()
-							.getServletContext(), "Reporte_ListaConsumosAfiliado_"
-							+ nombreEmpresario + ".pdf",
-							RecursosEnum.FW_JASPER_REPORTE_LISTA_CONSUMOS_AFILIADO_NOMBRE
-									.getRecurso(), map, lista);
+					GenerarReporte.exportarPDF(request, response, getServletConfig().getServletContext(), "Reporte_ListaConsumosAfiliado_"
+							+ nombreEmpresario + ".pdf", RecursosEnum.FW_JASPER_REPORTE_LISTA_CONSUMOS_AFILIADO_NOMBRE.getRecurso(), map, lista);
 				} else {
-					GenerarReporte.exportarExcel(request, response, getServletConfig()
-							.getServletContext(), "Reporte_ListaConsumosAfiliado_"
-							+ nombreEmpresario + ".xls",
-							RecursosEnum.FW_JASPER_REPORTE_LISTA_CONSUMOS_AFILIADO_NOMBRE
-									.getRecurso(), map, lista);
+					GenerarReporte.exportarExcel(request, response, getServletConfig().getServletContext(), "Reporte_ListaConsumosAfiliado_"
+							+ nombreEmpresario + ".xls", RecursosEnum.FW_JASPER_REPORTE_LISTA_CONSUMOS_AFILIADO_NOMBRE.getRecurso(), map, lista);
 				}
 			} else {
-				request.setAttribute("error", "No existen consumos para el periodo solicitado:"
-						+ periodo + " o digite nombre y apellido nuevamente");
+				request.setAttribute("error", "No existen consumos para el periodo solicitado:" + periodo + " o digite nombre y apellido nuevamente");
 				rd = getServletContext().getRequestDispatcher(RecursosEnum.FW_ERROR.getRecurso());
 				rd.forward(request, response);
 			}

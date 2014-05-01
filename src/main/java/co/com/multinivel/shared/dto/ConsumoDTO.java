@@ -1,12 +1,13 @@
 package co.com.multinivel.shared.dto;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 public class ConsumoDTO {
 	private String codigoPedido;
 	private String codigoConsumo;
 	private BigDecimal totalPedido;
-	private String fecha;
+	private Date fecha;
 	private String pedido;
 	private String codigoProducto;
 	private String nombreProducto;
@@ -95,12 +96,12 @@ public class ConsumoDTO {
 		this.cedulaDistribuidor = cedulaDistribuidor;
 	}
 
-	public void setFecha(String fecha) {
-		this.fecha = fecha;
+	public Date getFecha() {
+		return fecha;
 	}
 
-	public String getFecha() {
-		return this.fecha;
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
 	}
 
 	public void setCodigoProducto(String codigoProducto) {

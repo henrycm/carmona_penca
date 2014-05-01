@@ -2,6 +2,7 @@ package co.com.multinivel.backend.dao;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -17,6 +18,7 @@ import co.com.multinivel.backend.model.Consumo;
 import co.com.multinivel.shared.dto.ConsumoDTO;
 import co.com.multinivel.shared.dto.ReporteConsumoDTO;
 import co.com.multinivel.shared.exception.MultinivelDAOException;
+import co.com.multinivel.shared.util.FechasUtil;
 
 @Repository
 @Transactional
@@ -68,7 +70,8 @@ public class ConsumoDAOImp implements ConsumoDAO {
 				String nombreDistribuidor = (String) objectArray[9];
 				String telefono = objectArray[10] == null ? "" : (String) objectArray[10];
 				String ciudadEmpresario = (String) objectArray[11];
-				String fecha = ((java.sql.Date) objectArray[12]).toString();
+				String tmp = (String) objectArray[12];
+				Date fecha = FechasUtil.parse(tmp);
 
 				ConsumoDTO p = new ConsumoDTO();
 				p.setCedulaAfiliado(afiliado);
@@ -168,7 +171,8 @@ public class ConsumoDAOImp implements ConsumoDAO {
 				Integer codigoConsumo = (Integer) objectArray[0];
 				BigDecimal totalConsumo = (BigDecimal) objectArray[2];
 				String distribuidor = (String) objectArray[3];
-				java.util.Date fecha = (java.util.Date) objectArray[4];
+				String tmp = (String) objectArray[4];
+				Date fecha = FechasUtil.parse(tmp);
 
 				Consumo pedido2 = new Consumo();
 				pedido2.setCodigoConsumo(codigoConsumo.intValue());
@@ -200,16 +204,17 @@ public class ConsumoDAOImp implements ConsumoDAO {
 			Object[] objectArray = (Object[]) obj;
 			Integer codigoPedido = (Integer) objectArray[0];
 			BigDecimal totalPedido = (BigDecimal) objectArray[1];
-			java.util.Date fecha = (java.util.Date) objectArray[2];
+			String tmp = (String) objectArray[2];
+			Date fecha = FechasUtil.parse(tmp);
 			String nombreAfiliado = (String) objectArray[3];
 			String afiliado = (String) objectArray[4];
-
 			totalDistribuidor += totalPedido.doubleValue();
+
 			ConsumoDTO pedido2 = new ConsumoDTO();
 			pedido2.setCodigoConsumo(codigoPedido.toString());
-			pedido2.setFecha(fecha.toString());
+			pedido2.setFecha(fecha);
 			pedido2.setTotalPedido(totalPedido);
-			pedido2.setFecha(fecha.toString());
+			pedido2.setFecha(fecha);
 
 			pedido2.setNombreAfiliado(nombreAfiliado);
 			pedido2.setCedulaAfiliado(afiliado);
@@ -284,7 +289,8 @@ public class ConsumoDAOImp implements ConsumoDAO {
 					Object[] objectArray = (Object[]) obj;
 					Integer codigoPedido = (Integer) objectArray[0];
 					BigDecimal totalPedido = (BigDecimal) objectArray[1];
-					java.util.Date fecha = (java.util.Date) objectArray[2];
+					String tmp = (String) objectArray[2];
+					Date fecha = FechasUtil.parse(tmp);
 					String codigoProducto = (String) objectArray[3];
 					String nombreProducto = (String) objectArray[4];
 					BigDecimal valorUnitario = (BigDecimal) objectArray[5];
@@ -294,9 +300,10 @@ public class ConsumoDAOImp implements ConsumoDAO {
 					String nombreAfiliado = (String) objectArray[9];
 
 					totalDistribuidor += totalPedido.doubleValue();
+
 					ConsumoDTO pedido2 = new ConsumoDTO();
 					pedido2.setCodigoConsumo(codigoPedido.toString());
-					pedido2.setFecha(fecha.toString());
+					pedido2.setFecha(fecha);
 					pedido2.setTotalPedido(totalPedido);
 					pedido2.setCodigoProducto(codigoProducto);
 					pedido2.setNombreProducto(nombreProducto);
@@ -351,13 +358,14 @@ public class ConsumoDAOImp implements ConsumoDAO {
 					Object[] objectArray = (Object[]) obj;
 					Integer codigoPedido = (Integer) objectArray[0];
 					BigDecimal totalPedido = (BigDecimal) objectArray[1];
-					java.util.Date fecha = (java.util.Date) objectArray[2];
+					String tmp = (String) objectArray[2];
+					Date fecha = FechasUtil.parse(tmp);
 					String cedulaAfiliado = (String) objectArray[3];
 					String nombreAfiliado = (String) objectArray[4];
 
 					ConsumoDTO pedido2 = new ConsumoDTO();
 					pedido2.setCodigoConsumo(codigoPedido.toString());
-					pedido2.setFecha(fecha.toString());
+					pedido2.setFecha(fecha);
 					pedido2.setTotalPedido(totalPedido);
 					pedido2.setNombreAfiliado(nombreAfiliado);
 					pedido2.setCedulaAfiliado(cedulaAfiliado);
@@ -403,15 +411,16 @@ public class ConsumoDAOImp implements ConsumoDAO {
 					Object[] objectArray = (Object[]) obj;
 					Integer codigoPedido = (Integer) objectArray[0];
 					BigDecimal totalPedido = (BigDecimal) objectArray[1];
-					java.util.Date fecha = (java.util.Date) objectArray[2];
-
+					String tmp = (String) objectArray[2];
+					Date fecha = FechasUtil.parse(tmp);
 					String cedulaAfiliado = (String) objectArray[3];
 					String nombreAfiliado = (String) objectArray[4];
 
 					totalDistribuidor += totalPedido.doubleValue();
+
 					ConsumoDTO pedido2 = new ConsumoDTO();
 					pedido2.setCodigoConsumo(codigoPedido.toString());
-					pedido2.setFecha(fecha.toString());
+					pedido2.setFecha(fecha);
 					pedido2.setTotalPedido(totalPedido);
 					pedido2.setNombreAfiliado(nombreAfiliado);
 					pedido2.setCedulaAfiliado(cedulaAfiliado);

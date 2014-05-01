@@ -14,14 +14,8 @@ public class ReporteConsumoDTO implements Serializable {
 	private String nom_afiliado;
 	private double consumoAfiliado;
 	private String papa;
-
-	public String getPapa() {
-		return papa;
-	}
-
-	public void setPapa(String papa) {
-		this.papa = papa;
-	}
+	private double comisionProducto;
+	private double comisionDinero;
 
 	public String getAfiliado() {
 		return afiliado;
@@ -95,4 +89,31 @@ public class ReporteConsumoDTO implements Serializable {
 		this.consumoAfiliado = consumoAfiliado;
 	}
 
+	public String getPapa() {
+		return papa;
+	}
+
+	public void setPapa(String papa) {
+		this.papa = papa;
+	}
+
+	public double getComisionProducto() {
+		return comisionProducto;
+	}
+
+	public void setComisionProducto(double comisionProducto) {
+		this.comisionProducto = comisionProducto;
+	}
+
+	public double getComisionDinero() {
+		return comisionDinero;
+	}
+
+	public void setComisionDinero(double comisionDinero) {
+		this.comisionDinero = comisionDinero;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 }

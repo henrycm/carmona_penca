@@ -12,9 +12,7 @@
 <link rel="StyleSheet" type="text/css" href="../../bootstrap/css/bootstrap.css" />
 <script src="../../js/producto/producto.js"></script>
 <script src="../../js/generico.js"></script>
-
 <link rel="stylesheet" href="../../css/jquery/demos.css">
-
 <link rel="stylesheet" href="../../css/multinivel.css">
 
 </head>

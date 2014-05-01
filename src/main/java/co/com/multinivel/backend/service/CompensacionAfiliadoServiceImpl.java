@@ -16,8 +16,7 @@ public class CompensacionAfiliadoServiceImpl implements CompensacionAfiliadoServ
 	@EJB
 	private CompensacionAfiliadoDAO compensacionAfiliadoDAO;
 
-	public List<Object> consultar(CompensacionAfiliadoDTO compensacionAfiliadoDTO)
-			throws MultinivelServiceException {
+	public List<Object> consultar(CompensacionAfiliadoDTO compensacionAfiliadoDTO) throws MultinivelServiceException {
 		List<Object> retorno = null;
 		try {
 			retorno = this.compensacionAfiliadoDAO.consultar(compensacionAfiliadoDTO);
@@ -27,8 +26,7 @@ public class CompensacionAfiliadoServiceImpl implements CompensacionAfiliadoServ
 		return retorno;
 	}
 
-	public double getTotalConsumo(CompensacionAfiliadoDTO compensacionAfiliadoDTO)
-			throws MultinivelServiceException {
+	public double getTotalConsumo(CompensacionAfiliadoDTO compensacionAfiliadoDTO) throws MultinivelServiceException {
 		double retorno = 0.0D;
 		try {
 			retorno = this.compensacionAfiliadoDAO.totalConsumo(compensacionAfiliadoDTO);
@@ -38,8 +36,7 @@ public class CompensacionAfiliadoServiceImpl implements CompensacionAfiliadoServ
 		return retorno;
 	}
 
-	public List<Object> listarPagoAfiliados(CompensacionAfiliadoDTO compensacionAfiliadoDTO)
-			throws MultinivelServiceException {
+	public List<Object> listarPagoAfiliados(CompensacionAfiliadoDTO compensacionAfiliadoDTO) throws MultinivelServiceException {
 		List<Object> retorno = null;
 		try {
 			retorno = this.compensacionAfiliadoDAO.listarPagoAfiliados(compensacionAfiliadoDTO);
@@ -67,10 +64,10 @@ public class CompensacionAfiliadoServiceImpl implements CompensacionAfiliadoServ
 		}
 	}
 
-	public List<Object> consultar(String cedula, String periodo) throws MultinivelServiceException {
+	public List<Object> comisionTotalPorDistribuidorPeriodo(String periodo) throws MultinivelServiceException {
 		List<Object> retorno = null;
 		try {
-			retorno = this.compensacionAfiliadoDAO.consultar(cedula, periodo);
+			retorno = this.compensacionAfiliadoDAO.comisionTotalPorDistribuidorPeriodo(periodo);
 		} catch (MultinivelDAOException e) {
 			throw new MultinivelServiceException(e.getMessage(), getClass());
 		}
@@ -81,5 +78,6 @@ public class CompensacionAfiliadoServiceImpl implements CompensacionAfiliadoServ
 /*
  * Location: D:\Dllo\multinivel\multinivelEAR.ear\multinivelEJB.jar\
  * 
- * Qualified Name: co.com.multinivel.backend.service.CompensacionAfiliadoServiceImpl
+ * Qualified Name:
+ * co.com.multinivel.backend.service.CompensacionAfiliadoServiceImpl
  */

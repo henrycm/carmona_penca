@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="inscripcionAfiliado.jasper" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="inscripcionAfiliado.jasper" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a6b80034-ad41-43fa-94cd-1d703f5ae65c">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="127"/>
+	<property name="ireport.y" value="0"/>
 	<scriptlet name="scriptlet1" class="net.sf.jasperreports.engine.JRDefaultScriptlet"/>
 	<parameter name="total" class="java.lang.Integer"/>
 	<parameter name="rutaImagenes" class="java.lang.String"/>
 	<parameter name="periodo" class="java.lang.String"/>
 	<field name="cedula" class="java.lang.String"/>
 	<field name="nombre" class="java.lang.String"/>
-	<field name="fechaIngreso" class="java.lang.String"/>
+	<field name="fechaIngreso" class="java.util.Date"/>
 	<field name="cedulaDistribuidor" class="java.lang.String"/>
 	<field name="cedulaDistribuidorPago" class="java.lang.String"/>
 	<variable name="cedulaDistribuidor_1" class="java.lang.Integer" resetType="Group" resetGroup="distribuidor" calculation="Count">
@@ -18,40 +18,43 @@
 	<group name="distribuidor">
 		<groupExpression><![CDATA[$F{cedulaDistribuidor}]]></groupExpression>
 		<groupHeader>
-			<band height="26">
+			<band height="17">
 				<staticText>
-					<reportElement mode="Opaque" x="4" y="2" width="73" height="20" forecolor="#FFFFFF" backcolor="#006600"/>
+					<reportElement mode="Opaque" x="4" y="2" width="71" height="15" forecolor="#FFFFFF" backcolor="#006600" uuid="8448dc0a-6495-4a0f-9db5-52c301d46ccf"/>
 					<textElement>
-						<font size="10" isBold="false"/>
+						<font size="10" isBold="true"/>
 					</textElement>
-					<text><![CDATA[Distribuidor]]></text>
+					<text><![CDATA[Distribuidor:]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="79" y="2" width="100" height="20"/>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{cedulaDistribuidor}]]></textFieldExpression>
+					<reportElement x="86" y="2" width="100" height="15" uuid="2036fcbd-56dc-481f-851a-bda6733dceae"/>
+					<textFieldExpression><![CDATA[$F{cedulaDistribuidor}]]></textFieldExpression>
 				</textField>
-				<textField>
-					<reportElement x="180" y="2" width="362" height="20"/>
-					<textElement/>
-					<textFieldExpression class="java.lang.String"><![CDATA[$F{cedulaDistribuidorPago}]]></textFieldExpression>
+				<textField pattern="###0.00">
+					<reportElement x="199" y="2" width="343" height="15" uuid="b2bb0d2a-708d-4cc5-8d50-7be3ad2885cc"/>
+					<textFieldExpression><![CDATA[$F{cedulaDistribuidorPago}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="50">
+			<band height="23">
 				<textField>
-					<reportElement x="79" y="0" width="100" height="20"/>
-					<textElement/>
-					<textFieldExpression class="java.lang.Integer"><![CDATA[$V{cedulaDistribuidor_1}]]></textFieldExpression>
+					<reportElement x="86" y="0" width="101" height="15" uuid="a6d019d4-b03a-4ecc-81c3-e3491fa42ec8"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{cedulaDistribuidor_1}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement mode="Opaque" x="6" y="0" width="73" height="20" forecolor="#FFFFFF" backcolor="#006600"/>
+					<reportElement mode="Opaque" x="6" y="0" width="69" height="15" forecolor="#FFFFFF" backcolor="#006600" uuid="ad55215a-3201-46ca-8bc3-14caf02aee86"/>
 					<textElement>
-						<font size="10" isBold="false"/>
+						<font size="10" isBold="true"/>
 					</textElement>
-					<text><![CDATA[Afiliados]]></text>
+					<text><![CDATA[Afiliados:]]></text>
 				</staticText>
+				<line>
+					<reportElement x="4" y="16" width="538" height="1" uuid="aac8d594-1435-4ba0-ba47-d7a426e76ce2"/>
+				</line>
 			</band>
 		</groupFooter>
 	</group>
@@ -65,53 +68,59 @@
 		<band splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="116" splitType="Stretch">
+		<band height="134" splitType="Stretch">
 			<staticText>
-				<reportElement x="179" y="73" width="263" height="20"/>
+				<reportElement x="155" y="73" width="263" height="20" uuid="174eab65-bf4b-4df2-99cc-d8131e8cfa8a"/>
 				<textElement textAlignment="Center">
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[LISTA DE AFILIADOS POR PERIODO ]]></text>
 			</staticText>
 			<image>
-				<reportElement x="5" y="11" width="50" height="50"/>
-				<imageExpression class="java.lang.String"><![CDATA[$P{rutaImagenes}+"/pencaSabila.png"]]></imageExpression>
+				<reportElement x="5" y="7" width="70" height="61" uuid="5ce48644-e6c5-4064-b55e-366c45ed32a6"/>
+				<imageExpression><![CDATA[$P{rutaImagenes}+"/pencaSabila.png"]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="118" y="10" width="300" height="62"/>
-				<imageExpression class="java.lang.String"><![CDATA["C:\\jbossMultinivel\\reports\\MultiAloe.png"]]></imageExpression>
+				<reportElement x="118" y="10" width="300" height="62" uuid="71e3b54b-d746-4e82-81d8-97897a50d907"/>
+				<imageExpression><![CDATA[$P{rutaImagenes}+"/MultiAloe.png"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement mode="Opaque" x="4" y="93" width="73" height="20" forecolor="#FFFFFF" backcolor="#006600"/>
+				<reportElement mode="Opaque" x="232" y="93" width="56" height="15" forecolor="#FFFFFF" backcolor="#006600" uuid="704c5e33-b2d1-43e5-87dc-5b09423d6b3b"/>
 				<textElement>
-					<font size="10" isBold="false"/>
+					<font size="10" isBold="true"/>
 				</textElement>
-				<text><![CDATA[PERIODO]]></text>
+				<text><![CDATA[PERIODO:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="79" y="93" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$P{periodo}]]></textFieldExpression>
+				<reportElement x="293" y="93" width="74" height="15" uuid="fecf4719-c501-4a0a-b2de-3ff573700137"/>
+				<textFieldExpression><![CDATA[$P{periodo}]]></textFieldExpression>
 			</textField>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="25" splitType="Stretch">
-			<textField>
-				<reportElement x="466" y="3" width="90" height="20"/>
+		<band height="17" splitType="Stretch">
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement x="395" y="1" width="90" height="15" uuid="03461027-d788-423c-96c4-d330808adc8a"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{fechaIngreso}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{fechaIngreso}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="3" width="75" height="20"/>
+				<reportElement x="31" y="1" width="75" height="15" uuid="d45c1aa0-6a16-46f5-b716-316177c308ce"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{cedula}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cedula}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="75" y="3" width="390" height="20"/>
+				<reportElement x="106" y="1" width="263" height="15" uuid="49106b84-aa30-4821-9f2e-6b5fc54dc690"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{nombre}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="6" y="0" width="25" height="15" uuid="aa9b1e78-7845-4b17-81dd-bc065eb77cc5"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[>]]></text>
+			</staticText>
 		</band>
 	</detail>
 	<columnFooter>
