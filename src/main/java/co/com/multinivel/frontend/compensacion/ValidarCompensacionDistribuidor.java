@@ -21,6 +21,8 @@ import co.com.multinivel.backend.service.ValidacionCompensacionDistribuidorServi
 import co.com.multinivel.shared.util.RecursosEnum;
 
 public class ValidarCompensacionDistribuidor extends HttpServlet {
+
+	private static final long serialVersionUID = 1L;
 	@Autowired
 	private ValidacionCompensacionDistribuidorService validacionCompensacionDistribuidorService;
 	@Autowired
@@ -28,21 +30,17 @@ public class ValidarCompensacionDistribuidor extends HttpServlet {
 
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
-		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
-				config.getServletContext());
+		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String recurso = RecursosEnum.FW_VALIDAR_COMPENSACION_DISTRIBUIDOR.getRecurso();
 		try {
-			char accion = request.getParameter("accion") == null ? '*' : request.getParameter(
-					"accion").charAt(0);
+			char accion = request.getParameter("accion") == null ? '*' : request.getParameter("accion").charAt(0);
 			Date fechaActual = new Date();
 			SimpleDateFormat formato = new SimpleDateFormat("MM/yyyy");
 			String cadenaFecha = formato.format(fechaActual);
@@ -57,17 +55,14 @@ public class ValidarCompensacionDistribuidor extends HttpServlet {
 				ValidacionCompensacionDistribuidor validacionCompensacionDistribuidor = new ValidacionCompensacionDistribuidor();
 				ValidacionCompensacionDistribuidorPK validacionCompensacionDistribuidorPK = new ValidacionCompensacionDistribuidorPK();
 				validacionCompensacionDistribuidorPK.setPeriodo(periodo);
-				validacionCompensacionDistribuidorPK.setDistribuidor(request
-						.getParameter("distribuidor"));
+				validacionCompensacionDistribuidorPK.setDistribuidor(request.getParameter("distribuidor"));
 				validacionCompensacionDistribuidor.setId(validacionCompensacionDistribuidorPK);
-				boolean retorno = this.validacionCompensacionDistribuidorService
-						.ingresar(validacionCompensacionDistribuidor);
+				boolean retorno = this.validacionCompensacionDistribuidorService.ingresar(validacionCompensacionDistribuidor);
 				request.setAttribute("mensaje", Boolean.valueOf(retorno));
 
 				break;
 			default:
-				request.setAttribute("listaDistribuidores",
-						this.afiliadoService.listarDistribuidores());
+				request.setAttribute("listaDistribuidores", this.afiliadoService.listarDistribuidores());
 			}
 			request.setAttribute("accion", Character.valueOf(accion));
 		} catch (Exception e) {

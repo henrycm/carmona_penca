@@ -127,12 +127,13 @@ public class IndexFrontController extends HttpServlet {
 					CantidadAfiliacionesDistribuidor cantidadAfiliacionesDistribuidor = new CantidadAfiliacionesDistribuidor();
 					cantidadAfiliacionesDistribuidor.setCantidad(cantidad);
 					cantidadAfiliacionesDistribuidor.setDistribuidor(request.getParameter("distribuidor"));
-					boolean retorno = this.cantidaAfiliacionesDistribuidorService.ingresar(cantidadAfiliacionesDistribuidor);
+					boolean retorno = Boolean.FALSE;
+					retorno = this.cantidaAfiliacionesDistribuidorService.ingresar(cantidadAfiliacionesDistribuidor);
 					if (retorno) {
-						request.setAttribute("mensaje", "se ingresaron las cantidades para el distribuidor exitosamente");
+						request.setAttribute("mensaje", "Se ingresaron las cantidades para el distribuidor exitosamente.");
 					} else {
 						request.setAttribute("mensaje",
-								"no se ingresaron las cantidas porque ya existen unas cantidades ingresadas para este distribuidor");
+								"No se ingresaron las cantidas porque ya existen unas cantidades ingresadas para este distribuidor. Por favor verifique!");
 					}
 				}
 				request.setAttribute("listaDistribuidores", this.afiliadoService.listarDistribuidores());

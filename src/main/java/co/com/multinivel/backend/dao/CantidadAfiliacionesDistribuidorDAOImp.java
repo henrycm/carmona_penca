@@ -12,37 +12,29 @@ import co.com.multinivel.shared.exception.MultinivelDAOException;
 
 @Repository
 @Transactional
-public class CantidadAfiliacionesDistribuidorDAOImp implements
-		CantidadAfiliacionesDistribuidorDAO {
+public class CantidadAfiliacionesDistribuidorDAOImp implements CantidadAfiliacionesDistribuidorDAO {
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	public boolean ingresar(
-			CantidadAfiliacionesDistribuidor cantidadAfiliacionesDistribuidor)
-			throws MultinivelDAOException {
-		boolean retorno = false;
+	public boolean ingresar(CantidadAfiliacionesDistribuidor cantidadAfiliacionesDistribuidor) throws MultinivelDAOException {
+		boolean retorno = Boolean.FALSE;
 		try {
 			this.entityManager.merge(cantidadAfiliacionesDistribuidor);
-			retorno = true;
+			retorno = Boolean.TRUE;
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new MultinivelDAOException("Error ingresando el producto -"
-					+ e.getMessage(), getClass());
+			throw new MultinivelDAOException("Error ingresando el producto -" + e.getMessage(), getClass());
 		}
 		return retorno;
 	}
 
-	public CantidadAfiliacionesDistribuidor consultar(
-			CantidadAfiliacionesDistribuidor cantidadAfiliacionesDistribuidor)
+	public CantidadAfiliacionesDistribuidor consultar(CantidadAfiliacionesDistribuidor cantidadAfiliacionesDistribuidor)
 			throws MultinivelDAOException {
-		Query query = this.entityManager
-				.createQuery("from CantidadAfiliacionesDistribuidor v where v.id.distribuidor=?");
-		query.setParameter(1,
-				cantidadAfiliacionesDistribuidor.getDistribuidor());
+		Query query = this.entityManager.createQuery("from CantidadAfiliacionesDistribuidor v where v.id.distribuidor=?");
+		query.setParameter(1, cantidadAfiliacionesDistribuidor.getDistribuidor());
 		CantidadAfiliacionesDistribuidor valida = null;
 		try {
-			valida = (CantidadAfiliacionesDistribuidor) query.getResultList()
-					.get(0);
+			valida = (CantidadAfiliacionesDistribuidor) query.getResultList().get(0);
 		} catch (Exception e) {
 			valida = null;
 		}
