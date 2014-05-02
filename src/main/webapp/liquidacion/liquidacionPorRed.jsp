@@ -22,27 +22,66 @@
 				<c:if test="${empty mensaje}">
 					<div class="btn-group">
 						<a class="btn btn-sm btn-default" href="javascript:enviarRed()">Generar
-							Liquidacion</a>
+							Liquidación</a>
 					</div>
 				</c:if>
-				<c:if test="${liquidacionExitosa==null ||liquidacionExitosa==''}">
-					<table align="center" class="tbl-lista" width="80%">
+				<table align="center" class="tbl-lista" width="80%">
+					<tr>
+						<th colspan="2">Liquidación Por Red de Distribución.</th>
+					</tr>
+					<tr>
+						<td>Distribuidor a Consultar: <select name="red">
+								<option value="">Seleccione el distribuidor</option>
+								<c:forEach var='distribuidor' items='${listaDistribuidores}'>
+									<option value="<c:out value='${distribuidor.cedula}'/>"><c:out
+											value='${distribuidor.nombre}' />
+										<c:out value='${distribuidor.apellido}' /></option>
+								</c:forEach>
+						</select>
+						</td>
+						<td>Periodo: <select name="mes">
+						</select> <select name="ano">
+						</select>
+						</td>
+					</tr>
+				</table>
+				<c:if test="${liquidacionExitosa!=null && liquidacionExitosa=='1'}">
+					<table align="center" class="tabla" width="80%" border="1">
 						<tr>
-							<th colspan="2">Liquidación Por Red de Distribución.</th>
-						</tr>
-						<tr>
-							<td>Distribuidor a Consultar: <select name="red">
-									<option value="">Seleccione el distribuidor</option>
-									<c:forEach var='distribuidor' items='${listaDistribuidores}'>
-										<option value="<c:out value='${distribuidor.cedula}'/>"><c:out
-												value='${distribuidor.nombre}' />&nbsp;
-											<c:out value='${distribuidor.apellido}' /></option>
-									</c:forEach>
-							</select>
+							<td width="10%">
+								<h4 style="color: blue">
+									<c:out value="La liquidación fue Exitosa." />
+								</h4>
 							</td>
-							<td>Periodo: <select name="mes">
-							</select> <select name="ano">
-							</select>
+						</tr>
+					</table>
+				</c:if>
+				<c:if test="${liquidacionExitosa!=null && liquidacionExitosa=='0'}">
+					<table align="center" class="tabla" width="80%" border="1">
+						<tr>
+							<td width="10%">
+								<h4 style="color: blue">
+									<c:out
+										value="El proceso de liquidación fue
+								Exitoso; Pero no se encontraron datos Para Liquidar en este
+								Periodo." />
+								</h4>
+								<h4 style="color: red">
+									<c:out value="Por favor Verifique!" />
+								</h4>
+							</td>
+						</tr>
+					</table>
+				</c:if>
+				<c:if test="${liquidacionExitosa!=null && liquidacionExitosa=='-1'}">
+					<table align="center" class="tabla" width="80%" border="1">
+						<tr>
+							<td width="10%">
+								<h4 style="color: red">
+									<c:out
+										value="La liquidación presento errores; por
+								favor comuniquese con el administrador." />
+								</h4>
 							</td>
 						</tr>
 					</table>
@@ -52,18 +91,7 @@
 						<tr>
 							<td width="10%">
 								<h4 style="color: red">
-									<c:out value="${mensaje}"></c:out>
-								</h4>
-							</td>
-						</tr>
-					</table>
-				</c:if>
-				<c:if test="${liquidacionExitosa!=null}">
-					<table align="center" class="tabla" width="80%" border="1">
-						<tr>
-							<td width="10%">
-								<h4 style="color: blue;">
-									<c:out value="La liquidacion fue Exitosa."></c:out>
+									<c:out value="${mensaje}" />
 								</h4>
 							</td>
 						</tr>

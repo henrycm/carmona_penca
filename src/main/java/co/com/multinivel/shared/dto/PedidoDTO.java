@@ -1,11 +1,12 @@
 package co.com.multinivel.shared.dto;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 public class PedidoDTO {
 	private String codigoPedido;
 	private BigDecimal totalPedido;
-	private String fecha;
+	private Date fecha;
 	private String pedido;
 	private String codigoProducto;
 	private String nombreProducto;
@@ -21,24 +22,8 @@ public class PedidoDTO {
 	private String periodo;
 	private BigDecimal totalProducto;
 
-	public String getNombreProducto() {
-		return this.nombreProducto;
-	}
-
-	public void setNombreProducto(String nombreProducto) {
-		this.nombreProducto = nombreProducto;
-	}
-
-	public int getCantidad() {
-		return this.cantidad;
-	}
-
-	public void setCantidad(int cantidad) {
-		this.cantidad = cantidad;
-	}
-
 	public String getCodigoPedido() {
-		return this.codigoPedido;
+		return codigoPedido;
 	}
 
 	public void setCodigoPedido(String codigoPedido) {
@@ -46,23 +31,63 @@ public class PedidoDTO {
 	}
 
 	public BigDecimal getTotalPedido() {
-		return this.totalPedido;
+		return totalPedido;
 	}
 
 	public void setTotalPedido(BigDecimal totalPedido) {
 		this.totalPedido = totalPedido;
 	}
 
+	public Date getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+
 	public String getPedido() {
-		return this.pedido;
+		return pedido;
 	}
 
 	public void setPedido(String pedido) {
 		this.pedido = pedido;
 	}
 
+	public String getCodigoProducto() {
+		return codigoProducto;
+	}
+
+	public void setCodigoProducto(String codigoProducto) {
+		this.codigoProducto = codigoProducto;
+	}
+
+	public String getNombreProducto() {
+		return nombreProducto;
+	}
+
+	public void setNombreProducto(String nombreProducto) {
+		this.nombreProducto = nombreProducto;
+	}
+
+	public BigDecimal getValorUnitario() {
+		return valorUnitario;
+	}
+
+	public void setValorUnitario(BigDecimal valorUnitario) {
+		this.valorUnitario = valorUnitario;
+	}
+
+	public int getCantidad() {
+		return cantidad;
+	}
+
+	public void setCantidad(int cantidad) {
+		this.cantidad = cantidad;
+	}
+
 	public String getNombreAfiliado() {
-		return this.nombreAfiliado;
+		return nombreAfiliado;
 	}
 
 	public void setNombreAfiliado(String nombreAfiliado) {
@@ -70,7 +95,7 @@ public class PedidoDTO {
 	}
 
 	public String getCedulaAfiliado() {
-		return this.cedulaAfiliado;
+		return cedulaAfiliado;
 	}
 
 	public void setCedulaAfiliado(String cedulaAfiliado) {
@@ -78,7 +103,7 @@ public class PedidoDTO {
 	}
 
 	public String getNombreDistribuidor() {
-		return this.nombreDistribuidor;
+		return nombreDistribuidor;
 	}
 
 	public void setNombreDistribuidor(String nombreDistribuidor) {
@@ -86,75 +111,51 @@ public class PedidoDTO {
 	}
 
 	public String getCedulaDistribuidor() {
-		return this.cedulaDistribuidor;
+		return cedulaDistribuidor;
 	}
 
 	public void setCedulaDistribuidor(String cedulaDistribuidor) {
 		this.cedulaDistribuidor = cedulaDistribuidor;
 	}
 
-	public void setFecha(String fecha) {
-		this.fecha = fecha;
-	}
-
-	public String getFecha() {
-		return this.fecha;
-	}
-
-	public void setCodigoProducto(String codigoProducto) {
-		this.codigoProducto = codigoProducto;
-	}
-
-	public String getCodigoProducto() {
-		return this.codigoProducto;
-	}
-
-	public void setValorUnitario(BigDecimal valorUnitario) {
-		this.valorUnitario = valorUnitario;
-	}
-
-	public BigDecimal getValorUnitario() {
-		return this.valorUnitario;
+	public String getTelefono() {
+		return telefono;
 	}
 
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
 	}
 
-	public String getTelefono() {
-		return this.telefono;
+	public String getCiudadEmpresario() {
+		return ciudadEmpresario;
 	}
 
 	public void setCiudadEmpresario(String ciudadEmpresario) {
 		this.ciudadEmpresario = ciudadEmpresario;
 	}
 
-	public String getCiudadEmpresario() {
-		return this.ciudadEmpresario;
+	public BigDecimal getTransporte() {
+		return transporte;
 	}
 
 	public void setTransporte(BigDecimal transporte) {
 		this.transporte = transporte;
 	}
 
-	public BigDecimal getTransporte() {
-		return this.transporte;
+	public String getPeriodo() {
+		return periodo;
 	}
 
 	public void setPeriodo(String periodo) {
 		this.periodo = periodo;
 	}
 
-	public String getPeriodo() {
-		return this.periodo;
+	public BigDecimal getTotalProducto() {
+		return totalProducto;
 	}
 
 	public void setTotalProducto(BigDecimal totalProducto) {
 		this.totalProducto = totalProducto;
-	}
-
-	public BigDecimal getTotalProducto() {
-		return this.totalProducto;
 	}
 }
 

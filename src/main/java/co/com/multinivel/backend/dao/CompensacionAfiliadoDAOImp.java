@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -176,27 +177,34 @@ public class CompensacionAfiliadoDAOImp implements CompensacionAfiliadoDAO {
 	}
 
 	public int liquidar(String distribuidor, String periodo) throws MultinivelDAOException {
-		int param1 = 0;
+		int Regs = 0;
 		try {
 			Class.forName(ParametrosEnum.DRIVER_DATABASE.getValor());
 			Connection conexion = DriverManager.getConnection(ParametrosEnum.URL_DATABASE.getValor(), ParametrosEnum.USUARIO.getValor(),
 					ParametrosEnum.PASSWORD.getValor());
 
-			String command1 = "{call Sp_Liquidar(?,?)}";
+			String command1 = "{call Sp_Liquidar(?,?,?)}";
 			CallableStatement cstmt1 = conexion.prepareCall(command1);
 			cstmt1.setString(1, distribuidor);
 			cstmt1.setString(2, periodo);
+			cstmt1.registerOutParameter(3, Types.NUMERIC);
 			cstmt1.execute();
+
+			/*
+			 * Se captura el numero de registros Procesados.
+			 */
+			Regs = (cstmt1.getInt(3));
+			Regs = Regs > 0 ? 1 : Regs;
 
 			cstmt1.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new MultinivelDAOException("error al realizar la busqueda", getClass());
 		}
-		return param1;
+		return Regs;
 	}
 
-	public void calcularArbol(String cedula, String tipoUsuario) throws MultinivelDAOException {
+	public void calcularArbol(String cedulaAfiliado, String cedulaDistribuidor) throws MultinivelDAOException {
 		try {
 			Class.forName(ParametrosEnum.DRIVER_DATABASE.getValor());
 			Connection conexion = DriverManager.getConnection(ParametrosEnum.URL_DATABASE.getValor(), ParametrosEnum.USUARIO.getValor(),
@@ -204,8 +212,8 @@ public class CompensacionAfiliadoDAOImp implements CompensacionAfiliadoDAO {
 
 			String command = "{call Sp_Arbol(?,?)}";
 			CallableStatement cstmt = conexion.prepareCall(command);
-			cstmt.setString(1, cedula);
-			cstmt.setString(2, tipoUsuario);
+			cstmt.setString(1, cedulaAfiliado);
+			cstmt.setString(2, cedulaDistribuidor);
 			cstmt.execute();
 
 			cstmt.close();

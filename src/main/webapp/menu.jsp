@@ -17,26 +17,26 @@
 					<li><a target="mainFrame"
 						href="administracion/IndexAfiliado?accion=X">Eliminar Afiliado</a></li>
 					<li><a target="mainFrame"
-						href="administracion/IndexAfiliado?accion=N">Listar Afiliados
-							por distribuidor</a></li>
-					<li><a target="mainFrame"
 						href="administracion/IndexAfiliado?accion=E">Consultar
 							Afiliado</a></li>
 					<li><a target="mainFrame"
 						href="administracion/IndexAfiliado?accion=D">Actualizar
 							Afiliado a Distribuidor</a></li>
 					<li><a target="mainFrame"
-						href="administracion/IndexAfiliado?accion=F">Listar
-							Distribuidores</a></li>
-					<li><a target="mainFrame"
 						href="administracion/IndexAfiliado?accion=W">Activar
-							Afiliaciones por Distribuidor</a></li>
+							Afiliaciones Por Distribuidor</a></li>
 					<li><a target="mainFrame"
 						href="administracion/IndexAfiliado?accion=U">Cambiar Documento
 							Afiliado</a></li>
 					<li><a target="mainFrame"
-						href="administracion/IndexAfiliado?accion=Z"> Afiliaciones por
-							distribuidor Periodo</a></li>
+						href="administracion/IndexAfiliado?accion=F">Listar
+							Distribuidores</a></li>
+					<li><a target="mainFrame"
+						href="administracion/IndexAfiliado?accion=N">Listar Afiliados
+							Por Distribuidor</a></li>
+					<li><a target="mainFrame"
+						href="administracion/IndexAfiliado?accion=Z"> Listar Afiliaciones Por
+							Distribuidor Periodo</a></li>
 				</ul></li>
 		</ul>
 
@@ -72,7 +72,7 @@
 							Pedido</a></li>
 					<li><a target="mainFrame"
 						href="${ctx}/spring/movimiento/inicio">Realizar Abono</a></li>
-					<li><a target="mainFrame" href="pedido/IndexPedido?accion=S">OPCION
+					<li><a target="mainFrame" href="pedido/IndexPedido?accion=S">OPCIóN
 							NUEVA PARA Realizar Pedido</a></li>
 					<li><a target="mainFrame"
 						href="pedido/ListaPedidoController?accion=L">Actualizar
@@ -97,10 +97,10 @@
 					<li class="dropdown-header">Liquidación</li>
 					<li><a target="mainFrame"
 						href="liquidacion/ControlLiquidacion?accion=I">Calcular Árbol</a></li>
-					<li><a target="mainFrame" href="liquidacion/IndexLiquidacion">Liquidacion
+					<li><a target="mainFrame" href="liquidacion/IndexLiquidacion">Liquidación
 							Por Red</a></li>
 					<li><a target="mainFrame"
-						href="liquidacion/IndexLiquidacion?accion=M">Liquidacion
+						href="liquidacion/IndexLiquidacion?accion=M">Liquidación
 							Masiva</a></li>
 					<li class="divider"></li>
 					<li class="dropdown-header">Compensación</li>

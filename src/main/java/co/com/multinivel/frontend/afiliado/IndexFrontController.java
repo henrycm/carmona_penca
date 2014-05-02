@@ -38,21 +38,17 @@ public class IndexFrontController extends HttpServlet {
 
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
-		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
-				config.getServletContext());
+		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
 	}
 
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String recurso = null;
 		try {
-			char accion = request.getParameter("accion") == null ? '*'
-					: request.getParameter("accion").charAt(0);
+			char accion = request.getParameter("accion") == null ? '*' : request.getParameter("accion").charAt(0);
 
 			Date fechaActual = new Date();
 			SimpleDateFormat formato = new SimpleDateFormat("MM/yyyy");
@@ -67,14 +63,12 @@ public class IndexFrontController extends HttpServlet {
 			List<AfiliadoDTO> listaAfiliado = null;
 			switch (accion) {
 			case 'I':
-				listaAfiliado = this.afiliadoService.buscarDistribuidor(
-						UsuarioHelper.getUsuario(), null);
+				listaAfiliado = this.afiliadoService.buscarDistribuidor(UsuarioHelper.getUsuario(), null);
 				if ((listaAfiliado != null) && (listaAfiliado.size() > 0)) {
 					request.setAttribute("usuario", listaAfiliado.get(0));
 				}
 				request.setAttribute("listaBancos", this.bancoService.listar());
-				request.setAttribute("listaDepartamentos",
-						this.departamentoService.listar());
+				request.setAttribute("listaDepartamentos", this.departamentoService.listar());
 
 				request.setAttribute("rol", "" + rol);
 				recurso = RecursosEnum.FW_INGRESO_AFILIADO.getRecurso();
@@ -82,26 +76,21 @@ public class IndexFrontController extends HttpServlet {
 			case 'C':
 				recurso = RecursosEnum.FW_ACTUALIZACION_AFILIADO.getRecurso();
 				request.setAttribute("listaBancos", this.bancoService.listar());
-				request.setAttribute("listaDepartamentos",
-						this.departamentoService.listar());
+				request.setAttribute("listaDepartamentos", this.departamentoService.listar());
 
 				break;
 			case 'L':
 				recurso = RecursosEnum.FW_LISTAR_AFILIADO.getRecurso();
 				break;
 			case 'N':
-				recurso = RecursosEnum.FW_LISTAR_AFILIADO_POR_NIVEL
-						.getRecurso();
-				request.setAttribute("listaDistribuidores",
-						this.afiliadoService.listarDistribuidores());
+				recurso = RecursosEnum.FW_LISTAR_AFILIADO_POR_NIVEL.getRecurso();
+				request.setAttribute("listaDistribuidores", this.afiliadoService.listarDistribuidores());
 
 				break;
 			case 'D':
 				request.setAttribute("listaBancos", this.bancoService.listar());
-				request.setAttribute("listaDepartamentos",
-						this.departamentoService.listar());
-				recurso = RecursosEnum.FW_ACTUALIZAR_AFILIADO_DISTRIBUIDOR
-						.getRecurso();
+				request.setAttribute("listaDepartamentos", this.departamentoService.listar());
+				recurso = RecursosEnum.FW_ACTUALIZAR_AFILIADO_DISTRIBUIDOR.getRecurso();
 
 				break;
 			case 'E':
@@ -110,56 +99,43 @@ public class IndexFrontController extends HttpServlet {
 				break;
 			case 'F':
 				recurso = RecursosEnum.FW_LISTAR_DISTRIBUIDORES.getRecurso();
-				request.setAttribute("listaDistribuidores",
-						this.afiliadoService.listarDistribuidores());
+				request.setAttribute("listaDistribuidores", this.afiliadoService.listarDistribuidores());
 
 				break;
 			case 'P':
-				recurso = RecursosEnum.FW_LISTAR_AFILIADOSXDISTRIBUIDORES
-						.getRecurso();
-				request.setAttribute("listaDistribuidores",
-						this.afiliadoService.listarDistribuidores());
+				recurso = RecursosEnum.FW_LISTAR_AFILIADOSXDISTRIBUIDORES.getRecurso();
+				request.setAttribute("listaDistribuidores", this.afiliadoService.listarDistribuidores());
 
 				break;
 			case 'Z':
-				recurso = RecursosEnum.FW_LISTAR_AFILIADOSXDISTRIBUIDORESPERIODO
-						.getRecurso();
+				recurso = RecursosEnum.FW_LISTAR_AFILIADOSXDISTRIBUIDORESPERIODO.getRecurso();
 
 				break;
 			case 'X':
 				recurso = RecursosEnum.FW_BORRAR_AFILIADO.getRecurso();
 				request.setAttribute("listaBancos", this.bancoService.listar());
-				request.setAttribute("listaDepartamentos",
-						this.departamentoService.listar());
+				request.setAttribute("listaDepartamentos", this.departamentoService.listar());
 				break;
 			case 'U':
-				recurso = RecursosEnum.FW_CAMBIAR_DOCUMENTO_AFILIADO
-						.getRecurso();
+				recurso = RecursosEnum.FW_CAMBIAR_DOCUMENTO_AFILIADO.getRecurso();
 
 				break;
 			case 'W':
-				recurso = RecursosEnum.FW_VALIDAR_AFILIACIONES_DISTRIBUIDOR
-						.getRecurso();
-				int cantidad = request.getParameter("cantidad") == null ? 0
-						: Integer.parseInt(request.getParameter("cantidad"));
+				recurso = RecursosEnum.FW_VALIDAR_AFILIACIONES_DISTRIBUIDOR.getRecurso();
+				int cantidad = request.getParameter("cantidad") == null ? 0 : Integer.parseInt(request.getParameter("cantidad"));
 				if (cantidad > 0) {
 					CantidadAfiliacionesDistribuidor cantidadAfiliacionesDistribuidor = new CantidadAfiliacionesDistribuidor();
 					cantidadAfiliacionesDistribuidor.setCantidad(cantidad);
-					cantidadAfiliacionesDistribuidor.setDistribuidor(request
-							.getParameter("distribuidor"));
-					boolean retorno = this.cantidaAfiliacionesDistribuidorService
-							.ingresar(cantidadAfiliacionesDistribuidor);
+					cantidadAfiliacionesDistribuidor.setDistribuidor(request.getParameter("distribuidor"));
+					boolean retorno = this.cantidaAfiliacionesDistribuidorService.ingresar(cantidadAfiliacionesDistribuidor);
 					if (retorno) {
-						request.setAttribute("mensaje",
-								"se ingresaron las cantidades para el distribuidor exitosamente");
+						request.setAttribute("mensaje", "se ingresaron las cantidades para el distribuidor exitosamente");
 					} else {
-						request.setAttribute(
-								"mensaje",
+						request.setAttribute("mensaje",
 								"no se ingresaron las cantidas porque ya existen unas cantidades ingresadas para este distribuidor");
 					}
 				}
-				request.setAttribute("listaDistribuidores",
-						this.afiliadoService.listarDistribuidores());
+				request.setAttribute("listaDistribuidores", this.afiliadoService.listarDistribuidores());
 			}
 			request.setAttribute("accion", request.getParameter("accion"));
 		} catch (MultinivelServiceException e) {
@@ -167,8 +143,7 @@ public class IndexFrontController extends HttpServlet {
 			request.setAttribute("error", e.getMessage());
 			recurso = RecursosEnum.FW_INGRESO_AFILIADO_ERROR.getRecurso();
 		}
-		RequestDispatcher rd = getServletContext()
-				.getRequestDispatcher(recurso);
+		RequestDispatcher rd = getServletContext().getRequestDispatcher(recurso);
 		rd.forward(request, response);
 	}
 }

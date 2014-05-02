@@ -52,6 +52,7 @@ public class ControlLiquidacion extends HttpServlet {
 
 			String periodo = mes + "/" + ano;
 			request.setAttribute("periodo", periodo);
+			String mensaje = "";
 			switch (accion) {
 			case 'M':
 				recurso = RecursosEnum.FW_INDEX_LIQUIDACION.getRecurso();
@@ -73,12 +74,11 @@ public class ControlLiquidacion extends HttpServlet {
 				ArbolTaskService t = new ArbolTaskService(compensacionAfiliadoService, "No", "No");
 				threadPool = (ThreadPoolTaskExecutor) WebApplicationContextUtils.getWebApplicationContext(request.getSession().getServletContext())
 						.getBean("taskExecutor");
-				String mensaje = "";
 				if (threadPool.getActiveCount() > 0)
 					mensaje = "Se esta ejecutando en este momento";
 				else {
 					threadPool.execute(t);
-					mensaje = "Se inicio el proceso de calculo del arbol de liquidacion!";
+					mensaje = "Se inicio el proceso de calculo del Árbol para liquidación!";
 				}
 				request.setAttribute("mensaje", mensaje);
 				break;

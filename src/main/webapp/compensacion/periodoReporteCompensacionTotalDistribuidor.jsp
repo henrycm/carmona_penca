@@ -30,8 +30,8 @@
 
 				<table align="center" class="tbl-lista" width="70%">
 					<tr>
-						<th colspan="2">Consultar consolidados de compensacion por
-							periodo y distribuidor</th>
+						<th colspan="2">Consultar Consolidados de Compensación Por
+							Periodo y Distribuidor</th>
 					</tr>
 					<tr>
 						<td>Periodo: <select name="mes">

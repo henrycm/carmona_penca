@@ -34,27 +34,33 @@
 			<c:if test="${empty mensaje}">
 				<form name="calcular" method="post" action="ControlLiquidacion">
 					<input type="hidden" name="accion" value="C">
-					<div class="btn-group">
-						<a class="btn btn-sm btn-default"
-							href="javascript:calcularArbol()">Calcular</a>
-					</div>
+					<c:if test="${fecha!='1900-01-01'}">
+						<div class="btn-group">
+							<a class="btn btn-sm btn-default"
+								href="javascript:calcularArbol()">Calcular</a>
+						</div>
+					</c:if>
 					<input name="accion" type="hidden" value="P"> <input
 						name="periodo" type="hidden">
 
 					<table align="center" class="tbl-lista" width="70%">
 						<tr>
-							<th colspan="2	">Calcular Arbol Multi-Aloe</th>
+							<th colspan="2	">Calcular Árbol Multi-Aloe</th>
 						</tr>
 						<tr>
 							<td>
 								<h5 style="color: blue">
 									Este proceso puede durar alrededor de una hora! <br /> Fecha
-									ultimo calculo:
-									<c:if test="${not empty fecha}">
-										<c:out value="${fecha}" />
+									ultimo calculo.
+									<c:if test="${fecha!='1900-01-01'}">
+										<h4 style="color: red">
+											<c:out value="${fecha}" />
+										</h4>
 									</c:if>
-									<c:if test="${empty fecha}">
-										En ejecución!
+									<c:if test="${fecha=='1900-01-01'}">
+										<h4 style="color: red">
+											<c:out value="En Ejecución!"></c:out>
+										</h4>
 									</c:if>
 								</h5>
 							</td>

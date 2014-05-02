@@ -28,17 +28,14 @@ public class ReporteAfiliacionesPorDistribuidoresPeriodo extends HttpServlet {
 
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
-		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
-				config.getServletContext());
+		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd = null;
 		try {
 			HashMap<String, Object> map = new HashMap<String, Object>();
@@ -46,32 +43,23 @@ public class ReporteAfiliacionesPorDistribuidoresPeriodo extends HttpServlet {
 			Date fechaActual = new Date();
 			SimpleDateFormat formato = new SimpleDateFormat("MM/yyyy");
 			String cadenaFecha = formato.format(fechaActual);
-			String periodo = request.getParameter("periodo") == null ? cadenaFecha : request
-					.getParameter("periodo");
+			String periodo = request.getParameter("periodo") == null ? cadenaFecha : request.getParameter("periodo");
 			map.put("titulo", "LISTA DE AFILIADOS POR DISTRIBUIDOR");
 			map.put("periodo", periodo);
 			map.put("rutaImagenes", RutasUtil.getRutaImagenes(getServletContext()));
 
-			List<Object> lista = this.afiliadoService
-					.listarAfiliadosDistribuidorPorPeriodo(periodo);
+			List<Object> lista = this.afiliadoService.listarAfiliadosDistribuidorPorPeriodo(periodo);
 			if ((lista != null) && (lista.size() > 0)) {
-				String tipoReporte = request.getParameter("tipoReporte") == null ? "PDF" : request
-						.getParameter("tipoReporte");
+				String tipoReporte = request.getParameter("tipoReporte") == null ? "PDF" : request.getParameter("tipoReporte");
 				if ("PDF".equals(tipoReporte)) {
-					GenerarReporte.exportarPDF(request, response, getServletConfig()
-							.getServletContext(), "listaAfiliacionesPorDistribuidor_" + periodo
-							+ ".pdf", RecursosEnum.FW_JASPER_AFILIADOSXDISTRIBUIDORESXPERIODO
-							.getRecurso(), map, lista);
+					GenerarReporte.exportarPDF(request, response, getServletConfig().getServletContext(), "listaAfiliacionesPorDistribuidor_"
+							+ periodo + ".pdf", RecursosEnum.FW_JASPER_AFILIADOSXDISTRIBUIDORESXPERIODO.getRecurso(), map, lista);
 				} else {
-					GenerarReporte.exportarExcel(request, response, getServletConfig()
-							.getServletContext(), "listaAfiliacionesPorDistribuidor_" + periodo
-							+ ".xls", RecursosEnum.FW_JASPER_AFILIADOSXDISTRIBUIDORES.getRecurso(),
-							map, lista);
+					GenerarReporte.exportarExcel(request, response, getServletConfig().getServletContext(), "listaAfiliacionesPorDistribuidor_"
+							+ periodo + ".xls", RecursosEnum.FW_JASPER_AFILIADOSXDISTRIBUIDORESXPERIODO.getRecurso(), map, lista);
 				}
 			} else {
-				request.setAttribute("error",
-						"no existen afiliaciones de los distribuidores para el periodo:" + periodo
-								+ ".");
+				request.setAttribute("error", "no existen afiliaciones de los distribuidores para el periodo:" + periodo + ".");
 				rd = getServletContext().getRequestDispatcher(RecursosEnum.FW_ERROR.getRecurso());
 				rd.forward(request, response);
 			}

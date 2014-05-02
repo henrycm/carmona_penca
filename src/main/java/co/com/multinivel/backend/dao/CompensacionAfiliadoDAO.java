@@ -14,9 +14,9 @@ public abstract interface CompensacionAfiliadoDAO {
 
 	public abstract List<Object> listarPagoAfiliados(CompensacionAfiliadoDTO paramCompensacionAfiliadoDTO) throws MultinivelDAOException;
 
-	public abstract int liquidar(String paramString1, String paramString2) throws MultinivelDAOException;
+	public abstract int liquidar(String distribuidor, String periodo) throws MultinivelDAOException;
 
-	public void calcularArbol(String cedula, String tipoUsuario) throws MultinivelDAOException;
+	public void calcularArbol(String cedulaAfiliado, String cedulaDistribuidor) throws MultinivelDAOException;
 }
 
 /*

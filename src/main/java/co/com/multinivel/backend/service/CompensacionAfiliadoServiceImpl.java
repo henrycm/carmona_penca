@@ -56,9 +56,9 @@ public class CompensacionAfiliadoServiceImpl implements CompensacionAfiliadoServ
 		return retorno;
 	}
 
-	public void calcularArbol(String cedula, String tipoUsuario) throws MultinivelServiceException {
+	public void calcularArbol(String cedulaAfiliado, String cedulaDistribuidor) throws MultinivelServiceException {
 		try {
-			this.compensacionAfiliadoDAO.calcularArbol(cedula, tipoUsuario);
+			this.compensacionAfiliadoDAO.calcularArbol(cedulaAfiliado, cedulaDistribuidor);
 		} catch (MultinivelDAOException e) {
 			throw new MultinivelServiceException(e.getMessage(), getClass());
 		}

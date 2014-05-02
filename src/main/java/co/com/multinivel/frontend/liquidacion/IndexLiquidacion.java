@@ -44,9 +44,14 @@ public class IndexLiquidacion extends HttpServlet {
 			String cadenaFecha = formato.format(fechaActual);
 			String mensaje = "";
 			String st_fecha = parametroService.obtenerValor("FECHA_ARBOL").getValor();
-			Date fecha = FechasUtil.parse(st_fecha);
-			if (FechasUtil.getDias(fecha, new Date()) > 1) {
-				mensaje = "Es necesario calcular el arbol. Ultima fecha de calculo: " + st_fecha;
+			if (!"1900-01-01".equalsIgnoreCase(st_fecha)) {
+				Date fecha = (Date) (!"".equalsIgnoreCase(st_fecha) ? FechasUtil.parse(st_fecha) : "1900-01-01");
+				if (FechasUtil.getDias(fecha, new Date()) > 1) {
+					mensaje = "Es necesario calcular el Árbol. Ultima fecha de calculo: " + st_fecha;
+					request.setAttribute("mensaje", mensaje);
+				}
+			} else {
+				mensaje = "En este momento no es posible Generar Liquidación; Se está Ejecutando el Caluclo del Árbol. Intente de nuevo mas tarde !";
 				request.setAttribute("mensaje", mensaje);
 			}
 			request.setAttribute("periodo", cadenaFecha);
