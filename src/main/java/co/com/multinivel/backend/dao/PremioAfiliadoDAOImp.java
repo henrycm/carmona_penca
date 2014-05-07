@@ -21,7 +21,7 @@ public class PremioAfiliadoDAOImp implements PremioAfiliadoDAO {
 	private EntityManager entityManager;
 
 	public List<Object> consultar(PremioAfiliado premioAfiliado) throws MultinivelDAOException {
-		List<Object> listaPremios = new ArrayList();
+		List<Object> listaPremios = new ArrayList<Object>();
 		try {
 			String sql = "SELECT afiliado,p.nombre,periodo FROM t_premios_afiliado_periodo t,t_premios p WHERE p.codigo=t.premio and t.periodo=? AND t.afiliado=?";
 
@@ -29,7 +29,7 @@ public class PremioAfiliadoDAOImp implements PremioAfiliadoDAO {
 			q.setParameter(1, premioAfiliado.getPeriodo());
 			q.setParameter(2, premioAfiliado.getCedula());
 
-			List result = q.getResultList();
+			List<?> result = q.getResultList();
 			int s = result.size();
 			for (int i = 0; i < s; i++) {
 				PremioAfiliadoDTO premioAfiliadoDto = new PremioAfiliadoDTO();

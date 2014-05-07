@@ -234,12 +234,14 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Afiliado> listar() throws MultinivelDAOException {
 		Query query = this.entityManager.createQuery("from Afiliado");
 		List<Afiliado> lista = query.getResultList();
 		return lista;
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<AfiliadoDTO> buscar(String codigo, String nombre, String cedulaDistribuidor) throws MultinivelDAOException {
 		List<AfiliadoDTO> lista = null;
 		try {
@@ -337,9 +339,9 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
 			}
 			Query q = this.entityManager.createNativeQuery(sql);
 
-			List result = q.getResultList();
+			List<?> result = q.getResultList();
 			int s = result.size();
-			lista = new ArrayList();
+			lista = new ArrayList<AfiliadoDTO>();
 			for (int i = 0; i < s; i++) {
 				Object obj = result.get(i);
 				Object[] objectArray = (Object[]) obj;
@@ -383,7 +385,7 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
 
 			Query q = this.entityManager.createNativeQuery(sql);
 
-			List result = q.getResultList();
+			List<?> result = q.getResultList();
 			int s = result.size();
 			lista = new ArrayList<AfiliadoDTO>();
 			for (int i = 0; i < s; i++) {
@@ -434,42 +436,17 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
 		}
 	}
 
-	public boolean validarNivelesRed(Afiliado afiliado, String Distribuidor) throws MultinivelDAOException {
-		boolean retorno = false;
-		try {
-			String sql = " SELECT a.cedula  from t_afiliados a  where    a.cedula = '" +
-
-			afiliado.getCedula() + "'";
-
-			Query q = this.entityManager.createNativeQuery(sql);
-
-			List result = q.getResultList();
-			int s = result.size();
-			for (int i = 0; i < s; i++) {
-				Object obj = result.get(i);
-				Object[] objectArray = (Object[]) obj;
-				String cedulaPadre = (String) objectArray[0];
-				retorno = true;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new MultinivelDAOException("error al realizar la busqueda", getClass());
-		}
-		return retorno;
-	}
-
 	public List<Object> listaAfiliadosPorDistribuidor(String periodo) throws MultinivelDAOException {
 		List<Object> lista = null;
-		int filtros = 0;
 		try {
 			String sql = " SELECT  a.cedula,CONCAT (A.NOMBRE ,' ',IF(A.APELLIDO IS NULL,'',A.APELLIDO)), count(t.cedula)  FROM t_afiliados t,t_afiliados a where t.cedulaDistribuidor =a.cedula and DATE_FORMAT(t.FECHAingreso,'%m/%Y')=?group by a.cedula order by t.fechaingreso, a.nombre";
 
 			Query q = this.entityManager.createNativeQuery(sql);
 			q.setParameter(1, periodo);
 
-			List result = q.getResultList();
+			List<?> result = q.getResultList();
 			int s = result.size();
-			lista = new ArrayList();
+			lista = new ArrayList<Object>();
 			for (int i = 0; i < s; i++) {
 				Object obj = result.get(i);
 				Object[] objectArray = (Object[]) obj;
@@ -531,7 +508,7 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
 
 			Query q = this.entityManager.createNativeQuery(sql);
 
-			List result = q.getResultList();
+			List<?> result = q.getResultList();
 			s = result.size();
 			for (int i = 0; i < s; i++) {
 				Object obj = result.get(i);
@@ -555,7 +532,7 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
 
 			Query q = this.entityManager.createNativeQuery(sql);
 
-			List result = q.getResultList();
+			List<?> result = q.getResultList();
 			s = result.size();
 			for (int i = 0; i < s; i++) {
 				Object obj = result.get(i);
@@ -571,7 +548,7 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
 	public List<Nodo> ArbolAfiliado(String afiliado) throws MultinivelDAOException {
 		List<Nodo> lista = null;
 		try {
-			lista = new ArrayList();
+			lista = new ArrayList<Nodo>();
 
 			StringBuffer sql = new StringBuffer();
 
@@ -1058,7 +1035,7 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
 			sql.append("       ON A.CEDULA =AFI.CEDULA ");
 			Query q = this.entityManager.createNativeQuery(sql.toString());
 
-			List result = q.getResultList();
+			List<?> result = q.getResultList();
 			int s = result.size();
 			if (s > 0) {
 				for (int i = 0; i < s; i++) {
@@ -1097,7 +1074,7 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
 	public List<Nodo> generarHijosAfiliado(String afiliado) throws MultinivelDAOException {
 		List<Nodo> lista = null;
 		try {
-			lista = new ArrayList();
+			lista = new ArrayList<Nodo>();
 
 			StringBuffer sql = new StringBuffer();
 
@@ -1119,10 +1096,9 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
 
 			System.err.println(sql.toString());
 
-			List result = q.getResultList();
+			List<?> result = q.getResultList();
 			int s = result.size();
 			if (s > 0) {
-				double total = 0.0D;
 				for (int i = 0; i < s; i++) {
 					Object obj = result.get(i);
 					Object[] objectArray = (Object[]) obj;
@@ -1212,6 +1188,7 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
 		return lista;
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Afiliado> buscar(String nomFiltro, String filtro) throws MultinivelDAOException {
 		String query = "from Afiliado a where a." + nomFiltro + " like :filtro order by a.nombre";
 		Query q = entityManager.createQuery(query);

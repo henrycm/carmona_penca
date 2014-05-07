@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
 <html>
 <head>
 <title>APLICACION MULTIALOE</title>
@@ -15,15 +14,12 @@
 <script src="../js/jquery/jquery.effects.core.js"></script>
 <script src="../js/jquery/jquery.effects.drop.js"></script>
 <script src="../js/jquery/jquery.ui.datepicker.js"></script>
-
 <script src="../js/afiliado/afiliado.js"></script>
 <script src="../js/generico.js"></script>
-
-<link rel="StyleSheet" type="text/css"	href="${ctx}/bootstrap/css/bootstrap.css"></link>
+<link rel="StyleSheet" type="text/css"
+	href="${ctx}/bootstrap/css/bootstrap.css"></link>
 <link rel="stylesheet" href="../css/jquery/demos.css">
-
 <link rel="stylesheet" href="../css/multinivel.css">
-
 <script>
 	$(document).ready(function() {		
 		$("#codigoEmpresario").change(function() {			
@@ -72,11 +68,9 @@
 	height: 100px;
 }
 </style>
-
 </head>
 <body>
 	<div align="center">
-
 		<form name="forma" action="AfiliadoFrontController" method="post">
 			<div class="btn-group">
 				<a class="btn btn-sm btn-default"
@@ -99,20 +93,14 @@
 							name="codigoEmpresario" type="text" size="11" maxlength="11"
 							id="codigoEmpresario" /><select name="letra" id="letra">
 							<option value="A">A</option>
-							
 						</select> Tipo de Afiliado: <select name="rol">
-							<option value="3">Afiliado</option>							
+							<option value="3">Afiliado</option>
 						</select>
-
 					</div>
-
 					<div class="demo">
-
 						<div id="accordion">
-
 							<div class="titulo">DATOS DEL PATROCINADOR</div>
 							<div id="datosPatrocinador">
-
 								<table>
 									<tr>
 										<td align="left">Nombres y Apellidos del distribuidor <input
@@ -138,12 +126,9 @@
 											value="<c:out value='${usuario.tipoCuenta}'/>"> <input
 											type="hidden" name="bancoDistribuidor"
 											value="<c:out value='${usuario.banco}'/>">
-
-
 										</td>
 									</tr>
 								</table>
-
 								<table>
 									<tr>
 										<td align="left">Nombres y Apellidos del Patrocinador <input
@@ -159,7 +144,6 @@
 											onclick="javascript:document.forma.numeroEmpresario.readOnly =true;" />
 											<a href="javascript:abrirBuscarAfiliado()">Buscar
 												Afiliado</a>
-
 										</td>
 									</tr>
 									<tr>
@@ -171,14 +155,9 @@
 										</td>
 									</tr>
 								</table>
-
-
-
-
 							</div>
 							<div class="titulo">DATOS PERSONALES</div>
 							<div id="datosPersonales">
-
 								<table>
 									<tr align="left">
 										<td width="25%">Nombre: <input name="nombre" type="text"
@@ -196,12 +175,10 @@
 											name="fechaNacimiento" type="text"
 											class="ui-datepicker-calendar" id="fecha" size="10"
 											maxlength="10" /></td>
-
 									</tr>
 									<tr align="left">
 										<td>Lugar de Nac.: Ciudad <input name="ciudadNacimiento"
 											type="text" size="13" maxlength="25" />
-
 										</td>
 										<td height="26">Dpto Nac <select id="departamento"
 											name="departamento">
@@ -214,10 +191,8 @@
 													</option>
 												</c:forEach>
 										</select>
-
 										</td>
 									</tr>
-
 									<tr align="left">
 										<td>Barrio: <input name="barrio" type="text" size="25"
 											maxlength="50" /></td>
@@ -236,9 +211,7 @@
 													</option>
 												</c:forEach>
 										</select></td>
-
 									</tr>
-
 									<tr align="left">
 										<td>Teléfono: <input name="telefono" type="text"
 											size="10" maxlength="10" /></td>
@@ -248,20 +221,16 @@
 										<td>E-mail: <input name="email" type="text" size="20"
 											maxlength="50" /></td>
 									</tr>
-
 								</table>
-
 							</div>
 							<div class="titulo">DATOS PARA PAGO DE RECONOCIMIENTOS
 								MONETARIOS.</div>
 							<div>
-
 								<table>
 									<tr>
 										<td colspan="2">PAGAR A DISTRIBUIDOR <input
 											name="pagarADistribuidor" type="checkbox"
 											onclick="javascript:validarChequeCta()" />
-
 										</td>
 									</tr>
 									<tr>
@@ -280,7 +249,6 @@
 										</td>
 									</tr>
 									<tr>
-
 										<td>Tipo de cta. Ahorro <input name="tipoCuenta"
 											type="radio" value="AHORRO" checked="checked" /> Cte. <input
 											name="tipoCuenta" type="radio" value="CRTE" />
@@ -304,9 +272,7 @@
 									</tr>
 								</table>
 							</div>
-
 						</div>
-
 					</div>
 				</c:otherwise>
 			</c:choose>

@@ -60,24 +60,25 @@ public class UsuarioDAOImp implements UsuarioDAO {
 
 	public void actualizar(User usuario) throws MultinivelDAOException {
 		try {
-			//usuario.setEnabled(Byte.parseByte("1"));
+			// usuario.setEnabled(Byte.parseByte("1"));
 			this.entityManager.merge(usuario);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<User> listar() throws MultinivelDAOException {
 		Query query = this.entityManager.createQuery("from User");
 		List<User> lista = query.getResultList();
 		return lista;
 	}
 
+	@SuppressWarnings("unchecked")
 	public User consultar(User pusuario) throws MultinivelDAOException {
 		User usuario = null;
 		try {
-			Query query = this.entityManager
-					.createQuery(" select u  from User  u where u.username=:usuario and u.password=:clave ");
+			Query query = this.entityManager.createQuery(" select u  from User  u where u.username=:usuario and u.password=:clave ");
 			query.setParameter("usuario", pusuario.getUsername());
 			query.setParameter("clave", pusuario.getPassword());
 			List<User> usuarios = query.getResultList();
@@ -90,8 +91,8 @@ public class UsuarioDAOImp implements UsuarioDAO {
 		return usuario;
 	}
 
-	public Pagina listarConDistribuidor(int pagina)
-			throws MultinivelDAOException {
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public Pagina listarConDistribuidor(int pagina) throws MultinivelDAOException {
 		int max = ParametrosEnum.TAM_PAGINA.getValorInt() * pagina;
 		int min = ParametrosEnum.TAM_PAGINA.getValorInt() * (pagina - 1);
 		Pagina p = new Pagina();
@@ -130,33 +131,22 @@ public class UsuarioDAOImp implements UsuarioDAO {
 			p.setContent(listaUsuario);
 			p.setNumber(pagina);
 			p.setTotalElements(total.intValue());
-			p.setTotalPages(total.intValue()
-					/ ParametrosEnum.TAM_PAGINA.getValorInt());
+			p.setTotalPages(total.intValue() / ParametrosEnum.TAM_PAGINA.getValorInt());
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new MultinivelDAOException(
-					"error al listar los afiliados por nivel", getClass());
+			throw new MultinivelDAOException("error al listar los afiliados por nivel", getClass());
 		}
 		return p;
 	}
 
-	public List<UsuarioDTO> buscar(String nomFiltro, String filtro)
-			throws MultinivelDAOException {
+	public List<UsuarioDTO> buscar(String nomFiltro, String filtro) throws MultinivelDAOException {
 		List<UsuarioDTO> listaUsuario = new ArrayList<UsuarioDTO>();
 		try {
-			String sql = " Select u.UserName Usuario, \n"
-					+ "a.Nombre+' '+Case When a.Apellido Is Null Then '' Else a.Apellido End NombreUsuario,\n"
-					+ "u.Password Clave, u.Enabled\n"
-					+ "From Users u\n"
-					+ "Inner Join T_Afiliados a On u.UserName=a.Cedula\n"
-					+ "Where a. "
-					+ nomFiltro
-					+ " like '%"
-					+ filtro
-					+ "%'"
-					+ "Order By a.Nombre+' '+Case When a.Apellido Is Null Then '' Else a.Apellido End";
+			String sql = " Select u.UserName Usuario, a.Nombre+' '+Case When a.Apellido Is Null Then '' Else a.Apellido End NombreUsuario,\n"
+					+ "u.Password Clave, u.Enabled From Users u Inner Join T_Afiliados a On u.UserName=a.Cedula Where a. " + nomFiltro + " like '%"
+					+ filtro + "%' Order By a.Nombre+' '+Case When a.Apellido Is Null Then '' Else a.Apellido End";
 			Query q = this.entityManager.createNativeQuery(sql);
-			List result = q.getResultList();
+			List<?> result = q.getResultList();
 			int s = result.size();
 			if (s > 0) {
 				for (int i = 0; i < s; i++) {
@@ -180,8 +170,7 @@ public class UsuarioDAOImp implements UsuarioDAO {
 
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
-			throw new MultinivelDAOException(
-					"Error al listar los afiliados por nivel", getClass());
+			throw new MultinivelDAOException("Error al listar los afiliados por nivel", getClass());
 		}
 		return listaUsuario;
 	}

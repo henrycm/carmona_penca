@@ -39,7 +39,7 @@ public class Nodo {
 	}
 
 	public Nodo() {
-		this.hijos = new ArrayList();
+		this.hijos = new ArrayList<Nodo>();
 	}
 
 	public String getCedula() {

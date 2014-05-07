@@ -188,13 +188,15 @@ public class ConsumoDAOImp implements ConsumoDAO {
 		return listaConsumo;
 	}
 
-	public List<Object> calcularConsumosPeriodo(String periodo, String red) throws MultinivelDAOException {
+	public List<Object> calcularConsumosPeriodo(String periodo, String distribuidor) throws MultinivelDAOException {
 		List<Object> listaPedido = new ArrayList<Object>();
-		String sql = " SELECT c.codigo_consumo,c.totalpedido,c.fecha ,      CONCAT(a.nombre,' ',a.apellido),a.cedula  FROM t_afiliados a, t_consumos c  WHERE   c.afiliado=a.cedula  and c.Distribuidor=?  and Date_format(c.fecha,'%m/%Y')=?";
+		String sql = " Select c.Afiliado, a.Nombre+' '+a.Apellido NombreAfiliado, c.Codigo_Consumo, c.Fecha, c.TotalPedido From T_Consumos c "
+				+ "Inner Join T_Afiliados a On c.Afiliado=a.Cedula "
+				+ "Where Right('00'+Cast(Month(c.Fecha) As Varchar(2)),2)+'/'+Cast(Year(c.Fecha) As Varchar(4)) = ? And c.Distribuidor = ? ";
 
 		Query query = this.entityManager.createNativeQuery(sql);
-		query.setParameter(1, red);
-		query.setParameter(2, periodo);
+		query.setParameter(1, periodo);
+		query.setParameter(2, distribuidor);
 		List<?> lista = query.getResultList();
 
 		int s = lista.size();
@@ -202,12 +204,13 @@ public class ConsumoDAOImp implements ConsumoDAO {
 		for (int i = 0; i < s; i++) {
 			Object obj = lista.get(i);
 			Object[] objectArray = (Object[]) obj;
-			Integer codigoPedido = (Integer) objectArray[0];
-			BigDecimal totalPedido = (BigDecimal) objectArray[1];
-			String tmp = (String) objectArray[2];
+			String afiliado = (String) objectArray[0];
+			String nombreAfiliado = (String) objectArray[1];
+			Integer codigoPedido = Integer.parseInt(objectArray[2].toString());
+			String tmp = objectArray[3].toString();
 			Date fecha = FechasUtil.parse(tmp);
-			String nombreAfiliado = (String) objectArray[3];
-			String afiliado = (String) objectArray[4];
+			BigDecimal totalPedido = (BigDecimal) objectArray[4];
+
 			totalDistribuidor += totalPedido.doubleValue();
 
 			ConsumoDTO pedido2 = new ConsumoDTO();
@@ -264,20 +267,29 @@ public class ConsumoDAOImp implements ConsumoDAO {
 
 	public List<Object> listarConsumosPeriodo(ConsumoDTO consumo) throws MultinivelDAOException {
 		List<Object> listaPedido = new ArrayList<Object>();
+		String cedula = null;
 		try {
-			String sql = " select p.codigo_consumo,  p.totalPedido,  p.fecha,  t.codigo_producto,  r.nombre_producto,  t.valorUnitario,  t.cantidad,  t.totalProducto,  p.afiliado,(  SELECT CONCAT (a.NOMBRE ,' ',IF(a.APELLIDO IS NULL,'',a.APELLIDO))) NOMBRE_PADRE from t_consumos p inner join t_det_consumos t on  DATE_FORMAT(P.FECHA,'%m/%Y')='"
-					+
+			cedula = consumo.getCedulaDistribuidor() != null ? consumo.getCedulaDistribuidor() : consumo.getCedulaAfiliado();
 
-					consumo.getPeriodo() + "' ";
+			StringBuffer sql = new StringBuffer();
+
+			sql.append(" Select c.Afiliado, a.Nombre +' '+a.Apellido NombreAfiliado, "
+					+ "c.Fecha, c.Codigo_Consumo, d.Codigo_Producto, p.Nombre_Producto, "
+					+ "d.Cantidad, d.ValorUnitario, d.TotalProducto, c.TotalPedido From T_Consumos c "
+					+ "Inner Join T_Det_Consumos d On c.Codigo_Consumo=d.Codigo_Consumo "
+					+ "Inner Join T_Productos p On p.Codigo=d.Codigo_Producto "
+					+ "Inner Join T_Afiliados a On c.Afiliado=a.Cedula Where Right('00'+Cast(Month(c.Fecha) As Varchar(2)),2)+'/'+Cast(Year(c.Fecha) As Varchar(4)) = ? ");
 			if (consumo.getCedulaDistribuidor() != null) {
-				sql = sql + " and p.distribuidor='" + consumo.getCedulaDistribuidor() + "' ";
+				sql.append(" And c.Distribuidor = ?");
 			} else {
-				sql = sql + " and p.afiliado='" + consumo.getCedulaAfiliado() + "' ";
+				sql.append(" And c.Afiliado = ?");
 			}
-			sql = sql
-					+ " and  t.codigo_consumo=p.codigo_consumo inner join t_productos r  on r.codigo=t.codigo_producto inner join t_afiliados a ON a.cedula=p.afiliado ";
 
-			Query query = this.entityManager.createNativeQuery(sql);
+			Query query = this.entityManager.createNativeQuery(sql.toString());
+			query.setParameter(1, consumo.getPeriodo());
+			query.setParameter(2, cedula);
+
+			System.err.println(sql);
 
 			double totalDistribuidor = 0.0D;
 			if (query.getResultList() != null) {
@@ -287,17 +299,18 @@ public class ConsumoDAOImp implements ConsumoDAO {
 				for (int i = 0; i < s; i++) {
 					Object obj = lista.get(i);
 					Object[] objectArray = (Object[]) obj;
-					Integer codigoPedido = (Integer) objectArray[0];
-					BigDecimal totalPedido = (BigDecimal) objectArray[1];
+
+					String cedulaAfiliado = objectArray[0].toString();
+					String nombreAfiliado = objectArray[1].toString();
 					String tmp = (String) objectArray[2];
 					Date fecha = FechasUtil.parse(tmp);
-					String codigoProducto = (String) objectArray[3];
-					String nombreProducto = (String) objectArray[4];
-					BigDecimal valorUnitario = (BigDecimal) objectArray[5];
-					Integer cantidad = (Integer) objectArray[6];
-					BigDecimal totalProducto = (BigDecimal) objectArray[7];
-					String cedulaAfiliado = (String) objectArray[8];
-					String nombreAfiliado = (String) objectArray[9];
+					Integer codigoPedido = Integer.parseInt(objectArray[3].toString());
+					String codigoProducto = objectArray[4].toString();
+					String nombreProducto = objectArray[5].toString();
+					Integer cantidad = Integer.parseInt(objectArray[6].toString());
+					BigDecimal valorUnitario = (BigDecimal) objectArray[7];
+					BigDecimal totalProducto = (BigDecimal) objectArray[8];
+					BigDecimal totalPedido = (BigDecimal) objectArray[9];
 
 					totalDistribuidor += totalPedido.doubleValue();
 
@@ -335,20 +348,22 @@ public class ConsumoDAOImp implements ConsumoDAO {
 			rs2.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			return Boolean.FALSE;
 		}
-		return true;
+		return Boolean.TRUE;
 	}
 
 	public List<Object> listarConsumosPeriodoAEliminar(ConsumoDTO consumo) throws MultinivelDAOException {
 		List<Object> listaPedido = new ArrayList<Object>();
 		try {
-			String sql = "SELECT p.codigo_consumo, \tp.totalPedido,p.fecha, p.afiliado,  (SELECT CONCAT (a.NOMBRE ,' ',IF(a.APELLIDO IS NULL,'',a.APELLIDO))) nombre  FROM t_consumos p INNER JOIN t_afiliados a   ON a.cedula=p.afiliado   AND DATE_FORMAT(P.FECHA,'%m/%Y')='"
-					+
-
-					consumo.getPeriodo() + "' " + " and  p.distribuidor='" + consumo.getCedulaDistribuidor() + "' ";
+			String sql = " Select c.Afiliado, a.Nombre+' '+a.Apellido NombreAfiliado, c.Fecha, c.Codigo_Consumo, c.TotalPedido "
+					+ "From T_Consumos c Inner Join T_Afiliados a On c.Afiliado=a.Cedula "
+					+ "Where Right('00'+Cast(Month(c.Fecha) As Varchar(2)),2)+'/'+Cast(Year(c.Fecha) As Varchar(4))= ? And c.Distribuidor = ? ";
 
 			Query query = this.entityManager.createNativeQuery(sql);
+			query.setParameter(1, consumo.getPeriodo());
+			query.setParameter(2, consumo.getCedulaDistribuidor());
+
 			if (query.getResultList() != null) {
 				List<?> lista = query.getResultList();
 
@@ -356,12 +371,12 @@ public class ConsumoDAOImp implements ConsumoDAO {
 				for (int i = 0; i < s; i++) {
 					Object obj = lista.get(i);
 					Object[] objectArray = (Object[]) obj;
-					Integer codigoPedido = (Integer) objectArray[0];
-					BigDecimal totalPedido = (BigDecimal) objectArray[1];
+					String cedulaAfiliado = objectArray[0].toString();
+					String nombreAfiliado = objectArray[1].toString();
 					String tmp = (String) objectArray[2];
 					Date fecha = FechasUtil.parse(tmp);
-					String cedulaAfiliado = (String) objectArray[3];
-					String nombreAfiliado = (String) objectArray[4];
+					Integer codigoPedido = (Integer) objectArray[3];
+					BigDecimal totalPedido = (BigDecimal) objectArray[4];
 
 					ConsumoDTO pedido2 = new ConsumoDTO();
 					pedido2.setCodigoConsumo(codigoPedido.toString());

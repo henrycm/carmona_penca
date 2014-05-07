@@ -16,6 +16,26 @@ public class CompensacionAfiliadoServiceImpl implements CompensacionAfiliadoServ
 	@EJB
 	private CompensacionAfiliadoDAO compensacionAfiliadoDAO;
 
+	public List<Object> comisionAfiliadoPeriodo(String periodo, String cedula) throws MultinivelServiceException {
+		List<Object> retorno = null;
+		try {
+			retorno = this.compensacionAfiliadoDAO.comisionAfiliadoPeriodo(periodo, cedula);
+		} catch (MultinivelDAOException e) {
+			throw new MultinivelServiceException(e.getMessage(), getClass());
+		}
+		return retorno;
+	}
+
+	public List<Object> comisionTotalPorDistribuidorPeriodo(String periodo) throws MultinivelServiceException {
+		List<Object> retorno = null;
+		try {
+			retorno = this.compensacionAfiliadoDAO.comisionTotalPorDistribuidorPeriodo(periodo);
+		} catch (MultinivelDAOException e) {
+			throw new MultinivelServiceException(e.getMessage(), getClass());
+		}
+		return retorno;
+	}
+
 	public List<Object> consultar(CompensacionAfiliadoDTO compensacionAfiliadoDTO) throws MultinivelServiceException {
 		List<Object> retorno = null;
 		try {
@@ -26,7 +46,7 @@ public class CompensacionAfiliadoServiceImpl implements CompensacionAfiliadoServ
 		return retorno;
 	}
 
-	public double getTotalConsumo(CompensacionAfiliadoDTO compensacionAfiliadoDTO) throws MultinivelServiceException {
+	public double totalConsumo(CompensacionAfiliadoDTO compensacionAfiliadoDTO) throws MultinivelServiceException {
 		double retorno = 0.0D;
 		try {
 			retorno = this.compensacionAfiliadoDAO.totalConsumo(compensacionAfiliadoDTO);
@@ -62,16 +82,6 @@ public class CompensacionAfiliadoServiceImpl implements CompensacionAfiliadoServ
 		} catch (MultinivelDAOException e) {
 			throw new MultinivelServiceException(e.getMessage(), getClass());
 		}
-	}
-
-	public List<Object> comisionTotalPorDistribuidorPeriodo(String periodo) throws MultinivelServiceException {
-		List<Object> retorno = null;
-		try {
-			retorno = this.compensacionAfiliadoDAO.comisionTotalPorDistribuidorPeriodo(periodo);
-		} catch (MultinivelDAOException e) {
-			throw new MultinivelServiceException(e.getMessage(), getClass());
-		}
-		return retorno;
 	}
 }
 

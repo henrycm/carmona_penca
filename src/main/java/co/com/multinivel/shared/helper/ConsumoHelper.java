@@ -21,7 +21,7 @@ public class ConsumoHelper {
 			long totalProducto = 0L;
 			long totalConsumo = 0L;
 
-			List<DetConsumo> pedidos = new ArrayList();
+			List<DetConsumo> pedidos = new ArrayList<DetConsumo>();
 			for (int i = 0; i < productos.length; i++) {
 				String[] arrayDatos = request.getParameter("datos_" + productos[i]).split("_");
 				String codigoProducto = productos[i];
@@ -52,13 +52,14 @@ public class ConsumoHelper {
 		return pedido;
 	}
 
+	@SuppressWarnings("deprecation")
 	public static Consumo cargarEntidad(HttpServletRequest request) throws Exception {
 		Consumo pedido = new Consumo();
 		try {
 			String[] productos = request.getParameterValues("codigoProducto");
 			String[] valorUnitario = request.getParameterValues("valorUnitario");
 			String[] cantidades = request.getParameterValues("cantidad");
-			List<DetConsumo> pedidos = new ArrayList();
+			List<DetConsumo> pedidos = new ArrayList<DetConsumo>();
 
 			String usuario = UsuarioHelper.getUsuario();
 			if (UsuarioHelper.getRol() == '1') {

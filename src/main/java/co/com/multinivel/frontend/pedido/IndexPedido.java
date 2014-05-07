@@ -31,21 +31,17 @@ public class IndexPedido extends HttpServlet {
 
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
-		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
-				config.getServletContext());
+		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String recurso = null;
 		try {
-			char accion = request.getParameter("accion") == null ? '*' : request.getParameter(
-					"accion").charAt(0);
+			char accion = request.getParameter("accion") == null ? '*' : request.getParameter("accion").charAt(0);
 			request.setAttribute("fechaActual", new Date());
 			Date fechaActual = new Date();
 			SimpleDateFormat formato = new SimpleDateFormat("MM/yyyy");
@@ -56,11 +52,9 @@ public class IndexPedido extends HttpServlet {
 			case 'I':
 				recurso = RecursosEnum.FW_INGRESO_PEDIDO.getRecurso();
 				if (UsuarioHelper.getRol() == '2') {
-					request.setAttribute("afiliado",
-							this.afiliadoService.consultar(UsuarioHelper.getUsuario()));
+					request.setAttribute("afiliado", this.afiliadoService.consultar(UsuarioHelper.getUsuario()));
 				} else {
-					request.setAttribute("afiliado",
-							this.afiliadoService.consultar(request.getParameter("distribuidor")));
+					request.setAttribute("afiliado", this.afiliadoService.consultar(request.getParameter("distribuidor")));
 				}
 				request.setAttribute("listaAlimentos", this.productoService.listar("1"));
 				request.setAttribute("listaPiel", this.productoService.listar("2"));
@@ -75,8 +69,7 @@ public class IndexPedido extends HttpServlet {
 			case 'A':
 				recurso = RecursosEnum.FW_INGRESO_PEDIDO_AFILIADO.getRecurso();
 
-				request.setAttribute("afiliado",
-						this.afiliadoService.consultar(request.getParameter("cedula")));
+				request.setAttribute("afiliado", this.afiliadoService.consultar(request.getParameter("cedula")));
 
 				request.setAttribute("listaAlimentos", this.productoService.listar("1"));
 				request.setAttribute("listaPiel", this.productoService.listar("2"));
@@ -96,8 +89,7 @@ public class IndexPedido extends HttpServlet {
 				} else {
 					st_dist = request.getParameter("distribuidor");
 				}
-				request.setAttribute("afiliado",
-						this.afiliadoService.consultar(st_dist));
+				request.setAttribute("afiliado", this.afiliadoService.consultar(st_dist));
 				request.setAttribute("saldoMvtos", movService.consultarSaldo(st_dist));
 				request.setAttribute("listaAlimentos", this.productoService.listar("1"));
 				request.setAttribute("listaPiel", this.productoService.listar("2"));
@@ -121,15 +113,13 @@ public class IndexPedido extends HttpServlet {
 			case 'C':
 				request.setAttribute("accion", "I");
 
-				request.setAttribute("listaDistribuidores",
-						this.afiliadoService.listarDistribuidores());
+				request.setAttribute("listaDistribuidores", this.afiliadoService.listarDistribuidores());
 				recurso = RecursosEnum.FW_LISTAR_DISTRIBUIDORES_PEDIDO.getRecurso();
 				break;
 			case 'S':
 				request.setAttribute("accion", "Q");
 
-				request.setAttribute("listaDistribuidores",
-						this.afiliadoService.listarDistribuidores());
+				request.setAttribute("listaDistribuidores", this.afiliadoService.listarDistribuidores());
 				recurso = RecursosEnum.FW_LISTAR_DISTRIBUIDORES_PEDIDO_NUEVO.getRecurso();
 				break;
 			case 'D':

@@ -33,28 +33,23 @@ public class ReportePremiosAfiliadoPeriodo extends HttpServlet {
 
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
-		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
-				config.getServletContext());
+		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd = null;
 		try {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 
-			String documento = request.getParameter("documento") == null ? "0" : request
-					.getParameter("documento");
+			String documento = request.getParameter("documento") == null ? "0" : request.getParameter("documento");
 			Date fechaActual = new Date();
 			SimpleDateFormat formato = new SimpleDateFormat("MM/yyyy");
 			String cadenaFecha = formato.format(fechaActual);
-			String periodo = request.getParameter("periodo") == null ? cadenaFecha : request
-					.getParameter("periodo");
+			String periodo = request.getParameter("periodo") == null ? cadenaFecha : request.getParameter("periodo");
 			map.put("titulo", "PREMIOS AFIALIDO POR PERIDOS");
 			map.put("periodo", periodo);
 			map.put("rutaImagenes", RutasUtil.getRutaImagenes(getServletContext()));
@@ -63,42 +58,32 @@ public class ReportePremiosAfiliadoPeriodo extends HttpServlet {
 			premioAfiliado.setPeriodo(periodo);
 
 			Afiliado afiliado = this.afiliadoService.consultar(documento);
-			Afiliado distribuidor = this.afiliadoService.consultar(afiliado
-					.getCedulaDistribuidorPago());
 			if (afiliado != null) {
+				Afiliado distribuidor = this.afiliadoService.consultar(afiliado.getCedulaDistribuidorPago());
 				List<Object> lista = this.premioAfiliadoService.consultar(premioAfiliado);
 				if ((lista != null) && (lista.size() > 0)) {
-					map.put("telefono",
-							afiliado.getTelefono() == null ? "" : afiliado.getTelefono());
+					map.put("telefono", afiliado.getTelefono() == null ? "" : afiliado.getTelefono());
 					map.put("nombreAfiliado", afiliado.getNombre() + " " + afiliado.getApellido());
 					map.put("cedulaAfiliado", afiliado.getCedula());
 					map.put("ciudadEmpresario", afiliado.getCiudadResidencia());
 					if (distribuidor != null) {
-						map.put("nombreDistribuidor",
-								distribuidor.getNombre() + " " + distribuidor.getApellido());
+						map.put("nombreDistribuidor", distribuidor.getNombre() + " " + distribuidor.getApellido());
 						map.put("cedulaDistribuidor", distribuidor.getCedula());
 					} else {
-						map.put("nombreDistribuidor",
-								afiliado.getNombre() + " " + afiliado.getApellido());
+						map.put("nombreDistribuidor", afiliado.getNombre() + " " + afiliado.getApellido());
 						map.put("cedulaDistribuidor", afiliado.getCedula());
 					}
-					String tipoReporte = request.getParameter("tipoReporte") == null ? "PDF"
-							: request.getParameter("tipoReporte");
+					String tipoReporte = request.getParameter("tipoReporte") == null ? "PDF" : request.getParameter("tipoReporte");
 					if ("PDF".equals(tipoReporte)) {
-						GenerarReporte.exportarPDF(request, response, getServletConfig()
-								.getServletContext(), "listaPremios_" + documento + "_" + periodo
-								+ ".pdf", RecursosEnum.FW_JASPER_LISTA_PREMIOS_AFILIADO
-								.getRecurso(), map, lista);
+						GenerarReporte.exportarPDF(request, response, getServletConfig().getServletContext(), "listaPremios_" + documento + "_"
+								+ periodo + ".pdf", RecursosEnum.FW_JASPER_LISTA_PREMIOS_AFILIADO.getRecurso(), map, lista);
 					} else {
-						GenerarReporte.exportarExcel(request, response, getServletConfig()
-								.getServletContext(), "listaPremios_" + documento + "_" + periodo
-								+ ".xls", RecursosEnum.FW_JASPER_LISTA_PREMIOS_AFILIADO
-								.getRecurso(), map, lista);
+						GenerarReporte.exportarExcel(request, response, getServletConfig().getServletContext(), "listaPremios_" + documento + "_"
+								+ periodo + ".xls", RecursosEnum.FW_JASPER_LISTA_PREMIOS_AFILIADO.getRecurso(), map, lista);
 					}
 				} else {
 					request.setAttribute("error", "No se encuentra premios para el afiliado");
-					rd = getServletContext().getRequestDispatcher(
-							RecursosEnum.FW_ERROR.getRecurso());
+					rd = getServletContext().getRequestDispatcher(RecursosEnum.FW_ERROR.getRecurso());
 					rd.forward(request, response);
 				}
 			} else {
@@ -119,5 +104,6 @@ public class ReportePremiosAfiliadoPeriodo extends HttpServlet {
  * Location:
  * D:\Dllo\multinivel\multinivelEAR.ear\multinivel.war\WEB-INF\classes\
  * 
- * Qualified Name: co.com.multinivel.frontend.liquidacion.ReportePremiosAfiliadoPeriodo
+ * Qualified Name:
+ * co.com.multinivel.frontend.liquidacion.ReportePremiosAfiliadoPeriodo
  */

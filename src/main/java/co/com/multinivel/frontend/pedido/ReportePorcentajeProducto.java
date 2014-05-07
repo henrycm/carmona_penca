@@ -55,6 +55,7 @@ public class ReportePorcentajeProducto extends HttpServlet {
 				}
 			} else {
 				request.setAttribute("error", "No existen datos para el periodo solicitado o no se ha liquidado:" + periodo);
+				rd = getServletContext().getRequestDispatcher(RecursosEnum.FW_ERROR.getRecurso());
 				rd.forward(request, response);
 			}
 		} catch (Exception e) {

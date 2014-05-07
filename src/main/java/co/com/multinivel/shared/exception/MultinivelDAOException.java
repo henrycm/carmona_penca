@@ -6,7 +6,7 @@ public class MultinivelDAOException extends Exception {
 	public MultinivelDAOException() {
 	}
 
-	public MultinivelDAOException(String mensaje, Class clase) {
+	public MultinivelDAOException(String mensaje, Class<?> clase) {
 		super("El sistema ha presentando un error:" + mensaje);
 	}
 }

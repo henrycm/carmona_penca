@@ -18,6 +18,7 @@ public class DepartamentoDAOImp implements DepartamentoDAO {
 	@PersistenceContext
 	private EntityManager entityManager;
 
+	@SuppressWarnings("unchecked")
 	public List<Departamento> listar() throws MultinivelDAOException {
 		Query query = this.entityManager.createQuery("from Departamento o order by o.descripcion");
 		List<Departamento> lista = query.getResultList();

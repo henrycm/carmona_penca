@@ -28,15 +28,12 @@ public class RolesPorUsuarioFrontController extends HttpServlet {
 	@Autowired
 	private UsuarioService usuarioService;
 
-	public void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String url = RecursosEnum.FW_ROL_POR_USUARIO.getRecurso();
 		List<GroupAuthority> listaRoles = null;
 		List<User> listaUsuarios = null;
 		try {
-			char accion = request.getParameter("accion") == null ? '*' : request.getParameter(
-					"accion").charAt(0);
-			String codigo = request.getParameter("codigo");
+			char accion = request.getParameter("accion") == null ? '*' : request.getParameter("accion").charAt(0);
 			User usuario = null;
 			GroupAuthority rol = null;
 			GroupMember rolPorUsuario = null;
@@ -49,8 +46,7 @@ public class RolesPorUsuarioFrontController extends HttpServlet {
 				rolPorUsuario.setGroupAuthority(rol);
 				this.rolService.guardarRolUsuario(rolPorUsuario);
 				request.setAttribute("ingreso", Boolean.valueOf(true));
-				request.setAttribute("listaRolesPorUsuario",
-						this.rolService.rolesPorUsuario(usuario));
+				request.setAttribute("listaRolesPorUsuario", this.rolService.rolesPorUsuario(usuario));
 				request.setAttribute("usuario", usuario);
 				break;
 			case 'B':
@@ -62,8 +58,7 @@ public class RolesPorUsuarioFrontController extends HttpServlet {
 				this.rolService.borrarRolUsuario(rolPorUsuario);
 				request.setAttribute("retiro", Boolean.valueOf(true));
 				request.setAttribute("usuario", usuario);
-				request.setAttribute("listaRolesPorUsuario",
-						this.rolService.rolesPorUsuario(usuario));
+				request.setAttribute("listaRolesPorUsuario", this.rolService.rolesPorUsuario(usuario));
 
 				break;
 			case 'C':
@@ -71,8 +66,7 @@ public class RolesPorUsuarioFrontController extends HttpServlet {
 					usuario = this.usuarioService.consultar(request.getParameter("usuario"));
 
 					request.setAttribute("usuario", usuario);
-					request.setAttribute("listaRolesPorUsuario",
-							this.rolService.rolesPorUsuario(usuario));
+					request.setAttribute("listaRolesPorUsuario", this.rolService.rolesPorUsuario(usuario));
 				}
 				break;
 			}
@@ -89,12 +83,10 @@ public class RolesPorUsuarioFrontController extends HttpServlet {
 
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
-		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
-				config.getServletContext());
+		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
 	}
 
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
-			IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		doPost(req, resp);
 	}
 }

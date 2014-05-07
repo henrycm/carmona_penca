@@ -13,7 +13,8 @@
 			src="../images/regresar.gif" border="0" width="149" height="27"
 			alt="Regresar a la página anterior"
 			onmouseover="this.src='../images/regresar2.gif'"
-			onmouseout="this.src='../images/regresar.gif'" /> <a />
+			onmouseout="this.src='../images/regresar.gif'" />
+		</a>
 	</p>
 </body>
 </html>

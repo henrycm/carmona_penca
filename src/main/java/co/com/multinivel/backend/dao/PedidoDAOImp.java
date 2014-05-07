@@ -200,19 +200,15 @@ public class PedidoDAOImp implements PedidoDAO {
 	public List<Object> listarPorPeriodo(PedidoDTO pedido) throws MultinivelDAOException {
 		List<Object> listaPedido = new ArrayList<Object>();
 		try {
-			String sql = " select    p.codigo_Pedido,                    p.transporte,  \t\t\t        p.totalPedido,  \t\t\t        p.fecha,  \t\t\t        t.codigo_producto,  \t\t\t        r.nombre_producto,  \t\t\t        t.valorUnitario,  \t\t\t        t.cantidad,  \t\t\t\t        t.totalProducto  \t\t\t\t        from t_Pedidos p  \t\t\t\t             inner join  \t\t\t\t             t_det_pedidos t  \t\t\t\t\t\t\t\t\t   on  DATE_FORMAT(P.FECHA,'%m/%Y')='"
-					+
-
-					pedido.getPeriodo()
-					+ "' "
-					+ " \t\t\t\t             and p.distribuidor='"
-					+ pedido.getCedulaDistribuidor()
-					+ "' "
-					+ " \t\t\t\t             and  t.codigo_pedido=p.codigo_Pedido "
-					+ " \t\t\t\t             inner join t_productos r "
-					+ " \t\t\t\t                on r.codigo=t.codigo_producto ";
+			String sql = " SELECT p.Codigo_Pedido, p.Transporte, p.TotalPedido, p.Fecha, d.Codigo_Producto, r.Nombre_Producto, d.ValorUnitario, d.Cantidad, d.TotalProducto "
+					+ "FROM T_Pedidos p INNER JOIN T_Det_Pedidos d ON  p.Codigo_Pedido = d.Codigo_Pedido "
+					+ "INNER JOIN t_productos r ON r.codigo = d.codigo_producto "
+					+ "Where Right('00'+Cast(Month(p.Fecha) As Varchar(2)),2)+'/'+Cast(Year(p.Fecha) As Varchar(4))= ? AND p.distribuidor = ? ";
 
 			Query query = this.entityManager.createNativeQuery(sql);
+			query.setParameter(1, pedido.getPeriodo());
+			query.setParameter(2, pedido.getCedulaDistribuidor());
+
 			if (query.getResultList() != null) {
 				List<?> lista = query.getResultList();
 
@@ -255,7 +251,7 @@ public class PedidoDAOImp implements PedidoDAO {
 	public List<Object> listarPedidosAEliminar(PedidoDTO pedido) throws MultinivelDAOException {
 		List<Object> listaPedido = new ArrayList<Object>();
 		try {
-			String sql = " select p.codigo_Pedido,p.totalPedido, p.fecha from t_Pedidos p where  DATE_FORMAT(P.FECHA,'%m/%Y')='"
+			String sql = " select p.codigo_Pedido,p.totalPedido, p.fecha from t_Pedidos p where Right('00'+Cast(Month(Fecha) As Varchar(2)),2)+'/'+Cast(Year(Fecha) As Varchar(4))='"
 					+ pedido.getPeriodo() + "' " + " and p.distribuidor='" + pedido.getCedulaDistribuidor() + "' ";
 
 			Query query = this.entityManager.createNativeQuery(sql);

@@ -15,7 +15,7 @@ public class PedidoHelper {
 		Pedido pedido = new Pedido();
 		try {
 			String[] productos = request.getParameterValues("producto");
-			Enumeration eForma = null;
+			Enumeration<?> eForma = null;
 
 			String usuario = request.getParameter("distribuidor");
 			if (UsuarioHelper.getRol() == '2') {
@@ -26,7 +26,7 @@ public class PedidoHelper {
 			long totalProducto = 0L;
 			long totalPedido = 0L;
 
-			HashSet<DetallePedido> pedidos = new HashSet();
+			HashSet<DetallePedido> pedidos = new HashSet<DetallePedido>();
 			for (int i = 0; i < productos.length; i++) {
 				eForma = request.getParameterNames();
 				while (eForma.hasMoreElements()) {
@@ -39,8 +39,7 @@ public class PedidoHelper {
 								String codigoProducto = productos[i];
 								Double valorProducto = Double.parseDouble(arrayDatos[2]);
 
-								int cantidad = Integer.parseInt(request
-										.getParameter(nombreParametro));
+								int cantidad = Integer.parseInt(request.getParameter(nombreParametro));
 								BigDecimal valor = new BigDecimal(arrayDatos[2]);
 
 								String nombreProducto = arrayDatos[3];
@@ -75,7 +74,7 @@ public class PedidoHelper {
 			String[] productos = request.getParameterValues("codigoProducto");
 			String[] valorUnitario = request.getParameterValues("valorUnitario");
 			String[] cantidades = request.getParameterValues("cantidad");
-			HashSet<DetallePedido> pedidos = new HashSet();
+			HashSet<DetallePedido> pedidos = new HashSet<DetallePedido>();
 
 			String usuario = request.getParameter("cedula");
 			if (UsuarioHelper.getRol() == '2') {

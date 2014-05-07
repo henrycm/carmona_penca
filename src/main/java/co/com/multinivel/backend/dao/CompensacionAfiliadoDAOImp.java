@@ -17,6 +17,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import co.com.multinivel.backend.model.Parametro;
+import co.com.multinivel.shared.dto.AfiliadoConsumo;
 import co.com.multinivel.shared.dto.CompensacionAfiliadoDTO;
 import co.com.multinivel.shared.dto.ReporteConsumoDTO;
 import co.com.multinivel.shared.exception.MultinivelDAOException;
@@ -29,6 +30,67 @@ public class CompensacionAfiliadoDAOImp implements CompensacionAfiliadoDAO {
 	private EntityManager entityManager;
 	@Autowired
 	private ParametroDAO parametroDAO;
+
+	public List<Object> comisionAfiliadoPeriodo(String periodo, String cedula) throws MultinivelDAOException {
+		List<Object> lista = null;
+		try {
+			lista = new ArrayList<Object>();
+			Parametro pconsumoMinimo = this.parametroDAO.obtenerValor("CONSUMO_MINIMO_ABRIR_RED");
+			double consumoMinimo = Double.parseDouble(pconsumoMinimo.getValor());
+
+			String sql = "Select c.Papa, c.Afiliado, a.Nombre+' '+a.Apellido NombreAfiliado, c.Nivel, c.ConsumoAfiliado, c.Comision "
+					+ "From T_Comision_Afiliado_Periodo c Inner Join T_Afiliados a On c.Afiliado=a.Cedula "
+					+ "Where Periodo = ? And Papa = ? Order By c.Nivel, a.Nombre+' '+a.Apellido Asc";
+
+			Query q = this.entityManager.createNativeQuery(sql);
+			q.setParameter(1, periodo);
+			q.setParameter(2, cedula);
+
+			List<?> result = q.getResultList();
+			int s = result.size();
+			if (s > 0) {
+				double total = 0.0D;
+				for (int i = 0; i < s; i++) {
+					Object obj = result.get(i);
+					Object[] objectArray = (Object[]) obj;
+
+					String cedulaAfiliado = (String) objectArray[1];
+					String nombreAfiliado = (String) objectArray[2];
+					int nivel = Integer.parseInt(objectArray[3].toString());
+					double consumo = ((BigDecimal) objectArray[4]).doubleValue();
+					double comision = Double.parseDouble(objectArray[5].toString());
+					total += comision;
+
+					AfiliadoConsumo afiliadoConsumo = new AfiliadoConsumo();
+					afiliadoConsumo.setNombre(nombreAfiliado);
+					afiliadoConsumo.setAfiliado(cedulaAfiliado);
+					afiliadoConsumo.setNivel(nivel);
+					afiliadoConsumo.setComision(comision);
+					afiliadoConsumo.setConsumoTotal(consumo);
+					afiliadoConsumo.setTotal(total);
+
+					double consumoProducto = 0.0D;
+					double consumoDinero = 0.0D;
+					if (total > 0.0D) {
+						consumoProducto = total - consumoMinimo;
+						if (consumoProducto < 0.0D) {
+							consumoProducto = total;
+						} else {
+							consumoDinero = consumoProducto;
+							consumoProducto = consumoMinimo;
+						}
+					}
+					afiliadoConsumo.setComisionDinero(consumoDinero);
+					afiliadoConsumo.setComisionProducto(consumoProducto);
+					lista.add(afiliadoConsumo);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new MultinivelDAOException("error al listar los afiliados por nivel", getClass());
+		}
+		return lista;
+	}
 
 	public List<Object> comisionTotalPorDistribuidorPeriodo(String periodo) throws MultinivelDAOException {
 		List<Object> lista = new ArrayList<Object>();

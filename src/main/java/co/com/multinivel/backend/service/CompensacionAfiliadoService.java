@@ -6,17 +6,20 @@ import co.com.multinivel.shared.dto.CompensacionAfiliadoDTO;
 import co.com.multinivel.shared.exception.MultinivelServiceException;
 
 public abstract interface CompensacionAfiliadoService {
-	public abstract List<Object> consultar(CompensacionAfiliadoDTO paramCompensacionAfiliadoDTO) throws MultinivelServiceException;
+	public abstract List<Object> comisionAfiliadoPeriodo(String periodo, String cedula) throws MultinivelServiceException;
 
 	public abstract List<Object> comisionTotalPorDistribuidorPeriodo(String periodo) throws MultinivelServiceException;
 
-	public abstract double getTotalConsumo(CompensacionAfiliadoDTO paramCompensacionAfiliadoDTO) throws MultinivelServiceException;
+	public abstract List<Object> consultar(CompensacionAfiliadoDTO paramCompensacionAfiliadoDTO) throws MultinivelServiceException;
+
+	public abstract double totalConsumo(CompensacionAfiliadoDTO paramCompensacionAfiliadoDTO) throws MultinivelServiceException;
 
 	public abstract List<Object> listarPagoAfiliados(CompensacionAfiliadoDTO paramCompensacionAfiliadoDTO) throws MultinivelServiceException;
 
 	public abstract int liquidar(String distribuidor, String periodo) throws MultinivelServiceException;
 
 	public void calcularArbol(String cedulaAfiliado, String cedulaDistribuidor) throws MultinivelServiceException;
+
 }
 
 /*

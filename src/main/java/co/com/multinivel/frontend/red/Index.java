@@ -47,37 +47,28 @@ public class Index extends HttpServlet {
 
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
-		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
-				config.getServletContext());
+		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String recurso = null;
 		Afiliado afiliado = null;
-
-		List<Afiliado> lista = null;
-		List<AfiliadoDTO> listaPorNivel = null;
-		Afiliado afiliadoConsulta = null;
 		GroupAuthority rol = null;
 		GroupMember rolPorUsuario = null;
 		Red red = null;
 		try {
-			char accion = request.getParameter("accion") == null ? '*' : request.getParameter(
-					"accion").charAt(0);
+			char accion = request.getParameter("accion") == null ? '*' : request.getParameter("accion").charAt(0);
 			List<AfiliadoDTO> listaAfiliado = null;
 			switch (accion) {
 			case 'V':
 				recurso = RecursosEnum.FW_INGRESO_RED.getRecurso();
 				request.setAttribute("listaBancos", this.bancoService.listar());
 				request.setAttribute("listaDepartamentos", this.departamentoService.listar());
-				listaAfiliado = this.afiliadoService.buscarDistribuidor(UsuarioHelper.getUsuario(),
-						null);
+				listaAfiliado = this.afiliadoService.buscarDistribuidor(UsuarioHelper.getUsuario(), null);
 				if ((listaAfiliado != null) && (listaAfiliado.size() > 0)) {
 					request.setAttribute("usuario", listaAfiliado.get(0));
 				}

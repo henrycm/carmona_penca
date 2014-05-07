@@ -87,7 +87,7 @@
 				</fieldset>
 
 				<c:if test='${listaUsuarios!=null}'>
-					<table align="center" class="tbl-lista" width="70%" border="1">
+					<table align="center" class="tbl-lista" border="1">
 						<tr>
 							<th colspan="15">Lista de Usuarios</th>
 						</tr>

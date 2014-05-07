@@ -1,8 +1,6 @@
 package co.com.multinivel.frontend.consumo;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -34,28 +32,20 @@ public class ReporteListaConsumosTotalPorDistribuidor extends HttpServlet {
 
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
-		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
-				config.getServletContext());
+		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd = null;
 		String periodo = "";
-		String tipoReporte = request.getParameter("tipoReporte") == null ? "PDF" : request
-				.getParameter("tipoReporte");
+		String tipoReporte = request.getParameter("tipoReporte") == null ? "PDF" : request.getParameter("tipoReporte");
 		try {
 			HashMap<String, Object> map = new HashMap<String, Object>();
-			Date fechaActual = new Date();
-			String distribuidor = request.getParameter("distribuidor") == null ? UsuarioHelper
-					.getUsuario() : request.getParameter("distribuidor");
-			SimpleDateFormat formato = new SimpleDateFormat("MM/yyyy");
-			String cadenaFecha = formato.format(fechaActual);
+			String distribuidor = request.getParameter("distribuidor") == null ? UsuarioHelper.getUsuario() : request.getParameter("distribuidor");
 			String mes = request.getParameter("mes");
 			String ano = request.getParameter("ano");
 
@@ -69,25 +59,16 @@ public class ReporteListaConsumosTotalPorDistribuidor extends HttpServlet {
 
 			List<Object> lista = this.consumoService.calcularConsumosPeriodo(periodo, distribuidor);
 			if ((lista != null) && (lista.size() > 0)) {
-				map.put("distribuidor",
-						datosDistribuidor.getCedula() + "  " + datosDistribuidor.getNombre() + " "
-								+ datosDistribuidor.getApellido());
+				map.put("distribuidor", datosDistribuidor.getCedula() + "  " + datosDistribuidor.getNombre() + " " + datosDistribuidor.getApellido());
 				if ("PDF".equals(tipoReporte)) {
-					GenerarReporte.exportarPDF(request, response, getServletConfig()
-							.getServletContext(), "Reporte_ListaConsumosTotalDistribuidor_"
-							+ periodo + ".pdf",
-							RecursosEnum.FW_JASPER_REPORTE_LISTA_CONSUMOS_TOTAL_DISTRIBUIDOR
-									.getRecurso(), map, lista);
+					GenerarReporte.exportarPDF(request, response, getServletConfig().getServletContext(), "Reporte_ListaConsumosTotalDistribuidor_"
+							+ periodo + ".pdf", RecursosEnum.FW_JASPER_REPORTE_LISTA_CONSUMOS_TOTAL_DISTRIBUIDOR.getRecurso(), map, lista);
 				} else {
-					GenerarReporte.exportarExcel(request, response, getServletConfig()
-							.getServletContext(), "Reporte_ListaConsumosTotalDistribuidor_"
-							+ periodo + ".xls",
-							RecursosEnum.FW_JASPER_REPORTE_LISTA_CONSUMOS_TOTAL_DISTRIBUIDOR
-									.getRecurso(), map, lista);
+					GenerarReporte.exportarExcel(request, response, getServletConfig().getServletContext(), "Reporte_ListaConsumosTotalDistribuidor_"
+							+ periodo + ".xls", RecursosEnum.FW_JASPER_REPORTE_LISTA_CONSUMOS_TOTAL_DISTRIBUIDOR.getRecurso(), map, lista);
 				}
 			} else {
-				request.setAttribute("error", "No existen consumos para el periodo solicitado:"
-						+ periodo);
+				request.setAttribute("error", "No existen consumos para el periodo solicitado:" + periodo);
 				rd = getServletContext().getRequestDispatcher(RecursosEnum.FW_ERROR.getRecurso());
 				rd.forward(request, response);
 			}

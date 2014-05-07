@@ -3,7 +3,6 @@ package co.com.multinivel.shared.dto;
 import java.math.BigDecimal;
 
 public class ProductoDTO {
-	private static final long serialVersionUID = 1L;
 	private String codigo;
 	private String nombreProducto;
 	private BigDecimal precioAfiliado;

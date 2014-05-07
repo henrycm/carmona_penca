@@ -6,7 +6,7 @@ public class MultinivelServiceException extends Exception {
 	public MultinivelServiceException() {
 	}
 
-	public MultinivelServiceException(String mensaje, Class clase) {
+	public MultinivelServiceException(String mensaje, Class<?> clase) {
 		super(" Error en el servicio:" + clase.getName() + ":" + mensaje);
 	}
 }

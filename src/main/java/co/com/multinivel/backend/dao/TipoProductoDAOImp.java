@@ -18,6 +18,7 @@ public class TipoProductoDAOImp implements TipoProductoDAO {
 	@PersistenceContext
 	private EntityManager entityManager;
 
+	@SuppressWarnings("unchecked")
 	public List<TiposProducto> listar() throws MultinivelDAOException {
 		Query query = this.entityManager.createQuery("from TiposProducto");
 		List<TiposProducto> lista = query.getResultList();

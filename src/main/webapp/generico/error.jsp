@@ -4,7 +4,6 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Aplicacion MultiALOE</title>
@@ -19,7 +18,7 @@
 	<div class="demo" align="center">
 		<table align="center" class="tbl-lista" width="80%">
 			<tr>
-				<th colspan="2">El sistema MULTIALOE presento un error:</th>
+				<th colspan="2">El sistema MULTIALOE presento un error.</th>
 			</tr>
 			<tr>
 				<td width="10%">

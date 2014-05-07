@@ -54,28 +54,27 @@ public class RolDAOImp implements RolDAO {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<GroupAuthority> listar() throws MultinivelDAOException {
 		Query query = this.entityManager.createQuery("from GroupAuthority");
 		List<GroupAuthority> lista = query.getResultList();
 		return lista;
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<GroupAuthority> rolesPorUsuario(User usuario) throws MultinivelDAOException {
-		Query query = this.entityManager
-				.createQuery(" select g.groupAuthority from GroupMember g where g.user.username=?");
+		Query query = this.entityManager.createQuery(" select g.groupAuthority from GroupMember g where g.user.username=?");
 		query.setParameter(1, usuario.getUsername());
 		List<GroupAuthority> lista = query.getResultList();
 		return lista;
 	}
 
-	public boolean consultarAsociacionRolUsuario(User usuario, GroupAuthority rol)
-			throws MultinivelDAOException {
+	public boolean consultarAsociacionRolUsuario(User usuario, GroupAuthority rol) throws MultinivelDAOException {
 		boolean retorno = true;
-		Query query = this.entityManager
-				.createQuery(" select g from GroupMember g where g.user.username=? and g.groupAuthority.id=?");
+		Query query = this.entityManager.createQuery(" select g from GroupMember g where g.user.username=? and g.groupAuthority.id=?");
 		query.setParameter(1, usuario.getUsername());
 		query.setParameter(2, rol.getGroupId());
-		List<GroupMember> lista = query.getResultList();
+		List<?> lista = query.getResultList();
 		if (lista.isEmpty()) {
 			retorno = false;
 		}
@@ -84,8 +83,7 @@ public class RolDAOImp implements RolDAO {
 
 	public void guardarRolUsuario(GroupMember rolUsuario) throws MultinivelDAOException {
 		try {
-			Boolean rolConsultado = Boolean.valueOf(consultarAsociacionRolUsuario(
-					rolUsuario.getUser(), rolUsuario.getGroupAuthority()));
+			Boolean rolConsultado = Boolean.valueOf(consultarAsociacionRolUsuario(rolUsuario.getUser(), rolUsuario.getGroupAuthority()));
 			if (!rolConsultado.booleanValue()) {
 				rolUsuario.setId(rolUsuario.getUser().getUsername());
 				this.entityManager.persist(rolUsuario);
@@ -111,8 +109,7 @@ public class RolDAOImp implements RolDAO {
 		try {
 			GroupMember rolConsultado = consultarAsociacionRolUsuarioABorrar(rolUsuario.getUser());
 			if (rolConsultado != null) {
-				Query query = this.entityManager
-						.createNativeQuery(" UPDATE group_members set group_id=? where id=?");
+				Query query = this.entityManager.createNativeQuery(" UPDATE group_members set group_id=? where id=?");
 				query.setParameter(1, rolUsuario.getGroupAuthority().getGroupId());
 				query.setParameter(2, rolUsuario.getUser().getUsername());
 				query.executeUpdate();
@@ -124,21 +121,19 @@ public class RolDAOImp implements RolDAO {
 		}
 	}
 
-	public GroupMember consultarAsociacionRolUsuarioABorrar(User usuario)
-			throws MultinivelDAOException {
+	public GroupMember consultarAsociacionRolUsuarioABorrar(User usuario) throws MultinivelDAOException {
 		GroupMember retorno = null;
-		Query query = this.entityManager
-				.createNativeQuery(" SELECT id,group_id,username FROM group_members where id=?");
+		Query query = this.entityManager.createNativeQuery(" SELECT id,group_id,username FROM group_members where id=?");
 		query.setParameter(1, usuario.getUsername());
 
-		List result = query.getResultList();
+		List<?> result = query.getResultList();
 		int s = result.size();
 		for (int i = 0; i < s; i++) {
 			Object obj = result.get(i);
 			Object[] objectArray = (Object[]) obj;
-			String id = (String) objectArray[0];
+			// String id = (String) objectArray[0];
 			String idGrupo = (String) objectArray[1];
-			String login = (String) objectArray[2];
+			// String login = (String) objectArray[2];
 
 			retorno = new GroupMember();
 

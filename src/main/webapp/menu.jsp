@@ -35,8 +35,8 @@
 						href="administracion/IndexAfiliado?accion=N">Listar Afiliados
 							Por Distribuidor</a></li>
 					<li><a target="mainFrame"
-						href="administracion/IndexAfiliado?accion=Z"> Listar Afiliaciones Por
-							Distribuidor Periodo</a></li>
+						href="administracion/IndexAfiliado?accion=Z"> Listar
+							Afiliaciones Por Distribuidor Periodo</a></li>
 				</ul></li>
 		</ul>
 
@@ -117,6 +117,5 @@
 						href="jerarquia/IndexArbolController">Consultar Jerarquía</a></li>
 				</ul></li>
 		</ul>
-
 	</div>
 </nav>

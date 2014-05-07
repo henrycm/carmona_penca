@@ -18,6 +18,7 @@ public class ParametroDAOImp implements ParametroDAO {
 	@PersistenceContext
 	private EntityManager entityManager;
 
+	@SuppressWarnings("unchecked")
 	public List<Parametro> listar() throws MultinivelDAOException {
 		Query query = this.entityManager.createQuery("from Parametro");
 		List<Parametro> lista = query.getResultList();

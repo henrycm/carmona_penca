@@ -30,17 +30,14 @@ public class ListaPedidosAEliminar extends HttpServlet {
 
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
-		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
-				config.getServletContext());
+		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd = null;
 		String periodo = "";
 		String url = RecursosEnum.FW_ERROR.getRecurso();
@@ -49,19 +46,18 @@ public class ListaPedidosAEliminar extends HttpServlet {
 			String distribuidor = UsuarioHelper.getUsuario();
 			SimpleDateFormat formato = new SimpleDateFormat("MM/yyyy");
 			String cadenaFecha = formato.format(fechaActual);
-			periodo = request.getParameter("periodo") == null ? cadenaFecha : request
-					.getParameter("periodo");
+			periodo = request.getParameter("periodo") == null ? cadenaFecha : request.getParameter("periodo");
 			PedidoDTO pedido = new PedidoDTO();
 			pedido.setPeriodo(periodo);
 			pedido.setCedulaDistribuidor(distribuidor);
+			request.setAttribute("periodo", periodo);
 
 			List<Object> lista = this.pedidoService.listarPedidosAEliminar(pedido);
 			if ((lista != null) && (lista.size() > 0)) {
 				request.setAttribute("pedidos", lista);
 				url = RecursosEnum.FW_LISTAR_PEDIDO_ELIMINAR.getRecurso();
 			} else {
-				request.setAttribute("error", "No existen pedidos para el periodo solicitado:"
-						+ periodo);
+				request.setAttribute("error", "No existen pedidos para el periodo solicitado:" + periodo);
 			}
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());

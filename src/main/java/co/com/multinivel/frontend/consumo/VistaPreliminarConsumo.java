@@ -32,17 +32,14 @@ public class VistaPreliminarConsumo extends HttpServlet {
 
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
-		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
-				config.getServletContext());
+		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			Consumo pedido = ConsumoHelper.cargarEntidadPreliminar(request);
 			String recurso = RecursosEnum.FW_PRELIMINAR_CONSUMO.getRecurso();
@@ -53,8 +50,7 @@ public class VistaPreliminarConsumo extends HttpServlet {
 			request.setAttribute("ciudad", request.getParameter("ciudad"));
 			request.setAttribute("telefono", request.getParameter("telefono"));
 			request.setAttribute("nombre", request.getParameter("nombre"));
-			if ((request.getParameter("documento") == null)
-					|| ("".equals(request.getParameter("documento")))) {
+			if ((request.getParameter("documento") == null) || ("".equals(request.getParameter("documento")))) {
 				request.setAttribute("cedula", UsuarioHelper.getUsuario());
 			} else {
 				request.setAttribute("cedula", request.getParameter("documento"));
@@ -67,20 +63,15 @@ public class VistaPreliminarConsumo extends HttpServlet {
 			} else {
 				Objpedido.setDistribuidor(request.getParameter("distribuidor"));
 			}
-			BigDecimal saldoDistribuidor = this.pedidoService
-					.consultarSaldoPorPeriodoDistribuidor(Objpedido);
+			BigDecimal saldoDistribuidor = this.pedidoService.consultarSaldoPorPeriodoDistribuidor(Objpedido);
 			if (saldoDistribuidor != null) {
-				Double descontarSaldoDistribuidor = Double.valueOf(saldoDistribuidor.doubleValue()
-						- pedido.getTotalpedido().doubleValue());
+				Double descontarSaldoDistribuidor = Double.valueOf(saldoDistribuidor.doubleValue() - pedido.getTotalpedido().doubleValue());
 				if (descontarSaldoDistribuidor.doubleValue() > 0.0D) {
 					request.setAttribute("saldoDistribuidor", descontarSaldoDistribuidor);
 				} else {
 					request.setAttribute("mensajeSaldoDistribuidor", "true");
 				}
 			}
-			int minimoConsumo = Integer.parseInt(this.parametroService
-					.obtenerValor("MINIMO_PEDIDO").getValor());
-
 			request.setAttribute("transporte", "0");
 			request.setAttribute("totalConsumoConTransporte", pedido.getTotalpedido().intValue());
 

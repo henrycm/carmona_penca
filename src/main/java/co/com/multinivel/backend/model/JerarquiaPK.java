@@ -38,12 +38,10 @@ public class JerarquiaPK implements Serializable {
 		}
 		JerarquiaPK castOther = (JerarquiaPK) other;
 
-		return (this.cedulaPadre.equals(castOther.cedulaPadre))
-				&& (this.cedulaHijo.equals(castOther.cedulaHijo));
+		return (this.cedulaPadre.equals(castOther.cedulaPadre)) && (this.cedulaHijo.equals(castOther.cedulaHijo));
 	}
 
 	public int hashCode() {
-		int prime = 31;
 		int hash = 17;
 		hash = hash * 31 + this.cedulaPadre.hashCode();
 		hash = hash * 31 + this.cedulaHijo.hashCode();

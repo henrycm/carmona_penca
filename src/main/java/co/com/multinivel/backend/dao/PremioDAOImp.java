@@ -20,15 +20,14 @@ public class PremioDAOImp implements PremioDAO {
 	private EntityManager entityManager;
 
 	public List<Premio> consultar(Premio premio) throws MultinivelDAOException {
-		List<Premio> lista = new ArrayList();
-		int filtros = 0;
+		List<Premio> lista = new ArrayList<Premio>();
 		try {
 			String sql = "SELECT CODIGO,CONSUMOS,CONSUMOMAXIMO,MANTENERCONSUMO3MESES FROM T_PREMIOS WHERE NIVEL=?";
 
 			Query q = this.entityManager.createNativeQuery(sql);
 			q.setParameter(1, premio.getNivel());
 
-			List result = q.getResultList();
+			List<?> result = q.getResultList();
 			int s = result.size();
 			for (int i = 0; i < s; i++) {
 				Object obj = result.get(i);

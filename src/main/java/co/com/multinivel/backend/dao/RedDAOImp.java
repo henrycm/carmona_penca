@@ -18,6 +18,7 @@ public class RedDAOImp implements RedDAO {
 	@PersistenceContext
 	private EntityManager entityManager;
 
+	@SuppressWarnings("unchecked")
 	public List<Red> listar() throws MultinivelDAOException {
 		Query query = this.entityManager.createQuery("from Red");
 		List<Red> lista = query.getResultList();
@@ -41,11 +42,10 @@ public class RedDAOImp implements RedDAO {
 	private Red consultar(Red pRed) throws MultinivelDAOException {
 		Red red = null;
 		try {
-			Query query = this.entityManager
-					.createNativeQuery("select codigo,nombre from t_Redes r where r.codigo=? or r.nombre=? ");
+			Query query = this.entityManager.createNativeQuery("select codigo,nombre from t_Redes r where r.codigo=? or r.nombre=? ");
 			query.setParameter(1, pRed.getCodigo());
 			query.setParameter(2, pRed.getNombre());
-			List lista = query.getResultList();
+			List<?> lista = query.getResultList();
 
 			int s = lista.size();
 			if (s > 0) {

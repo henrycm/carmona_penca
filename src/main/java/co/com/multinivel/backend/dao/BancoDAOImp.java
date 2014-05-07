@@ -18,6 +18,7 @@ public class BancoDAOImp implements BancoDAO {
 	@PersistenceContext
 	private EntityManager entityManager;
 
+	@SuppressWarnings("unchecked")
 	public List<Banco> listar() throws MultinivelDAOException {
 		Query query = this.entityManager.createQuery("from Banco b order by descripcion");
 		List<Banco> lista = query.getResultList();

@@ -24,21 +24,17 @@ public class IndexReporteCompensacion extends HttpServlet {
 
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
-		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
-				config.getServletContext());
+		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String recurso = null;
 		try {
-			char accion = request.getParameter("accion") == null ? 'B' : request.getParameter(
-					"accion").charAt(0);
+			char accion = request.getParameter("accion") == null ? 'B' : request.getParameter("accion").charAt(0);
 			Date fechaActual = new Date();
 			SimpleDateFormat formato = new SimpleDateFormat("MM/yyyy");
 			String cadenaFecha = formato.format(fechaActual);
@@ -49,16 +45,14 @@ public class IndexReporteCompensacion extends HttpServlet {
 			request.setAttribute("accion", Character.valueOf(accion));
 			switch (accion) {
 			case 'C':
-				request.setAttribute("listaDistribuidores",
-						this.afiliadoService.listarDistribuidores());
+				request.setAttribute("listaDistribuidores", this.afiliadoService.listarDistribuidores());
 				recurso = RecursosEnum.FW_INDEX_REPORTE_COMPENSACION_RED.getRecurso();
 				break;
 			case 'D':
 				recurso = RecursosEnum.FW_INDEX_REPORTE_COMPENSACION_DISTRIBUIDOR.getRecurso();
 				break;
 			case 'F':
-				recurso = RecursosEnum.FW_INDEX_REPORTE_COMPENSACION_TOTAL_DISTRIBUIDOR
-						.getRecurso();
+				recurso = RecursosEnum.FW_INDEX_REPORTE_COMPENSACION_TOTAL_DISTRIBUIDOR.getRecurso();
 				break;
 			case 'E':
 			default:
@@ -77,5 +71,6 @@ public class IndexReporteCompensacion extends HttpServlet {
  * Location:
  * D:\Dllo\multinivel\multinivelEAR.ear\multinivel.war\WEB-INF\classes\
  * 
- * Qualified Name: co.com.multinivel.frontend.compensacion.IndexReporteCompensacion
+ * Qualified Name:
+ * co.com.multinivel.frontend.compensacion.IndexReporteCompensacion
  */

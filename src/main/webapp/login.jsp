@@ -29,7 +29,7 @@
 				</div>
 			</c:if>
 			<form name="f" action="<c:url value='j_spring_security_check'/>"
-				method="post" class="form-horizontal" role="form">
+				method="post" class="form-horizontal">
 				<fieldset>
 					<h4>INGRESO A LA PLATAFORMA MULTINIVEL</h4>
 					<br></br>
@@ -43,24 +43,24 @@
 					<div class="form-group">
 						<label class="col-sm-3 control-label">Contraseña:</label>
 						<div class="col-sm-3">
-							<input class="form-control" type='password' name='j_password'>
+							<input class="form-control" type='password' name='j_password' />
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-4">
 							<div class="checkbox">
 								<label> <input type="checkbox"
-									name="j_spring_security_remember_me"> No preguntar de
-									nuevo de la contraseña
+									name="j_spring_security_remember_me" /> <c:out
+										value="No preguntar de nuevo de la contraseña" />
 								</label>
 							</div>
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-4">
-							<input type="submit" class="boton"
-								name="Ingresar" id="Ingresar" value="Ingresar" />
-							<input type="reset" class="boton" name="Limpiar" id="Limpiar" value="Limpiar" />								
+							<input type="submit" class="boton" name="Ingresar" id="Ingresar"
+								value="Ingresar" /> <input type="reset" class="boton"
+								name="Limpiar" id="Limpiar" value="Limpiar" />
 						</div>
 					</div>
 					<div class="form-group">
