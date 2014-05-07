@@ -39,7 +39,7 @@
 					<tr>
 						<td align="left">Valor(*):</td>
 						<td align="left"><input name="valor" type="text" size="15"
-							value="" /></td>
+							maxlength="25" value="" /></td>
 					</tr>
 				</table>
 				<c:if test="${not empty mensaje}">
