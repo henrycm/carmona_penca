@@ -130,6 +130,16 @@
   </servlet-mapping>
   <servlet>
     <description></description>
+    <display-name>IndexFrontControllerParametro</display-name>
+    <servlet-name>IndexFrontControllerParametro</servlet-name>
+    <servlet-class>co.com.multinivel.frontend.parametro.IndexFrontController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>IndexFrontControllerParametro</servlet-name>
+    <url-pattern>/administracion/parametro/IndexFrontController</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
     <display-name>ReporteInscripcion</display-name>
     <servlet-name>ReporteInscripcion</servlet-name>
     <servlet-class>co.com.multinivel.frontend.afiliado.ReporteInscripcion</servlet-class>

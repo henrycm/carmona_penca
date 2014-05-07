@@ -34,6 +34,16 @@ public class ParametroServiceImpl implements ParametroService {
 		}
 		return null;
 	}
+
+	public boolean guardar(Parametro p) throws MultinivelServiceException {
+		boolean retorno = Boolean.FALSE;
+		try {
+			retorno = this.parametroDAO.guardar(p);
+		} catch (MultinivelDAOException e) {
+			throw new MultinivelServiceException(e.getMessage(), getClass());
+		}
+		return retorno;
+	}
 }
 
 /*

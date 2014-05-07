@@ -117,5 +117,16 @@
 						href="jerarquia/IndexArbolController">Consultar Jerarquía</a></li>
 				</ul></li>
 		</ul>
+
+		<ul class="nav navbar-nav">
+			<li class="dropdown"><a target="mainFrame" href="#"
+				class="dropdown-toggle" data-toggle="dropdown">Parametrización</a>
+				<ul class="dropdown-menu">
+					<li class="dropdown-header">Parámetros</li>
+					<li><a target="mainFrame"
+						href="administracion/parametro/IndexFrontController">Consulta y
+							modificación de parámetros</a></li>
+				</ul></li>
+		</ul>
 	</div>
 </nav>

@@ -14,6 +14,8 @@ public class Parametro implements Serializable {
 	@Id
 	@Column(name = "NOMBRE_PARAMETRO")
 	private String nombreParametro;
+	@Column(name = "Descripcion")
+	private String descripcion;
 	@Column(name = "VALOR")
 	private String valor;
 
@@ -23,6 +25,14 @@ public class Parametro implements Serializable {
 
 	public void setNombreParametro(String nombreParametro) {
 		this.nombreParametro = nombreParametro;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
 
 	public String getValor() {

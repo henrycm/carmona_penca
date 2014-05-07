@@ -10,7 +10,7 @@ public abstract interface ParametroDAO {
 
 	public abstract Parametro obtenerValor(String paramString) throws MultinivelDAOException;
 	
-	public void guardar(Parametro p) throws MultinivelDAOException;
+	public boolean guardar(Parametro p) throws MultinivelDAOException;
 }
 
 /*

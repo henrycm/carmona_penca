@@ -9,6 +9,8 @@ public abstract interface ParametroService {
 	public abstract List<Parametro> listar() throws MultinivelServiceException;
 
 	public abstract Parametro obtenerValor(String paramString) throws MultinivelServiceException;
+
+	public abstract boolean guardar(Parametro p) throws MultinivelServiceException;
 }
 
 /*

@@ -20,7 +20,7 @@ public class ParametroDAOImp implements ParametroDAO {
 
 	@SuppressWarnings("unchecked")
 	public List<Parametro> listar() throws MultinivelDAOException {
-		Query query = this.entityManager.createQuery("from Parametro");
+		Query query = this.entityManager.createQuery("from Parametro p Order By p.nombreParametro");
 		List<Parametro> lista = query.getResultList();
 		return lista;
 	}
@@ -29,9 +29,17 @@ public class ParametroDAOImp implements ParametroDAO {
 		return (Parametro) this.entityManager.find(Parametro.class, parametro);
 	}
 
-	public void guardar(Parametro p) throws MultinivelDAOException {
-		this.entityManager.merge(p);
-		entityManager.flush();
+	public boolean guardar(Parametro p) throws MultinivelDAOException {
+		boolean retorno = Boolean.FALSE;
+		try {
+			this.entityManager.merge(p);
+			entityManager.flush();
+			retorno = Boolean.TRUE;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new MultinivelDAOException("Error ingresando el producto -" + e.getMessage(), getClass());
+		}
+		return retorno;
 	}
 }
 
