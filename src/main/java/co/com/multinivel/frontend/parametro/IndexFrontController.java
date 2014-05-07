@@ -42,8 +42,6 @@ public class IndexFrontController extends HttpServlet {
 			}
 			if (grabadoExitoso) {
 				request.setAttribute("mensaje", "Parámetro " + request.getParameter("nombre") + " actializado satisfactoriamente.");
-			} else {
-				request.setAttribute("error", "No fue posible actializar el Parámetro. Verifique e intente nuevamente.");
 			}
 			request.setAttribute("listaParametros", this.parametroService.listar());
 			request.setAttribute("accion", accion);
@@ -51,6 +49,9 @@ public class IndexFrontController extends HttpServlet {
 			recurso = RecursosEnum.FW_INDEX_PARAMETRO.getRecurso();
 		} catch (Exception e) {
 			e.printStackTrace();
+			request.setAttribute("error", "No fue posible actializar el Parámetro. Verifique e intente nuevamente.");
+			RequestDispatcher rd = getServletContext().getRequestDispatcher(recurso);
+			rd.forward(request, response);
 		}
 		RequestDispatcher rd = getServletContext().getRequestDispatcher(recurso);
 		rd.forward(request, response);

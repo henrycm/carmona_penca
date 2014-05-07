@@ -53,12 +53,12 @@
 						</tr>
 					</table>
 				</c:if>
-				<c:if test="${not empty error}">
+				<c:if test="${not empty error && mensaje==null}">
 					<table align="center" class="tabla" width="80%" border="1">
 						<tr>
 							<td width="10%">
 								<h5 style="color: blue">
-									<c:out value="${mensaje}" />
+									<c:out value="${error}" />
 								</h5>
 							</td>
 						</tr>
