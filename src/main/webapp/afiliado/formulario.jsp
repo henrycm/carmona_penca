@@ -21,11 +21,11 @@
 <link rel="stylesheet" href="../css/jquery/demos.css">
 <link rel="stylesheet" href="../css/multinivel.css">
 <script>
-	$(document).ready(function() {		
-		$("#codigoEmpresario").change(function() {			
-			existeAfiliado();			
+	$(document).ready(function() {
+		$("#codigoEmpresario").change(function() {
+			existeAfiliado();
 		});
-		
+
 		$("input").attr("disabled", "disabled");
 		$("#codigoEmpresario").removeAttr("disabled");
 
@@ -38,11 +38,11 @@
 		$.ajax(
 				{
 					url : "${ctx}/AjaxServlet?accion=C&cedula="
-									+ $("#codigoEmpresario").val()
-									+ "-"
-									+ $("#letra").val(),
-							context : document.body
-						}).done(
+							+ $("#codigoEmpresario").val() + "-"
+							+ $("#letra").val(),
+					context : document.body
+				})
+				.done(
 						function(respuesta) {
 							if (respuesta == "S")
 								alert("Afiliado con el código: "
@@ -93,7 +93,7 @@
 							name="codigoEmpresario" type="text" size="11" maxlength="11"
 							id="codigoEmpresario" /><select name="letra" id="letra">
 							<option value="A">A</option>
-						</select> Tipo de Afiliado: <select name="rol">
+						</select> Tipo de Afiliado: <select name="tipoAfiliado">
 							<option value="3">Afiliado</option>
 						</select>
 					</div>

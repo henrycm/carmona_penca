@@ -7,6 +7,8 @@ import co.com.multinivel.shared.exception.MultinivelDAOException;
 
 public abstract interface DepartamentoDAO {
 	public abstract List<Departamento> listar() throws MultinivelDAOException;
+
+	public abstract Departamento consultar(String paramString) throws MultinivelDAOException;
 }
 
 /*

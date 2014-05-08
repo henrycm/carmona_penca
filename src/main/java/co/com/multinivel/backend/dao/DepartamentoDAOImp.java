@@ -24,6 +24,10 @@ public class DepartamentoDAOImp implements DepartamentoDAO {
 		List<Departamento> lista = query.getResultList();
 		return lista;
 	}
+
+	public Departamento consultar(String codigo) throws MultinivelDAOException {
+		return (Departamento) this.entityManager.find(Departamento.class, codigo);
+	}
 }
 
 /*

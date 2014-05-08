@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -9,26 +9,32 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Aplicacion MultiALOE</title>
 <link rel="stylesheet" href="../css/multinivel.css">
- <script src="../js/afiliado/afiliado.js"></script>
-	<link rel="stylesheet" href="../css/jquery/demos.css">
-
-
+<link rel="StyleSheet" type="text/css"
+	href="../bootstrap/css/bootstrap.css" />
+<script src="../js/afiliado/afiliado.js"></script>
+<link rel="stylesheet" href="../css/jquery/demos.css">
 </head>
-<body class="fondo">
- <div class="demo" align="center">
-   <table class="tabla">
-     <tr>
-     
-     <td>
-     La inscripción del afiliado a MULTIALOE fue exitosa.
-     Desea Imprimir la constancia.   <a href="javascript:imprimirConstancia()">IMPRIMIR CONSTANCIA</a>
-     <form name="imprimirReporte" method="post">
-     <input type="hidden" name="documento" value='<c:out value="${afiliado.cedula}"></c:out>'>
-     </form>
-     </td>
-     </tr>
-    
-   </table>    
-   </div>
+<body>
+	<div class="demo" align="center">
+		<table align="center" class="tbl-lista" width="80%">
+			<tr>
+				<th colspan="2">La inscripción del afiliado a MULTIALOE fue
+					exitosa. Desea Imprimir la constancia.</th>
+			</tr>
+			<tr>
+				<td>
+					<form name="imprimirReporte" method="post">
+						<input type="hidden" name="documento"
+							value='<c:out value="${afiliado.cedula}"></c:out>'>
+						<div class="btn-group">
+							<a class="btn btn-sm btn-default"
+								href="javascript:imprimirConstancia()">Imprimir Constancia
+								de Afiliación</a>
+						</div>
+					</form>
+				</td>
+			</tr>
+		</table>
+	</div>
 </body>
 </html>

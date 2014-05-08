@@ -1,5 +1,4 @@
 function inscribirAfiliado() {
-
 	if (document.forms[0].codigoEmpresario.value == '') {
 		alert('El codigo del empresario es un dato requerido');
 		return;
@@ -7,6 +6,7 @@ function inscribirAfiliado() {
 	if (!validarCampos()) {
 		return;
 	}
+
 	document.forms[0].accion.value = 'I';
 	document.forms[0].submit();
 }

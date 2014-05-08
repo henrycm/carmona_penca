@@ -25,6 +25,16 @@ public class DepartamentoServiceImpl implements DepartamentoService {
 		}
 		return lista;
 	}
+
+	public Departamento consultar(String codigo) throws MultinivelServiceException {
+		Departamento retorno = null;
+		try {
+			retorno = this.departamentoDAO.consultar(codigo);
+		} catch (MultinivelDAOException e) {
+			throw new MultinivelServiceException(e.getMessage(), getClass());
+		}
+		return retorno;
+	}
 }
 
 /*

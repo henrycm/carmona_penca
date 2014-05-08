@@ -7,6 +7,8 @@ import co.com.multinivel.shared.exception.MultinivelServiceException;
 
 public abstract interface DepartamentoService {
 	public abstract List<Departamento> listar() throws MultinivelServiceException;
+
+	public abstract Departamento consultar(String paramString) throws MultinivelServiceException;
 }
 
 /*

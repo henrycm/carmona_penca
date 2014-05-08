@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
@@ -31,6 +32,7 @@ import co.com.multinivel.shared.util.CorreoUtil;
 import co.com.multinivel.shared.util.RecursosEnum;
 
 public class AfiliadoFrontController extends HttpServlet {
+	private static Logger log = Logger.getLogger(AfiliadoFrontController.class);
 	private static final long serialVersionUID = 1L;
 	@Autowired
 	private AfiliadoService afiliadoService;
@@ -47,8 +49,7 @@ public class AfiliadoFrontController extends HttpServlet {
 	@Autowired
 	private CantidadAfiliacionesDistribuidorService cantidaAfiliacionesDistribuidorService;
 
-	public void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd = null;
 		String recurso = null;
 		Afiliado afiliado = null;
@@ -59,8 +60,7 @@ public class AfiliadoFrontController extends HttpServlet {
 		GroupAuthority rol = null;
 		GroupMember rolPorUsuario = null;
 		try {
-			char accion = request.getParameter("accion") == null ? '*'
-					: request.getParameter("accion").charAt(0);
+			char accion = request.getParameter("accion") == null ? 'I' : request.getParameter("accion").charAt(0);
 
 			recurso = RecursosEnum.FW_INDEX_AFILIADO.getRecurso();
 			switch (accion) {
@@ -71,30 +71,18 @@ public class AfiliadoFrontController extends HttpServlet {
 				if (filtro != null && nomFiltro != null) {
 					lista = this.afiliadoService.buscar(nomFiltro, filtro);
 					request.setAttribute("listaAfiliados", lista);
-					System.out.println("LISTA>>>>>>" + lista.size());
-				}
-				else
-				{
-					afiliadoConsulta = this.afiliadoService.consultar(request
-							.getParameter("codigoEmpresario"));
+				} else {
+					afiliadoConsulta = this.afiliadoService.consultar(request.getParameter("codigoEmpresario"));
 					request.setAttribute("afiliado", afiliadoConsulta);
-					request.setAttribute("banco", this.bancoService
-							.consultar(afiliadoConsulta.getBanco()));
-					if ((afiliadoConsulta != null)
-							&& (afiliadoConsulta.getCedula() != null)) {
-						request.setAttribute("patrocinador", this.afiliadoService
-								.consultar(afiliadoConsulta.getCedulaPapa()));
-						List<AfiliadoDTO> listaAfiliado = this.afiliadoService
-								.buscarDistribuidor(
-										afiliadoConsulta.getCedulaDistribuidor(),
-										null);
+					request.setAttribute("banco", this.bancoService.consultar(afiliadoConsulta.getBanco()));
+					if ((afiliadoConsulta != null) && (afiliadoConsulta.getCedula() != null)) {
+						request.setAttribute("patrocinador", this.afiliadoService.consultar(afiliadoConsulta.getCedulaPapa()));
+						List<AfiliadoDTO> listaAfiliado = this.afiliadoService.buscarDistribuidor(afiliadoConsulta.getCedulaDistribuidor(), null);
 						if ((listaAfiliado != null) && (listaAfiliado.size() > 0)) {
-							request.setAttribute("distribuidor",
-									listaAfiliado.get(0));
+							request.setAttribute("distribuidor", listaAfiliado.get(0));
 						}
 					} else {
-						request.setAttribute("noExisteAfiliado",
-								Boolean.valueOf(true));
+						request.setAttribute("noExisteAfiliado", Boolean.valueOf(true));
 					}
 				}
 				request.setAttribute("accion", "E");
@@ -103,12 +91,9 @@ public class AfiliadoFrontController extends HttpServlet {
 			case 'D':
 				if ("A".equals(request.getParameter("actualizar"))) {
 					afiliadoConsulta = new Afiliado();
-					afiliadoConsulta.setCedula(request
-							.getParameter("codigoEmpresario"));
-					this.afiliadoService
-							.actualizarAfiliadoADistribuidor(afiliadoConsulta);
-					User usuario = this.usuarioService.consultar(request
-							.getParameter("codigoEmpresario"));
+					afiliadoConsulta.setCedula(request.getParameter("codigoEmpresario"));
+					this.afiliadoService.actualizarAfiliadoADistribuidor(afiliadoConsulta);
+					User usuario = this.usuarioService.consultar(request.getParameter("codigoEmpresario"));
 					rol = this.rolService.consultar("2");
 					if (rol != null) {
 						rolPorUsuario = new GroupMember();
@@ -116,40 +101,25 @@ public class AfiliadoFrontController extends HttpServlet {
 						rolPorUsuario.setGroupAuthority(rol);
 						this.rolService.actualizarRolUsuario(rolPorUsuario);
 					}
-					recurso = RecursosEnum.FW_ACTUALIZAR_AFILIADO_DISTRIBUIDOR_EXITO
-							.getRecurso();
+					recurso = RecursosEnum.FW_ACTUALIZAR_AFILIADO_DISTRIBUIDOR_EXITO.getRecurso();
 				} else {
-					afiliadoConsulta = this.afiliadoService.consultar(request
-							.getParameter("codigoEmpresario")
-							+ "-"
-							+ request.getParameter("letra"));
-					recurso = RecursosEnum.FW_ACTUALIZAR_AFILIADO_DISTRIBUIDOR
-							.getRecurso();
+					afiliadoConsulta = this.afiliadoService.consultar(request.getParameter("codigoEmpresario") + "-" + request.getParameter("letra"));
+					recurso = RecursosEnum.FW_ACTUALIZAR_AFILIADO_DISTRIBUIDOR.getRecurso();
 					request.setAttribute("afiliado", afiliadoConsulta);
-					request.setAttribute("banco", this.bancoService
-							.consultar(afiliadoConsulta.getBanco()));
-					if ((afiliadoConsulta != null)
-							&& (afiliadoConsulta.getCedula() != null)) {
-						request.setAttribute("patrocinador",
-								this.afiliadoService.consultar(afiliadoConsulta
-										.getCedulaPapa()));
-						List<AfiliadoDTO> listaAfiliado = this.afiliadoService
-								.buscarDistribuidor(afiliadoConsulta
-										.getCedulaDistribuidor(), null);
-						if ((listaAfiliado != null)
-								&& (listaAfiliado.size() > 0)) {
-							request.setAttribute("distribuidor",
-									listaAfiliado.get(0));
+					request.setAttribute("banco", this.bancoService.consultar(afiliadoConsulta.getBanco()));
+					if ((afiliadoConsulta != null) && (afiliadoConsulta.getCedula() != null)) {
+						request.setAttribute("patrocinador", this.afiliadoService.consultar(afiliadoConsulta.getCedulaPapa()));
+						List<AfiliadoDTO> listaAfiliado = this.afiliadoService.buscarDistribuidor(afiliadoConsulta.getCedulaDistribuidor(), null);
+						if ((listaAfiliado != null) && (listaAfiliado.size() > 0)) {
+							request.setAttribute("distribuidor", listaAfiliado.get(0));
 						}
 					} else {
-						request.setAttribute("noExisteAfiliado",
-								Boolean.valueOf(true));
+						request.setAttribute("noExisteAfiliado", Boolean.valueOf(true));
 					}
 				}
 				request.setAttribute("accion", "D");
 				request.setAttribute("listaBancos", this.bancoService.listar());
-				request.setAttribute("listaDepartamentos",
-						this.departamentoService.listar());
+				request.setAttribute("listaDepartamentos", this.departamentoService.listar());
 				break;
 			case 'A':
 				afiliado = AfiliadoHelper.cargarEntidad(request);
@@ -161,24 +131,18 @@ public class AfiliadoFrontController extends HttpServlet {
 				break;
 			case 'I':
 				afiliado = AfiliadoHelper.cargarEntidad(request);
-				afiliado.setIdAfiliacionDistribuidor(this.afiliadoService
-						.consultarIdDistribuidor(afiliado
-								.getCedulaDistribuidor()));
+				afiliado.setIdAfiliacionDistribuidor(this.afiliadoService.consultarIdDistribuidor(afiliado.getCedulaDistribuidor()));
 				this.afiliadoService.ingresar(afiliado);
 				User usuario = UsuarioHelper.cargarEntidad(afiliado, request);
 				this.usuarioService.ingresar(usuario);
-				CorreoUtil.enviarCorreo(
-						"INSCRIPCION AFILIADO",
-						"Se ha realizado la inscripciÃ³n de   un nuevo afiliado:"
-								+
+				try {
+					CorreoUtil.enviarCorreo("INSCRIPCIÓN AFILIADO", "Se ha realizado la inscripción de un nuevo afiliado: " + afiliado.getCedula()
+							+ " - " + afiliado.getNombre() + " " + afiliado.getApellido() + " para el patrocinador: " + afiliado.getCedulaPapa());
+				} catch (Exception e) {
+					log.error(e);
+				}
 
-								afiliado.getCedula() + " - "
-								+ afiliado.getNombre() + " "
-								+ afiliado.getApellido()
-								+ " para el patrocinador:"
-								+ afiliado.getCedulaPapa());
-
-				rol = this.rolService.consultar(request.getParameter("rol"));
+				rol = this.rolService.consultar(request.getParameter("tipoAfiliado"));
 				if (rol != null) {
 					rolPorUsuario = new GroupMember();
 					rolPorUsuario.setUser(usuario);
@@ -191,26 +155,16 @@ public class AfiliadoFrontController extends HttpServlet {
 
 				break;
 			case 'C':
-				afiliadoConsulta = this.afiliadoService.consultar(request
-						.getParameter("codigoEmpresario")
-						+ "-"
-						+ request.getParameter("letra"));
+				afiliadoConsulta = this.afiliadoService.consultar(request.getParameter("codigoEmpresario") + "-" + request.getParameter("letra"));
 				recurso = RecursosEnum.FW_ACTUALIZACION_AFILIADO.getRecurso();
 				request.setAttribute("distribuidores", afiliadoService.listarDistribuidores());
 				request.setAttribute("afiliado", afiliadoConsulta);
-				request.setAttribute("banco", this.bancoService
-						.consultar(afiliadoConsulta.getBanco()));
-				if ((afiliadoConsulta != null)
-						&& (afiliadoConsulta.getCedula() != null)) {
-					request.setAttribute("patrocinador", this.afiliadoService
-							.consultar(afiliadoConsulta.getCedulaPapa()));
-					List<AfiliadoDTO> listaAfiliado = this.afiliadoService
-							.buscarDistribuidor(
-									afiliadoConsulta.getCedulaDistribuidor(),
-									null);
+				request.setAttribute("banco", this.bancoService.consultar(afiliadoConsulta.getBanco()));
+				if ((afiliadoConsulta != null) && (afiliadoConsulta.getCedula() != null)) {
+					request.setAttribute("patrocinador", this.afiliadoService.consultar(afiliadoConsulta.getCedulaPapa()));
+					List<AfiliadoDTO> listaAfiliado = this.afiliadoService.buscarDistribuidor(afiliadoConsulta.getCedulaDistribuidor(), null);
 					if ((listaAfiliado != null) && (listaAfiliado.size() > 0)) {
-						request.setAttribute("distribuidor",
-								listaAfiliado.get(0));
+						request.setAttribute("distribuidor", listaAfiliado.get(0));
 					}
 					request.setAttribute("listaRedes", this.redService.listar());
 
@@ -219,8 +173,7 @@ public class AfiliadoFrontController extends HttpServlet {
 					request.setAttribute("accion", "C");
 				}
 				request.setAttribute("listaBancos", this.bancoService.listar());
-				request.setAttribute("listaDepartamentos",
-						this.departamentoService.listar());
+				request.setAttribute("listaDepartamentos", this.departamentoService.listar());
 				request.setAttribute("ingreso", Boolean.valueOf(true));
 
 				break;
@@ -238,27 +191,20 @@ public class AfiliadoFrontController extends HttpServlet {
 				request.setAttribute("listaAfiliados", listaPorNivel);
 				request.setAttribute("listaRedes", this.redService.listar());
 
-				recurso = RecursosEnum.FW_LISTAR_AFILIADO_POR_NIVEL
-						.getRecurso();
+				recurso = RecursosEnum.FW_LISTAR_AFILIADO_POR_NIVEL.getRecurso();
 
 				break;
 			case 'U':
-				String documentoActual = request
-						.getParameter("codigoEmpresario");
-				String documentoNuevo = request
-						.getParameter("nuevoCodigoEmpresario");
+				String documentoActual = request.getParameter("codigoEmpresario");
+				String documentoNuevo = request.getParameter("nuevoCodigoEmpresario");
 
-				boolean retorno = this.afiliadoService.cambiarDocumento(
-						documentoActual, documentoNuevo);
+				boolean retorno = this.afiliadoService.cambiarDocumento(documentoActual, documentoNuevo);
 				if (retorno) {
-					request.setAttribute("mensaje",
-							"el cambio de documento se realizo con exito");
+					request.setAttribute("mensaje", "el cambio de documento se realizo con exito");
 				} else {
-					request.setAttribute("mensaje",
-							"el cambio de documento no se realizo por favor verifique con el administrador");
+					request.setAttribute("mensaje", "el cambio de documento no se realizo por favor verifique con el administrador");
 				}
-				recurso = RecursosEnum.FW_CAMBIAR_DOCUMENTO_AFILIADO
-						.getRecurso();
+				recurso = RecursosEnum.FW_CAMBIAR_DOCUMENTO_AFILIADO.getRecurso();
 
 				break;
 			case 'X':
@@ -266,38 +212,25 @@ public class AfiliadoFrontController extends HttpServlet {
 				if (request.getParameter("codigoEmpresario") != null) {
 					if (request.getParameter("borrar") != null) {
 						afiliadoConsulta = new Afiliado();
-						afiliadoConsulta.setCedula(request
-								.getParameter("codigoEmpresario"));
+						afiliadoConsulta.setCedula(request.getParameter("codigoEmpresario"));
 						if (this.afiliadoService.borrar(afiliadoConsulta)) {
-							request.setAttribute("mensaje",
-									"el afiliado ha sido eliminado con exito");
+							request.setAttribute("mensaje", "el afiliado ha sido eliminado con exito");
 							break;
 						}
-						request.setAttribute(
-								"mensaje",
+						request.setAttribute("mensaje",
 								"el afiliado tiene asociados personas en su red. Por favor borre sus asociados o comuniquese con el administrador");
 						break;
 					}
 				}
-				afiliadoConsulta = this.afiliadoService.consultar(request
-						.getParameter("codigoEmpresario")
-						+ "-"
-						+ request.getParameter("letra"));
+				afiliadoConsulta = this.afiliadoService.consultar(request.getParameter("codigoEmpresario") + "-" + request.getParameter("letra"));
 				recurso = RecursosEnum.FW_BORRAR_AFILIADO.getRecurso();
 				request.setAttribute("afiliado", afiliadoConsulta);
-				request.setAttribute("banco", this.bancoService
-						.consultar(afiliadoConsulta.getBanco()));
-				if ((afiliadoConsulta != null)
-						&& (afiliadoConsulta.getCedula() != null)) {
-					request.setAttribute("patrocinador", this.afiliadoService
-							.consultar(afiliadoConsulta.getCedulaPapa()));
-					List<AfiliadoDTO> listaAfiliado = this.afiliadoService
-							.buscarDistribuidor(
-									afiliadoConsulta.getCedulaDistribuidor(),
-									null);
+				request.setAttribute("banco", this.bancoService.consultar(afiliadoConsulta.getBanco()));
+				if ((afiliadoConsulta != null) && (afiliadoConsulta.getCedula() != null)) {
+					request.setAttribute("patrocinador", this.afiliadoService.consultar(afiliadoConsulta.getCedulaPapa()));
+					List<AfiliadoDTO> listaAfiliado = this.afiliadoService.buscarDistribuidor(afiliadoConsulta.getCedulaDistribuidor(), null);
 					if ((listaAfiliado != null) && (listaAfiliado.size() > 0)) {
-						request.setAttribute("distribuidor",
-								listaAfiliado.get(0));
+						request.setAttribute("distribuidor", listaAfiliado.get(0));
 					}
 					request.setAttribute("listaRedes", this.redService.listar());
 
@@ -316,12 +249,10 @@ public class AfiliadoFrontController extends HttpServlet {
 
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
-		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
-				config.getServletContext());
+		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
 	}
 
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		doPost(req, resp);
 	}
 }

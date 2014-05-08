@@ -18,9 +18,8 @@ public class UsuarioHelper {
 		User usuario = new User();
 		usuario.setUsername(request.getParameter("usuario"));
 		usuario.setPassword(request.getParameter("password"));
-		byte activado = (request.getParameter("activado") == null)
-				|| ("0".equals(request.getParameter("activado"))) ? Byte
-				.valueOf("0").byteValue() : Byte.valueOf("1").byteValue();
+		byte activado = (request.getParameter("activado") == null) || ("0".equals(request.getParameter("activado"))) ? Byte.valueOf("0").byteValue()
+				: Byte.valueOf("1").byteValue();
 		usuario.setEnabled(activado);
 		return usuario;
 	}
@@ -28,20 +27,19 @@ public class UsuarioHelper {
 	public static User cargarEntidad(Afiliado afiliado) {
 		User usuario = new User();
 		usuario.setUsername(afiliado.getCedula());
-		usuario.setPassword(afiliado.getCedula() + "_aloe*");
+		usuario.setPassword(afiliado.getCedula() + "_Aloe");
 		byte activado = Byte.valueOf("1").byteValue();
 		usuario.setEnabled(activado);
 		return usuario;
 	}
 
-	public static User cargarEntidad(Afiliado afiliado,
-			HttpServletRequest request) {
+	public static User cargarEntidad(Afiliado afiliado, HttpServletRequest request) {
 		User usuario = new User();
 		usuario.setUsername(afiliado.getCedula());
-		if ("3".equals(request.getParameter("rol"))) {
+		if ("3".equals(request.getParameter("tipoAfiliado"))) {
 			usuario.setPassword(afiliado.getCedula());
 		} else {
-			usuario.setPassword(afiliado.getCedula() + "_aloe*");
+			usuario.setPassword(afiliado.getCedula() + "_Aloe");
 		}
 		byte activado = Byte.valueOf("1").byteValue();
 		usuario.setEnabled(activado);
@@ -49,8 +47,7 @@ public class UsuarioHelper {
 	}
 
 	public static String getUsuario() {
-		Object principal = SecurityContextHolder.getContext()
-				.getAuthentication().getPrincipal();
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String usuario = null;
 		if ((principal instanceof UserDetails)) {
 			usuario = ((UserDetails) principal).getUsername();
@@ -61,8 +58,7 @@ public class UsuarioHelper {
 	}
 
 	public static char getRol() {
-		Authentication principal = SecurityContextHolder.getContext()
-				.getAuthentication();
+		Authentication principal = SecurityContextHolder.getContext().getAuthentication();
 		Collection<? extends GrantedAuthority> roles = null;
 		char roleRetornado = '3';
 		roles = principal.getAuthorities();
@@ -72,8 +68,7 @@ public class UsuarioHelper {
 
 			boolean bandera = true;
 			while ((listaRoles.hasNext()) && (bandera)) {
-				GrantedAuthority grantedAuthority = (GrantedAuthority) listaRoles
-						.next();
+				GrantedAuthority grantedAuthority = (GrantedAuthority) listaRoles.next();
 				if ("ROLE_ADMIN".equals(grantedAuthority.getAuthority())) {
 					return '1';
 				}
