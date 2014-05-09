@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -33,7 +34,7 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
 	public Afiliado consultar(String codigo) throws MultinivelDAOException {
 		Afiliado afiliado = null;
 		try {
-			String sql = " SELECT a.cedula, a.nombre,a.apellido,  a.red, a.direccion,a.barrio,a.telefono,a.celular,a.fecha_nacimiento,a.departamento,a.ciudad, a.departamentoResidencia,a.ciudadResidencia,a.email,a.estadocivil,a.ocupacion,a.cedula_Papa, a.tipo_cuenta,a.cuenta_nro,a.titular_cuenta,a.nombretitularcta,a.banco,a.documentoConyugue,a.nombreConyugue, a.tipoAfiliado,a.cedulaDistribuidor,a.cedulaDistribuidorPago,tipoDocumento,a.idAfiliacionDist from t_afiliados a  where cedula='"
+			String sql = " SELECT a.cedula, a.nombre,a.apellido,  a.red, a.direccion,a.barrio,a.telefono,a.celular,a.fecha_nacimiento,a.departamento,a.ciudad, a.departamentoResidencia,a.ciudadResidencia,a.email,a.estadocivil,a.ocupacion,a.cedula_Papa, a.tipo_cuenta,a.cuenta_nro,a.titular_cuenta,a.nombretitularcta,a.banco,a.documentoConyugue,a.nombreConyugue, a.tipoAfiliado,a.cedulaDistribuidor,a.cedulaDistribuidorPago,tipoDocumento,a.idAfiliacionDist, a.Activo from t_afiliados a  where cedula='"
 					+ codigo + "' ";
 
 			Query q = this.entityManager.createNativeQuery(sql);
@@ -73,6 +74,7 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
 				String distribuidorPago = objectArray[26].toString();
 				String tipoDocumento = objectArray[27].toString();
 				int consecutivoAfiliaciondis = ((Integer) objectArray[28]).intValue();
+				String activo = objectArray[29].toString();
 
 				afiliado = new Afiliado();
 				afiliado.setCedula(cedula);
@@ -104,6 +106,7 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
 				afiliado.setTitularCuenta(titularCta);
 				afiliado.setNombreTitularCta(nombreTitularCta);
 				afiliado.setIdAfiliacionDistribuidor(consecutivoAfiliaciondis);
+				afiliado.setActivo(activo);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -200,9 +203,28 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
 	}
 
 	public boolean eliminar(Afiliado afiliado) throws MultinivelDAOException {
-		Afiliado af = entityManager.find(Afiliado.class, afiliado.getCedula());
-		af.setActivo("no");
-		return true;
+		boolean retorno = Boolean.FALSE;
+		int returnId = 0;
+		try {
+			Class.forName(ParametrosEnum.DRIVER_DATABASE.getValor());
+			Connection conexion = DriverManager.getConnection(ParametrosEnum.URL_DATABASE.getValor(), ParametrosEnum.USUARIO.getValor(),
+					ParametrosEnum.PASSWORD.getValor());
+
+			String command = "{call Sp_EliminarAfiliado(?,?)}";
+			CallableStatement cstmt = conexion.prepareCall(command);
+			cstmt.setString(1, afiliado.getCedula());
+			cstmt.registerOutParameter(2, Types.NUMERIC);
+			cstmt.execute();
+
+			returnId = cstmt.getInt(2);
+			retorno = returnId == 0 ? Boolean.TRUE : Boolean.FALSE;
+
+			cstmt.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new MultinivelDAOException("error al realizar el cambio de documento:" + e.getMessage(), getClass());
+		}
+		return retorno;
 	}
 
 	public void ingresar(Afiliado afiliado) throws MultinivelDAOException {
@@ -476,8 +498,6 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
 			Connection conexion = DriverManager.getConnection(ParametrosEnum.URL_DATABASE.getValor(), ParametrosEnum.USUARIO.getValor(),
 					ParametrosEnum.PASSWORD.getValor());
 
-			System.err.println(documentoActual);
-			System.err.println(documentoNuevo);
 			String command1 = "{call  SP_ACTUALIZAR_PADRE(?,?,?)}";
 			CallableStatement cstmt1 = conexion.prepareCall(command1);
 			cstmt1.setString(1, documentoActual);

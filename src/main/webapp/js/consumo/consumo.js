@@ -215,7 +215,7 @@ function calcularPedido(){
 	        forma= document.forms[0];
         	//forma.periodo.value=forma.mes.options[forma.mes.selectedIndex].value+"/"+forma.ano.options[forma.ano.selectedIndex].value;
         	
-        	if(forma.nombreEmpresario.value==''){
+        	if(forma.nombreEmpresario.value==""){
         	    alert('Ingrese el nombre del empresario');
         		return;
         	}

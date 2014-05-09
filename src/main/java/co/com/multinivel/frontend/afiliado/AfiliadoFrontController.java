@@ -59,6 +59,7 @@ public class AfiliadoFrontController extends HttpServlet {
 		Afiliado afiliadoConsulta = null;
 		GroupAuthority rol = null;
 		GroupMember rolPorUsuario = null;
+		char rolUserLogged = UsuarioHelper.getRol();
 		try {
 			char accion = request.getParameter("accion") == null ? 'I' : request.getParameter("accion").charAt(0);
 
@@ -155,6 +156,7 @@ public class AfiliadoFrontController extends HttpServlet {
 
 				break;
 			case 'C':
+				request.setAttribute("rol", "" + rolUserLogged);
 				afiliadoConsulta = this.afiliadoService.consultar(request.getParameter("codigoEmpresario") + "-" + request.getParameter("letra"));
 				recurso = RecursosEnum.FW_ACTUALIZACION_AFILIADO.getRecurso();
 				request.setAttribute("distribuidores", afiliadoService.listarDistribuidores());
@@ -194,6 +196,7 @@ public class AfiliadoFrontController extends HttpServlet {
 				recurso = RecursosEnum.FW_LISTAR_AFILIADO_POR_NIVEL.getRecurso();
 
 				break;
+			// Opción DesHabilitada en el Menú.
 			case 'U':
 				String documentoActual = request.getParameter("codigoEmpresario");
 				String documentoNuevo = request.getParameter("nuevoCodigoEmpresario");
@@ -214,27 +217,30 @@ public class AfiliadoFrontController extends HttpServlet {
 						afiliadoConsulta = new Afiliado();
 						afiliadoConsulta.setCedula(request.getParameter("codigoEmpresario"));
 						if (this.afiliadoService.borrar(afiliadoConsulta)) {
-							request.setAttribute("mensaje", "el afiliado ha sido eliminado con exito");
+							request.setAttribute("mensaje", "El Afiliado ha sido eliminado con exito.");
 							break;
+						} else {
+							request.setAttribute("rol", "" + rolUserLogged);
+							afiliadoConsulta = this.afiliadoService.consultar(request.getParameter("codigoEmpresario"));
+							recurso = RecursosEnum.FW_ACTUALIZACION_AFILIADO.getRecurso();
+							request.setAttribute("afiliado", afiliadoConsulta);
+							request.setAttribute("banco", this.bancoService.consultar(afiliadoConsulta.getBanco()));
+							if ((afiliadoConsulta != null) && (afiliadoConsulta.getCedula() != null)) {
+								request.setAttribute("patrocinador", this.afiliadoService.consultar(afiliadoConsulta.getCedulaPapa()));
+								List<AfiliadoDTO> listaAfiliado = this.afiliadoService.buscarDistribuidor(afiliadoConsulta.getCedulaDistribuidor(),
+										null);
+								if ((listaAfiliado != null) && (listaAfiliado.size() > 0)) {
+									request.setAttribute("distribuidor", listaAfiliado.get(0));
+								}
+								request.setAttribute("listaRedes", this.redService.listar());
+
+								request.setAttribute("accion", "X");
+							}
+							request.setAttribute("mensaje",
+									"El Afiliado tiene asociadas personas en su red. Por favor verifique o comuniquese con el Administrador.");
 						}
-						request.setAttribute("mensaje",
-								"el afiliado tiene asociados personas en su red. Por favor borre sus asociados o comuniquese con el administrador");
 						break;
 					}
-				}
-				afiliadoConsulta = this.afiliadoService.consultar(request.getParameter("codigoEmpresario") + "-" + request.getParameter("letra"));
-				recurso = RecursosEnum.FW_BORRAR_AFILIADO.getRecurso();
-				request.setAttribute("afiliado", afiliadoConsulta);
-				request.setAttribute("banco", this.bancoService.consultar(afiliadoConsulta.getBanco()));
-				if ((afiliadoConsulta != null) && (afiliadoConsulta.getCedula() != null)) {
-					request.setAttribute("patrocinador", this.afiliadoService.consultar(afiliadoConsulta.getCedulaPapa()));
-					List<AfiliadoDTO> listaAfiliado = this.afiliadoService.buscarDistribuidor(afiliadoConsulta.getCedulaDistribuidor(), null);
-					if ((listaAfiliado != null) && (listaAfiliado.size() > 0)) {
-						request.setAttribute("distribuidor", listaAfiliado.get(0));
-					}
-					request.setAttribute("listaRedes", this.redService.listar());
-
-					request.setAttribute("accion", "X");
 				}
 				break;
 			}

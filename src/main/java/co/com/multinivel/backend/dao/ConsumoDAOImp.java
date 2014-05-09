@@ -398,21 +398,9 @@ public class ConsumoDAOImp implements ConsumoDAO {
 	public List<Object> listarConsumosAfiliado(ConsumoDTO consumo) throws MultinivelDAOException {
 		List<Object> listaPedido = new ArrayList<Object>();
 		try {
-			String sql = "select distinct p.codigo_consumo,  p.totalPedido,  \tp.fecha,  \t p.afiliado,  (  SELECT CONCAT (a.NOMBRE ,' ',IF(a.APELLIDO IS NULL,'',a.APELLIDO))) NOMBRE_PADRE  \t from t_consumos p  \t  inner join t_afiliados a ON a.cedula=p.afiliado   and  a.nombre like '"
-					+
-
-					consumo.getNombreAfiliado()
-					+ "%' "
-					+ " union all "
-					+ " select distinct p.codigo_consumo,"
-					+ " p.totalPedido, "
-					+ " p.fecha, "
-					+ "  p.afiliado,"
-					+ " (  SELECT CONCAT (a.NOMBRE ,' ',IF(a.APELLIDO IS NULL,'',a.APELLIDO))) NOMBRE_PADRE "
-					+ " from t_consumos p \tinner join t_afiliados "
-					+ " a ON a.cedula=p.afiliado  and a.nombre like '"
-					+ consumo.getNombreAfiliado()
-					+ "%' and a.apellido like '" + consumo.getApellidoAfiliado() + "%' ";
+			String sql = " Select Distinct c.Codigo_Consumo,  c.TotalPedido, c.Fecha, c.Afiliado, a.NOMBRE+' '+a.APELLIDO NombreAfiliado "
+					+ "From T_Consumos c Inner Join T_Afiliados a On a.Cedula=c.Afiliado Where (a.Nombre like '" + consumo.getNombreAfiliado()
+					+ "%') And (a.Nombre like '" + consumo.getNombreAfiliado() + "%' And a.Apellido like '" + consumo.getApellidoAfiliado() + "%')";
 
 			Query query = this.entityManager.createNativeQuery(sql);
 
@@ -448,23 +436,19 @@ public class ConsumoDAOImp implements ConsumoDAO {
 			e.printStackTrace();
 			throw new MultinivelDAOException("error listando pedidos:" + e.getMessage(), getClass());
 		}
-		System.err.println(listaPedido.size());
 		return listaPedido;
 	}
 
 	public List<Object> listarConsumosProducto(ConsumoDTO consumo) throws MultinivelDAOException {
 		List<Object> listaPedido = new ArrayList<Object>();
 		try {
-			String sql = " select p.codigo,p.nombre_producto, x.valorunitario valorUnitario,x.totalProducto,x.cantidad  from  t_productos p,  (select round(sum( cantidad * valorunitario),0)totalProducto         ,codigo_producto, sum(cantidad) cantidad,valorunitario  \t\t\t\t  FROM t_consumos p INNER JOIN t_det_consumos a  \t\t\t\t  ON a.codigo_consumo=p.codigo_consumo  \t\t\t\t  AND DATE_FORMAT(P.FECHA,'%m/%Y')='"
-					+
-
-					consumo.getPeriodo()
-					+ "' "
-					+ " group by codigo_producto) x "
-					+ " where p.codigo= x.codigo_producto "
-					+ " order by x.cantidad desc ";
+			String sql = " Select d.Codigo_Producto, p.Nombre_Producto, d.ValorUnitario, Sum(d.Cantidad)Cantidad, SUM(d.Cantidad*d.ValorUnitario)ValorTotal "
+					+ "From T_Consumos h Inner Join T_Det_Consumos d On h.Codigo_Consumo=d.Codigo_Consumo Inner Join T_Productos p On d.Codigo_Producto=p.Codigo "
+					+ "Where Right('00'+Cast(Month(h.Fecha) As Varchar(2)),2)+'/'+Cast(Year(h.Fecha) As Varchar(4))= ? "
+					+ "Group By d.Codigo_Producto, p.Nombre_Producto, d.ValorUnitario Order By Sum(d.Cantidad) Desc ";
 
 			Query query = this.entityManager.createNativeQuery(sql);
+			query.setParameter(1, consumo.getPeriodo());
 
 			if (query.getResultList() != null) {
 				List<?> lista = query.getResultList();
@@ -476,16 +460,16 @@ public class ConsumoDAOImp implements ConsumoDAO {
 					String codigoProducto = (String) objectArray[0];
 					String nombreProducto = (String) objectArray[1];
 					BigDecimal valorUnitario = (BigDecimal) objectArray[2];
-					BigDecimal totalProducto = (BigDecimal) objectArray[3];
-					BigDecimal cantidad = (BigDecimal) objectArray[4];
+					int cantidad = Integer.parseInt(objectArray[3].toString());
+					BigDecimal totalProducto = (BigDecimal) objectArray[4];
 
 					ConsumoDTO pedido2 = new ConsumoDTO();
 
 					pedido2.setCodigoProducto(codigoProducto);
 					pedido2.setNombreProducto(nombreProducto);
 					pedido2.setValorUnitario(valorUnitario);
+					pedido2.setCantidad(cantidad);
 					pedido2.setTotalProducto(totalProducto);
-					pedido2.setCantidad(cantidad.intValue());
 
 					listaPedido.add(pedido2);
 				}

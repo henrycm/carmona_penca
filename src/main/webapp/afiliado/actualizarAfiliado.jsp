@@ -66,14 +66,16 @@ style>#accordion {
 	<body>
 </c:if>
 <div align="center">
-
 	<form name="forma" action="AfiliadoFrontController" method="post">
 		<input type="hidden" name="borrar">
 		<c:if test='${afiliado!=null}'>
 			<div class="btn-group">
 				<a class="btn btn-sm btn-default"
-					href="javascript:actualizarAfiliado();">Actualizar</a> <a
-					class="btn btn-sm btn-default" href="javascript:eliminarAfiliado()">Borrar</a>
+					href="javascript:actualizarAfiliado();">Actualizar</a>
+				<c:if test="${rol=='1'}">
+					<a class="btn btn-sm btn-default"
+						href="javascript:eliminarAfiliado()">Eliminar</a>
+				</c:if>
 				<div class="separador"></div>
 			</div>
 		</c:if>
@@ -81,21 +83,38 @@ style>#accordion {
 			AFILIADO</div>
 		<div>
 			<input name="accion" type="hidden" value="<c:out value='${accion}'/>" />
+
 			<c:if test='${afiliado==null}'>
 
-Código Nuevo Empresario: <input name="codigoEmpresario" type="text"
-					size="30" />
-				<select name="letra">
-					<option value="A">A</option>
-				</select>
-				<a href="javascript:consultarAfiliado();">Consultar</a>
+				<table class="tbl-lista">
+					<tr>
+						<td>Código del Empresario: <input name="codigoEmpresario"
+							type="text" size="30" /> <select name="letra">
+								<option value="A">A</option>
+						</select>
+							<div class="btn-group">
+								<a class="btn btn-sm btn-default"
+									href="javascript:consultarAfiliado()">Consultar</a>
+							</div>
+						</td>
+					</tr>
+				</table>
 			</c:if>
-
 			<c:if test='${afiliado!=null}'>
-Código Nuevo Empresario: <input name="codigoEmpresario" type="text"
+Código del Empresario: <input name="codigoEmpresario" type="text"
 					size="30" value="<c:out value='${afiliado.cedula}'/>"
 					readonly="readonly" />
-
+				<c:if test="${mensaje!=null}">
+					<table class="tabla">
+						<tr>
+							<td align="center">
+								<h5 style="color: red">
+									<c:out value='${mensaje}' />
+								</h5>
+							</td>
+						</tr>
+					</table>
+				</c:if>
 			</c:if>
 		</div>
 		<div class="demo">
@@ -106,27 +125,29 @@ Código Nuevo Empresario: <input name="codigoEmpresario" type="text"
 					<div>
 						<table>
 							<tr>
+								<td style="color: red">Estado:<select name="estado" ${rol=='1' ? '' : 'disabled'}>
+										<c:if test='${afiliado.activo=="si"}'>
+											<option value="si" Selected>Activo</option>
+											<option value="no">Inactivo</option>
+										</c:if>
+										<c:if test='${afiliado.activo=="no"}'>
+											<option value="no" Selected>Inactivo</option>
+											<option value="si">Activo</option>
+										</c:if>
+								</select>
+								</td>
+								<td>Tipo de Afiliado: <label style="color: blue"><c:out
+											value="${afiliado.tipoAfiliado == 1 ? 'Administrador' : afiliado.tipoAfiliado == 2 ? 'Distribuidor' : 'Afiliado'}" /></label>
+								</td>
+								<td><input name="tipoAfiliado" type="hidden"
+									value="<c:out value="${afiliado.tipoAfiliado}"/>"></td>
+							</tr>
+							<tr>
 								<td>Nombre: <input name="nombre" type="text" size="20"
 									maxlength="40" value="<c:out value='${afiliado.nombre}'/>" /></td>
 								<td>Apellidos Completos: <input name="apellido" type="text"
 									maxlength="50" size="15"
 									value="<c:out value='${afiliado.apellido}'/>" /></td>
-								<td>Tipo de Afiliado: <select name="tipoAfiliado"
-									id="tipoAfiliado">
-										<option value="3"
-											${afiliado.tipoAfiliado == 3 ? 'selected' : ''}>Afiliado</option>
-										<option value="2"
-											${afiliado.tipoAfiliado == 2 ? 'selected' : ''}>Distribuidor</option>
-								</select>
-									<div id="cmdDistribuidor">
-										Nuevo distribuidor:<select name="nuevoDistribuidor">
-										<option value="">Seleccionar</option>
-											<c:forEach items="${distribuidores}" var="d">
-												<option value="${d.cedula}">${d.nombre}
-													${d.apellido}</option>
-											</c:forEach>
-										</select>
-									</div></td>
 								<td>Identificación:<br> <select name="tipoDocumento">
 										<option value="C.C.">C.C.</option>
 										<option value="Nit">Nit</option>
@@ -142,23 +163,18 @@ Código Nuevo Empresario: <input name="codigoEmpresario" type="text"
 								<td>Lugar de Nac.: Ciudad <input name="ciudadNacimiento"
 									type="text" size="13"
 									value="<c:out value='${afiliado.ciudad}'/>" />
-
 								</td>
 								<td height="26">Dpto Nac <select id="departamento"
 									name="departamento">
-
 										<option value="">Elija el depart...</option>
-
 										<c:forEach var='dept' items='${listaDepartamentos}'>
 											<option value="<c:out value='${dept.codigo}'/>">
 												<c:out value='${dept.descripcion}' />
 											</option>
 										</c:forEach>
 								</select>
-
 								</td>
 							</tr>
-
 							<tr>
 								<td>Barrio:<input name="barrio" type="text" size="25"
 									value="<c:out value='${afiliado.barrio}'/>" /></td>
@@ -166,7 +182,6 @@ Código Nuevo Empresario: <input name="codigoEmpresario" type="text"
 									name="direccion" type="text" size="15"
 									value="<c:out value='${afiliado.direccion}'/>" />
 								</td>
-
 								<td>Ciudad: <input name="ciudadResidencia" type="text"
 									size="15" value="<c:out value='${afiliado.ciudadResidencia}'/>" /></td>
 								<td height="51">Departamento: <select
@@ -179,11 +194,8 @@ Código Nuevo Empresario: <input name="codigoEmpresario" type="text"
 											</option>
 										</c:forEach>
 								</select></td>
-
 							</tr>
-
 							<tr>
-
 								<td>Teléfono: <input name="telefono" type="text" size="10"
 									value="<c:out value='${afiliado.telefono}'/>" /></td>
 								<td>Celular: <input name="celular" type="text" size="10"
@@ -192,12 +204,8 @@ Código Nuevo Empresario: <input name="codigoEmpresario" type="text"
 								<td>E-mail: <input name="email" type="text" size="20"
 									maxlength="50" value="<c:out value='${afiliado.email}'/>" /></td>
 							</tr>
-
-
-
 						</table>
 					</div>
-
 					<div class="titulo">DATOS PARA PAGO DE RECONOCIMIENTOS
 						MONETARIOS</div>
 					<div>
@@ -207,8 +215,6 @@ Código Nuevo Empresario: <input name="codigoEmpresario" type="text"
 									type="checkbox" onclick="javascript:validarChequeCta()" />
 
 								</td>
-
-
 								<td>Cuenta Número: <input name="numeroCuenta" type="text"
 									size="20" value="<c:out value='${afiliado.cuentaNro}'/>"
 									maxlength="20" />
@@ -223,10 +229,8 @@ Código Nuevo Empresario: <input name="codigoEmpresario" type="text"
 										</c:forEach>
 								</select>
 								</td>
-
 							</tr>
 							<tr>
-
 								<td>Tipo de cta. Ahorro <input name="tipoCuenta"
 									type="radio" value="AHORRO" checked="checked" /> Cte. <input
 									name="tipoCuenta" type="radio" value="CRTE" />
@@ -250,11 +254,9 @@ Código Nuevo Empresario: <input name="codigoEmpresario" type="text"
 									ALOE de COLOMBIA sean consignadas en esta cuenta.</td>
 							</tr>
 						</table>
-
 					</div>
 					<div class="titulo">DATOS DEL PATROCINADOR</div>
 					<div id="datosPatrocinador">
-
 						<table>
 							<tr>
 								<td>Nombres y Apellidos(completos) <c:out
@@ -279,7 +281,6 @@ Código Nuevo Empresario: <input name="codigoEmpresario" type="text"
 								</td>
 							</tr>
 						</table>
-
 						<table>
 							<tr>
 								<td>Nombres y Apellidos del distribuidor <input
@@ -295,20 +296,18 @@ Código Nuevo Empresario: <input name="codigoEmpresario" type="text"
 									value="<c:out value='${distribuidor.cedula}'/>" type="text"
 									size="15" readonly="readonly"
 									onclick="javascript:document.forma.numeroEmpresario.readOnly =true;" />
-									<a href="javascript:abrirBuscarDistribuidor()">Buscar
-										Distribuidor</a> <input type="hidden"
-									name="numeroCuentaDistribuidor"
+									<c:if test="${rol=='1'}">
+										<a href="javascript:abrirBuscarDistribuidor()">Buscar
+											Distribuidor</a>
+									</c:if> <input type="hidden" name="numeroCuentaDistribuidor"
 									value="<c:out value='${distribuidor.cuentaNro}'/>"> <input
 									type="hidden" name="tipoCuentaDistribuidor"
 									value="<c:out value='${distribuidor.tipoCuenta}'/>"> <input
 									type="hidden" name="bancoDistribuidor"
 									value="<c:out value='${distribuidor.banco}'/>">
-
-
 								</td>
 							</tr>
 						</table>
-
 					</div>
 				</div>
 			</c:if>

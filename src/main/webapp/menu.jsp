@@ -25,9 +25,9 @@
 					<li><a target="mainFrame"
 						href="administracion/IndexAfiliado?accion=W">Activar
 							Afiliaciones Por Distribuidor</a></li>
-					<li><a target="mainFrame"
+					<!--<li><a target="mainFrame"
 						href="administracion/IndexAfiliado?accion=U">Cambiar Documento
-							Afiliado</a></li>
+							Afiliado</a></li>-->
 					<li><a target="mainFrame"
 						href="administracion/IndexAfiliado?accion=F">Listar
 							Distribuidores</a></li>
@@ -124,8 +124,8 @@
 				<ul class="dropdown-menu">
 					<li class="dropdown-header">Parámetros</li>
 					<li><a target="mainFrame"
-						href="administracion/parametro/IndexFrontController">Consulta y
-							modificación de parámetros</a></li>
+						href="administracion/parametro/IndexFrontController">Consulta
+							y modificación de parámetros</a></li>
 				</ul></li>
 		</ul>
 	</div>

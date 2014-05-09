@@ -49,7 +49,6 @@ public class ReporteConsumosAfiliado extends HttpServlet {
 
 			String mes = request.getParameter("mes");
 			String ano = request.getParameter("ano");
-			System.err.println("h3");
 
 			periodo = mes + "/" + ano;
 			map.put("periodo", periodo);
@@ -58,10 +57,8 @@ public class ReporteConsumosAfiliado extends HttpServlet {
 			consumo.setPeriodo(periodo);
 			consumo.setNombreAfiliado(nombreEmpresario);
 			consumo.setApellidoAfiliado(apellidoEmpresario);
-			System.err.println("h4");
 
 			List<Object> lista = this.consumoService.listarConsumosAfiliado(consumo);
-			System.err.println("h5:" + lista.size());
 			if ((lista != null) && (lista.size() > 0)) {
 				if ("PDF".equals(tipoReporte)) {
 					GenerarReporte.exportarPDF(request, response, getServletConfig().getServletContext(), "Reporte_ListaConsumosAfiliado_"

@@ -53,7 +53,6 @@ public class ReporteConsumosProducto extends HttpServlet {
 			consumo.setPeriodo(periodo);
 
 			List<Object> lista = this.consumoService.listarConsumosProducto(consumo);
-			System.err.println("h5:" + lista.size());
 			if ((lista != null) && (lista.size() > 0)) {
 				if ("PDF".equals(tipoReporte)) {
 					GenerarReporte.exportarPDF(request, response, getServletConfig().getServletContext(), "Reporte_ListaConsumosProducto_" + periodo
@@ -63,7 +62,7 @@ public class ReporteConsumosProducto extends HttpServlet {
 							+ periodo + ".xls", RecursosEnum.FW_JASPER_REPORTE_LISTA_CONSUMOS_PRODUCTO.getRecurso(), map, lista);
 				}
 			} else {
-				request.setAttribute("error", "No existen consumos para el periodo solicitado:" + periodo);
+				request.setAttribute("error", "No existen consumos para el periodo solicitado: " + periodo);
 				rd = getServletContext().getRequestDispatcher(RecursosEnum.FW_ERROR.getRecurso());
 				rd.forward(request, response);
 			}

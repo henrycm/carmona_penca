@@ -15,8 +15,7 @@ public class AfiliadoHelper {
 	public static Afiliado cargarEntidad(HttpServletRequest request) {
 		Afiliado afiliado = new Afiliado();
 		if ("I".equals(request.getParameter("accion"))) {
-			afiliado.setCedula(request.getParameter("codigoEmpresario") + "-"
-					+ request.getParameter("letra"));
+			afiliado.setCedula(request.getParameter("codigoEmpresario") + "-" + request.getParameter("letra"));
 		} else {
 			afiliado.setCedula(request.getParameter("codigoEmpresario"));
 		}
@@ -25,22 +24,17 @@ public class AfiliadoHelper {
 
 		String tmp = request.getParameter("fechaNacimiento");
 		afiliado.setFechaNacimiento(FechasUtil.parse(tmp));
-		afiliado.setActivo("si");
+		afiliado.setActivo(request.getParameter("estado") == null ? "si" : request.getParameter("estado"));
 		afiliado.setTipoDocumento(request.getParameter("tipoDocumento"));
 		afiliado.setCiudad(request.getParameter("ciudadNacimiento").toUpperCase());
 		afiliado.setDepartamento(request.getParameter("departamento"));
-		afiliado.setOcupacion(request.getParameter("profesion") == null ? "" : request
-				.getParameter("profesion").toUpperCase());
+		afiliado.setOcupacion(request.getParameter("profesion") == null ? "" : request.getParameter("profesion").toUpperCase());
 		afiliado.setEstadoCivil(request.getParameter("estadoCivil"));
-		afiliado.setNombreConyugue(request.getParameter("nombreConyugue") == null ? "" : request
-				.getParameter("nombreConyugue").toUpperCase());
+		afiliado.setNombreConyugue(request.getParameter("nombreConyugue") == null ? "" : request.getParameter("nombreConyugue").toUpperCase());
 		afiliado.setDocumentoConyugue(request.getParameter("documentoConyugue"));
-		afiliado.setDireccion(request.getParameter("direccion") == null ? "" : request
-				.getParameter("direccion").toUpperCase());
-		afiliado.setBarrio(request.getParameter("barrio") == null ? "" : request.getParameter(
-				"barrio").toUpperCase());
-		afiliado.setCiudadResidencia(request.getParameter("ciudadResidencia") == null ? ""
-				: request.getParameter("ciudadResidencia").toUpperCase());
+		afiliado.setDireccion(request.getParameter("direccion") == null ? "" : request.getParameter("direccion").toUpperCase());
+		afiliado.setBarrio(request.getParameter("barrio") == null ? "" : request.getParameter("barrio").toUpperCase());
+		afiliado.setCiudadResidencia(request.getParameter("ciudadResidencia") == null ? "" : request.getParameter("ciudadResidencia").toUpperCase());
 		afiliado.setDepartamentoResidencia(request.getParameter("departamentoResidencia"));
 
 		afiliado.setTelefono(request.getParameter("telefono"));
@@ -76,9 +70,6 @@ public class AfiliadoHelper {
 		afiliado.setUsuarioIngreso(UsuarioHelper.getUsuario());
 		afiliado.setFechaIngreso(new Date());
 		afiliado.setTipoAfiliado(request.getParameter("tipoAfiliado"));
-		if (request.getParameter("nuevoDistribuidor") != null) {			
-			//afiliado.setCedulaDistribuidor(request.getParameter("nuevoDistribuidor"));			
-		}
 
 		return afiliado;
 	}
@@ -90,8 +81,7 @@ public class AfiliadoHelper {
 				arbol = arbol + "['" + nodo.getCedula() + "-" + nodo.getNombre() + "',0,";
 				List<Nodo> hijos = nodo.getHijos();
 				for (Nodo nodohijo : hijos) {
-					arbol = arbol + "['" + nodohijo.getCedula() + "-" + nodohijo.getNombre()
-							+ "'],";
+					arbol = arbol + "['" + nodohijo.getCedula() + "-" + nodohijo.getNombre() + "'],";
 				}
 				arbol = arbol.substring(0, arbol.length() - 1);
 				arbol = arbol + "],";
@@ -131,19 +121,15 @@ public class AfiliadoHelper {
 		try {
 			System.err.println(nodo.getCedula());
 			if (nodo.getHijos().size() == 0) {
-				cadena = cadena + "[' " + nodo.getNivel() + "." + contador + " -- "
-						+ nodo.getCedula() + " -- " + nodo.getNombre() + " -- "
-						+ nodo.getTelefono() + " -- " + nodo.getEmail() + " -- "
-						+ nodo.getDireccion() + "'],";
+				cadena = cadena + "[' " + nodo.getNivel() + "." + contador + " -- " + nodo.getCedula() + " -- " + nodo.getNombre() + " -- "
+						+ nodo.getTelefono() + " -- " + nodo.getEmail() + " -- " + nodo.getDireccion() + "'],";
 
 				System.err.println(cadena.toString());
 			} else {
 				List<Nodo> hijos = nodo.getHijos();
 				int i = 0;
-				cadena = cadena + "['" + nodo.getNivel() + "." + contador + " -- "
-						+ nodo.getCedula() + " -- " + nodo.getNombre() + " -- "
-						+ nodo.getTelefono() + " -- " + nodo.getEmail() + " -- "
-						+ nodo.getDireccion() + "',0,";
+				cadena = cadena + "['" + nodo.getNivel() + "." + contador + " -- " + nodo.getCedula() + " -- " + nodo.getNombre() + " -- "
+						+ nodo.getTelefono() + " -- " + nodo.getEmail() + " -- " + nodo.getDireccion() + "',0,";
 				for (Nodo nodohijo : hijos) {
 					i++;
 					cadena = generarHoja(nodohijo, cadena, i);
@@ -160,19 +146,15 @@ public class AfiliadoHelper {
 		try {
 			System.err.println(nodo.getCedula());
 			if (nodo.getHijos().size() == 0) {
-				cadena = cadena + "[' " + nodo.getNivel() + "." + contador + " -- "
-						+ nodo.getCedula() + " -- " + nodo.getNombre() + " -- "
-						+ nodo.getTelefono() + " -- " + nodo.getEmail() + " -- "
-						+ nodo.getDireccion() + "'],";
+				cadena = cadena + "[' " + nodo.getNivel() + "." + contador + " -- " + nodo.getCedula() + " -- " + nodo.getNombre() + " -- "
+						+ nodo.getTelefono() + " -- " + nodo.getEmail() + " -- " + nodo.getDireccion() + "'],";
 
 				System.err.println(cadena.toString());
 			} else {
 				List<Nodo> hijos = nodo.getHijos();
 				int i = 0;
-				cadena = cadena + "['" + nodo.getNivel() + "." + contador + " -- "
-						+ nodo.getCedula() + " -- " + nodo.getNombre() + " -- "
-						+ nodo.getTelefono() + " -- " + nodo.getEmail() + " -- "
-						+ nodo.getDireccion() + "',0,";
+				cadena = cadena + "['" + nodo.getNivel() + "." + contador + " -- " + nodo.getCedula() + " -- " + nodo.getNombre() + " -- "
+						+ nodo.getTelefono() + " -- " + nodo.getEmail() + " -- " + nodo.getDireccion() + "',0,";
 				for (Nodo nodohijo : hijos) {
 					i++;
 					cadena = generarHoja(nodohijo, cadena, i);

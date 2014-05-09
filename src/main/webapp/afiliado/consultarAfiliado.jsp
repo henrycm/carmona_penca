@@ -67,7 +67,7 @@ style>#accordion {
 							<th colspan="15">Lista de Afiliados</th>
 						</tr>
 						<tr>
-							<th>Nombre Usuario</th>
+							<th>Nombre Afiliado</th>
 							<th>Tipo</th>
 							<th>Activo</th>
 							<th>Seleccionar</th>
@@ -75,8 +75,14 @@ style>#accordion {
 						<c:forEach var='af' items='${listaAfiliados}'>
 							<tr>
 								<td><c:out value='${af.nombre} ${af.apellido}' /></td>
-								<td><c:out value='${af.tipoAfiliado}' /></td>
-								<td><c:out value='${af.activo}' /></td>
+								<td align="center"><c:if test='${af.tipoAfiliado=="1"}'>
+										<c:out value="Administrador" />
+									</c:if> <c:if test='${af.tipoAfiliado=="2"}'>
+										<c:out value="Distribuidor" />
+									</c:if> <c:if test='${af.tipoAfiliado=="3"}'>
+										<c:out value="Afiliado" />
+									</c:if></td>
+								<td align="center"><c:out value='${af.activo}' /></td>
 								<td><a
 									href="AfiliadoFrontController?accion=E&letra=A&codigoEmpresario=${af.cedula}">Seleccionar</a>
 								</td>
