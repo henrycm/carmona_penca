@@ -96,6 +96,12 @@ Linea de Alimentos
 
   <tr>
    <td colspan="4" align="right">
+      SALDO DISPONIBLE :
+     <input id="saldo" name="saldo" value="${saldoMvtos}" readonly="readonly" />&nbsp;&nbsp;&nbsp;
+   </td>
+  </tr>
+  <tr>
+   <td colspan="4" align="right">
       TRANSPORTE PEDIDO :
      <input name="transporte" value=<c:out value='${transporte}'/> readonly="readonly" />&nbsp;&nbsp;&nbsp;
    </td>
@@ -116,7 +122,7 @@ Linea de Alimentos
   <tr>
    <td colspan="4" align="right">
       TOTAL PEDIDO :
-     <input name="totalPedidoTransporte" value=<c:out value='${totalPedidoConTransporte}'/> readonly="readonly" />&nbsp;&nbsp;&nbsp;
+     <input id="totPedido" name="totalPedidoTransporte" value=<c:out value='${totalPedidoConTransporte}'/> readonly="readonly" />&nbsp;&nbsp;&nbsp;
    </td>
    </tr>
  

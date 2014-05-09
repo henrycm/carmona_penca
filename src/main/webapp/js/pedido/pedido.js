@@ -58,7 +58,7 @@ function vistaPreliminarPedido() {
 	bandera = 0;
 	var productos = forma.elements["producto"];
 
-	for (var i = 0; i < productos.length; i++) {
+	for ( var i = 0; i < productos.length; i++) {
 
 		if (productos[i].checked) {
 			codigoProducto = productos[i].value;
@@ -120,12 +120,17 @@ function enviarPedido() {
 		return;
 
 	}
-	if (!confirm("Esta seguro de que desea realizar el pedido, verifiquelo por favor")) {
-		return;
+	var saldo = Number(document.getElementById("saldo").value);
+	var total = Number(document.getElementById("totPedido").value);
+	if (saldo >= total) {
+		if (!confirm("Esta seguro de que desea realizar el pedido, verifiquelo por favor")) {
+			return;
+		}
+		document.forms[0].action = "../pedido/RealizarPedido";
+		document.forms[0].submit();
+	} else {
+		alert("No hay suficiente saldo");
 	}
-
-	document.forms[0].action = "../pedido/RealizarPedido";
-	document.forms[0].submit();
 
 }
 
@@ -162,7 +167,7 @@ function chequearProducto(objetoCantidad) {
 	datos = nombre.split('_');
 	codigoProducto = datos[1];
 
-	for (var i = 0; i < productos.length; i++) {
+	for ( var i = 0; i < productos.length; i++) {
 
 		if (productos[i].value == codigoProducto) {
 			productos[i].checked = true;

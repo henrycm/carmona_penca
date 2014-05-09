@@ -51,11 +51,14 @@ public class IndexPedido extends HttpServlet {
 			switch (accion) {
 			case 'I':
 				recurso = RecursosEnum.FW_INGRESO_PEDIDO.getRecurso();
+				String st_dist = "";
 				if (UsuarioHelper.getRol() == '2') {
-					request.setAttribute("afiliado", this.afiliadoService.consultar(UsuarioHelper.getUsuario()));
+					st_dist = UsuarioHelper.getUsuario();
 				} else {
-					request.setAttribute("afiliado", this.afiliadoService.consultar(request.getParameter("distribuidor")));
+					st_dist = request.getParameter("distribuidor");
 				}
+				request.setAttribute("afiliado", this.afiliadoService.consultar(st_dist));
+				request.getSession().setAttribute("saldoMvtos", movService.consultarSaldo(st_dist));
 				request.setAttribute("listaAlimentos", this.productoService.listar("1"));
 				request.setAttribute("listaPiel", this.productoService.listar("2"));
 				request.setAttribute("listaCapilar", this.productoService.listar("3"));
@@ -70,7 +73,6 @@ public class IndexPedido extends HttpServlet {
 				recurso = RecursosEnum.FW_INGRESO_PEDIDO_AFILIADO.getRecurso();
 
 				request.setAttribute("afiliado", this.afiliadoService.consultar(request.getParameter("cedula")));
-
 				request.setAttribute("listaAlimentos", this.productoService.listar("1"));
 				request.setAttribute("listaPiel", this.productoService.listar("2"));
 				request.setAttribute("listaCapilar", this.productoService.listar("3"));
@@ -83,14 +85,14 @@ public class IndexPedido extends HttpServlet {
 				break;
 			case 'Q':
 				recurso = RecursosEnum.FW_NUEVO_INGRESO_PEDIDO.getRecurso();
-				String st_dist = "";
+				st_dist = "";
 				if (UsuarioHelper.getRol() == '2') {
 					st_dist = UsuarioHelper.getUsuario();
 				} else {
 					st_dist = request.getParameter("distribuidor");
 				}
 				request.setAttribute("afiliado", this.afiliadoService.consultar(st_dist));
-				request.setAttribute("saldoMvtos", movService.consultarSaldo(st_dist));
+				request.getSession().setAttribute("saldoMvtos", movService.consultarSaldo(st_dist));
 				request.setAttribute("listaAlimentos", this.productoService.listar("1"));
 				request.setAttribute("listaPiel", this.productoService.listar("2"));
 				request.setAttribute("listaCapilar", this.productoService.listar("3"));

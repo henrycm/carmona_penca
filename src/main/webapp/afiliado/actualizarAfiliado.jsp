@@ -154,7 +154,7 @@ Código del Empresario: <input name="codigoEmpresario" type="text"
 								</select> <input name="numeroIdentificacion" type="text" size="13"
 									value="<c:out value='${afiliado.cedula}'/>" maxlength="13" />
 								</td>
-								<td>Fecha de Nac: <input name="fechaNacimiento" type="text"
+								<td>Fecha de Nac: <input name="fechaNacimiento" type="text" readonly="readonly"
 									class="ui-datepicker-calendar" id="fecha" size="15"
 									value="<fmt:formatDate pattern='yyyy-MM-dd' 
             value='${afiliado.fechaNacimiento}' />" /></td>

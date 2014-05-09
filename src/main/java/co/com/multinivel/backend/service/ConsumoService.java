@@ -47,6 +47,9 @@ public abstract interface ConsumoService {
 
 	public abstract List<Object> listarConsumosProducto(ConsumoDTO paramConsumoDTO)
 			throws MultinivelServiceException;
+
+	public BigDecimal consultarConsumoTotalAfiliadoPeriodo(String periodo, String afiliado)
+			throws MultinivelServiceException;
 }
 
 /*

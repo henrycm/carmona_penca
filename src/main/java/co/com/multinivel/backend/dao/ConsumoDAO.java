@@ -44,6 +44,9 @@ public abstract interface ConsumoDAO {
 
 	public abstract List<Object> listarConsumosProducto(ConsumoDTO paramConsumoDTO)
 			throws MultinivelDAOException;
+
+	public BigDecimal consultarConsumoTotalAfiliadoPeriodo(String periodo, String afiliado)
+			throws MultinivelDAOException;
 }
 
 /*

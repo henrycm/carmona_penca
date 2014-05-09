@@ -102,8 +102,8 @@ h1 {
 						value="<c:out value="${afiliado.ciudad}"/>" /></td>
 				</tr>
 				<tr>
-					<td>Saldo disponible:</td>
-					<td><input name="saldo" type="text" value="${saldoMvtos}"
+					<td>Consumo periodo:</td>
+					<td><input name="saldo" type="text" value="${saldoAfiliado}"
 						readonly="readonly" /></td>
 					<td><input name="fechaConsumo" type="hidden" size="20"
 						value="<c:out value="${fechaConsumo}"/>" /></td>

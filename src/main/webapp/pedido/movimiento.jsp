@@ -12,12 +12,12 @@
 <link rel="StyleSheet" href="${ctx}/bootstrap/css/bootstrap.css"></link>
 <link rel="stylesheet" href="${ctx}/css/multinivel.css">
 <script type="text/javascript">
-$(document).ready(function() {
-	$("#distribuidor").change(function() {
-		$(this).closest("form").attr("action", "inicio");
-		$(this).closest("form").submit();
+	$(document).ready(function() {
+		$("#distribuidor").change(function() {
+			$(this).closest("form").attr("action", "inicio");
+			$(this).closest("form").submit();
+		});
 	});
-});
 </script>
 </head>
 <body>
@@ -33,14 +33,16 @@ $(document).ready(function() {
 							required="required">
 							<option value="">--Seleccionar--</option>
 							<c:forEach items="${listaDistribuidores}" var="d">
-								<option value="${d.cedula}">${d.nombre} ${d.apellido}</option>
+								<c:if test="${movimiento.distribuidor eq d.cedula}">
+									<option value="${d.cedula}" selected="selected">${d.cedula}
+										- ${d.nombre} ${d.apellido}</option>
+								</c:if>
+								<c:if test="${movimiento.distribuidor ne d.cedula}">
+									<option value="${d.cedula}">${d.cedula} - ${d.nombre}
+										${d.apellido}</option>
+								</c:if>
 							</c:forEach>
 						</form:select>
-					</c:if>
-					<c:if test="${not empty distribuidor}">
-						<form:hidden path="distribuidor" />
-						<input type="text" readonly="readonly"
-							value="${${distribuidor.nombre} ${${distribuidor.nombre}">
 					</c:if>
 				</div>
 				<div class="form-group">
@@ -50,7 +52,7 @@ $(document).ready(function() {
 				</div>
 				<div class="form-group">
 					<button type="submit" class="btn btn-primary btn-sm" value="Check">Guardar
-					</button>
+						Abono</button>
 				</div>
 			</fieldset>
 		</form:form>

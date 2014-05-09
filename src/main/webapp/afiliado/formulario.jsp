@@ -56,7 +56,7 @@
 		$("#fecha").datepicker({
 			changeMonth : true,
 			changeYear : true,
-			yearRange : '1940:2010',
+			yearRange : '1940:2015',
 			dateFormat : 'yy-mm-dd'
 		});
 		$("#fecha").datepicker("option", "showAnim", "drop");
@@ -172,7 +172,7 @@
 											maxlength="13" />
 										</td>
 										<td width="25%">Fecha de Nac: <input
-											name="fechaNacimiento" type="text"
+											name="fechaNacimiento" type="text" readonly="readonly"
 											class="ui-datepicker-calendar" id="fecha" size="10"
 											maxlength="10" /></td>
 									</tr>

@@ -103,6 +103,9 @@ Linea de Productos
   
    <td colspan="4" align="right">
    
+     TOTAL CONSUMO PERIODO :
+     <input name="totalConsumo" value="<c:out value='${saldoAfiliado}'/>" readonly="readonly" />&nbsp;&nbsp;&nbsp;
+     
       TOTAL PEDIDO :
      <input name="totalPedido" value="<c:out value='${totalConsumo}'/>" readonly="readonly" />&nbsp;&nbsp;&nbsp;
 	 

@@ -10,6 +10,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import co.com.multinivel.backend.model.Mvtos_Cont_Distribuidor;
@@ -35,18 +36,13 @@ public class MovimientoController {
 			{
 				model.addAttribute("listaDistribuidores",
 						afiliadoService.listarDistribuidores());
+				if (m.getDistribuidor() != null)
+				{
+					List<Mvtos_Cont_Distribuidor> l = mvtosService.consultar(m.getDistribuidor());
+					model.addAttribute("movimientos", l);
+				}
 			}
-			else
-			{
-				model.addAttribute("distribuidor",
-						afiliadoService.consultar(UsuarioHelper.getUsuario()));
-				m.setDistribuidor(UsuarioHelper.getUsuario());
-			}
-			if (m.getDistribuidor() != null)
-			{
-				List<Mvtos_Cont_Distribuidor> l = mvtosService.consultar(m.getDistribuidor());
-				model.addAttribute("movimientos", l);
-			}
+			model.addAttribute("movimiento", m);
 		} catch (MultinivelServiceException e) {
 			model.addAttribute("error", e.getMessage());
 		}
@@ -57,6 +53,9 @@ public class MovimientoController {
 	public String guardar(@ModelAttribute("movimiento") Mvtos_Cont_Distribuidor m, ModelMap model,
 			final RedirectAttributes ra)
 	{
+		/**
+		 * Tipo 1 es el abono.
+		 */
 		m.setTipo(1);
 		m.setFecha(new Date());
 		mvtosService.guardar(m);

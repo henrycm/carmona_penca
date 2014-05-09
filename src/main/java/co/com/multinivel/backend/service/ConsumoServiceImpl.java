@@ -5,11 +5,16 @@ import java.util.List;
 
 import javax.ejb.EJB;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import co.com.multinivel.backend.dao.ConsumoDAO;
+import co.com.multinivel.backend.dao.InventarioDistribuidorDAO;
 import co.com.multinivel.backend.model.Afiliado;
 import co.com.multinivel.backend.model.Consumo;
+import co.com.multinivel.backend.model.DetConsumo;
+import co.com.multinivel.backend.model.InventarioDistribuidor;
+import co.com.multinivel.backend.model.InventarioDistribuidorPK;
 import co.com.multinivel.shared.dto.ConsumoDTO;
 import co.com.multinivel.shared.exception.MultinivelDAOException;
 import co.com.multinivel.shared.exception.MultinivelServiceException;
@@ -18,11 +23,30 @@ import co.com.multinivel.shared.exception.MultinivelServiceException;
 public class ConsumoServiceImpl implements ConsumoService {
 	@EJB
 	private ConsumoDAO consumoDAO;
+	@Autowired
+	private InventarioDistribuidorDAO invDist;
 
 	public boolean ingresar(Consumo consumo) throws MultinivelServiceException {
 		boolean retorno = false;
 		try {
 			retorno = this.consumoDAO.ingresar(consumo);
+
+			for (DetConsumo dc : consumo.getTDetConsumos())
+			{
+				InventarioDistribuidor iv = invDist.findOne(new InventarioDistribuidorPK(consumo
+						.getDistribuidor(),
+						dc.getCodigoProducto()));
+				if (iv == null)
+				{
+					iv = new InventarioDistribuidor(new InventarioDistribuidorPK(
+							consumo.getDistribuidor(),
+							dc.getCodigoProducto()));
+				}
+				iv.setCantidad(iv.getCantidad() - dc.getCantidad());
+				iv.setValor_total(iv.getValor_total() - dc.getTotalProducto().longValueExact());
+				invDist.save(iv);
+
+			}
 		} catch (MultinivelDAOException e) {
 			e.printStackTrace();
 			throw new MultinivelServiceException(e.getMessage(), getClass());
@@ -86,6 +110,16 @@ public class ConsumoServiceImpl implements ConsumoService {
 			e.printStackTrace();
 		}
 		return saldoDistribuidor;
+	}
+
+	public BigDecimal consultarConsumoTotalAfiliadoPeriodo(String periodo, String afiliado)
+			throws MultinivelServiceException
+	{
+		try {
+			return consumoDAO.consultarConsumoTotalAfiliadoPeriodo(periodo, afiliado);
+		} catch (MultinivelDAOException e) {
+			throw new MultinivelServiceException(e.getMessage(), getClass());
+		}		
 	}
 
 	public Consumo buscar(Consumo consumo) throws MultinivelServiceException {

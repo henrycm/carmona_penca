@@ -33,7 +33,8 @@ public class ConsumoDAOImp implements ConsumoDAO {
 	public boolean ingresar(Consumo consumo) throws MultinivelDAOException {
 		try {
 			this.entityManager.persist(consumo);
-			Query rs1 = this.entityManager.createNativeQuery(" UPDATE t_saldos_pedido_distribuidor SET saldo=(saldo - ?) WHERE  distribuidor=? ");
+			Query rs1 = this.entityManager
+					.createNativeQuery(" UPDATE t_saldos_pedido_distribuidor SET saldo=(saldo - ?) WHERE  distribuidor=? ");
 			long saldo2 = consumo.getTotalpedido().longValue();
 			rs1.setParameter(1, Long.valueOf(saldo2));
 			rs1.setParameter(2, consumo.getDistribuidor());
@@ -110,12 +111,14 @@ public class ConsumoDAOImp implements ConsumoDAO {
 			retorno = result.intValue();
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new MultinivelDAOException("error al realizar la consulta del ultimo pedido del afiliado", getClass());
+			throw new MultinivelDAOException(
+					"error al realizar la consulta del ultimo pedido del afiliado", getClass());
 		}
 		return retorno;
 	}
 
-	public BigDecimal consultarSaldoPorPeriodoDistribuidor(Consumo pedido) throws MultinivelDAOException {
+	public BigDecimal consultarSaldoPorPeriodoDistribuidor(Consumo pedido)
+			throws MultinivelDAOException {
 		BigDecimal totalConsumos = null;
 		try {
 			String sql = "SELECT SUM(X.TOTALPEDIDO)  FROM (SELECT month(p.FECHA)PERIODO, P.*  FROM t_CONSUMOS P   WHERE DISTRIBUIDOR=? )X  WHERE X.PERIODO=  month(getdate())";
@@ -132,7 +135,8 @@ public class ConsumoDAOImp implements ConsumoDAO {
 		return totalConsumos;
 	}
 
-	public BigDecimal consultarSaldoPorPeriodoDeAfiliados(Consumo pedido) throws MultinivelDAOException {
+	public BigDecimal consultarSaldoPorPeriodoDeAfiliados(Consumo pedido)
+			throws MultinivelDAOException {
 		BigDecimal totalConsumos = null;
 		try {
 			String sql = "SELECT SUM(X.TOTALPEDIDO)  FROM (SELECT month(p.FECHA)PERIODO, P.*  FROM t_CONSUMOS P   WHERE DISTRIBUIDOR=? )X  WHERE X.PERIODO=  month(getdate())";
@@ -143,7 +147,8 @@ public class ConsumoDAOImp implements ConsumoDAO {
 			totalConsumos = (BigDecimal) q.getSingleResult();
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new MultinivelDAOException("error al realizar la consultar saldo de afiliados", getClass());
+			throw new MultinivelDAOException("error al realizar la consultar saldo de afiliados",
+					getClass());
 		}
 		if (totalConsumos == null) {
 			totalConsumos = new BigDecimal(0);
@@ -151,8 +156,37 @@ public class ConsumoDAOImp implements ConsumoDAO {
 		return totalConsumos;
 	}
 
+	public BigDecimal consultarConsumoTotalAfiliadoPeriodo(String periodo, String afiliado)
+			throws MultinivelDAOException {
+
+		BigDecimal totalConsumos = null;
+		try {
+			String sql = "Select IsNull(SUM(TotalPedido),0)TotalConsumosPeriodo From T_Consumos \r\n"
+					+
+					"Where Right('00'+Cast(Month(Fecha) As Varchar(2)),2)+'/'+Cast(Year(Fecha) As Varchar(4)) = ? \r\n"
+					+
+					"And Afiliado =?";
+
+			Query q = this.entityManager.createNativeQuery(sql);
+			q.setParameter(1, periodo);
+			q.setParameter(2, afiliado);
+
+			totalConsumos = (BigDecimal) q.getSingleResult();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new MultinivelDAOException(
+					"error al realizar la consultar saldo de afiliados", getClass());
+		}
+		if (totalConsumos == null) {
+			totalConsumos = new BigDecimal(0);
+		}
+		return totalConsumos;
+
+	}
+
 	public Consumo buscar(Consumo pedido) throws MultinivelDAOException {
-		return (Consumo) this.entityManager.find(Consumo.class, Integer.valueOf(pedido.getCodigoConsumo()));
+		return (Consumo) this.entityManager.find(Consumo.class,
+				Integer.valueOf(pedido.getCodigoConsumo()));
 	}
 
 	public List<Consumo> listar(Consumo pedido) throws MultinivelDAOException {
@@ -188,7 +222,8 @@ public class ConsumoDAOImp implements ConsumoDAO {
 		return listaConsumo;
 	}
 
-	public List<Object> calcularConsumosPeriodo(String periodo, String distribuidor) throws MultinivelDAOException {
+	public List<Object> calcularConsumosPeriodo(String periodo, String distribuidor)
+			throws MultinivelDAOException {
 		List<Object> listaPedido = new ArrayList<Object>();
 		String sql = " Select c.Afiliado, a.Nombre+' '+a.Apellido NombreAfiliado, c.Codigo_Consumo, c.Fecha, c.TotalPedido From T_Consumos c "
 				+ "Inner Join T_Afiliados a On c.Afiliado=a.Cedula "
@@ -227,7 +262,8 @@ public class ConsumoDAOImp implements ConsumoDAO {
 		return listaPedido;
 	}
 
-	public List<Object> listarConsumosRed(Afiliado distribuidor, String periodo) throws MultinivelDAOException {
+	public List<Object> listarConsumosRed(Afiliado distribuidor, String periodo)
+			throws MultinivelDAOException {
 		List<Object> lista = new ArrayList<Object>();
 		try {
 
@@ -240,7 +276,8 @@ public class ConsumoDAOImp implements ConsumoDAO {
 
 			String cedula_distribuidor = distribuidor.getCedula();
 
-			Query q = this.entityManager.createNativeQuery(sql).setParameter(1, periodo).setParameter(2, cedula_distribuidor);
+			Query q = this.entityManager.createNativeQuery(sql).setParameter(1, periodo)
+					.setParameter(2, cedula_distribuidor);
 
 			for (Object obj : q.getResultList()) {
 				Object[] objectArray = (Object[]) obj;
@@ -269,7 +306,8 @@ public class ConsumoDAOImp implements ConsumoDAO {
 		List<Object> listaPedido = new ArrayList<Object>();
 		String cedula = null;
 		try {
-			cedula = consumo.getCedulaDistribuidor() != null ? consumo.getCedulaDistribuidor() : consumo.getCedulaAfiliado();
+			cedula = consumo.getCedulaDistribuidor() != null ? consumo.getCedulaDistribuidor()
+					: consumo.getCedulaAfiliado();
 
 			StringBuffer sql = new StringBuffer();
 
@@ -339,11 +377,13 @@ public class ConsumoDAOImp implements ConsumoDAO {
 
 	public boolean eliminar(Consumo pedido) throws MultinivelDAOException {
 		try {
-			Query rs3 = this.entityManager.createNativeQuery(" DELETE FROM T_DET_CONSUMOS  WHERE codigo_consumo=? ");
+			Query rs3 = this.entityManager
+					.createNativeQuery(" DELETE FROM T_DET_CONSUMOS  WHERE codigo_consumo=? ");
 			rs3.setParameter(1, Integer.valueOf(pedido.getCodigoConsumo()));
 			rs3.executeUpdate();
 
-			Query rs2 = this.entityManager.createNativeQuery(" DELETE FROM T_CONSUMOS  WHERE codigo_consumo=? ");
+			Query rs2 = this.entityManager
+					.createNativeQuery(" DELETE FROM T_CONSUMOS  WHERE codigo_consumo=? ");
 			rs2.setParameter(1, Integer.valueOf(pedido.getCodigoConsumo()));
 			rs2.executeUpdate();
 		} catch (Exception e) {
@@ -353,7 +393,8 @@ public class ConsumoDAOImp implements ConsumoDAO {
 		return Boolean.TRUE;
 	}
 
-	public List<Object> listarConsumosPeriodoAEliminar(ConsumoDTO consumo) throws MultinivelDAOException {
+	public List<Object> listarConsumosPeriodoAEliminar(ConsumoDTO consumo)
+			throws MultinivelDAOException {
 		List<Object> listaPedido = new ArrayList<Object>();
 		try {
 			String sql = " Select c.Afiliado, a.Nombre+' '+a.Apellido NombreAfiliado, c.Fecha, c.Codigo_Consumo, c.TotalPedido "
@@ -399,8 +440,11 @@ public class ConsumoDAOImp implements ConsumoDAO {
 		List<Object> listaPedido = new ArrayList<Object>();
 		try {
 			String sql = " Select Distinct c.Codigo_Consumo,  c.TotalPedido, c.Fecha, c.Afiliado, a.NOMBRE+' '+a.APELLIDO NombreAfiliado "
-					+ "From T_Consumos c Inner Join T_Afiliados a On a.Cedula=c.Afiliado Where (a.Nombre like '" + consumo.getNombreAfiliado()
-					+ "%') And (a.Nombre like '" + consumo.getNombreAfiliado() + "%' And a.Apellido like '" + consumo.getApellidoAfiliado() + "%')";
+					+ "From T_Consumos c Inner Join T_Afiliados a On a.Cedula=c.Afiliado Where (a.Nombre like '"
+					+ consumo.getNombreAfiliado()
+					+ "%') And (a.Nombre like '"
+					+ consumo.getNombreAfiliado()
+					+ "%' And a.Apellido like '" + consumo.getApellidoAfiliado() + "%')";
 
 			Query query = this.entityManager.createNativeQuery(sql);
 
@@ -476,7 +520,8 @@ public class ConsumoDAOImp implements ConsumoDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new MultinivelDAOException("error listando consumos por producto:" + e.getMessage(), getClass());
+			throw new MultinivelDAOException("error listando consumos por producto:"
+					+ e.getMessage(), getClass());
 		}
 		System.err.println(listaPedido.size());
 		return listaPedido;
