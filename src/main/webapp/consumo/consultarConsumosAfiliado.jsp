@@ -33,9 +33,9 @@
 							Empresario</th>
 					</tr>
 					<tr>
-						<td>Nombre Empresario: <input name="nombreEmpresario">
+						<td align="right">Nombre Empresario: <input name="nombreEmpresario">
 						</td>
-						<td>Apellido Empresario: <input name="apellidoEmpresario">
+						<td align="left">Apellido Empresario: <input name="apellidoEmpresario">
 						</td>
 					</tr>
 					<tr>

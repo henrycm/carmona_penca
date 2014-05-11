@@ -24,27 +24,21 @@ public class ConsumoServiceImpl implements ConsumoService {
 	@EJB
 	private ConsumoDAO consumoDAO;
 	@Autowired
-	private InventarioDistribuidorDAO invDist;
+	private InventarioDistribuidorDAO invDistDAO;
 
 	public boolean ingresar(Consumo consumo) throws MultinivelServiceException {
 		boolean retorno = false;
 		try {
 			retorno = this.consumoDAO.ingresar(consumo);
 
-			for (DetConsumo dc : consumo.getTDetConsumos())
-			{
-				InventarioDistribuidor iv = invDist.findOne(new InventarioDistribuidorPK(consumo
-						.getDistribuidor(),
-						dc.getCodigoProducto()));
-				if (iv == null)
-				{
-					iv = new InventarioDistribuidor(new InventarioDistribuidorPK(
-							consumo.getDistribuidor(),
-							dc.getCodigoProducto()));
+			for (DetConsumo dc : consumo.getTDetConsumos()) {
+				InventarioDistribuidor iv = invDistDAO.findOne(new InventarioDistribuidorPK(consumo.getDistribuidor(), dc.getCodigoProducto()));
+				if (iv == null) {
+					iv = new InventarioDistribuidor(new InventarioDistribuidorPK(consumo.getDistribuidor(), dc.getCodigoProducto()));
 				}
 				iv.setCantidad(iv.getCantidad() - dc.getCantidad());
 				iv.setValor_total(iv.getValor_total() - dc.getTotalProducto().longValueExact());
-				invDist.save(iv);
+				invDistDAO.save(iv);
 
 			}
 		} catch (MultinivelDAOException e) {
@@ -77,10 +71,8 @@ public class ConsumoServiceImpl implements ConsumoService {
 	public boolean validarSaldoDistribuidor(Consumo consumo) throws MultinivelServiceException {
 		boolean retorno = false;
 		try {
-			BigDecimal saldoAfiliados = this.consumoDAO
-					.consultarSaldoPorPeriodoDeAfiliados(consumo);
-			BigDecimal saldoDistribuidor = this.consumoDAO
-					.consultarSaldoPorPeriodoDeAfiliados(consumo);
+			BigDecimal saldoAfiliados = this.consumoDAO.consultarSaldoPorPeriodoDeAfiliados(consumo);
+			BigDecimal saldoDistribuidor = this.consumoDAO.consultarSaldoPorPeriodoDeAfiliados(consumo);
 			if (saldoAfiliados.intValue() < saldoDistribuidor.intValue()) {
 				retorno = true;
 			}
@@ -90,8 +82,7 @@ public class ConsumoServiceImpl implements ConsumoService {
 		return retorno;
 	}
 
-	public BigDecimal consultarSaldoPorPeriodoDeAfiliados(Consumo consumo)
-			throws MultinivelServiceException {
+	public BigDecimal consultarSaldoPorPeriodoDeAfiliados(Consumo consumo) throws MultinivelServiceException {
 		BigDecimal saldoAfiliados = null;
 		try {
 			saldoAfiliados = this.consumoDAO.consultarSaldoPorPeriodoDeAfiliados(consumo);
@@ -101,8 +92,7 @@ public class ConsumoServiceImpl implements ConsumoService {
 		return saldoAfiliados;
 	}
 
-	public BigDecimal consultarSaldoPorPeriodoDistribuidor(Consumo consumo)
-			throws MultinivelServiceException {
+	public BigDecimal consultarSaldoPorPeriodoDistribuidor(Consumo consumo) throws MultinivelServiceException {
 		BigDecimal saldoDistribuidor = new BigDecimal(0);
 		try {
 			saldoDistribuidor = this.consumoDAO.consultarSaldoPorPeriodoDistribuidor(consumo);
@@ -112,18 +102,12 @@ public class ConsumoServiceImpl implements ConsumoService {
 		return saldoDistribuidor;
 	}
 
-	public BigDecimal consultarConsumoTotalAfiliadoPeriodo(String periodo, String afiliado)
-			throws MultinivelServiceException
-	{
+	public BigDecimal consultarConsumoTotalAfiliadoPeriodo(String periodo, String afiliado) throws MultinivelServiceException {
 		try {
 			return consumoDAO.consultarConsumoTotalAfiliadoPeriodo(periodo, afiliado);
 		} catch (MultinivelDAOException e) {
 			throw new MultinivelServiceException(e.getMessage(), getClass());
-		}		
-	}
-
-	public Consumo buscar(Consumo consumo) throws MultinivelServiceException {
-		return null;
+		}
 	}
 
 	public List<Consumo> listar(Consumo consumo) throws MultinivelServiceException {
@@ -136,8 +120,7 @@ public class ConsumoServiceImpl implements ConsumoService {
 		return lista;
 	}
 
-	public List<Object> listarConsumosRed(Afiliado distribuidor, String periodo)
-			throws MultinivelServiceException {
+	public List<Object> listarConsumosRed(Afiliado distribuidor, String periodo) throws MultinivelServiceException {
 		List<Object> lista = null;
 		try {
 			lista = this.consumoDAO.listarConsumosRed(distribuidor, periodo);
@@ -157,8 +140,7 @@ public class ConsumoServiceImpl implements ConsumoService {
 		return lista;
 	}
 
-	public List<Object> calcularConsumosPeriodo(String periodo, String red)
-			throws MultinivelServiceException {
+	public List<Object> calcularConsumosPeriodo(String periodo, String red) throws MultinivelServiceException {
 		List<Object> lista = null;
 		try {
 			lista = this.consumoDAO.calcularConsumosPeriodo(periodo, red);
@@ -179,8 +161,7 @@ public class ConsumoServiceImpl implements ConsumoService {
 		return retorno;
 	}
 
-	public List<Object> listarConsumosPeriodoAEliminar(ConsumoDTO consumo)
-			throws MultinivelServiceException {
+	public List<Object> listarConsumosPeriodoAEliminar(ConsumoDTO consumo) throws MultinivelServiceException {
 		List<Object> lista = null;
 		try {
 			lista = this.consumoDAO.listarConsumosPeriodoAEliminar(consumo);
@@ -190,8 +171,7 @@ public class ConsumoServiceImpl implements ConsumoService {
 		return lista;
 	}
 
-	public List<Object> listarConsumosAfiliado(ConsumoDTO consumo)
-			throws MultinivelServiceException {
+	public List<Object> listarConsumosAfiliado(ConsumoDTO consumo) throws MultinivelServiceException {
 		List<Object> lista = null;
 		try {
 			lista = this.consumoDAO.listarConsumosAfiliado(consumo);
@@ -201,8 +181,7 @@ public class ConsumoServiceImpl implements ConsumoService {
 		return lista;
 	}
 
-	public List<Object> listarConsumosProducto(ConsumoDTO consumo)
-			throws MultinivelServiceException {
+	public List<Object> listarConsumosProducto(ConsumoDTO consumo) throws MultinivelServiceException {
 		List<Object> lista = null;
 		try {
 			lista = this.consumoDAO.listarConsumosProducto(consumo);
@@ -210,6 +189,16 @@ public class ConsumoServiceImpl implements ConsumoService {
 			throw new MultinivelServiceException(e.getMessage(), getClass());
 		}
 		return lista;
+	}
+
+	@Override
+	public Consumo consultarConsumo(Consumo consumo) throws MultinivelServiceException {
+		try {
+			consumo = this.consumoDAO.consultarConsumo(consumo);
+		} catch (MultinivelDAOException e) {
+			throw new MultinivelServiceException(e.getMessage(), getClass());
+		}
+		return consumo;
 	}
 }
 

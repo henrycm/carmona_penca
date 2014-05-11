@@ -161,8 +161,8 @@ public class AfiliadoFrontController extends HttpServlet {
 				recurso = RecursosEnum.FW_ACTUALIZACION_AFILIADO.getRecurso();
 				request.setAttribute("distribuidores", afiliadoService.listarDistribuidores());
 				request.setAttribute("afiliado", afiliadoConsulta);
-				request.setAttribute("banco", this.bancoService.consultar(afiliadoConsulta.getBanco()));
 				if ((afiliadoConsulta != null) && (afiliadoConsulta.getCedula() != null)) {
+					request.setAttribute("banco", this.bancoService.consultar(afiliadoConsulta.getBanco()));
 					request.setAttribute("patrocinador", this.afiliadoService.consultar(afiliadoConsulta.getCedulaPapa()));
 					List<AfiliadoDTO> listaAfiliado = this.afiliadoService.buscarDistribuidor(afiliadoConsulta.getCedulaDistribuidor(), null);
 					if ((listaAfiliado != null) && (listaAfiliado.size() > 0)) {
@@ -173,6 +173,7 @@ public class AfiliadoFrontController extends HttpServlet {
 					request.setAttribute("accion", "A");
 				} else {
 					request.setAttribute("accion", "C");
+					request.setAttribute("noExisteAfiliado", Boolean.valueOf(true));
 				}
 				request.setAttribute("listaBancos", this.bancoService.listar());
 				request.setAttribute("listaDepartamentos", this.departamentoService.listar());

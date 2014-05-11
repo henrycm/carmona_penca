@@ -26,7 +26,7 @@ public class PedidoDAOImp implements PedidoDAO {
 	public boolean ingresarPedido(Pedido pedido) throws MultinivelDAOException {
 		try {
 			this.entityManager.persist(pedido);
-			Query rs = this.entityManager.createNativeQuery("SELECT SALDO FROM t_saldos_pedido_distribuidor where  distribuidor=?");
+			Query rs = this.entityManager.createNativeQuery("Select Saldo From T_Saldos_Pedido_Distribuidor Where Distribuidor = ?");
 			rs.setParameter(1, pedido.getDistribuidor());
 			BigDecimal saldo;
 			try {
@@ -35,16 +35,17 @@ public class PedidoDAOImp implements PedidoDAO {
 				saldo = null;
 			}
 			if (saldo != null) {
-				Query rs1 = this.entityManager.createNativeQuery(" UPDATE t_saldos_pedido_distribuidor SET saldo=? WHERE    distribuidor=? ");
+				Query rs1 = this.entityManager.createNativeQuery(" Update T_Saldos_Pedido_Distribuidor Set Saldo = ? Where Distribuidor = ?");
 				long saldo2 = (saldo.longValue() < 0L ? 0L : saldo.longValue()) + pedido.getTotalPedido().longValue();
 				rs1.setParameter(1, Long.valueOf(saldo2));
 				rs1.setParameter(2, pedido.getDistribuidor());
 				rs1.executeUpdate();
 			} else {
-				Query rs1 = this.entityManager.createNativeQuery("INSERT INTO t_saldos_pedido_distribuidor(distribuidor,saldo)values(?,?)");
+				Query rs1 = this.entityManager
+						.createNativeQuery("Insert Into T_Saldos_Pedido_Distribuidor(Distribuidor, Saldo, SaldoAbonado)Values(?,?,0)");
 				long saldo2 = 0L + pedido.getTotalPedido().longValue();
-				rs1.setParameter(2, Long.valueOf(saldo2));
 				rs1.setParameter(1, pedido.getDistribuidor());
+				rs1.setParameter(2, Long.valueOf(saldo2));
 				rs1.executeUpdate();
 			}
 		} catch (Exception e) {
@@ -124,17 +125,29 @@ public class PedidoDAOImp implements PedidoDAO {
 		return retorno;
 	}
 
-	public BigDecimal consultarSaldoPorPeriodoDistribuidor(Pedido pedido) throws MultinivelDAOException {
-		BigDecimal saldo = new BigDecimal(0);
+	/*
+	 * public BigDecimal consultarSaldoDistribuidor(Pedido pedido) throws
+	 * MultinivelDAOException { BigDecimal saldo = new BigDecimal(0); try {
+	 * Query rs = this.entityManager.createNativeQuery(
+	 * "Select Saldo From T_Saldos_Pedido_Distribuidor Where Distribuidor = ?");
+	 * rs.setParameter(1, pedido.getDistribuidor()); try { saldo = (BigDecimal)
+	 * rs.getSingleResult(); } catch (Exception e) { saldo = new BigDecimal(0);
+	 * } return saldo; } catch (Exception e) { e.printStackTrace(); throw new
+	 * MultinivelDAOException("error al realizar la busqueda", getClass()); } }
+	 */
+	public BigDecimal consultarValorTotalPedidosPeriodo(String periodo, String distribuidor) throws MultinivelDAOException {
+		BigDecimal valor = new BigDecimal(0);
 		try {
-			Query rs = this.entityManager.createNativeQuery("SELECT SALDO FROM t_saldos_pedido_distribuidor where distribuidor=?");
-			rs.setParameter(1, pedido.getDistribuidor());
+			Query rs = this.entityManager.createNativeQuery("Select IsNull(Sum(TotalPedido),0)TotalPedidos From T_Pedidos "
+					+ "Where Right('00'+Cast(Month(Fecha) As Varchar(2)),2)+'/'+Cast(Year(Fecha) As Varchar(4)) = ? And Distribuidor = ?");
+			rs.setParameter(1, periodo);
+			rs.setParameter(1, distribuidor);
 			try {
-				saldo = (BigDecimal) rs.getSingleResult();
+				valor = (BigDecimal) rs.getSingleResult();
 			} catch (Exception e) {
-				saldo = new BigDecimal(0);
+				valor = new BigDecimal(0);
 			}
-			return saldo;
+			return valor;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new MultinivelDAOException("error al realizar la busqueda", getClass());
@@ -291,7 +304,7 @@ public class PedidoDAOImp implements PedidoDAO {
 			rs2.setParameter(1, Integer.valueOf(pedido.getCodigoPedido()));
 			rs2.executeUpdate();
 
-			Query rs = this.entityManager.createNativeQuery("SELECT SALDO FROM t_saldos_pedido_distribuidor where  distribuidor=?");
+			Query rs = this.entityManager.createNativeQuery("Select Saldo From T_Saldos_Pedido_Distribuidor Where Distribuidor = ?");
 			rs.setParameter(1, pedido.getDistribuidor());
 			BigDecimal saldo;
 			try {
@@ -300,7 +313,7 @@ public class PedidoDAOImp implements PedidoDAO {
 				saldo = new BigDecimal(0);
 			}
 			if ((saldo != null) && (saldo.longValue() > 0L)) {
-				Query rs1 = this.entityManager.createNativeQuery(" UPDATE t_saldos_pedido_distribuidor SET saldo=? WHERE    distribuidor=? ");
+				Query rs1 = this.entityManager.createNativeQuery(" Update T_Saldos_Pedido_Distribuidor Set Saldo = ? Where Distribuidor = ?");
 				long saldo2 = saldo.longValue() - pedido.getTotalPedido().longValue();
 
 				rs1.setParameter(1, Long.valueOf(saldo2));

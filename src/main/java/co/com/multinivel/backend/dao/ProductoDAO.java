@@ -7,28 +7,21 @@ import co.com.multinivel.shared.dto.ProductoDTO;
 import co.com.multinivel.shared.exception.MultinivelDAOException;
 
 public abstract interface ProductoDAO {
-	public abstract void ingresar(Producto paramProducto)
-			throws MultinivelDAOException;
+	public abstract void ingresar(Producto paramProducto) throws MultinivelDAOException;
 
-	public abstract void actualizar(Producto paramProducto)
-			throws MultinivelDAOException;
+	public abstract void actualizar(Producto paramProducto) throws MultinivelDAOException;
 
-	public abstract Producto consultar(String paramString)
-			throws MultinivelDAOException;
+	public abstract Producto consultar(String paramString) throws MultinivelDAOException;
 
-	public abstract void eliminar(Producto paramProducto)
-			throws MultinivelDAOException;
+	public abstract void eliminar(Producto paramProducto) throws MultinivelDAOException;
 
 	public abstract List<ProductoDTO> listar() throws MultinivelDAOException;
 
-	public abstract List<ProductoDTO> listar(String paramString)
-			throws MultinivelDAOException;
+	public abstract List<ProductoDTO> listar(String paramString) throws MultinivelDAOException;
 
-	public abstract List<ProductoDTO> listarParaDistribuidor(String paramString)
-			throws MultinivelDAOException;
+	public abstract List<ProductoDTO> listarParaDistribuidor(String tipoProducto, String distribuidor) throws MultinivelDAOException;
 
-	public abstract List<Object> listarProductoPorcentaje(
-			String paramString) throws MultinivelDAOException;
+	public abstract List<Object> listarProductoPorcentaje(String paramString) throws MultinivelDAOException;
 }
 
 /*

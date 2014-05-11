@@ -84,6 +84,17 @@ style>#accordion {
 		<div>
 			<input name="accion" type="hidden" value="<c:out value='${accion}'/>" />
 
+			<c:if test="${noExisteAfiliado==true}">
+				<table class="tabla">
+					<tr align="center">
+						<td>
+							<h5 style="color: blue">
+								<c:out value="El Afiliado No Existe. Verifique por favor !" />
+							</h5>
+						</td>
+					</tr>
+				</table>
+			</c:if>
 			<c:if test='${afiliado==null}'>
 
 				<table class="tbl-lista">

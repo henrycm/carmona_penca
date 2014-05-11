@@ -1,7 +1,6 @@
 package co.com.multinivel.frontend.consumo;
 
 import java.io.IOException;
-import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -14,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import co.com.multinivel.backend.model.Consumo;
-import co.com.multinivel.backend.model.Pedido;
 import co.com.multinivel.backend.service.ConsumoService;
 import co.com.multinivel.backend.service.PedidoService;
 import co.com.multinivel.shared.helper.ConsumoHelper;
@@ -29,62 +27,36 @@ public class RealizarConsumo extends HttpServlet {
 
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
-		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
-				config.getServletContext());
+		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
 
-	public void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd = null;
 		String recurso = null;
 		try {
-			char accion = request.getParameter("accion") == null ? '*' : request.getParameter(
-					"accion").charAt(0);
-			Consumo pedido = ConsumoHelper.cargarEntidad(request);
+			char accion = request.getParameter("accion") == null ? '*' : request.getParameter("accion").charAt(0);
+			Consumo consumo = ConsumoHelper.cargarEntidad(request);
 
 			recurso = RecursosEnum.FW_INGRESO_CONSUMO_EXITO.getRecurso();
 			switch (accion) {
 			case 'I':
-				if (!this.consumoService.ingresar(pedido)) {
+				if (!this.consumoService.ingresar(consumo)) {
 					request.setAttribute("error", "Datos incompletos");
 					recurso = RecursosEnum.FW_INGRESO_PEDIDO_ERROR.getRecurso();
 				} else {
-					request.setAttribute("codigoConsumo",
-							Integer.valueOf(this.consumoService.ultimoConsumo(pedido)));
+					request.setAttribute("codigoConsumo", Integer.valueOf(this.consumoService.ultimoConsumo(consumo)));
 				}
 				break;
 			case 'A':
-				int saldoAfiliado = this.consumoService.consultarSaldoPorPeriodoDeAfiliados(pedido)
-						.intValue();
-
-				Pedido pedidoDistribuidor = new Pedido();
-				pedidoDistribuidor.setDistribuidor(pedido.getDistribuidor());
-				pedidoDistribuidor.setFecha(new Date());
-				int saldoDistribuidor = this.pedidoService
-						.consultarSaldoPorPeriodoDistribuidor(pedidoDistribuidor) == null ? 0
-						: this.pedidoService.consultarSaldoPorPeriodoDistribuidor(
-								pedidoDistribuidor).intValue();
-
-				int totalConsumo = pedido.getTotalpedido() == null ? 0 : pedido.getTotalpedido()
-						.intValue();
-				if (totalConsumo + saldoAfiliado < saldoDistribuidor) {
-					if (!this.consumoService.ingresar(pedido)) {
-						request.setAttribute("error", "Datos incompletos");
-						recurso = RecursosEnum.FW_INGRESO_CONSUMO_ERROR.getRecurso();
-					} else {
-						request.setAttribute("codigoConsumo",
-								Integer.valueOf(this.consumoService.ultimoConsumo(pedido)));
-					}
-				} else {
-					request.setAttribute(
-							"error",
-							"El saldo del distribuidor es menor al registrado por el afiliado, el distribuidor debe realizar otro pedido.");
+				if (!this.consumoService.ingresar(consumo)) {
+					request.setAttribute("error", "Datos incompletos");
 					recurso = RecursosEnum.FW_INGRESO_CONSUMO_ERROR.getRecurso();
+				} else {
+					request.setAttribute("codigoConsumo", Integer.valueOf(this.consumoService.ultimoConsumo(consumo)));
 				}
 				break;
 			}

@@ -14,9 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
+import co.com.multinivel.backend.model.SaldoPedidoDistribuidor;
 import co.com.multinivel.backend.service.AfiliadoService;
-import co.com.multinivel.backend.service.MovimientosContablesService;
 import co.com.multinivel.backend.service.ProductoService;
+import co.com.multinivel.backend.service.SaldoPedidoDistristribuidorService;
 import co.com.multinivel.shared.helper.UsuarioHelper;
 import co.com.multinivel.shared.util.RecursosEnum;
 
@@ -27,7 +28,7 @@ public class IndexPedido extends HttpServlet {
 	@Autowired
 	private AfiliadoService afiliadoService;
 	@Autowired
-	private MovimientosContablesService movService;
+	private SaldoPedidoDistristribuidorService saldoPedidoDistristribuidorService;
 
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
@@ -51,14 +52,20 @@ public class IndexPedido extends HttpServlet {
 			switch (accion) {
 			case 'I':
 				recurso = RecursosEnum.FW_INGRESO_PEDIDO.getRecurso();
-				String st_dist = "";
+				String distribuidor = "";
 				if (UsuarioHelper.getRol() == '2') {
-					st_dist = UsuarioHelper.getUsuario();
+					distribuidor = UsuarioHelper.getUsuario();
 				} else {
-					st_dist = request.getParameter("distribuidor");
+					distribuidor = request.getParameter("distribuidor");
 				}
-				request.setAttribute("afiliado", this.afiliadoService.consultar(st_dist));
-				request.getSession().setAttribute("saldoMvtos", movService.consultarSaldo(st_dist));
+				SaldoPedidoDistribuidor saldoPedidoDistribuidor = this.saldoPedidoDistristribuidorService.consultarSaldoDistribuidor(distribuidor);
+				if (saldoPedidoDistribuidor == null) {
+					saldoPedidoDistribuidor = new SaldoPedidoDistribuidor();
+					saldoPedidoDistribuidor.setSaldo(0);
+					saldoPedidoDistribuidor.setSaldoAbonado(0);
+				}
+				request.setAttribute("afiliado", this.afiliadoService.consultar(distribuidor));
+				request.getSession().setAttribute("saldosDistribuidor", saldoPedidoDistribuidor);
 				request.setAttribute("listaAlimentos", this.productoService.listar("1"));
 				request.setAttribute("listaPiel", this.productoService.listar("2"));
 				request.setAttribute("listaCapilar", this.productoService.listar("3"));
@@ -85,14 +92,14 @@ public class IndexPedido extends HttpServlet {
 				break;
 			case 'Q':
 				recurso = RecursosEnum.FW_NUEVO_INGRESO_PEDIDO.getRecurso();
-				st_dist = "";
+				distribuidor = "";
 				if (UsuarioHelper.getRol() == '2') {
-					st_dist = UsuarioHelper.getUsuario();
+					distribuidor = UsuarioHelper.getUsuario();
 				} else {
-					st_dist = request.getParameter("distribuidor");
+					distribuidor = request.getParameter("distribuidor");
 				}
-				request.setAttribute("afiliado", this.afiliadoService.consultar(st_dist));
-				request.getSession().setAttribute("saldoMvtos", movService.consultarSaldo(st_dist));
+				request.setAttribute("afiliado", this.afiliadoService.consultar(distribuidor));
+				request.getSession().setAttribute("saldosDistribuidor", saldoPedidoDistristribuidorService.consultarSaldoDistribuidor(distribuidor));
 				request.setAttribute("listaAlimentos", this.productoService.listar("1"));
 				request.setAttribute("listaPiel", this.productoService.listar("2"));
 				request.setAttribute("listaCapilar", this.productoService.listar("3"));

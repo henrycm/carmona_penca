@@ -36,7 +36,7 @@
 
 				<table align="center" class="tbl-lista" width="80%">
 					<tr>
-						<th colspan="2">Eliminar Consumo periodo</th>
+						<th colspan="2">Eliminar Consumos periodo</th>
 					</tr>
 					<tr>
 						<td>Periodo: <select name="mes">
@@ -45,15 +45,19 @@
 						</td>
 					</tr>
 				</table>
-				<c:if test="${consumos!=null}">
-					<table align="center" class="tbl-lista" width="90%" border="1">
-						<tr>
-							<th>Codigo</th>
-							<th>Fecha</th>
-							<th>Nombre</th>
-							<th>Total Pedido</th>
-							<th>Eliminar Pedido</th>
-						</tr>
+
+				<table align="center" class="tbl-lista" width="90%" border="1">
+					<tr>
+						<th colspan="5">Lista de Consumos</th>
+					</tr>
+					<tr>
+						<th>Codigo</th>
+						<th>Fecha</th>
+						<th>Nombre</th>
+						<th>Total Consumo</th>
+						<th>Eliminar Consumo</th>
+					</tr>
+					<c:if test="${consumos!=null}">
 						<c:forEach var='consumo' items='${consumos}'>
 							<tr>
 								<td><c:out value='${consumo.codigoConsumo}' /></td>
@@ -66,8 +70,8 @@
 										Consumo</A></td>
 							</tr>
 						</c:forEach>
-					</table>
-				</c:if>
+					</c:if>
+				</table>
 			</form>
 		</div>
 	</div>

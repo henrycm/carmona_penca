@@ -133,13 +133,20 @@ public class ProductoDAOImp implements ProductoDAO {
 		return lista;
 	}
 
-	public List<ProductoDTO> listarParaDistribuidor(String tipoProducto) throws MultinivelDAOException {
+	public List<ProductoDTO> listarParaDistribuidor(String tipoProducto, String distribuidor) throws MultinivelDAOException {
 		List<ProductoDTO> lista = null;
 		try {
-			String sql = "SELECT  P.CODIGO,\t\t P.NOMBRE_PRODUCTO, CAST((P.PRECIO_AFILIADO)-(P.PRECIO_AFILIADO *  (CAST(A.VALOR AS DECIMAL(10,0))/100)) as Decimal(11,0)),  P.PRECIO_AFILIADO,  T.TIPOPRODUCTO,P.TIPO   FROM T_PRODUCTOS P,  T_TIPOS_PRODUCTOS T, (SELECT VALOR FROM T_PARAMETROS WHERE NOMBRE_PARAMETRO='PORC_GAN_PDTO_PROVEE')A   WHERE T.CODIGO= P.TIPO   AND T.CODIGO=?   ORDER BY T.TIPOPRODUCTO ";
+			String sql = " Select Pr.Codigo, Pr.Nombre_Producto, Pr.Precio_Afiliado, "
+					+ "Cast((Pr.Precio_Afiliado)-(Pr.Precio_Afiliado * (Cast(p.Valor As Numeric(11,0))/100))As Numeric(11,0))PrecioDistribuidor, "
+					+ "Pr.Tipo, Tp.TipoProducto, IsNull(Iv.Cantidad,0)Cantidad "
+					+ "From T_Productos Pr Inner Join T_Tipos_Productos Tp On Pr.Tipo=Tp.Codigo "
+					+ "Inner Join T_Parametros p On p.Nombre_Parametro='PORC_GAN_PDTO_PROVEE' "
+					+ "Left Join T_Inventario_Distribuidor Iv On Pr.Codigo=Iv.Cod_Producto And Iv.Distribuidor = ? "
+					+ "Where Tp.Codigo = ? Order By Tp.Codigo Asc, Pr.Nombre_Producto Asc ";
 
 			Query q = this.entityManager.createNativeQuery(sql);
-			q.setParameter(1, tipoProducto);
+			q.setParameter(1, distribuidor);
+			q.setParameter(2, tipoProducto);
 			List<?> result = q.getResultList();
 			int s = result.size();
 			lista = new ArrayList<ProductoDTO>();
@@ -148,17 +155,21 @@ public class ProductoDAOImp implements ProductoDAO {
 				Object[] objectArray = (Object[]) obj;
 				String codigo = (String) objectArray[0];
 				String nombre = (String) objectArray[1];
-				BigDecimal precioDist = (BigDecimal) objectArray[2];
-				BigDecimal precioAfil = (BigDecimal) objectArray[3];
-				String tipo = (String) objectArray[4];
-				String codigoTipo = (String) objectArray[5];
+				BigDecimal precioAfil = (BigDecimal) objectArray[2];
+				BigDecimal precioDist = (BigDecimal) objectArray[3];
+				String codigoTipo = (String) objectArray[4];
+				String tipo = (String) objectArray[5];
+				int invDistribuidor = Integer.parseInt(objectArray[6].toString());
+
 				ProductoDTO p = new ProductoDTO();
 				p.setCodigo(codigo);
 				p.setNombreProducto(nombre);
 				p.setPrecioAfiliado(precioAfil);
 				p.setPrecioDistribuidor(precioDist);
-				p.setTipo(tipo);
 				p.setCodigoTipo(codigoTipo);
+				p.setTipo(tipo);
+				p.setDisponibilidadDist(invDistribuidor);
+
 				lista.add(p);
 			}
 		} catch (Exception e) {

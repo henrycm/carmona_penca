@@ -18,18 +18,17 @@ public abstract interface PedidoDAO {
 
 	public abstract int ultimoPedido(Pedido paramPedido) throws MultinivelDAOException;
 
-	public abstract BigDecimal consultarSaldoPorPeriodoDistribuidor(Pedido paramPedido)
-			throws MultinivelDAOException;
+	//public abstract BigDecimal consultarSaldoDistribuidor(Pedido paramPedido) throws MultinivelDAOException;
 
 	public abstract boolean actualizar(Pedido paramPedido) throws MultinivelDAOException;
 
 	public abstract Pedido buscar(Pedido paramPedido) throws MultinivelDAOException;
 
-	public abstract List<Object> listarPorPeriodo(PedidoDTO paramPedidoDTO)
-			throws MultinivelDAOException;
+	public abstract List<Object> listarPorPeriodo(PedidoDTO paramPedidoDTO) throws MultinivelDAOException;
 
-	public abstract List<Object> listarPedidosAEliminar(PedidoDTO paramPedidoDTO)
-			throws MultinivelDAOException;
+	public abstract List<Object> listarPedidosAEliminar(PedidoDTO paramPedidoDTO) throws MultinivelDAOException;
+
+	public abstract BigDecimal consultarValorTotalPedidosPeriodo(String periodo, String distribuidor) throws MultinivelDAOException;
 }
 
 /*

@@ -29,22 +29,18 @@ public class RealizarPedido extends HttpServlet {
 
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
-		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
-				config.getServletContext());
+		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
 
-	public void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd = null;
 		String recurso = null;
 		try {
-			char accion = request.getParameter("accion") == null ? '*' : request.getParameter(
-					"accion").charAt(0);
+			char accion = request.getParameter("accion") == null ? '*' : request.getParameter("accion").charAt(0);
 			Pedido pedido = PedidoHelper.cargarEntidad(request);
 
 			recurso = RecursosEnum.FW_INGRESO_PEDIDO_EXITO.getRecurso();
@@ -55,11 +51,9 @@ public class RealizarPedido extends HttpServlet {
 					recurso = RecursosEnum.FW_INGRESO_PEDIDO_ERROR.getRecurso();
 				} else {
 					CorreoUtil.enviarCorreo("ENVIO PEDIDO N." + pedido.getCodigoPedido(),
-							"Se realizo el pedido para el distribuidor:" + pedido.getAfiliado()
-									+ " por valor de :" + pedido.getTotalPedido() + " periodo:"
-									+ pedido.getFecha());
-					request.setAttribute("codigoPedido",
-							Integer.valueOf(this.pedidoService.ultimoPedido(pedido)));
+							"Se realizo el pedido para el distribuidor:" + pedido.getAfiliado() + " por valor de :" + pedido.getTotalPedido()
+									+ " periodo:" + pedido.getFecha());
+					request.setAttribute("codigoPedido", Integer.valueOf(this.pedidoService.ultimoPedido(pedido)));
 				}
 				break;
 			case 'A':
@@ -67,29 +61,17 @@ public class RealizarPedido extends HttpServlet {
 				consumo.setAfiliado(pedido.getAfiliado());
 				consumo.setDistribuidor(pedido.getDistribuidor());
 
-				int saldoAfiliado = this.consumoService
-						.consultarSaldoPorPeriodoDeAfiliados(consumo).intValue();
-				int saldoDistribuidor = this.pedidoService.consultarSaldoPorPeriodoDistribuidor(
-						pedido).intValue();
-				int totalPedido = pedido.getTotalPedido().intValue();
-				if (totalPedido + saldoAfiliado < saldoDistribuidor) {
-					if (!this.pedidoService.ingresarPedido(pedido)) {
-						request.setAttribute("error", "Datos incompletos");
-						recurso = RecursosEnum.FW_INGRESO_PEDIDO_ERROR.getRecurso();
-					} else {
-						CorreoUtil.enviarCorreo("REGISTRO CONSUMO N." + pedido.getCodigoPedido(),
-								"Se registro el consumo para el afiliado:" + pedido.getAfiliado()
-										+ " por valor de :" + pedido.getTotalPedido() + " periodo:"
-										+ pedido.getFecha());
-
-						request.setAttribute("codigoPedido",
-								Integer.valueOf(this.pedidoService.ultimoPedido(pedido)));
-					}
-				} else {
-					request.setAttribute("error",
-							"El saldo del distribuidor es menor al registro de afiliados ingresados");
+				if (!this.pedidoService.ingresarPedido(pedido)) {
+					request.setAttribute("error", "Datos incompletos");
 					recurso = RecursosEnum.FW_INGRESO_PEDIDO_ERROR.getRecurso();
+				} else {
+					CorreoUtil.enviarCorreo("REGISTRO CONSUMO N." + pedido.getCodigoPedido(),
+							"Se registro el consumo para el afiliado:" + pedido.getAfiliado() + " por valor de :" + pedido.getTotalPedido()
+									+ " periodo:" + pedido.getFecha());
+
+					request.setAttribute("codigoPedido", Integer.valueOf(this.pedidoService.ultimoPedido(pedido)));
 				}
+
 				break;
 			case 'Q':
 				if (!this.pedidoService.ingresarPedido(pedido)) {
@@ -97,11 +79,9 @@ public class RealizarPedido extends HttpServlet {
 					recurso = RecursosEnum.FW_INGRESO_PEDIDO_ERROR.getRecurso();
 				} else {
 					CorreoUtil.enviarCorreo("ENVIO PEDIDO N." + pedido.getCodigoPedido(),
-							"Se realizo el pedido para el distribuidor:" + pedido.getAfiliado()
-									+ " por valor de :" + pedido.getTotalPedido() + " periodo:"
-									+ pedido.getFecha());
-					request.setAttribute("codigoPedido",
-							Integer.valueOf(this.pedidoService.ultimoPedido(pedido)));
+							"Se realizo el pedido para el distribuidor:" + pedido.getAfiliado() + " por valor de :" + pedido.getTotalPedido()
+									+ " periodo:" + pedido.getFecha());
+					request.setAttribute("codigoPedido", Integer.valueOf(this.pedidoService.ultimoPedido(pedido)));
 				}
 				break;
 			}

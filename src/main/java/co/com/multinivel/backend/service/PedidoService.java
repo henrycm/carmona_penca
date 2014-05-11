@@ -16,8 +16,7 @@ public abstract interface PedidoService {
 
 	public abstract int ultimoPedido(Pedido paramPedido) throws MultinivelServiceException;
 
-	public abstract BigDecimal consultarSaldoPorPeriodoDistribuidor(Pedido paramPedido)
-			throws MultinivelServiceException;
+	//public abstract BigDecimal consultarSaldoDistribuidor(Pedido paramPedido) throws MultinivelServiceException;
 
 	public abstract boolean actualizar(Pedido paramPedido) throws MultinivelServiceException;
 
@@ -25,11 +24,11 @@ public abstract interface PedidoService {
 
 	public abstract List<Pedido> listar(Pedido paramPedido) throws MultinivelServiceException;
 
-	public abstract List<Object> listarPorPeriodo(PedidoDTO paramPedidoDTO)
-			throws MultinivelServiceException;
+	public abstract List<Object> listarPorPeriodo(PedidoDTO paramPedidoDTO) throws MultinivelServiceException;
 
-	public abstract List<Object> listarPedidosAEliminar(PedidoDTO paramPedidoDTO)
-			throws MultinivelServiceException;
+	public abstract List<Object> listarPedidosAEliminar(PedidoDTO paramPedidoDTO) throws MultinivelServiceException;
+
+	public abstract BigDecimal consultarValorTotalPedidosPeriodo(String periodo, String distribuidor) throws MultinivelServiceException;
 }
 
 /*

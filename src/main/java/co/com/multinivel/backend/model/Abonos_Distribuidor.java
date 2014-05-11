@@ -10,16 +10,16 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "t_mvtos_cont_distribuidor")
-public class Mvtos_Cont_Distribuidor implements Serializable {
+@Table(name = "t_abonos_distribuidor")
+public class Abonos_Distribuidor implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	private String distribuidor;
-	private double valor;
-	private int tipo;
+	private double saldoAbonado;
+	private String usuario;
 	private Date fecha;
 
 	public long getId() {
@@ -38,20 +38,20 @@ public class Mvtos_Cont_Distribuidor implements Serializable {
 		this.distribuidor = distribuidor;
 	}
 
-	public double getValor() {
-		return valor;
+	public double getSaldoAbonado() {
+		return saldoAbonado;
 	}
 
-	public void setValor(double valor) {
-		this.valor = valor;
+	public void setSaldoAbonado(double saldoAbonado) {
+		this.saldoAbonado = saldoAbonado;
 	}
 
-	public int getTipo() {
-		return tipo;
+	public String getUsuario() {
+		return usuario;
 	}
 
-	public void setTipo(int tipo) {
-		this.tipo = tipo;
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
 	}
 
 	public Date getFecha() {

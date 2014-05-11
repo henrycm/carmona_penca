@@ -17,36 +17,27 @@ public abstract interface ConsumoDAO {
 
 	public abstract int ultimoConsumo(Consumo paramConsumo) throws MultinivelDAOException;
 
-	public abstract BigDecimal consultarSaldoPorPeriodoDistribuidor(Consumo paramConsumo)
-			throws MultinivelDAOException;
+	public abstract BigDecimal consultarSaldoPorPeriodoDistribuidor(Consumo paramConsumo) throws MultinivelDAOException;
 
-	public abstract BigDecimal consultarSaldoPorPeriodoDeAfiliados(Consumo paramConsumo)
-			throws MultinivelDAOException;
+	public abstract BigDecimal consultarSaldoPorPeriodoDeAfiliados(Consumo paramConsumo) throws MultinivelDAOException;
 
-	public abstract Consumo buscar(Consumo paramConsumo) throws MultinivelDAOException;
+	public abstract List<Object> calcularConsumosPeriodo(String paramString1, String paramString2) throws MultinivelDAOException;
 
-	public abstract List<Object> calcularConsumosPeriodo(String paramString1, String paramString2)
-			throws MultinivelDAOException;
+	public abstract List<Object> listarConsumosRed(Afiliado paramAfiliado, String paramString) throws MultinivelDAOException;
 
-	public abstract List<Object> listarConsumosRed(Afiliado paramAfiliado, String paramString)
-			throws MultinivelDAOException;
-
-	public abstract List<Object> listarConsumosPeriodo(ConsumoDTO paramConsumoDTO)
-			throws MultinivelDAOException;
+	public abstract List<Object> listarConsumosPeriodo(ConsumoDTO paramConsumoDTO) throws MultinivelDAOException;
 
 	public abstract boolean eliminar(Consumo paramConsumo) throws MultinivelDAOException;
 
-	public abstract List<Object> listarConsumosPeriodoAEliminar(ConsumoDTO paramConsumoDTO)
-			throws MultinivelDAOException;
+	public abstract List<Object> listarConsumosPeriodoAEliminar(ConsumoDTO paramConsumoDTO) throws MultinivelDAOException;
 
-	public abstract List<Object> listarConsumosAfiliado(ConsumoDTO paramConsumoDTO)
-			throws MultinivelDAOException;
+	public abstract List<Object> listarConsumosAfiliado(ConsumoDTO paramConsumoDTO) throws MultinivelDAOException;
 
-	public abstract List<Object> listarConsumosProducto(ConsumoDTO paramConsumoDTO)
-			throws MultinivelDAOException;
+	public abstract List<Object> listarConsumosProducto(ConsumoDTO paramConsumoDTO) throws MultinivelDAOException;
 
-	public BigDecimal consultarConsumoTotalAfiliadoPeriodo(String periodo, String afiliado)
-			throws MultinivelDAOException;
+	public abstract BigDecimal consultarConsumoTotalAfiliadoPeriodo(String periodo, String afiliado) throws MultinivelDAOException;
+
+	public abstract Consumo consultarConsumo(Consumo consumo) throws MultinivelDAOException;
 }
 
 /*

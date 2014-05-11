@@ -30,7 +30,7 @@
 				</div>
 				<table align="center" class="tbl-lista" width="70%">
 					<tr>
-						<th>Eliminar pedido periodo</th>
+						<th>Eliminar pedidos periodo</th>
 					</tr>
 					<tr>
 						<td>Periodo: <select name="mes">
@@ -40,14 +40,17 @@
 						</td>
 					</tr>
 				</table>
-				<c:if test="${pedidos!=null}">
-					<table align="center" class="tbl-lista" width="90%" border="1">
-						<tr>
-							<th>Codigo</th>
-							<th>Fecha</th>
-							<th>Total Pedido</th>
-							<th>Eliminar Pedido</th>
-						</tr>
+				<table align="center" class="tbl-lista" width="90%" border="1">
+					<tr>
+						<th colspan="4">Lista de Pedidos</th>
+					</tr>
+					<tr>
+						<th>Codigo</th>
+						<th>Fecha</th>
+						<th>Total Pedido</th>
+						<th>Eliminar Pedido</th>
+					</tr>
+					<c:if test="${pedidos!=null}">
 						<c:forEach var='pedido' items='${pedidos}'>
 							<tr>
 								<td><c:out value='${pedido.codigoPedido}' /></td>
@@ -59,8 +62,8 @@
 										Pedido </a></td>
 							</tr>
 						</c:forEach>
-					</table>
-				</c:if>
+					</c:if>
+				</table>
 			</form>
 		</div>
 	</div>

@@ -25,40 +25,32 @@ public class BuscadorAfiliado extends HttpServlet {
 
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
-		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
-				config.getServletContext());
+		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd = null;
 		String recurso = null;
 		try {
-			char accion = request.getParameter("accion") == null ? '*' : request.getParameter(
-					"accion").charAt(0);
+			char accion = request.getParameter("accion") == null ? '*' : request.getParameter("accion").charAt(0);
 
 			recurso = RecursosEnum.FW_EMERGENTE_AFILIADO.getRecurso();
 			switch (accion) {
 			case 'C':
 
-				request.setAttribute(
-						"listaAfiliados",
-						this.afiliadoService.buscar(request.getParameter("documento"),
-								request.getParameter("nombre"), null));
+				request.setAttribute("listaAfiliados",
+						this.afiliadoService.buscar(request.getParameter("documento"), request.getParameter("nombre"), null));
 
 				recurso = RecursosEnum.FW_EMERGENTE_AFILIADO.getRecurso();
 				break;
 			case 'P':
 				if (UsuarioHelper.getRol() == '2') {
-					request.setAttribute(
-							"listaAfiliados",
-							this.afiliadoService.buscar(request.getParameter("documento"),
-									request.getParameter("nombre"), UsuarioHelper.getUsuario()));
+					request.setAttribute("listaAfiliados", this.afiliadoService.buscar(request.getParameter("documento"),
+							request.getParameter("nombre"), UsuarioHelper.getUsuario()));
 				} else {
 					request.setAttribute(
 							"listaAfiliados",
-							this.afiliadoService.buscar(request.getParameter("documento"),
-									request.getParameter("nombre"),
+							this.afiliadoService.buscar(request.getParameter("documento"), request.getParameter("nombre"),
 									request.getParameter("distribuidor")));
 				}
 				recurso = RecursosEnum.FW_BUSCAR_AFILIADO_PEDIDO.getRecurso();
@@ -72,10 +64,8 @@ public class BuscadorAfiliado extends HttpServlet {
 				request.setAttribute("distribuidor", request.getParameter("distribuidor"));
 
 				request.setAttribute("periodo", periodo);
-				request.setAttribute(
-						"listaAfiliados",
-						this.afiliadoService.buscar(request.getParameter("documento"),
-								request.getParameter("nombre"), null));
+				request.setAttribute("listaAfiliados",
+						this.afiliadoService.buscar(request.getParameter("documento"), request.getParameter("nombre"), null));
 				recurso = RecursosEnum.FW_BUSCAR_AFILIADO_CONSUMO.getRecurso();
 			}
 			request.setAttribute("documento", request.getParameter("documento"));

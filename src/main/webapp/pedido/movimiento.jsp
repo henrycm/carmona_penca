@@ -22,7 +22,7 @@
 </head>
 <body>
 	<div align="center">
-		<div align="center" class="titulo">Ingreso de Abonos</div>
+		<div align="center" class="titulo">Ingreso de Abonos Distribuidor</div>
 		<form:form class="form-inline" action="guardar" method="POST"
 			commandName="movimiento">
 			<input name="accion" type="hidden" value="M">
@@ -34,19 +34,19 @@
 							<option value="">--Seleccionar--</option>
 							<c:forEach items="${listaDistribuidores}" var="d">
 								<c:if test="${movimiento.distribuidor eq d.cedula}">
-									<option value="${d.cedula}" selected="selected">${d.cedula}
-										- ${d.nombre} ${d.apellido}</option>
+									<option value="${d.cedula}" selected="selected">${d.nombre}
+										${d.apellido} -- ${d.cedula}</option>
 								</c:if>
 								<c:if test="${movimiento.distribuidor ne d.cedula}">
-									<option value="${d.cedula}">${d.cedula} - ${d.nombre}
-										${d.apellido}</option>
+									<option value="${d.cedula}">${d.nombre}${d.apellido}
+										-- ${d.cedula}</option>
 								</c:if>
 							</c:forEach>
 						</form:select>
 					</c:if>
 				</div>
 				<div class="form-group">
-					<form:input class="form-control input-sm" path="valor"
+					<form:input class="form-control input-sm" path="saldoAbonado"
 						required="required" pattern="\d*" title="Solo numeros"
 						maxlength="8" />
 				</div>
@@ -63,16 +63,16 @@
 					<thead>
 						<tr class="enc-tabla">
 							<th>Fecha</th>
-							<th>Valor</th>
-							<th>Tipo</th>
+							<th>Valor Abono</th>
+							<th>Usuario</th>
 						</tr>
 					</thead>
 					<tbody>
 						<c:forEach var="h" items="${movimientos}">
 							<tr>
 								<td><fmt:formatDate pattern="yyyy-MM-dd" value="${h.fecha}" /></td>
-								<td>${h.valor}</td>
-								<td>${h.tipo == 0 ? 'Pedido' : 'Abono'}</td>
+								<td>${h.saldoAbonado}</td>
+								<td>${h.usuario}</td>
 							</tr>
 						</c:forEach>
 					</tbody>
