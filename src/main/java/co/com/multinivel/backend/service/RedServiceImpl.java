@@ -27,7 +27,7 @@ public class RedServiceImpl implements RedService {
 	}
 
 	public boolean ingresar(Red red) throws MultinivelServiceException {
-		boolean retorno = false;
+		boolean retorno = Boolean.FALSE;
 		try {
 			retorno = this.redDAO.ingresar(red);
 		} catch (MultinivelDAOException e) {

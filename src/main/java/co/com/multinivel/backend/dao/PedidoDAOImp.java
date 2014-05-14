@@ -24,41 +24,26 @@ public class PedidoDAOImp implements PedidoDAO {
 	private EntityManager entityManager;
 
 	public boolean ingresarPedido(Pedido pedido) throws MultinivelDAOException {
+		boolean retorno = Boolean.FALSE;
 		try {
 			this.entityManager.persist(pedido);
-			Query rs = this.entityManager.createNativeQuery("Select Saldo From T_Saldos_Pedido_Distribuidor Where Distribuidor = ?");
-			rs.setParameter(1, pedido.getDistribuidor());
-			BigDecimal saldo;
-			try {
-				saldo = (BigDecimal) rs.getSingleResult();
-			} catch (Exception e) {
-				saldo = null;
-			}
-			if (saldo != null) {
-				Query rs1 = this.entityManager.createNativeQuery(" Update T_Saldos_Pedido_Distribuidor Set Saldo = ? Where Distribuidor = ?");
-				long saldo2 = (saldo.longValue() < 0L ? 0L : saldo.longValue()) + pedido.getTotalPedido().longValue();
-				rs1.setParameter(1, Long.valueOf(saldo2));
-				rs1.setParameter(2, pedido.getDistribuidor());
-				rs1.executeUpdate();
-			} else {
-				Query rs1 = this.entityManager
-						.createNativeQuery("Insert Into T_Saldos_Pedido_Distribuidor(Distribuidor, Saldo, SaldoAbonado)Values(?,?,0)");
-				long saldo2 = 0L + pedido.getTotalPedido().longValue();
-				rs1.setParameter(1, pedido.getDistribuidor());
-				rs1.setParameter(2, Long.valueOf(saldo2));
-				rs1.executeUpdate();
-			}
+			retorno = Boolean.TRUE;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			return retorno;
 		}
-		return true;
+		return retorno;
 	}
 
 	public List<Object> consultar(Pedido pPedido) throws MultinivelDAOException {
 		List<Object> lista = null;
 		try {
-			String sql = "SELECT  X.afiliado,  X.distribuidor,     X.totalPedido,    X.codigo_Pedido,    X.codigo_producto,    X.nombre_producto,   X.valorUnitario,   X.cantidad,    X.nombre_afiliado,    X.nombre_distribuidor,  X.telefono, X.ciudad,X.transporte,X.fecha FROM     ( SELECT  p.afiliado,  p.distribuidor,   p.totalPedido,  p.codigo_Pedido,  dp.codigo_producto,  pr.nombre_producto, dp.valorUnitario, dp.cantidad,  a.nombre nombre_afiliado,  d.nombre nombre_distribuidor,a.telefono telefono,a.ciudad ciudad,p.transporte,p.fecha  from  t_pedidos p,  t_det_pedidos dp,  t_productos pr,  t_afiliados a,  t_afiliados d  where   pr.codigo = dp.codigo_producto  and dp.codigo_pedido = p.codigo_pedido  and a.cedula = p.afiliado  and d.cedula = p.distribuidor  and p.codigo_pedido=? )X";
+			String sql = " Select Pd.Codigo_Pedido, Pd.Fecha, Pd.Distribuidor, Di.Nombre+' '+Di.Apellido NombreDistribuidor, "
+					+ "Pd.Afiliado, Af.Nombre+' '+Af.Apellido NombreAfiliado, Af.Telefono, Af.Ciudad, Dp.Codigo_Producto, Pr.Nombre_Producto, "
+					+ "Dp.ValorUnitario, Dp.Cantidad, Dp.TotalProducto, Dp.Cantidad*Pr.Precio_Afiliado TotalProductoAfiliado, Pd.TotalPedido, Pd.Transporte From T_Pedidos Pd "
+					+ "Inner Join T_Det_Pedidos Dp On Pd.Codigo_Pedido=Dp.Codigo_Pedido Inner Join T_Productos Pr On Dp.Codigo_Producto=Pr.Codigo "
+					+ "Inner Join T_Afiliados Af On Pd.Afiliado=Af.Cedula Inner Join T_Afiliados Di On Pd.Distribuidor=Di.Cedula "
+					+ "Where Pd.Codigo_Pedido= ? ";
 			Query q = this.entityManager.createNativeQuery(sql);
 			q.setParameter(1, Integer.valueOf(pPedido.getCodigoPedido()));
 			List<?> result = q.getResultList();
@@ -67,21 +52,23 @@ public class PedidoDAOImp implements PedidoDAO {
 			for (int i = 0; i < s; i++) {
 				Object obj = result.get(i);
 				Object[] objectArray = (Object[]) obj;
-				String afiliado = (String) objectArray[0];
-				String distribuidor = (String) objectArray[1];
-				BigDecimal totalPedido = (BigDecimal) objectArray[2];
-				String codigoPedido = ((Integer) objectArray[3]).toString();
-				String codigoProducto = (String) objectArray[4];
-				String nombreProducto = (String) objectArray[5];
-				BigDecimal valorUnitario = (BigDecimal) objectArray[6];
-				int cantidad = Integer.parseInt(objectArray[7].toString());
-				String nombreAfiliado = (String) objectArray[8];
-				String nombreDistribuidor = (String) objectArray[9];
-				String telefono = (String) objectArray[10];
-				String ciudadEmpresario = (String) objectArray[11];
-				BigDecimal transporte = (BigDecimal) objectArray[12];
-				String tmp = (String) objectArray[13];
+				String codigoPedido = objectArray[0].toString();
+				String tmp = (String) objectArray[1];
 				Date fecha = FechasUtil.parse(tmp);
+				String distribuidor = (String) objectArray[2];
+				String nombreDistribuidor = (String) objectArray[3];
+				String afiliado = (String) objectArray[4];
+				String nombreAfiliado = (String) objectArray[5];
+				String telefono = (String) objectArray[6];
+				String ciudadEmpresario = (String) objectArray[7];
+				String codigoProducto = (String) objectArray[8];
+				String nombreProducto = (String) objectArray[9];
+				BigDecimal valorUnitario = (BigDecimal) objectArray[10];
+				int cantidad = Integer.parseInt(objectArray[11].toString());
+				BigDecimal totalProducto = (BigDecimal) objectArray[12];
+				BigDecimal totalProductoAfiliado = (BigDecimal) objectArray[13];
+				BigDecimal totalPedido = (BigDecimal) objectArray[14];
+				BigDecimal transporte = (BigDecimal) objectArray[15];
 
 				PedidoDTO p = new PedidoDTO();
 				p.setCedulaAfiliado(afiliado);
@@ -95,6 +82,8 @@ public class PedidoDAOImp implements PedidoDAO {
 				p.setCodigoProducto(codigoProducto);
 				p.setNombreProducto(nombreProducto);
 				p.setCantidad(cantidad);
+				p.setTotalProducto(totalProducto);
+				p.setTotalProductoAfiliado(totalProductoAfiliado);
 				p.setValorUnitario(valorUnitario);
 				p.setTelefono(telefono);
 				p.setCiudadEmpresario(ciudadEmpresario);
@@ -125,16 +114,6 @@ public class PedidoDAOImp implements PedidoDAO {
 		return retorno;
 	}
 
-	/*
-	 * public BigDecimal consultarSaldoDistribuidor(Pedido pedido) throws
-	 * MultinivelDAOException { BigDecimal saldo = new BigDecimal(0); try {
-	 * Query rs = this.entityManager.createNativeQuery(
-	 * "Select Saldo From T_Saldos_Pedido_Distribuidor Where Distribuidor = ?");
-	 * rs.setParameter(1, pedido.getDistribuidor()); try { saldo = (BigDecimal)
-	 * rs.getSingleResult(); } catch (Exception e) { saldo = new BigDecimal(0);
-	 * } return saldo; } catch (Exception e) { e.printStackTrace(); throw new
-	 * MultinivelDAOException("error al realizar la busqueda", getClass()); } }
-	 */
 	public BigDecimal consultarValorTotalPedidosPeriodo(String periodo, String distribuidor) throws MultinivelDAOException {
 		BigDecimal valor = new BigDecimal(0);
 		try {
@@ -155,20 +134,16 @@ public class PedidoDAOImp implements PedidoDAO {
 	}
 
 	public boolean actualizar(Pedido pedido) throws MultinivelDAOException {
-		boolean retorno = false;
+		boolean retorno = Boolean.FALSE;
 		try {
 			Pedido pedidoConsultado = (Pedido) this.entityManager.find(Pedido.class, Integer.valueOf(pedido.getCodigoPedido()));
 			pedidoConsultado.setTransporte(new BigDecimal(0));
 			this.entityManager.merge(pedidoConsultado);
-			retorno = true;
+			retorno = Boolean.TRUE;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return retorno;
-	}
-
-	public Pedido buscar(Pedido pedido) throws MultinivelDAOException {
-		return (Pedido) this.entityManager.find(Pedido.class, Integer.valueOf(pedido.getCodigoPedido()));
 	}
 
 	public List<Pedido> listar(Pedido pedido) throws MultinivelDAOException {
@@ -325,6 +300,10 @@ public class PedidoDAOImp implements PedidoDAO {
 			return false;
 		}
 		return true;
+	}
+
+	public Pedido buscar(Pedido pedido) throws MultinivelDAOException {
+		return (Pedido) this.entityManager.find(Pedido.class, pedido.getCodigoPedido());
 	}
 }
 

@@ -30,7 +30,7 @@ public class ValidacionCompensacionDistribuidorServiceImp implements
 
 	public boolean eliminar(ValidacionCompensacionDistribuidor validacionCompensacionDistribuidor)
 			throws MultinivelServiceException {
-		boolean retorno = false;
+		boolean retorno = Boolean.FALSE;
 		try {
 			retorno = this.validarCompDistribuidorDAO.eliminar(validacionCompensacionDistribuidor);
 		} catch (MultinivelDAOException e) {
@@ -41,7 +41,7 @@ public class ValidacionCompensacionDistribuidorServiceImp implements
 
 	public boolean ingresar(ValidacionCompensacionDistribuidor validacionCompensacionDistribuidor)
 			throws MultinivelServiceException {
-		boolean retorno = false;
+		boolean retorno = Boolean.FALSE;
 		try {
 			retorno = this.validarCompDistribuidorDAO.ingresar(validacionCompensacionDistribuidor);
 		} catch (MultinivelDAOException e) {

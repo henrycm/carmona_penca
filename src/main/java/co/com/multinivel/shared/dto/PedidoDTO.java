@@ -21,6 +21,7 @@ public class PedidoDTO {
 	private BigDecimal transporte;
 	private String periodo;
 	private BigDecimal totalProducto;
+	private BigDecimal totalProductoAfiliado;
 
 	public String getCodigoPedido() {
 		return codigoPedido;
@@ -156,6 +157,14 @@ public class PedidoDTO {
 
 	public void setTotalProducto(BigDecimal totalProducto) {
 		this.totalProducto = totalProducto;
+	}
+
+	public BigDecimal getTotalProductoAfiliado() {
+		return totalProductoAfiliado;
+	}
+
+	public void setTotalProductoAfiliado(BigDecimal totalProductoAfiliado) {
+		this.totalProductoAfiliado = totalProductoAfiliado;
 	}
 }
 

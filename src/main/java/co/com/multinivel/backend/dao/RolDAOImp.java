@@ -70,13 +70,13 @@ public class RolDAOImp implements RolDAO {
 	}
 
 	public boolean consultarAsociacionRolUsuario(User usuario, GroupAuthority rol) throws MultinivelDAOException {
-		boolean retorno = true;
+		boolean retorno = Boolean.TRUE;
 		Query query = this.entityManager.createQuery(" select g from GroupMember g where g.user.username=? and g.groupAuthority.id=?");
 		query.setParameter(1, usuario.getUsername());
 		query.setParameter(2, rol.getGroupId());
 		List<?> lista = query.getResultList();
 		if (lista.isEmpty()) {
-			retorno = false;
+			retorno = Boolean.FALSE;
 		}
 		return retorno;
 	}

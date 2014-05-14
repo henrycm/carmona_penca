@@ -62,9 +62,6 @@
 	$(function() {
 		var projects = [
 
-
-
-
 <c:forEach var='producto'   items='${listaAlimentos}'>
 {
 	value: "${producto.nombreProducto}",
@@ -204,7 +201,6 @@
 	</script>
 </head>
 <body>
-
 	<div align="right" id="opcion">
 		<a href="javascript:vistaPreliminarPedido();">Vista Preliminar del
 			Pedido</a>
@@ -227,18 +223,18 @@
 					<tr>
 						<td width="27%">Nombre Empresario:</td>
 						<td width="26%"><input name="nombre" type="text" size="30"
-							value="<c:out value="${afiliado.nombre}"/>" readonly="readonly"/></td>
+							value="<c:out value="${afiliado.nombre}"/>" readonly="readonly" /></td>
 						<td width="25%">No. Identificaci&oacute;n:</td>
 						<td width="22%"><input name="documento" type="text" size="15"
-							value="<c:out value="${afiliado.cedula}"/>" readonly="readonly"/></td>
+							value="<c:out value="${afiliado.cedula}"/>" readonly="readonly" /></td>
 					</tr>
 					<tr>
 						<td>Telefono:</td>
 						<td><input name="telefono" type="text" size="15"
-							value="<c:out value="${afiliado.telefono}"/>" readonly="readonly"/></td>
+							value="<c:out value="${afiliado.telefono}"/>" readonly="readonly" /></td>
 						<td>Ciudad:</td>
 						<td><input name="ciudad" type="text" size="20"
-							value="<c:out value="${afiliado.ciudad}"/>" readonly="readonly"/></td>
+							value="<c:out value="${afiliado.ciudad}"/>" readonly="readonly" /></td>
 					</tr>
 					<tr>
 						<td style="color: blue">Saldo disponible:</td>
@@ -276,7 +272,7 @@
 							<td width="10%"><c:out
 									value='${producto.precioDistribuidor}' /></td>
 							<td width="10%"><input
-								name="cantidad_<c:out value='${producto.codigo}'/>_<c:out value='${producto.precioDistribuidor}'/>_<c:out value='${producto.nombreProducto}'/>"
+								name="cantidad_<c:out value='${producto.codigo}'/>_<c:out value='${producto.precioDistribuidor}'/>_<c:out value='${producto.nombreProducto}'/>_<c:out value='${producto.precioAfiliado}'/>"
 								onclick="javascript:chequearProducto(this)" /></td>
 							<td width="10%"><input type="checkbox"
 								value="<c:out value='${producto.codigo}'/>" name="producto" />
@@ -295,7 +291,7 @@
 							<td width="10%"><c:out
 									value='${producto.precioDistribuidor}' /></td>
 							<td width="10%"><input
-								name="cantidad_<c:out value='${producto.codigo}'/>_<c:out value='${producto.precioDistribuidor}'/>_<c:out value='${producto.nombreProducto}'/>"
+								name="cantidad_<c:out value='${producto.codigo}'/>_<c:out value='${producto.precioDistribuidor}'/>_<c:out value='${producto.nombreProducto}'/>_<c:out value='${producto.precioAfiliado}'/>"
 								onclick="javascript:chequearProducto(this)" /></td>
 							<td width="10%"><input type="checkbox"
 								value="<c:out value='${producto.codigo}'/>" name="producto" />
@@ -314,7 +310,7 @@
 							<td width="10%"><c:out
 									value='${producto.precioDistribuidor}' /></td>
 							<td width="10%"><input
-								name="cantidad_<c:out value='${producto.codigo}'/>_<c:out value='${producto.precioDistribuidor}'/>_<c:out value='${producto.nombreProducto}'/>"
+								name="cantidad_<c:out value='${producto.codigo}'/>_<c:out value='${producto.precioDistribuidor}'/>_<c:out value='${producto.nombreProducto}'/>_<c:out value='${producto.precioAfiliado}'/>"
 								onclick="javascript:chequearProducto(this)" /></td>
 							<td width="10%"><input type="checkbox"
 								value="<c:out value='${producto.codigo}'/>" name="producto" />
@@ -333,7 +329,7 @@
 							<td width="10%"><c:out
 									value='${producto.precioDistribuidor}' /></td>
 							<td width="10%"><input
-								name="cantidad_<c:out value='${producto.codigo}'/>_<c:out value='${producto.precioDistribuidor}'/>_<c:out value='${producto.nombreProducto}'/>"
+								name="cantidad_<c:out value='${producto.codigo}'/>_<c:out value='${producto.precioDistribuidor}'/>_<c:out value='${producto.nombreProducto}'/>_<c:out value='${producto.precioAfiliado}'/>"
 								onclick="javascript:chequearProducto(this)" /></td>
 							<td width="10%"><input type="checkbox"
 								value="<c:out value='${producto.codigo}'/>" name="producto" />
@@ -351,7 +347,7 @@
 							<td width="10%"><c:out
 									value='${producto.precioDistribuidor}' /></td>
 							<td width="10%"><input
-								name="cantidad_<c:out value='${producto.codigo}'/>_<c:out value='${producto.precioDistribuidor}'/>_<c:out value='${producto.nombreProducto}'/>"
+								name="cantidad_<c:out value='${producto.codigo}'/>_<c:out value='${producto.precioDistribuidor}'/>_<c:out value='${producto.nombreProducto}'/>_<c:out value='${producto.precioAfiliado}'/>"
 								onclick="javascript:chequearProducto(this)" /></td>
 							<td width="10%"><input type="checkbox"
 								value="<c:out value='${producto.codigo}'/>" name="producto" />
@@ -369,7 +365,7 @@
 							<td width="10%"><c:out
 									value='${producto.precioDistribuidor}' /></td>
 							<td width="10%"><input
-								name="cantidad_<c:out value='${producto.codigo}'/>_<c:out value='${producto.precioDistribuidor}'/>_<c:out value='${producto.nombreProducto}'/>"
+								name="cantidad_<c:out value='${producto.codigo}'/>_<c:out value='${producto.precioDistribuidor}'/>_<c:out value='${producto.nombreProducto}'/>_<c:out value='${producto.precioAfiliado}'/>"
 								onclick="javascript:chequearProducto(this)" /></td>
 							<td width="10%"><input type="checkbox"
 								value="<c:out value='${producto.codigo}'/>" name="producto" />
@@ -387,7 +383,7 @@
 							<td width="10%"><c:out
 									value='${producto.precioDistribuidor}' /></td>
 							<td width="10%"><input
-								name="cantidad_<c:out value='${producto.codigo}'/>_<c:out value='${producto.precioDistribuidor}'/>_<c:out value='${producto.nombreProducto}'/>"
+								name="cantidad_<c:out value='${producto.codigo}'/>_<c:out value='${producto.precioDistribuidor}'/>_<c:out value='${producto.nombreProducto}'/>_<c:out value='${producto.precioAfiliado}'/>"
 								onclick="javascript:chequearProducto(this)" /></td>
 							<td width="10%"><input type="checkbox"
 								value="<c:out value='${producto.codigo}'/>" name="producto" />
@@ -405,7 +401,7 @@
 							<td width="10%"><c:out
 									value='${producto.precioDistribuidor}' /></td>
 							<td width="10%"><input
-								name="cantidad_<c:out value='${producto.codigo}'/>_<c:out value='${producto.precioDistribuidor}'/>_<c:out value='${producto.nombreProducto}'/>"
+								name="cantidad_<c:out value='${producto.codigo}'/>_<c:out value='${producto.precioDistribuidor}'/>_<c:out value='${producto.nombreProducto}'/>_<c:out value='${producto.precioAfiliado}'/>"
 								onclick="javascript:chequearProducto(this)" /></td>
 							<td width="10%"><input type="checkbox"
 								value="<c:out value='${producto.codigo}'/>" name="producto" />

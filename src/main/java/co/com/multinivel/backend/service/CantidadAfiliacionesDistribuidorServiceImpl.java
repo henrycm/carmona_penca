@@ -30,7 +30,7 @@ public class CantidadAfiliacionesDistribuidorServiceImpl implements
 
 	public boolean ingresar(CantidadAfiliacionesDistribuidor cantidadAfiliacionesDistribuidor)
 			throws MultinivelServiceException {
-		boolean retorno = false;
+		boolean retorno = Boolean.FALSE;
 		try {
 			retorno = this.cantidadAfiliacionesDistribuidorDAO
 					.ingresar(cantidadAfiliacionesDistribuidor);

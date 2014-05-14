@@ -16,7 +16,7 @@ import co.com.multinivel.backend.model.Abonos_Distribuidor;
 import co.com.multinivel.backend.model.SaldoPedidoDistribuidor;
 import co.com.multinivel.backend.service.AbonosDistribuidorService;
 import co.com.multinivel.backend.service.AfiliadoService;
-import co.com.multinivel.backend.service.SaldoPedidoDistristribuidorService;
+import co.com.multinivel.backend.service.SaldoPedidoDistribuidorService;
 import co.com.multinivel.shared.exception.MultinivelServiceException;
 import co.com.multinivel.shared.helper.UsuarioHelper;
 import co.com.multinivel.shared.util.RecursosEnum;
@@ -28,7 +28,7 @@ public class AbonoController {
 	@Autowired
 	private AfiliadoService afiliadoService;
 	@Autowired
-	private SaldoPedidoDistristribuidorService saldoPedidoDistristribuidorService;
+	private SaldoPedidoDistribuidorService saldoPedidoDistristribuidorService;
 
 	@RequestMapping(value = "/movimiento/inicio")
 	public String inicio(@ModelAttribute("movimiento") Abonos_Distribuidor m, ModelMap model, Principal p) {

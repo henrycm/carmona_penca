@@ -25,22 +25,22 @@ public class EliminarPedido extends HttpServlet {
 
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
-		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
-				config.getServletContext());
+		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
 
-	public void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd = null;
 		String recurso = RecursosEnum.FW_ELIMINACION_PEDIDO_EXITO.getRecurso();
 		try {
+			String distribuidor = null;
 			Pedido pedido = new Pedido();
-			pedido.setDistribuidor(UsuarioHelper.getUsuario());
+			char rolUserLogged = UsuarioHelper.getRol();
+			distribuidor = rolUserLogged == '1' ? request.getParameter("distribuidor") : UsuarioHelper.getUsuario();
+			pedido.setDistribuidor(distribuidor);
 			int codigopedido = Integer.parseInt(request.getParameter("pedido"));
 			BigDecimal totalPedido = new BigDecimal(request.getParameter("totalPedido"));
 
@@ -48,8 +48,7 @@ public class EliminarPedido extends HttpServlet {
 			pedido.setTotalPedido(totalPedido);
 			boolean transaccion = this.pedidoService.eliminarPedido(pedido);
 			if (!transaccion) {
-				request.setAttribute("error",
-						"Borrado no fue finalizado consulte con el administrador del sistema");
+				request.setAttribute("error", "Borrado no fue finalizado consulte con el administrador del sistema");
 				recurso = RecursosEnum.FW_ELIMINACION_PEDIDO_ERROR.getRecurso();
 			}
 		} catch (Exception e) {

@@ -31,49 +31,50 @@ public class ConsumoDAOImp implements ConsumoDAO {
 	AfiliadoDAO afiliadoDAO;
 
 	public boolean ingresar(Consumo consumo) throws MultinivelDAOException {
+		boolean retorno = Boolean.FALSE;
 		try {
 			this.entityManager.persist(consumo);
-			Query rs1 = this.entityManager
-					.createNativeQuery(" Update T_Saldos_Pedido_Distribuidor Set Saldo=(Saldo - ?), SaldoAbonado=(SaldoAbonado - ?) Where  Distribuidor = ? ");
-			long saldo2 = consumo.getTotalpedido().longValue();
-			rs1.setParameter(1, Long.valueOf(saldo2));
-			rs1.setParameter(2, Long.valueOf(saldo2));
-			rs1.setParameter(3, consumo.getDistribuidor());
-			rs1.executeUpdate();
+			retorno = Boolean.TRUE;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			return retorno;
 		}
-		return true;
+		return retorno;
 	}
 
-	public List<Object> consultar(Consumo pConsumo) throws MultinivelDAOException {
+	public List<Object> consultar(Consumo consumo) throws MultinivelDAOException {
 		List<Object> lista = null;
 		try {
-			String sql = "SELECT  X.afiliado,  X.distribuidor,     X.totalPedido,    X.codigo_Consumo,    X.codigo_producto,    X.nombre_producto,   X.valorUnitario,   X.cantidad,    X.nombre_afiliado,    X.nombre_distribuidor,  X.telefono, X.ciudad,X.fecha FROM     ( SELECT  p.afiliado,  p.distribuidor,   p.totalPedido,  p.codigo_Consumo,  dp.codigo_producto,  pr.nombre_producto, dp.valorUnitario, dp.cantidad,  a.nombre nombre_afiliado,  d.nombre nombre_distribuidor,a.telefono telefono,a.ciudad ciudad,p.fecha  from  t_consumos p,  t_det_consumos dp,  t_productos pr,  t_afiliados a,  t_afiliados d  where   pr.codigo = dp.codigo_producto  and dp.codigo_consumo = p.codigo_consumo  and a.cedula = p.afiliado  and d.cedula = p.distribuidor  and p.codigo_consumo=? )X";
+			String sql = " Select Co.Codigo_Consumo, Co.Fecha, Co.Distribuidor, Di.Nombre+' '+Di.Apellido NombreDistribuidor, "
+					+ "Co.Afiliado, Af.Nombre+' '+Af.Apellido NombreAfiliado, Af.Telefono, Af.Ciudad, Dc.Codigo_Producto, Pr.Nombre_Producto, "
+					+ "Dc.ValorUnitario, Dc.Cantidad, Dc.TotalProducto, Co.TotalPedido From T_Consumos Co "
+					+ "Inner Join T_Det_Consumos Dc On Co.Codigo_Consumo=Dc.Codigo_Consumo Inner Join T_Productos Pr On Dc.Codigo_Producto=Pr.Codigo "
+					+ "Inner Join T_Afiliados Af On Co.Afiliado=Af.Cedula Inner Join T_Afiliados Di On Co.Distribuidor=Di.Cedula "
+					+ "Where Co.Codigo_Consumo = ? ";
 
 			Query q = this.entityManager.createNativeQuery(sql);
-			q.setParameter(1, Integer.valueOf(pConsumo.getCodigoConsumo()));
+			q.setParameter(1, Integer.valueOf(consumo.getCodigoConsumo()));
 			List<?> result = q.getResultList();
 			int s = result.size();
 			lista = new ArrayList<Object>();
 			for (int i = 0; i < s; i++) {
 				Object obj = result.get(i);
 				Object[] objectArray = (Object[]) obj;
-				String afiliado = (String) objectArray[0];
-				String distribuidor = (String) objectArray[1];
-				BigDecimal totalConsumo = (BigDecimal) objectArray[2];
-				String codigoConsumo = ((Integer) objectArray[3]).toString();
-				String codigoProducto = (String) objectArray[4];
-				String nombreProducto = (String) objectArray[5];
-				BigDecimal valorUnitario = (BigDecimal) objectArray[6];
-				int cantidad = Integer.parseInt(objectArray[7].toString());
-				String nombreAfiliado = (String) objectArray[8];
-				String nombreDistribuidor = (String) objectArray[9];
-				String telefono = objectArray[10] == null ? "" : (String) objectArray[10];
-				String ciudadEmpresario = (String) objectArray[11];
-				String tmp = (String) objectArray[12];
+				String codigoConsumo = objectArray[0].toString();
+				String tmp = (String) objectArray[1];
 				Date fecha = FechasUtil.parse(tmp);
+				String distribuidor = (String) objectArray[2];
+				String nombreDistribuidor = (String) objectArray[3];
+				String afiliado = (String) objectArray[4];
+				String nombreAfiliado = (String) objectArray[5];
+				String telefono = (String) objectArray[6];
+				String ciudadEmpresario = (String) objectArray[7];
+				String codigoProducto = (String) objectArray[8];
+				String nombreProducto = (String) objectArray[9];
+				BigDecimal valorUnitario = (BigDecimal) objectArray[10];
+				int cantidad = Integer.parseInt(objectArray[11].toString());
+				BigDecimal totalProducto = (BigDecimal) objectArray[12];
+				BigDecimal totalConsumo = (BigDecimal) objectArray[13];
 
 				ConsumoDTO p = new ConsumoDTO();
 				p.setCedulaAfiliado(afiliado);
@@ -81,12 +82,13 @@ public class ConsumoDAOImp implements ConsumoDAO {
 				p.setFecha(fecha);
 				p.setNombreAfiliado(nombreAfiliado);
 				p.setNombreDistribuidor(nombreDistribuidor);
-
 				p.setCodigoPedido(codigoConsumo);
+				p.setCodigoConsumo(codigoConsumo);
 				p.setTotalPedido(totalConsumo);
 				p.setCodigoProducto(codigoProducto);
 				p.setNombreProducto(nombreProducto);
 				p.setCantidad(cantidad);
+				p.setTotalProducto(totalProducto);
 				p.setValorUnitario(valorUnitario);
 				p.setTelefono(telefono);
 				p.setCiudadEmpresario(ciudadEmpresario);
@@ -310,8 +312,6 @@ public class ConsumoDAOImp implements ConsumoDAO {
 			query.setParameter(1, consumo.getPeriodo());
 			query.setParameter(2, cedula);
 
-			System.err.println(sql);
-
 			double totalDistribuidor = 0.0D;
 			if (query.getResultList() != null) {
 				List<?> lista = query.getResultList();
@@ -359,6 +359,7 @@ public class ConsumoDAOImp implements ConsumoDAO {
 	}
 
 	public boolean eliminar(Consumo consumo) throws MultinivelDAOException {
+		boolean retorno = Boolean.FALSE;
 		try {
 			Query rs1 = this.entityManager.createNativeQuery(" DELETE FROM T_DET_CONSUMOS  WHERE codigo_consumo=? ");
 			rs1.setParameter(1, Integer.valueOf(consumo.getCodigoConsumo()));
@@ -367,19 +368,12 @@ public class ConsumoDAOImp implements ConsumoDAO {
 			Query rs2 = this.entityManager.createNativeQuery(" DELETE FROM T_CONSUMOS  WHERE codigo_consumo=? ");
 			rs2.setParameter(1, Integer.valueOf(consumo.getCodigoConsumo()));
 			rs2.executeUpdate();
-			/*
-			 * Query rs3 = this.entityManager .createNativeQuery(
-			 * " Update T_Saldos_Pedido_Distribuidor Set Saldo=(Saldo + ?), SaldoAbonado=(SaldoAbonado + ?) Where  Distribuidor = ? "
-			 * ); long saldo2 = consumo.getTotalpedido().longValue();
-			 * rs3.setParameter(1, Long.valueOf(saldo2)); rs3.setParameter(2,
-			 * Long.valueOf(saldo2)); rs3.setParameter(3,
-			 * consumo.getDistribuidor()); rs3.executeUpdate();
-			 */
+			retorno = Boolean.TRUE;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return Boolean.FALSE;
+			return retorno;
 		}
-		return Boolean.TRUE;
+		return retorno;
 	}
 
 	public List<Object> listarConsumosPeriodoAEliminar(ConsumoDTO consumo) throws MultinivelDAOException {

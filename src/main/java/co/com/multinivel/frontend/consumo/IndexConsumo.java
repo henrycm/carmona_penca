@@ -19,7 +19,7 @@ import co.com.multinivel.backend.model.SaldoPedidoDistribuidor;
 import co.com.multinivel.backend.service.AfiliadoService;
 import co.com.multinivel.backend.service.ConsumoService;
 import co.com.multinivel.backend.service.ProductoService;
-import co.com.multinivel.backend.service.SaldoPedidoDistristribuidorService;
+import co.com.multinivel.backend.service.SaldoPedidoDistribuidorService;
 import co.com.multinivel.shared.helper.UsuarioHelper;
 import co.com.multinivel.shared.util.RecursosEnum;
 
@@ -32,7 +32,7 @@ public class IndexConsumo extends HttpServlet {
 	@Autowired
 	private ConsumoService consumoService;
 	@Autowired
-	private SaldoPedidoDistristribuidorService saldoPedidoDistristribuidorService;
+	private SaldoPedidoDistribuidorService saldoPedidoDistristribuidorService;
 
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);

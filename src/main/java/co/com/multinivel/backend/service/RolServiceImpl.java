@@ -80,7 +80,7 @@ public class RolServiceImpl implements RolService {
 
 	public boolean consultarAsociacionRolUsuario(User usuario, GroupAuthority rol)
 			throws MultinivelServiceException {
-		boolean retorno = false;
+		boolean retorno = Boolean.FALSE;
 		try {
 			retorno = this.rolDAO.consultarAsociacionRolUsuario(usuario, rol);
 		} catch (MultinivelDAOException e) {

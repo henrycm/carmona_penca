@@ -9,7 +9,7 @@ import co.com.multinivel.shared.exception.MultinivelDAOException;
 import co.com.multinivel.shared.exception.MultinivelServiceException;
 
 @Service
-public class SaldoPedidoDistristribuidorServiceImpl implements SaldoPedidoDistristribuidorService {
+public class SaldoPedidoDistribuidorServiceImpl implements SaldoPedidoDistribuidorService {
 	@Autowired
 	private SaldoPedidoDistribuidorDAO saldoPedidoDistribuidorDAO;
 

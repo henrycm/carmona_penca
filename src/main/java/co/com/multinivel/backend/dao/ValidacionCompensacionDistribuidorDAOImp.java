@@ -40,11 +40,11 @@ public class ValidacionCompensacionDistribuidorDAOImp implements ValidarCompDist
 	}
 
 	public boolean ingresar(ValidacionCompensacionDistribuidor validacionCompensacionDistribuidor) throws MultinivelDAOException {
-		boolean retorno = false;
+		boolean retorno = Boolean.FALSE;
 		ValidacionCompensacionDistribuidor validCompDistribuidorConsulta = consultar(validacionCompensacionDistribuidor);
 		if (validCompDistribuidorConsulta == null) {
 			this.entityManager.persist(validacionCompensacionDistribuidor);
-			retorno = true;
+			retorno = Boolean.TRUE;
 		}
 		return retorno;
 	}

@@ -16,8 +16,9 @@ import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import co.com.multinivel.backend.model.SaldoPedidoDistribuidor;
 import co.com.multinivel.backend.service.AfiliadoService;
+import co.com.multinivel.backend.service.ParametroService;
 import co.com.multinivel.backend.service.ProductoService;
-import co.com.multinivel.backend.service.SaldoPedidoDistristribuidorService;
+import co.com.multinivel.backend.service.SaldoPedidoDistribuidorService;
 import co.com.multinivel.shared.helper.UsuarioHelper;
 import co.com.multinivel.shared.util.RecursosEnum;
 
@@ -28,7 +29,9 @@ public class IndexPedido extends HttpServlet {
 	@Autowired
 	private AfiliadoService afiliadoService;
 	@Autowired
-	private SaldoPedidoDistristribuidorService saldoPedidoDistristribuidorService;
+	private SaldoPedidoDistribuidorService saldoPedidoDistristribuidorService;
+	@Autowired
+	private ParametroService parametroService;
 
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
@@ -49,6 +52,8 @@ public class IndexPedido extends HttpServlet {
 			String cadenaFecha = formato.format(fechaActual);
 			String periodo = cadenaFecha;
 			request.setAttribute("periodo", periodo);
+			char rolUserLogged = UsuarioHelper.getRol();
+			SaldoPedidoDistribuidor saldoPedidoDistribuidor = null;
 			switch (accion) {
 			case 'I':
 				recurso = RecursosEnum.FW_INGRESO_PEDIDO.getRecurso();
@@ -58,14 +63,15 @@ public class IndexPedido extends HttpServlet {
 				} else {
 					distribuidor = request.getParameter("distribuidor");
 				}
-				SaldoPedidoDistribuidor saldoPedidoDistribuidor = this.saldoPedidoDistristribuidorService.consultarSaldoDistribuidor(distribuidor);
+
+				saldoPedidoDistribuidor = this.saldoPedidoDistristribuidorService.consultarSaldoDistribuidor(distribuidor);
 				if (saldoPedidoDistribuidor == null) {
 					saldoPedidoDistribuidor = new SaldoPedidoDistribuidor();
 					saldoPedidoDistribuidor.setSaldo(0);
 					saldoPedidoDistribuidor.setSaldoAbonado(0);
 				}
-				request.setAttribute("afiliado", this.afiliadoService.consultar(distribuidor));
 				request.getSession().setAttribute("saldosDistribuidor", saldoPedidoDistribuidor);
+				request.setAttribute("afiliado", this.afiliadoService.consultar(distribuidor));
 				request.setAttribute("listaAlimentos", this.productoService.listar("1"));
 				request.setAttribute("listaPiel", this.productoService.listar("2"));
 				request.setAttribute("listaCapilar", this.productoService.listar("3"));
@@ -98,8 +104,15 @@ public class IndexPedido extends HttpServlet {
 				} else {
 					distribuidor = request.getParameter("distribuidor");
 				}
+
+				saldoPedidoDistribuidor = this.saldoPedidoDistristribuidorService.consultarSaldoDistribuidor(distribuidor);
+				if (saldoPedidoDistribuidor == null) {
+					saldoPedidoDistribuidor = new SaldoPedidoDistribuidor();
+					saldoPedidoDistribuidor.setSaldo(0);
+					saldoPedidoDistribuidor.setSaldoAbonado(0);
+				}
+				request.getSession().setAttribute("saldosDistribuidor", saldoPedidoDistribuidor);
 				request.setAttribute("afiliado", this.afiliadoService.consultar(distribuidor));
-				request.getSession().setAttribute("saldosDistribuidor", saldoPedidoDistristribuidorService.consultarSaldoDistribuidor(distribuidor));
 				request.setAttribute("listaAlimentos", this.productoService.listar("1"));
 				request.setAttribute("listaPiel", this.productoService.listar("2"));
 				request.setAttribute("listaCapilar", this.productoService.listar("3"));
@@ -117,6 +130,10 @@ public class IndexPedido extends HttpServlet {
 				recurso = RecursosEnum.FW_VISTA_REPORTES_LISTA_PEDIDO.getRecurso();
 				break;
 			case 'E':
+				if (rolUserLogged == '1') {
+					request.setAttribute("listaDistribuidores", afiliadoService.listarDistribuidores());
+				}
+				request.setAttribute("rol", "" + rolUserLogged);
 				recurso = RecursosEnum.FW_LISTAR_PEDIDO_ELIMINAR.getRecurso();
 				break;
 			case 'C':

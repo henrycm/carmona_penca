@@ -18,7 +18,7 @@ import co.com.multinivel.backend.model.DetConsumo;
 import co.com.multinivel.backend.model.Pedido;
 import co.com.multinivel.backend.model.SaldoPedidoDistribuidor;
 import co.com.multinivel.backend.service.ParametroService;
-import co.com.multinivel.backend.service.SaldoPedidoDistristribuidorService;
+import co.com.multinivel.backend.service.SaldoPedidoDistribuidorService;
 import co.com.multinivel.shared.helper.ConsumoHelper;
 import co.com.multinivel.shared.helper.UsuarioHelper;
 import co.com.multinivel.shared.util.RecursosEnum;
@@ -28,7 +28,7 @@ public class VistaPreliminarConsumo extends HttpServlet {
 	@Autowired
 	private ParametroService parametroService;
 	@Autowired
-	private SaldoPedidoDistristribuidorService saldoPedidoDistristribuidorService;
+	private SaldoPedidoDistribuidorService saldoPedidoDistristribuidorService;
 
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
@@ -69,12 +69,12 @@ public class VistaPreliminarConsumo extends HttpServlet {
 				Double descontarSaldoDistribuidor = Double.valueOf(saldoDistribuidor.getSaldo() - consumo.getTotalpedido().doubleValue());
 				Double descontarSaldoAbonadoDistribuidor = Double.valueOf(saldoDistribuidor.getSaldoAbonado()
 						- consumo.getTotalpedido().doubleValue());
-				if (descontarSaldoAbonadoDistribuidor.doubleValue() > 0.0D) {
+				if (descontarSaldoAbonadoDistribuidor.doubleValue() >= 0.0D) {
 					request.setAttribute("saldoAbonadoDistribuidor", descontarSaldoAbonadoDistribuidor);
 				} else {
 					request.setAttribute("mensajeSaldoAbonadoDistribuidor", "true");
 				}
-				if (descontarSaldoDistribuidor.doubleValue() > 0.0D) {
+				if (descontarSaldoDistribuidor.doubleValue() >= 0.0D) {
 					request.setAttribute("saldoDistribuidor", descontarSaldoDistribuidor);
 				} else {
 					request.setAttribute("mensajeSaldoDistribuidor", "true");

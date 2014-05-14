@@ -26,13 +26,13 @@ public class RedDAOImp implements RedDAO {
 	}
 
 	public boolean ingresar(Red red) throws MultinivelDAOException {
-		boolean retorno = false;
+		boolean retorno = Boolean.FALSE;
 		try {
 			Red redConsultado = consultar(red);
 			if ((redConsultado == null) || (redConsultado.getCodigo() == null)) {
 				this.entityManager.persist(red);
 			}
-			retorno = true;
+			retorno = Boolean.TRUE;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

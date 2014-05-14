@@ -16,8 +16,6 @@ public abstract interface PedidoService {
 
 	public abstract int ultimoPedido(Pedido paramPedido) throws MultinivelServiceException;
 
-	//public abstract BigDecimal consultarSaldoDistribuidor(Pedido paramPedido) throws MultinivelServiceException;
-
 	public abstract boolean actualizar(Pedido paramPedido) throws MultinivelServiceException;
 
 	public abstract Pedido buscar(Pedido paramPedido) throws MultinivelServiceException;

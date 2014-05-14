@@ -39,6 +39,24 @@
 						</select>
 						</td>
 					</tr>
+					<c:if test="${rol == '1'}">
+						<tr>
+							<td colspan="2">Distribuidor: <select name="distribuidor">
+									<option value="">Seleccione el distribuidor</option>
+									<c:forEach var='distribuidores' items='${listaDistribuidores}'>
+										<c:if test="${distribuidores.cedula == distribuidor}">
+											<option value="<c:out value='${distribuidores.cedula}'/>"
+												selected><c:out value='${distribuidores.nombre}' />&nbsp;
+												<c:out value='${distribuidores.apellido}' /></option>
+										</c:if>
+										<option value="<c:out value='${distribuidores.cedula}'/>"><c:out
+												value='${distribuidores.nombre}' />&nbsp;
+											<c:out value='${distribuidores.apellido}' /></option>
+									</c:forEach>
+							</select>
+							</td>
+						</tr>
+					</c:if>
 				</table>
 				<table align="center" class="tbl-lista" width="90%" border="1">
 					<tr>

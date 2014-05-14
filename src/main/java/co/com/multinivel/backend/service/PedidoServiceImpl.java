@@ -1,6 +1,7 @@
 package co.com.multinivel.backend.service;
 
 import java.math.BigDecimal;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,12 +9,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import co.com.multinivel.backend.dao.InventarioDistribuidorDAO;
-import co.com.multinivel.backend.dao.AbonosDistribuidorDAO;
+import co.com.multinivel.backend.dao.ParametroDAO;
 import co.com.multinivel.backend.dao.PedidoDAO;
+import co.com.multinivel.backend.dao.SaldoPedidoDistribuidorDAO;
 import co.com.multinivel.backend.model.DetallePedido;
 import co.com.multinivel.backend.model.InventarioDistribuidor;
 import co.com.multinivel.backend.model.InventarioDistribuidorPK;
 import co.com.multinivel.backend.model.Pedido;
+import co.com.multinivel.backend.model.SaldoPedidoDistribuidor;
 import co.com.multinivel.shared.dto.PedidoDTO;
 import co.com.multinivel.shared.exception.MultinivelDAOException;
 import co.com.multinivel.shared.exception.MultinivelServiceException;
@@ -22,28 +25,51 @@ import co.com.multinivel.shared.exception.MultinivelServiceException;
 public class PedidoServiceImpl implements PedidoService {
 	@Autowired
 	private PedidoDAO pedidoDAO;
-
 	@Autowired
-	private InventarioDistribuidorDAO invDist;
-
+	private InventarioDistribuidorDAO invDistDAO;
 	@Autowired
-	private AbonosDistribuidorDAO movDAO;
+	private ParametroDAO parametroDAO;
+	@Autowired
+	private SaldoPedidoDistribuidorDAO saldoPedidoDistribuidorDAO;
 
 	@Transactional
 	public boolean ingresarPedido(Pedido pedido) throws MultinivelServiceException {
-		boolean retorno = false;
+		boolean retorno = Boolean.FALSE;
 		try {
+			/*
+			 * Graba Pedido
+			 */
 			retorno = this.pedidoDAO.ingresarPedido(pedido);
-
+			/*
+			 * Graba Inventario Distribuidor
+			 */
+			double valTotProductoAfiliado = 0;
+			double valTotPedidoAfiliado = 0;
 			for (DetallePedido dp : pedido.getTDetPedidos()) {
-				InventarioDistribuidor iv = invDist.findOne(new InventarioDistribuidorPK(pedido.getDistribuidor(), dp.getCodigoProducto()));
+				InventarioDistribuidor iv = this.invDistDAO.findOne(new InventarioDistribuidorPK(pedido.getDistribuidor(), dp.getCodigoProducto()));
 				if (iv == null) {
 					iv = new InventarioDistribuidor(new InventarioDistribuidorPK(pedido.getDistribuidor(), dp.getCodigoProducto()));
 				}
+				valTotProductoAfiliado = iv.getValor_total() + dp.getTotalProductoAfiliado().longValueExact();
 				iv.setCantidad(iv.getCantidad() + dp.getCantidad());
-				iv.setValor_total(iv.getValor_total() + dp.getTotalProducto().longValueExact());
-				invDist.save(iv);
+				iv.setValor_total(valTotProductoAfiliado);
+				this.invDistDAO.save(iv);
+
+				valTotPedidoAfiliado += valTotProductoAfiliado;
 			}
+			/*
+			 * Graba Saldo Distribuidor
+			 */
+			SaldoPedidoDistribuidor spd = this.saldoPedidoDistribuidorDAO.consultarSaldoDistribuidor(pedido.getDistribuidor());
+			if (spd == null) {
+				spd = new SaldoPedidoDistribuidor();
+				spd.setDistribuidor(pedido.getDistribuidor());
+				spd.setSaldo(0);
+				spd.setSaldoAbonado(0);
+			}
+			double saldo = spd.getSaldo() + valTotPedidoAfiliado;
+			spd.setSaldo(saldo);
+			retorno = this.saldoPedidoDistribuidorDAO.guardar(spd);
 		} catch (MultinivelDAOException e) {
 			throw new MultinivelServiceException(e.getMessage(), getClass());
 		}
@@ -70,16 +96,8 @@ public class PedidoServiceImpl implements PedidoService {
 		return retorno;
 	}
 
-	/*
-	 * public BigDecimal consultarSaldoDistribuidor(Pedido pedido) throws
-	 * MultinivelServiceException { BigDecimal saldoDistribuidor = new
-	 * BigDecimal(0); try { saldoDistribuidor =
-	 * this.pedidoDAO.consultarSaldoDistribuidor(pedido); } catch
-	 * (MultinivelDAOException e) { e.printStackTrace(); } return
-	 * saldoDistribuidor; }
-	 */
 	public boolean actualizar(Pedido pedido) throws MultinivelServiceException {
-		boolean retorno = false;
+		boolean retorno = Boolean.FALSE;
 		try {
 			retorno = this.pedidoDAO.actualizar(pedido);
 		} catch (MultinivelDAOException e) {
@@ -113,8 +131,46 @@ public class PedidoServiceImpl implements PedidoService {
 	}
 
 	public boolean eliminarPedido(Pedido pedido) throws MultinivelServiceException {
-		boolean retorno = false;
+		boolean retorno = Boolean.FALSE;
 		try {
+			/*
+			 * Graba Inventario Distribuidor
+			 */
+			List<Object> lsPedidos = this.pedidoDAO.consultar(pedido);
+			Iterator<Object> iterador = lsPedidos.listIterator();
+
+			double valTotProductoAfiliado = 0;
+			double valTotPedidoAfiliado = 0;
+			while (iterador.hasNext()) {
+				PedidoDTO ped = (PedidoDTO) iterador.next();
+				InventarioDistribuidor iv = this.invDistDAO
+						.findOne(new InventarioDistribuidorPK(ped.getCedulaDistribuidor(), ped.getCodigoProducto()));
+				if (iv == null) {
+					iv = new InventarioDistribuidor(new InventarioDistribuidorPK(ped.getCedulaDistribuidor(), ped.getCodigoProducto()));
+				}
+				valTotProductoAfiliado = iv.getValor_total() - ped.getTotalProductoAfiliado().longValueExact();
+				iv.setCantidad(iv.getCantidad() - ped.getCantidad());
+				iv.setValor_total(valTotProductoAfiliado);
+				this.invDistDAO.save(iv);
+				valTotProductoAfiliado = ped.getTotalProductoAfiliado().longValueExact();
+				valTotPedidoAfiliado += valTotProductoAfiliado;
+			}
+			/*
+			 * Graba Saldo Distribuidor
+			 */
+			SaldoPedidoDistribuidor spd = this.saldoPedidoDistribuidorDAO.consultarSaldoDistribuidor(pedido.getDistribuidor());
+			if (spd == null) {
+				spd = new SaldoPedidoDistribuidor();
+				spd.setDistribuidor(pedido.getDistribuidor());
+				spd.setSaldo(0);
+				spd.setSaldoAbonado(0);
+			}
+			double saldo = spd.getSaldo() - valTotPedidoAfiliado;
+			spd.setSaldo(saldo);
+			retorno = this.saldoPedidoDistribuidorDAO.guardar(spd);
+			/*
+			 * Elimina Pedido
+			 */
 			retorno = this.pedidoDAO.eliminarPedido(pedido);
 		} catch (MultinivelDAOException e) {
 			throw new MultinivelServiceException(e.getMessage(), getClass());

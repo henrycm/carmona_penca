@@ -26,6 +26,8 @@ public class DetallePedido implements Serializable {
 	private BigDecimal totalProducto;
 	private BigDecimal valorUnitario;
 	private transient String nombreProducto;
+	private transient BigDecimal valorUnitarioAfiliado;
+	private transient BigDecimal totalProductoAfiliado;
 	@ManyToOne
 	@JoinColumn(name = "codigo_pedido")
 	private Pedido pedido;
@@ -84,6 +86,22 @@ public class DetallePedido implements Serializable {
 
 	public String getNombreProducto() {
 		return this.nombreProducto;
+	}
+
+	public BigDecimal getValorUnitarioAfiliado() {
+		return valorUnitarioAfiliado;
+	}
+
+	public void setValorUnitarioAfiliado(BigDecimal valorUnitarioAfiliado) {
+		this.valorUnitarioAfiliado = valorUnitarioAfiliado;
+	}
+
+	public BigDecimal getTotalProductoAfiliado() {
+		return totalProductoAfiliado;
+	}
+
+	public void setTotalProductoAfiliado(BigDecimal totalProductoAfiliado) {
+		this.totalProductoAfiliado = totalProductoAfiliado;
 	}
 }
 

@@ -102,7 +102,11 @@ public class ProductoDAOImp implements ProductoDAO {
 	public List<ProductoDTO> listar(String tipoProducto) throws MultinivelDAOException {
 		List<ProductoDTO> lista = null;
 		try {
-			String sql = "SELECT  P.CODIGO, P.NOMBRE_PRODUCTO, CAST((P.PRECIO_AFILIADO)-(P.PRECIO_AFILIADO *  (CAST(A.VALOR AS DECIMAL(10,2))/100)) as decimal(11,1)), P.PRECIO_AFILIADO, T.TIPOPRODUCTO,P.TIPO   FROM T_PRODUCTOS P,  T_TIPOS_PRODUCTOS T , (SELECT VALOR FROM T_PARAMETROS WHERE NOMBRE_PARAMETRO='PORC_GAN_PDTO_PROVEE')A   WHERE T.CODIGO= P.TIPO   AND T.CODIGO=?   ORDER BY T.TIPOPRODUCTO ";
+			String sql = " Select Pr.Codigo, Pr.Nombre_Producto, Pr.Precio_Afiliado, "
+					+ "Cast((Pr.Precio_Afiliado)-(Pr.Precio_Afiliado * (Cast(p.Valor As Numeric(11,0))/100))As Numeric(11,0))PrecioDistribuidor, "
+					+ "Pr.Tipo, Tp.TipoProducto From T_Productos Pr Inner Join T_Tipos_Productos Tp On Pr.Tipo=Tp.Codigo "
+					+ "Inner Join T_Parametros p On p.Nombre_Parametro='PORC_GAN_PDTO_PROVEE' "
+					+ "Where Tp.Codigo = ? Order By Tp.Codigo Asc, Pr.Nombre_Producto Asc ";
 
 			Query q = this.entityManager.createNativeQuery(sql);
 			q.setParameter(1, tipoProducto);
@@ -112,12 +116,14 @@ public class ProductoDAOImp implements ProductoDAO {
 			for (int i = 0; i < s; i++) {
 				Object obj = result.get(i);
 				Object[] objectArray = (Object[]) obj;
+
 				String codigo = (String) objectArray[0];
 				String nombre = (String) objectArray[1];
-				BigDecimal precioDist = (BigDecimal) objectArray[2];
-				BigDecimal precioAfil = (BigDecimal) objectArray[3];
-				String tipo = (String) objectArray[4];
-				String codigoTipo = (String) objectArray[5];
+				BigDecimal precioAfil = (BigDecimal) objectArray[2];
+				BigDecimal precioDist = (BigDecimal) objectArray[3];
+				String codigoTipo = (String) objectArray[4];
+				String tipo = (String) objectArray[5];
+
 				ProductoDTO p = new ProductoDTO();
 				p.setCodigo(codigo);
 				p.setNombreProducto(nombre);

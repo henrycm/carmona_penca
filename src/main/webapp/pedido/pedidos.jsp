@@ -102,21 +102,18 @@ h1 {
 		<table width="80%">
 			<tr class="tabla">
 				<th width="10%">Codigo Producto</th>
-
 				<th width="60%">Nombre Producto</th>
 				<th width="10%">Precio</th>
 				<th width="10%">Cantidad</th>
 				<th width="10%">Seleccionar</th>
-
 			</tr>
 			<c:forEach var='producto' items='${listaAlimentos}'>
 				<tr>
 					<td><c:out value='${producto.codigo}' /></td>
-
 					<td><c:out value='${producto.nombreProducto}' /></td>
 					<td><c:out value='${producto.precioDistribuidor}' /></td>
 					<td><input maxlength="3" size="3"
-						name="cantidad_<c:out value='${producto.codigo}'/>_<c:out value='${producto.precioDistribuidor}'/>_<c:out value='${producto.nombreProducto}'/>"
+						name="cantidad_<c:out value='${producto.codigo}'/>_<c:out value='${producto.precioDistribuidor}'/>_<c:out value='${producto.nombreProducto}'/>_<c:out value='${producto.precioAfiliado}'/>"
 						onclick="javascript:chequearProducto(this)" /></td>
 					<td><input type="checkbox"
 						value="<c:out value='${producto.codigo}'/>" name="producto" /></td>
@@ -127,95 +124,76 @@ h1 {
 		<table width="80%">
 			<tr class="tabla">
 				<th width="10%">Codigo Producto</th>
-
 				<th width="60%">Nombre Producto</th>
 				<th width="10%">Precio</th>
 				<th width="10%">Cantidad</th>
 				<th width="10%">Seleccionar</th>
-
 			</tr>
 			<c:forEach var='producto1' items='${listaPiel}'>
 				<tr>
 					<td><c:out value='${producto1.codigo}' /></td>
-
 					<td><c:out value='${producto1.nombreProducto}' /></td>
 					<td><c:out value='${producto1.precioDistribuidor}' /></td>
 					<td><input
-						name="cantidad_<c:out value='${producto1.codigo}'/>_<c:out value='${producto1.precioDistribuidor}'/>_<c:out value='${producto1.nombreProducto}'/>"
+						name="cantidad_<c:out value='${producto1.codigo}'/>_<c:out value='${producto1.precioDistribuidor}'/>_<c:out value='${producto1.nombreProducto}'/>_<c:out value='${producto1.precioAfiliado}'/>"
 						onclick="javascript:chequearProducto(this)" /></td>
 					<td><input type="checkbox"
 						value="<c:out value='${producto1.codigo}'/>" name="producto" /></td>
 				</tr>
 			</c:forEach>
-
 		</table>
-
-
-
 		Linea Capilar
 		<table width="80%">
 			<tr class="tabla">
 				<th width="10%">Codigo Producto</th>
-
 				<th width="60%">Nombre Producto</th>
 				<th width="10%">Precio</th>
 				<th width="10%">Cantidad</th>
 				<th width="10%">Seleccionar</th>
-
 			</tr>
 			<c:forEach var='producto' items='${listaCapilar}'>
 				<tr>
 					<td><c:out value='${producto.codigo}' /></td>
-
 					<td><c:out value='${producto.nombreProducto}' /></td>
 					<td><c:out value='${producto.precioDistribuidor}' /></td>
 					<td><input
-						name="cantidad_<c:out value='${producto.codigo}'/>_<c:out value='${producto.precioDistribuidor}'/>_<c:out value='${producto.nombreProducto}'/>"
+						name="cantidad_<c:out value='${producto.codigo}'/>_<c:out value='${producto.precioDistribuidor}'/>_<c:out value='${producto.nombreProducto}'/>_<c:out value='${producto.precioAfiliado}'/>"
 						onclick="javascript:chequearProducto(this)" /></td>
 					<td><input type="checkbox"
 						value="<c:out value='${producto.codigo}'/>" name="producto" /></td>
 				</tr>
 			</c:forEach>
-
 		</table>
-
 		Linea de Aseo Personal
-
 		<table width="80%">
 			<tr class="tabla">
 				<th width="10%">Codigo Producto</th>
-
 				<th width="60%">Nombre Producto</th>
 				<th width="10%">Precio</th>
 				<th width="10%">Cantidad</th>
 				<th width="10%">Seleccionar</th>
-
 			</tr>
 			<c:forEach var='producto' items='${listaAseoPersonal}'>
 				<tr>
 					<td><c:out value='${producto.codigo}' /></td>
-
 					<td><c:out value='${producto.nombreProducto}' /></td>
 					<td><c:out value='${producto.precioDistribuidor}' /></td>
 					<td><input
-						name="cantidad_<c:out value='${producto.codigo}'/>_<c:out value='${producto.precioDistribuidor}'/>_<c:out value='${producto.nombreProducto}'/>"
+						name="cantidad_<c:out value='${producto.codigo}'/>_<c:out value='${producto.precioDistribuidor}'/>_<c:out value='${producto.nombreProducto}'/>_<c:out value='${producto.precioAfiliado}'/>"
 						onclick="javascript:chequearProducto(this)" /></td>
 					<td><input type="checkbox"
 						value="<c:out value='${producto.codigo}'/>" name="producto" /></td>
 				</tr>
 			</c:forEach>
-
 		</table>
 		Linea Fisioterapia y Estética
 		<table width="80%">
 			<tr class="tabla">
 				<th width="10%">Codigo Producto</th>
-
 				<th width="60%">Nombre Producto</th>
 				<th width="10%">Precio</th>
 				<th width="10%">Cantidad</th>
 				<th width="10%">Seleccionar</th>
-
 			</tr>
 			<c:forEach var='producto' items='${listaFisioterapia}'>
 				<tr>
@@ -224,78 +202,65 @@ h1 {
 					<td><c:out value='${producto.nombreProducto}' /></td>
 					<td><c:out value='${producto.precioDistribuidor}' /></td>
 					<td><input
-						name="cantidad_<c:out value='${producto.codigo}'/>_<c:out value='${producto.precioDistribuidor}'/>_<c:out value='${producto.nombreProducto}'/>"
+						name="cantidad_<c:out value='${producto.codigo}'/>_<c:out value='${producto.precioDistribuidor}'/>_<c:out value='${producto.nombreProducto}'/>_<c:out value='${producto.precioAfiliado}'/>"
 						onclick="javascript:chequearProducto(this)" /></td>
 					<td><input type="checkbox"
 						value="<c:out value='${producto.codigo}'/>" name="producto" /></td>
 				</tr>
 			</c:forEach>
-
 		</table>
-
 		Linea Aseo del Hogar
 		<table width="80%">
 			<tr class="tabla">
 				<th width="10%">Codigo Producto</th>
-
 				<th width="60%">Nombre Producto</th>
 				<th width="10%">Precio</th>
 				<th width="10%">Cantidad</th>
 				<th width="10%">Seleccionar</th>
-
 			</tr>
 			<c:forEach var='producto' items='${listaAseoHogar}'>
 				<tr>
 					<td><c:out value='${producto.codigo}' /></td>
-
 					<td><c:out value='${producto.nombreProducto}' /></td>
 					<td><c:out value='${producto.precioDistribuidor}' /></td>
 					<td><input
-						name="cantidad_<c:out value='${producto.codigo}'/>_<c:out value='${producto.precioDistribuidor}'/>_<c:out value='${producto.nombreProducto}'/>"
+						name="cantidad_<c:out value='${producto.codigo}'/>_<c:out value='${producto.precioDistribuidor}'/>_<c:out value='${producto.nombreProducto}'/>_<c:out value='${producto.precioAfiliado}'/>"
 						onclick="javascript:chequearProducto(this)" /></td>
 					<td><input type="checkbox"
 						value="<c:out value='${producto.codigo}'/>" name="producto" /></td>
 				</tr>
 			</c:forEach>
-
 		</table>
-
 		Linea Veterinaria
 		<table width="80%">
 			<tr class="tabla">
 				<th width="10%">Codigo Producto</th>
-
 				<th width="60%">Nombre Producto</th>
 				<th width="10%">Precio</th>
 				<th width="10%">Cantidad</th>
 				<th width="10%">Seleccionar</th>
-
 			</tr>
 			<c:forEach var='producto' items='${listaVeterinaria}'>
 				<tr>
 					<td><c:out value='${producto.codigo}' /></td>
-
 					<td><c:out value='${producto.nombreProducto}' /></td>
 					<td><c:out value='${producto.precioDistribuidor}' /></td>
 					<td><input
-						name="cantidad_<c:out value='${producto.codigo}'/>_<c:out value='${producto.precioDistribuidor}'/>_<c:out value='${producto.nombreProducto}'/>"
+						name="cantidad_<c:out value='${producto.codigo}'/>_<c:out value='${producto.precioDistribuidor}'/>_<c:out value='${producto.nombreProducto}'/>_<c:out value='${producto.precioAfiliado}'/>"
 						onclick="javascript:chequearProducto(this)" /></td>
 					<td><input type="checkbox"
 						value="<c:out value='${producto.codigo}'/>" name="producto" /></td>
 				</tr>
 			</c:forEach>
-
 		</table>
 		Extractos
 		<table width="80%">
 			<tr class="tabla">
 				<th width="10%">Codigo Producto</th>
-
 				<th width="60%">Nombre Producto</th>
 				<th width="10%">Precio</th>
 				<th width="10%">Cantidad</th>
 				<th width="10%">Seleccionar</th>
-
 			</tr>
 			<c:forEach var='producto' items='${listaExtractos}'>
 				<tr>
@@ -304,17 +269,13 @@ h1 {
 					<td><c:out value='${producto.nombreProducto}' /></td>
 					<td><c:out value='${producto.precioDistribuidor}' /></td>
 					<td><input
-						name="cantidad_<c:out value='${producto.codigo}'/>_<c:out value='${producto.precioDistribuidor}'/>_<c:out value='${producto.nombreProducto}'/>"
+						name="cantidad_<c:out value='${producto.codigo}'/>_<c:out value='${producto.precioDistribuidor}'/>_<c:out value='${producto.nombreProducto}'/>_<c:out value='${producto.precioAfiliado}'/>"
 						onclick="javascript:chequearProducto(this)" /></td>
 					<td><input type="checkbox"
 						value="<c:out value='${producto.codigo}'/>" name="producto" /></td>
 				</tr>
 			</c:forEach>
-
 		</table>
-
 	</form>
-
-
 </body>
 </html>

@@ -43,22 +43,31 @@ public class ListaPedidosAEliminar extends HttpServlet {
 		String url = RecursosEnum.FW_ERROR.getRecurso();
 		try {
 			Date fechaActual = new Date();
-			String distribuidor = UsuarioHelper.getUsuario();
 			SimpleDateFormat formato = new SimpleDateFormat("MM/yyyy");
 			String cadenaFecha = formato.format(fechaActual);
+			String distribuidor = null;
+			char rolUserLogged = UsuarioHelper.getRol();
+			if (rolUserLogged == '1') {
+				distribuidor = request.getParameter("distribuidor");
+				request.setAttribute("listaDistribuidores", afiliadoService.listarDistribuidores());
+			} else {
+				distribuidor = UsuarioHelper.getUsuario();
+			}
 			periodo = request.getParameter("periodo") == null ? cadenaFecha : request.getParameter("periodo");
 			PedidoDTO pedido = new PedidoDTO();
 			pedido.setPeriodo(periodo);
 			pedido.setCedulaDistribuidor(distribuidor);
-			request.setAttribute("periodo", periodo);
 
 			List<Object> lista = this.pedidoService.listarPedidosAEliminar(pedido);
 			if ((lista != null) && (lista.size() > 0)) {
 				request.setAttribute("pedidos", lista);
 				url = RecursosEnum.FW_LISTAR_PEDIDO_ELIMINAR.getRecurso();
 			} else {
-				request.setAttribute("error", "No existen pedidos para el periodo solicitado:" + periodo);
+				request.setAttribute("error", "No existen pedidos para el periodo solicitado: " + periodo);
 			}
+			request.setAttribute("periodo", periodo);
+			request.setAttribute("distribuidor", distribuidor);
+			request.setAttribute("rol", "" + rolUserLogged);
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());
 		}

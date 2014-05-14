@@ -13,9 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import co.com.multinivel.backend.model.Consumo;
-import co.com.multinivel.backend.model.SaldoPedidoDistribuidor;
 import co.com.multinivel.backend.service.ConsumoService;
-import co.com.multinivel.backend.service.SaldoPedidoDistristribuidorService;
+import co.com.multinivel.backend.service.SaldoPedidoDistribuidorService;
 import co.com.multinivel.shared.helper.UsuarioHelper;
 import co.com.multinivel.shared.util.RecursosEnum;
 
@@ -24,7 +23,7 @@ public class EliminarConsumo extends HttpServlet {
 	@Autowired
 	private ConsumoService consumoService;
 	@Autowired
-	private SaldoPedidoDistristribuidorService saldoPedidoDistristribuidorService;
+	private SaldoPedidoDistribuidorService saldoPedidoDistribuidorService;
 
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
@@ -52,30 +51,10 @@ public class EliminarConsumo extends HttpServlet {
 
 			if (consumo != null) {
 				boolean transaccion = this.consumoService.eliminar(consumo);
-				if (transaccion) {
-					double saldo;
-					double saldoAbonos;
-					boolean grabadoExito = Boolean.FALSE;
-					SaldoPedidoDistribuidor spd = new SaldoPedidoDistribuidor();
-					spd = this.saldoPedidoDistristribuidorService.consultarSaldoDistribuidor(consumo.getDistribuidor());
-					if (spd == null) {
-						spd = new SaldoPedidoDistribuidor();
-						spd.setDistribuidor(consumo.getDistribuidor());
-					}
-					saldo = spd.getSaldo() + consumo.getTotalpedido().doubleValue();
-					saldoAbonos = spd.getSaldoAbonado() + consumo.getTotalpedido().doubleValue();
-					spd.setSaldo(saldo);
-					spd.setSaldoAbonado(saldoAbonos);
-
-					grabadoExito = this.saldoPedidoDistristribuidorService.guardar(spd);
-					if (!grabadoExito) {
-						request.setAttribute("error",
-								"Se elimino el consumo; pero no se devolvio el valor del abono. Comuníquese con el Administrador.");
-					}
+				if (!transaccion) {
+					request.setAttribute("error", "Borrado no fue finalizado consulte con el administrador del sistema");
+					recurso = RecursosEnum.FW_ELIMINACION_CONSUMO_ERROR.getRecurso();
 				}
-			} else {
-				request.setAttribute("error", "Borrado no fue finalizado consulte con el administrador del sistema");
-				recurso = RecursosEnum.FW_ELIMINACION_CONSUMO_ERROR.getRecurso();
 			}
 		} catch (Exception e) {
 			request.setAttribute("error", e.getMessage());

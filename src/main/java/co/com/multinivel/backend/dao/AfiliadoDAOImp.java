@@ -491,7 +491,7 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
 	}
 
 	public boolean cambiarDocumento(String documentoActual, String documentoNuevo) throws MultinivelDAOException {
-		boolean retorno = false;
+		boolean retorno = Boolean.FALSE;
 		int param1 = 0;
 		try {
 			Class.forName(ParametrosEnum.DRIVER_DATABASE.getValor());
@@ -507,7 +507,7 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
 			cstmt1.execute();
 			param1 = cstmt1.getInt(3);
 			if (param1 == 1) {
-				retorno = true;
+				retorno = Boolean.TRUE;
 			}
 			cstmt1.close();
 		} catch (Exception e) {
@@ -1154,7 +1154,7 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
 
 	private void buscarPadre(String cedulaPadre, Nodo nodoHijo, List<Nodo> lista) {
 		Iterator<Nodo> itr = lista.iterator();
-		boolean encontro = false;
+		boolean encontro = Boolean.FALSE;
 		Nodo nodoRetorno = null;
 		while ((itr.hasNext()) && (!encontro)) {
 			nodoRetorno = (Nodo) itr.next();

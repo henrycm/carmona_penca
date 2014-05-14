@@ -130,7 +130,7 @@ public class AfiliadoServiceImpl implements AfiliadoService {
 
 	public boolean cambiarDocumento(String documentoActual, String documentoNuevo)
 			throws MultinivelServiceException {
-		boolean retorno = false;
+		boolean retorno = Boolean.FALSE;
 		try {
 			retorno = this.afiliadoDAO.cambiarDocumento(documentoActual, documentoNuevo);
 		} catch (MultinivelDAOException e) {

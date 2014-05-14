@@ -66,7 +66,7 @@ public class UsuarioHelper {
 		if (roles != null) {
 			Iterator<? extends GrantedAuthority> listaRoles = roles.iterator();
 
-			boolean bandera = true;
+			boolean bandera = Boolean.TRUE;
 			while ((listaRoles.hasNext()) && (bandera)) {
 				GrantedAuthority grantedAuthority = (GrantedAuthority) listaRoles.next();
 				if ("ROLE_ADMIN".equals(grantedAuthority.getAuthority())) {

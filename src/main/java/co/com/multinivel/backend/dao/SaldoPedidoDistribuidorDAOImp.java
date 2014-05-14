@@ -25,7 +25,6 @@ public class SaldoPedidoDistribuidorDAOImp implements SaldoPedidoDistribuidorDAO
 		boolean retorno = Boolean.FALSE;
 		try {
 			this.entityManager.merge(saldo);
-			entityManager.flush();
 			retorno = Boolean.TRUE;
 		} catch (Exception e) {
 			e.printStackTrace();

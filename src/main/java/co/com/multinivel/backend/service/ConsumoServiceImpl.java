@@ -1,6 +1,7 @@
 package co.com.multinivel.backend.service;
 
 import java.math.BigDecimal;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -10,11 +11,13 @@ import org.springframework.stereotype.Service;
 
 import co.com.multinivel.backend.dao.ConsumoDAO;
 import co.com.multinivel.backend.dao.InventarioDistribuidorDAO;
+import co.com.multinivel.backend.dao.SaldoPedidoDistribuidorDAO;
 import co.com.multinivel.backend.model.Afiliado;
 import co.com.multinivel.backend.model.Consumo;
 import co.com.multinivel.backend.model.DetConsumo;
 import co.com.multinivel.backend.model.InventarioDistribuidor;
 import co.com.multinivel.backend.model.InventarioDistribuidorPK;
+import co.com.multinivel.backend.model.SaldoPedidoDistribuidor;
 import co.com.multinivel.shared.dto.ConsumoDTO;
 import co.com.multinivel.shared.exception.MultinivelDAOException;
 import co.com.multinivel.shared.exception.MultinivelServiceException;
@@ -25,12 +28,19 @@ public class ConsumoServiceImpl implements ConsumoService {
 	private ConsumoDAO consumoDAO;
 	@Autowired
 	private InventarioDistribuidorDAO invDistDAO;
+	@Autowired
+	private SaldoPedidoDistribuidorDAO saldoPedidoDistribuidorDAO;
 
 	public boolean ingresar(Consumo consumo) throws MultinivelServiceException {
-		boolean retorno = false;
+		boolean retorno = Boolean.FALSE;
 		try {
+			/*
+			 * Graba Consumo
+			 */
 			retorno = this.consumoDAO.ingresar(consumo);
-
+			/*
+			 * Graba Inventario Distribuidor
+			 */
 			for (DetConsumo dc : consumo.getTDetConsumos()) {
 				InventarioDistribuidor iv = invDistDAO.findOne(new InventarioDistribuidorPK(consumo.getDistribuidor(), dc.getCodigoProducto()));
 				if (iv == null) {
@@ -39,8 +49,22 @@ public class ConsumoServiceImpl implements ConsumoService {
 				iv.setCantidad(iv.getCantidad() - dc.getCantidad());
 				iv.setValor_total(iv.getValor_total() - dc.getTotalProducto().longValueExact());
 				invDistDAO.save(iv);
-
 			}
+			/*
+			 * Graba Saldo Distribuidor
+			 */
+			SaldoPedidoDistribuidor spd = this.saldoPedidoDistribuidorDAO.consultarSaldoDistribuidor(consumo.getDistribuidor());
+			if (spd == null) {
+				spd = new SaldoPedidoDistribuidor();
+				spd.setDistribuidor(consumo.getDistribuidor());
+				spd.setSaldo(0);
+				spd.setSaldoAbonado(0);
+			}
+			double saldo = spd.getSaldo() - consumo.getTotalpedido().doubleValue();
+			double saldoAbonado = spd.getSaldoAbonado() - consumo.getTotalpedido().doubleValue();
+			spd.setSaldo(saldo);
+			spd.setSaldoAbonado(saldoAbonado);
+			retorno = this.saldoPedidoDistribuidorDAO.guardar(spd);
 		} catch (MultinivelDAOException e) {
 			e.printStackTrace();
 			throw new MultinivelServiceException(e.getMessage(), getClass());
@@ -69,12 +93,12 @@ public class ConsumoServiceImpl implements ConsumoService {
 	}
 
 	public boolean validarSaldoDistribuidor(Consumo consumo) throws MultinivelServiceException {
-		boolean retorno = false;
+		boolean retorno = Boolean.FALSE;
 		try {
 			BigDecimal saldoAfiliados = this.consumoDAO.consultarSaldoPorPeriodoDeAfiliados(consumo);
 			BigDecimal saldoDistribuidor = this.consumoDAO.consultarSaldoPorPeriodoDeAfiliados(consumo);
 			if (saldoAfiliados.intValue() < saldoDistribuidor.intValue()) {
-				retorno = true;
+				retorno = Boolean.TRUE;
 			}
 		} catch (MultinivelDAOException e) {
 			e.printStackTrace();
@@ -150,10 +174,45 @@ public class ConsumoServiceImpl implements ConsumoService {
 		return lista;
 	}
 
-	public boolean eliminar(Consumo pedido) throws MultinivelServiceException {
-		boolean retorno = false;
+	public boolean eliminar(Consumo consumo) throws MultinivelServiceException {
+		boolean retorno = Boolean.FALSE;
 		try {
-			retorno = this.consumoDAO.eliminar(pedido);
+			/*
+			 * Graba Inventario Distribuidor
+			 */
+			List<Object> lsConsumos = this.consumoDAO.consultar(consumo);
+			Iterator<Object> iterador = lsConsumos.listIterator();
+
+			while (iterador.hasNext()) {
+				ConsumoDTO con = (ConsumoDTO) iterador.next();
+				InventarioDistribuidor iv = this.invDistDAO
+						.findOne(new InventarioDistribuidorPK(con.getCedulaDistribuidor(), con.getCodigoProducto()));
+				if (iv == null) {
+					iv = new InventarioDistribuidor(new InventarioDistribuidorPK(con.getCedulaDistribuidor(), con.getCodigoProducto()));
+				}
+				iv.setCantidad(iv.getCantidad() + con.getCantidad());
+				iv.setValor_total(iv.getValor_total() + con.getTotalProducto().longValueExact());
+				this.invDistDAO.save(iv);
+			}
+			/*
+			 * Graba Saldo Distribuidor
+			 */
+			SaldoPedidoDistribuidor spd = this.saldoPedidoDistribuidorDAO.consultarSaldoDistribuidor(consumo.getDistribuidor());
+			if (spd == null) {
+				spd = new SaldoPedidoDistribuidor();
+				spd.setDistribuidor(consumo.getDistribuidor());
+				spd.setSaldo(0);
+				spd.setSaldoAbonado(0);
+			}
+			double saldo = spd.getSaldo() + consumo.getTotalpedido().doubleValue();
+			double saldoAbonos = spd.getSaldoAbonado() + consumo.getTotalpedido().doubleValue();
+			spd.setSaldo(saldo);
+			spd.setSaldoAbonado(saldoAbonos);
+			retorno = this.saldoPedidoDistribuidorDAO.guardar(spd);
+			/*
+			 * Elimina Consumo
+			 */
+			retorno = this.consumoDAO.eliminar(consumo);
 		} catch (MultinivelDAOException e) {
 			e.printStackTrace();
 			throw new MultinivelServiceException(e.getMessage(), getClass());

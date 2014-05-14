@@ -39,6 +39,8 @@ public class PedidoHelper {
 								String codigoProducto = productos[i];
 								Double valorProducto = Double.parseDouble(arrayDatos[2]);
 
+								BigDecimal valorAfiliado = new BigDecimal(arrayDatos[4]);
+
 								int cantidad = Integer.parseInt(request.getParameter(nombreParametro));
 								BigDecimal valor = new BigDecimal(arrayDatos[2]);
 
@@ -52,6 +54,7 @@ public class PedidoHelper {
 								dp.setValorUnitario(valor);
 								dp.setCodigoProducto(codigoProducto);
 								dp.setNombreProducto(nombreProducto);
+								dp.setValorUnitarioAfiliado(valorAfiliado);
 
 								pedidos.add(dp);
 							}
@@ -71,9 +74,11 @@ public class PedidoHelper {
 	public static Pedido cargarEntidad(HttpServletRequest request) throws Exception {
 		Pedido pedido = new Pedido();
 		try {
+			String[] cantidades = request.getParameterValues("cantidad");
 			String[] productos = request.getParameterValues("codigoProducto");
 			String[] valorUnitario = request.getParameterValues("valorUnitario");
-			String[] cantidades = request.getParameterValues("cantidad");
+			String[] valorUnitarioAfiliado = request.getParameterValues("valorUnitarioAfiliado");
+
 			HashSet<DetallePedido> pedidos = new HashSet<DetallePedido>();
 
 			String usuario = request.getParameter("cedula");
@@ -84,6 +89,7 @@ public class PedidoHelper {
 			pedido.setAfiliado(request.getParameter("cedula"));
 			pedido.setFecha(new Date());
 			pedido.setTransporte(new BigDecimal(request.getParameter("transporte")));
+			long totalProductoAfiliado = 0L;
 			long totalProducto = 0L;
 			long totalPedido = 0L;
 			totalPedido = Integer.parseInt(request.getParameter("totalPedido"));
@@ -91,15 +97,18 @@ public class PedidoHelper {
 			for (int j = 0; j < productos.length; j++) {
 				String codigoProducto = productos[j];
 				Double valorProducto = Double.parseDouble(valorUnitario[j]);
+				Double valorProductoAfiliado = Double.parseDouble(valorUnitarioAfiliado[j]);
 				BigDecimal valor = new BigDecimal(valorProducto);
 				int cantidad = Integer.parseInt(cantidades[j]);
 				totalProducto = valorProducto.intValue() * cantidad;
+				totalProductoAfiliado = valorProductoAfiliado.intValue() * cantidad;
 
 				DetallePedido dp = new DetallePedido();
 
 				dp.setCantidad(cantidad);
 				dp.setCodigoProducto(codigoProducto);
 				dp.setTotalProducto(new BigDecimal(totalProducto));
+				dp.setTotalProductoAfiliado(new BigDecimal(totalProductoAfiliado));
 				dp.setValorUnitario(valor);
 				dp.setPedido(pedido);
 				pedidos.add(dp);

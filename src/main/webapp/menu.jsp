@@ -76,7 +76,8 @@
 							NUEVA PARA Realizar Pedido</a></li>
 					<li><a target="mainFrame"
 						href="pedido/ListaPedidoController?accion=L">Actualizar
-							Transporte Pedido</a></li>
+							Transporte Pedido</a> <a href="pedido/IndexPedido?accion=E"
+						target="mainFrame">Eliminar Pedido</a></li>
 					<li><a target="mainFrame" href="consumo/IndexConsumo?accion=C">Consumos
 							Totales por Distribuidor</a></li>
 					<li><a target="mainFrame" href="consumo/IndexConsumo?accion=E">Eliminar
