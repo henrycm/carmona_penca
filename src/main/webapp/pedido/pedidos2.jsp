@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Documento sin t&iacute;tulo</title>
-<link rel="stylesheet" href="../css/jquery/jquery.ui.all.css">
+<link rel="stylesheet" href="../css/jquery/jquery.ui.all.css"/>
 	<script src="../js/jquery/jquery-1.5.1.js"></script>
 	<script src="../js/jquery/jquery.ui.core.js"></script>
 	<script src="../js/jquery/jquery.ui.widget.js"></script>
@@ -20,10 +20,10 @@
 	<script src="../js/jquery/jquery.ui.datepicker.js"> </script>
 	 <script src="../js/generico.js" ></script>
 	 <script src="../js/pedido/pedido.js" ></script>
-<link rel="stylesheet" href="../css/multinivel.css">
+<link rel="stylesheet" href="../css/multinivel.css"/>
  
  
-<link rel="stylesheet" href="../css/jquery/demos.css">
+<link rel="stylesheet" href="../css/jquery/demos.css"/>
 	<style>
 	h1 { padding: .1em; margin: 0; font-size:18px; }
 	#products { float:left; width:500px; margin-right: 2em;  border-color:#006600;}

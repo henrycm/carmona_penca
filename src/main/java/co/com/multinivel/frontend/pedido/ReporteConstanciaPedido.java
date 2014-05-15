@@ -27,17 +27,14 @@ public class ReporteConstanciaPedido extends HttpServlet {
 
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
-		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
-				config.getServletContext());
+		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			HashMap<String, Object> mapParametrosReporte = new HashMap<String, Object>();
 			List<Object> listaPedido = null;
@@ -46,15 +43,12 @@ public class ReporteConstanciaPedido extends HttpServlet {
 			listaPedido = this.pedidoService.consultar(pedido);
 			mapParametrosReporte.put("totalAfiliados", listaPedido.size());
 			if ((listaPedido != null) && (listaPedido.size() > 0)) {
-				mapParametrosReporte.put("rutaImagenes",
-						RutasUtil.getRutaImagenes(getServletContext()));
+				mapParametrosReporte.put("rutaImagenes", RutasUtil.getRutaImagenes(getServletContext()));
 				mapParametrosReporte.put("codigoPedido", request.getParameter("codigoPedido"));
 				mapParametrosReporte.put("tituloCompania", "ALOE DE COLOMBIA");
 
-				GenerarReporte.exportarPDF(request, response, getServletConfig()
-						.getServletContext(), "PEDIDO_" + UsuarioHelper.getUsuario() + "_"
-						+ request.getParameter("codigoPedido") + ".pdf",
-						RecursosEnum.FW_JASPER_REPORTE_PEDIDO.getRecurso(), mapParametrosReporte,
+				GenerarReporte.exportarPDF(request, response, getServletConfig().getServletContext(), "PEDIDO_" + UsuarioHelper.getUsuario() + "_"
+						+ request.getParameter("codigoPedido") + ".pdf", RecursosEnum.FW_JASPER_REPORTE_PEDIDO.getRecurso(), mapParametrosReporte,
 						listaPedido);
 			}
 		} catch (Exception e) {

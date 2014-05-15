@@ -76,7 +76,7 @@ public enum RecursosEnum {
 			"ListaPagoCompensacionDistribuidor.jasper"), FW_JASPER_LISTA_COMPENSACION_DISTRIBUIDOR_PERIODO(
 			"ListaAfiliadosPadreConsumoPeriodo.jasper"), FW_JASPER_LISTA_COMPENSACION_RED(
 			"ListaAfiliadosPadreConsumoPeriodo.jasper"), FW_JASPER_REPORTE_CONSUMO(
-			"reporteConsumo.jasper"), FW_JASPER_REPORTE_PEDIDO("reportePedido.jasper"), FW_JASPER_REPORTE_PDTO_PORC_PERIODO(
+			"reporteConsumo.jasper"), FW_JASPER_REPORTE_PEDIDO("reportePedido.jasper.jasper"), FW_JASPER_REPORTE_PDTO_PORC_PERIODO(
 			"Reporte_PorcentajeProducto.jasper"), FW_JASPER_REPORTE_LISTA_PEDIDOS_DISTRIBUIDOR(
 			"Reporte_lista_pedidos_distribuidor_periodo.jasper"), FW_JASPER_REPORTE_LISTA_CONSUMOS_DISTRIBUIDOR(
 			"Reporte_lista_consumos_distribuidor_periodo.jasper"), FW_JASPER_REPORTE_LISTA_CONSUMOS_AFILIADO(
@@ -88,7 +88,7 @@ public enum RecursosEnum {
 			"listaAfiliadoPorDistribuidoresPeriodo.jasper"), FW_JASPER_REPORTE_LISTA_CONSUMOS_PRODUCTO(
 			"Reporte_lista_consumo_producto_periodo.jasper"), FW_ADMINISTRACION(
 			"/administracion/index.jsp"), FW_INICIO_CALCULO_ARBOL("/liquidacion/calcularArbol.jsp"), FW_MOVIMIENTO_CONTABLE(
-			"/pedido/movimiento.jsp"), FW_INDEX_PARAMETRO("/parametro/parametros.jsp");
+			"/pedido/movimiento.jsp"), FW_INVENTARIO_DISTRIBUIDOR("/pedido/inventarioDistribuidor.jsp"), FW_INDEX_PARAMETRO("/parametro/parametros.jsp");
 
 	private String recurso;
 

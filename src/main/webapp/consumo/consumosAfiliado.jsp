@@ -7,9 +7,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Documento sin t&iacute;tulo</title>
-<link rel="stylesheet" href="../css/jquery/jquery.ui.all.css">
-	<link rel="stylesheet" href="../css/multinivel.css">
-		<link rel="stylesheet" href="../css/jquery/demos.css">
+<link rel="stylesheet" href="../css/jquery/jquery.ui.all.css"/>
+	<link rel="stylesheet" href="../css/multinivel.css"/>
+		<link rel="stylesheet" href="../css/jquery/demos.css"/>
 
 			<script src="../js/jquery/jquery-1.5.1.js"></script>
 			<script src="../js/jquery/jquery.ui.core.js"></script>
@@ -49,7 +49,7 @@ h1 {
 			<script>
 				$(document).ready(function() {
 					$("[data-disp]").each(function() {
-						if ($(this).attr("data-disp") == 0) {
+						if ($(this).attr("data-disp") == 0 || $(this).attr("data-disp") < 0) {
 							$(this).attr("disabled", "disabled");
 						} else {
 							$(this).change(function() {

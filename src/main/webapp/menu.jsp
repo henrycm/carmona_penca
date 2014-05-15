@@ -14,8 +14,8 @@
 					<li><a target="mainFrame"
 						href="administracion/IndexAfiliado?accion=C">Actualizar
 							Afiliado</a></li>
-					<li><a target="mainFrame"
-						href="administracion/IndexAfiliado?accion=X">Eliminar Afiliado</a></li>
+					<!-- <li><a target="mainFrame"
+						href="administracion/IndexAfiliado?accion=X">Eliminar Afiliado</a></li> -->
 					<li><a target="mainFrame"
 						href="administracion/IndexAfiliado?accion=E">Consultar
 							Afiliado</a></li>
@@ -72,6 +72,9 @@
 							Pedido</a></li>
 					<li><a target="mainFrame"
 						href="${ctx}/spring/movimiento/inicio">Realizar Abono</a></li>
+					<li><a target="mainFrame"
+						href="${ctx}/spring/inventarioDistribuidor/inicio">Consultar Inventario
+							Distribuidor</a></li>
 					<li><a target="mainFrame" href="pedido/IndexPedido?accion=S">OPCIÛN
 							NUEVA PARA Realizar Pedido</a></li>
 					<li><a target="mainFrame"

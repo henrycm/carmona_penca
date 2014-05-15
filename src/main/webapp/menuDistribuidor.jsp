@@ -24,6 +24,9 @@
 							NUEVA PARA Realizar Pedido</a></li>
 					<li><a href="pedido/IndexPedido?accion=E" target="mainFrame">Eliminar
 							Pedido</a></li>
+					<li><a target="mainFrame"
+						href="${ctx}/spring/inventarioDistribuidor/inicio">Consultar
+							Inventario Distribuidor</a></li>
 					<li><a href="consumo/IndexConsumo?accion=B" target="mainFrame">Registrar
 							Consumo Afiliado</a></li>
 					<li><a href="consumo/IndexConsumo?accion=E" target="mainFrame">Eliminar

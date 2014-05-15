@@ -24,7 +24,7 @@ import co.com.multinivel.shared.util.RecursosEnum;
 @Controller
 public class AbonoController {
 	@Autowired
-	private AbonosDistribuidorService mvtosService;
+	private AbonosDistribuidorService abonosDistribuidorService;
 	@Autowired
 	private AfiliadoService afiliadoService;
 	@Autowired
@@ -36,7 +36,7 @@ public class AbonoController {
 			if (UsuarioHelper.getRol() == '1') {
 				model.addAttribute("listaDistribuidores", afiliadoService.listarDistribuidores());
 				if (m.getDistribuidor() != null) {
-					List<Abonos_Distribuidor> l = mvtosService.consultar(m.getDistribuidor());
+					List<Abonos_Distribuidor> l = abonosDistribuidorService.consultar(m.getDistribuidor());
 					model.addAttribute("movimientos", l);
 				}
 			}
@@ -52,7 +52,7 @@ public class AbonoController {
 		try {
 			m.setFecha(new Date());
 			m.setUsuario(UsuarioHelper.getUsuario());
-			mvtosService.guardar(m);
+			abonosDistribuidorService.guardar(m);
 
 			double saldoAbonos;
 			boolean grabadoExito = Boolean.FALSE;

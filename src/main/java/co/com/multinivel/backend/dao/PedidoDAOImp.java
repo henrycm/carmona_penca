@@ -149,10 +149,11 @@ public class PedidoDAOImp implements PedidoDAO {
 	public List<Pedido> listar(Pedido pedido) throws MultinivelDAOException {
 		List<Pedido> listaPedido = new ArrayList<Pedido>();
 		try {
-			String sql = "select  p.codigo_Pedido,p.transporte,  p.totalPedido,  p.distribuidor,  p.fecha   from t_Pedidos p   where  transporte <>0 ";
+			String sql = "Select p.codigo_Pedido,p.transporte, p.totalPedido, p.distribuidor, p.fecha From t_Pedidos p where transporte <> 0 ";
 			if ((pedido.getDistribuidor() != null) && (!"".equals(pedido.getDistribuidor()))) {
 				sql = sql + " and p.distribuidor='" + pedido.getDistribuidor() + "' ";
 			}
+			sql = sql + " Order By p.Distribuidor Asc ";
 			Query query = this.entityManager.createNativeQuery(sql);
 			if (query.getResultList() != null) {
 				List<?> lista = query.getResultList();

@@ -7,9 +7,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Saldos Abonados Distribuidor</title>
+<title>Movimientos COntables</title>
 <script src="${ctx}/js/jquery/jquery-1.5.1.js"></script>
+<link rel="stylesheet" href="${ctx}/css/jquery/jquery.ui.all.css">
 <link rel="StyleSheet" href="${ctx}/bootstrap/css/bootstrap.css"></link>
+<link rel="stylesheet" href="${ctx}/css/multinivel.css">
+<link rel="stylesheet" href="${ctx}/css/jquery/demos.css">
 <link rel="stylesheet" href="${ctx}/css/multinivel.css">
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -21,23 +24,27 @@
 </script>
 </head>
 <body>
-	<div align="center">
-		<div align="center" class="titulo">Ingreso de Abonos Distribuidor</div>
+	<div align="center" class="demo">
+		<div align="center" class="titulo">Consulta de Inventario
+			Distribuidor Producto.</div>
 		<form:form class="form-inline" action="guardar" method="POST"
-			commandName="movimiento">
+			commandName="inventario">
 			<input name="accion" type="hidden" value="M">
 			<fieldset>
+				<div class="form-group">
+					<label>Distribuidor</label>
+				</div>
 				<div class="form-group">
 					<c:if test="${not empty listaDistribuidores}">
 						<form:select path="distribuidor" class="form-control input-sm"
 							required="required">
 							<option value="">--Seleccionar--</option>
 							<c:forEach items="${listaDistribuidores}" var="d">
-								<c:if test="${movimiento.distribuidor eq d.cedula}">
+								<c:if test="${inventario.distribuidor eq d.cedula}">
 									<option value="${d.cedula}" selected="selected">${d.nombre}
 										${d.apellido} -- ${d.cedula}</option>
 								</c:if>
-								<c:if test="${movimiento.distribuidor ne d.cedula}">
+								<c:if test="${inventario.distribuidor ne d.cedula}">
 									<option value="${d.cedula}">${d.nombre}${d.apellido}
 										-- ${d.cedula}</option>
 								</c:if>
@@ -45,40 +52,34 @@
 						</form:select>
 					</c:if>
 				</div>
-				<div class="form-group">
-					<form:input class="form-control input-sm" path="saldoAbonado"
-						required="required" pattern="\d*" title="Solo numeros"
-						maxlength="8" />
-				</div>
-				<div class="form-group">
-					<button type="submit" class="btn btn-primary btn-sm" value="Check">Guardar
-						Abono</button>
-				</div>
 			</fieldset>
 		</form:form>
-
-		<c:if test="${not empty movimientos}">
-			<div style="width: 60%">
-				<table class="table table-bordered table-condensed">
-					<thead>
-						<tr class="enc-tabla">
-							<th>Fecha</th>
-							<th>Valor Abono</th>
-							<th>Usuario</th>
+		<div align="center">
+			<table class="tbl-lista" border="1">
+				<tr>
+					<th>Codigo</th>
+					<th>Producto</th>
+					<th>Cantidad</th>
+					<th>Val.Afiliado</th>
+					<th>Tot.Afiliado</th>
+					<th>Val.Distribuidor</th>
+					<th>Tot.Distribuidor</th>
+				</tr>
+				<c:if test="${not empty inventarios}">
+					<c:forEach var="i" items="${inventarios}">
+						<tr>
+							<td align="center">${i.producto.codigo}</td>
+							<td>${i.producto.nombreProducto}</td>
+							<td align="center">${i.producto.cantidad}</td>
+							<td align="center">${i.producto.precioAfiliado}</td>
+							<td align="center">${i.valorTotalAfiliado}</td>
+							<td align="center">${i.producto.precioDistribuidor}</td>
+							<td align="center">${i.valorTotalDistribuidor}</td>
 						</tr>
-					</thead>
-					<tbody>
-						<c:forEach var="h" items="${movimientos}">
-							<tr>
-								<td><fmt:formatDate pattern="yyyy-MM-dd" value="${h.fecha}" /></td>
-								<td>${h.saldoAbonado}</td>
-								<td>${h.usuario}</td>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
-			</div>
-		</c:if>
+					</c:forEach>
+				</c:if>
+			</table>
+		</div>
 	</div>
 </body>
 </html>
