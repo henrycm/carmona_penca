@@ -27,17 +27,14 @@ public class ReporteConstanciaConsumo extends HttpServlet {
 
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
-		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
-				config.getServletContext());
+		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			HashMap<String, Object> mapParametrosReporte = new HashMap<String, Object>();
 			List<Object> listaConsumo = null;
@@ -46,15 +43,12 @@ public class ReporteConstanciaConsumo extends HttpServlet {
 			listaConsumo = this.consumoService.consultar(pedido);
 			mapParametrosReporte.put("totalAfiliados", listaConsumo.size());
 			if ((listaConsumo != null) && (listaConsumo.size() > 0)) {
-				mapParametrosReporte.put("rutaImagenes",
-						RutasUtil.getRutaImagenes(getServletContext()));
+				mapParametrosReporte.put("rutaImagenes", RutasUtil.getRutaImagenes(getServletContext()));
 				mapParametrosReporte.put("codigoPedido", request.getParameter("codigoConsumo"));
 				mapParametrosReporte.put("tituloCompania", "ALOE DE COLOMBIA");
 
-				GenerarReporte.exportarPDF(request, response, getServletConfig()
-						.getServletContext(), "CONSUMO_" + UsuarioHelper.getUsuario() + "_"
-						+ request.getParameter("codigoConsumo") + ".pdf",
-						RecursosEnum.FW_JASPER_REPORTE_CONSUMO.getRecurso(), mapParametrosReporte,
+				GenerarReporte.exportarPDF(request, response, getServletConfig().getServletContext(), "CONSUMO_" + UsuarioHelper.getUsuario() + "_"
+						+ request.getParameter("codigoConsumo") + ".pdf", RecursosEnum.FW_JASPER_REPORTE_CONSUMO.getRecurso(), mapParametrosReporte,
 						listaConsumo);
 			}
 		} catch (Exception e) {

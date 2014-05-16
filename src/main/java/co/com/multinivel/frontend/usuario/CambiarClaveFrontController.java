@@ -25,14 +25,11 @@ public class CambiarClaveFrontController extends HttpServlet {
 	@Autowired
 	private RolService rolService;
 
-	public void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd = null;
 		try {
-			rd = getServletContext().getRequestDispatcher(
-					RecursosEnum.FW_CAMBIAR_CLAVE.getRecurso());
-			char accion = request.getParameter("accion") == null ? '*' : request.getParameter(
-					"accion").charAt(0);
+			rd = getServletContext().getRequestDispatcher(RecursosEnum.FW_CAMBIAR_CLAVE.getRecurso());
+			char accion = request.getParameter("accion") == null ? '*' : request.getParameter("accion").charAt(0);
 
 			User usuario = UsuarioHelper.cargarEntidad(request);
 			User usuarioConsultado = this.usuarioService.consultar(usuario);
@@ -44,8 +41,7 @@ public class CambiarClaveFrontController extends HttpServlet {
 					usuario.setEnabled(usuarioConsultado.getEnabled());
 					usuario.setPassword(request.getParameter("passwordNuevo"));
 					this.usuarioService.actualizar(usuario);
-					request.setAttribute("mensaje",
-							"La Clave se cambio exitosamente por favor haga clic en regresar");
+					request.setAttribute("mensaje", "La Clave se cambio exitosamente.");
 				} else {
 					request.setAttribute("error", "EL usuario no existe o la clave no coincide");
 				}
@@ -58,12 +54,10 @@ public class CambiarClaveFrontController extends HttpServlet {
 
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
-		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
-				config.getServletContext());
+		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
 	}
 
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
-			IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		doPost(req, resp);
 	}
 }
@@ -72,5 +66,6 @@ public class CambiarClaveFrontController extends HttpServlet {
  * Location:
  * D:\Dllo\multinivel\multinivelEAR.ear\multinivel.war\WEB-INF\classes\
  * 
- * Qualified Name: co.com.multinivel.frontend.usuario.CambiarClaveFrontController
+ * Qualified Name:
+ * co.com.multinivel.frontend.usuario.CambiarClaveFrontController
  */

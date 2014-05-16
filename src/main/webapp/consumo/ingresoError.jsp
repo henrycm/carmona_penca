@@ -10,11 +10,11 @@
 <script src="../js/afiliado/afiliado.js"></script>
 <link rel="stylesheet" href="../css/jquery/demos.css">
 </head>
-<body class="fondo">
+<body>
 	<div class="demo" align="center">
 		<table class="tabla">
 			<tr>
-				<td>El pedido realizado presento un error:<c:out
+				<td>El consumo realizado presento un error:<c:out
 						value="${error}"></c:out>.Intente mas tarde o comuniquese con el
 					administrador.
 				</td>

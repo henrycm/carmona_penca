@@ -50,6 +50,7 @@ public class IndexConsumo extends HttpServlet {
 		String cadenaFecha = formato.format(fechaActual);
 		String periodo = cadenaFecha;
 		request.setAttribute("periodo", periodo);
+		char rolUserLogged = UsuarioHelper.getRol();
 		try {
 			char accion = request.getParameter("accion") == null ? '*' : request.getParameter("accion").charAt(0);
 			request.setAttribute("fechaActual", new Date());
@@ -124,8 +125,10 @@ public class IndexConsumo extends HttpServlet {
 				recurso = RecursosEnum.FW_LISTAR_CONSUMOS_TOTALES.getRecurso();
 				break;
 			case 'E':
-				request.setAttribute("distribuidor", request.getParameter("distribuidor"));
-
+				if (rolUserLogged == '1') {
+					request.setAttribute("listaDistribuidores", afiliadoService.listarDistribuidores());
+				}
+				request.setAttribute("rol", "" + rolUserLogged);
 				recurso = RecursosEnum.FW_LISTAR_CONSUMO_ELIMINAR.getRecurso();
 				break;
 			case 'X':

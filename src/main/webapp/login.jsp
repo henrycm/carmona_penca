@@ -63,11 +63,13 @@
 								name="Limpiar" id="Limpiar" value="Limpiar" />
 						</div>
 					</div>
+					<!-- 
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-6">
 							<a href="cambiarClave">Cambiar Clave</a>
 						</div>
 					</div>
+					 -->
 				</fieldset>
 				<c:if test="${not empty param.login_error}">
 					<div class="alert alert-danger">El usuario no tiene acceso o

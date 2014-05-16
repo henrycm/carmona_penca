@@ -8,7 +8,8 @@
 			<li class="dropdown"><a target="mainFrame" href="#"
 				class="dropdown-toggle" data-toggle="dropdown">Consumos</a>
 				<ul class="dropdown-menu">
-					<li><a href="consumo/IndexConsumo?accion=L" target="mainFrame">Lista
+				<li class="dropdown-header">Reportes</li>
+					<li><a href="consumo/IndexConsumo?accion=L" target="mainFrame">Reporte
 							de Consumos por Periodo</a></li>
 				</ul></li>
 		</ul>
@@ -25,7 +26,7 @@
 				class="dropdown-toggle" data-toggle="dropdown">Premiación</a>
 				<ul class="dropdown-menu">
 					<li><a href="reporte/IndexPremiacion?accion=A"
-						target="mainFrame">Consultar Premiacion Usuario</a></li>
+						target="mainFrame">Consultar Premiación Usuario</a></li>
 				</ul></li>
 		</ul>
 		<ul class="nav navbar-nav">
