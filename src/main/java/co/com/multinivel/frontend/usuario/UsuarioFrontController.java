@@ -29,12 +29,10 @@ public class UsuarioFrontController extends HttpServlet {
 	@Autowired
 	private RolService rolService;
 
-	public void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd = null;
 		try {
-			char accion = request.getParameter("accion") == null ? '*' : request.getParameter(
-					"accion").charAt(0);
+			char accion = request.getParameter("accion") == null ? '*' : request.getParameter("accion").charAt(0);
 			User usuario = UsuarioHelper.cargarEntidad(request);
 			List<UsuarioDTO> lista = null;
 			GroupAuthority rol = null;
@@ -44,8 +42,7 @@ public class UsuarioFrontController extends HttpServlet {
 				User usuarioConsultado = this.usuarioService.consultar(usuario.getUsername());
 				if (usuarioConsultado != null) {
 					usuario.setGroupMembers(usuarioConsultado.getGroupMembers());
-					for (GroupMember gm : usuarioConsultado.getGroupMembers())
-					{
+					for (GroupMember gm : usuarioConsultado.getGroupMembers()) {
 						gm.getGroupAuthority().setGroupId(request.getParameter("rol"));
 						rolService.actualizar(gm.getGroupAuthority());
 					}
@@ -81,7 +78,6 @@ public class UsuarioFrontController extends HttpServlet {
 					lista = this.usuarioService.buscar(nomFiltro, filtro);
 					request.setAttribute("listaUsuarios", lista);
 					request.setAttribute("roles", rolService.listar());
-					System.out.println("LISTA>>>>>>" + lista.size());
 				}
 			}
 
@@ -95,12 +91,10 @@ public class UsuarioFrontController extends HttpServlet {
 
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
-		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
-				config.getServletContext());
+		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
 	}
 
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
-			IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		doPost(req, resp);
 	}
 }

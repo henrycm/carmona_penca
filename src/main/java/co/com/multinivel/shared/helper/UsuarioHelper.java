@@ -27,7 +27,7 @@ public class UsuarioHelper {
 	public static User cargarEntidad(Afiliado afiliado) {
 		User usuario = new User();
 		usuario.setUsername(afiliado.getCedula());
-		usuario.setPassword(afiliado.getCedula() + "_Aloe");
+		usuario.setPassword("Aloe*" + afiliado.getCedula() + "*");
 		byte activado = Byte.valueOf("1").byteValue();
 		usuario.setEnabled(activado);
 		return usuario;
@@ -39,7 +39,7 @@ public class UsuarioHelper {
 		if ("3".equals(request.getParameter("tipoAfiliado"))) {
 			usuario.setPassword(afiliado.getCedula());
 		} else {
-			usuario.setPassword(afiliado.getCedula() + "_Aloe");
+			usuario.setPassword("Aloe*" + afiliado.getCedula() + "*");
 		}
 		byte activado = Byte.valueOf("1").byteValue();
 		usuario.setEnabled(activado);

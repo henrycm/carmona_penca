@@ -1,8 +1,8 @@
 package co.com.multinivel.shared.util;
 
 public enum CorreoEnum {
-	CORREO_HOST("smtp.1and1.com"), CORREO_ENABLE("true"), CORREO_PORT("587"), CORREO_AUTH("true"), CORREO_FROM("jcamilo@grupovegaflor.com"), CORREO_TO(
-			"jcamilo@grupovegaflor.com"), CORREO_CLAVE("sistemas"), CORREO_USER("jcamilo@grupovegaflor.com");
+	CORREO_HOST("smtp.gmail.com"), CORREO_ENABLE("true"), CORREO_PORT("587"), CORREO_AUTH("true"), CORREO_FROM("RedMultiAloe@gmail.com"), CORREO_TO(
+			"RedMultiAloe@gmail.com"), CORREO_CLAVE("multi@loe"), CORREO_USER("RedMultiAloe@gmail.com");
 
 	private String valor;
 

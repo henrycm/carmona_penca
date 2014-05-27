@@ -1,6 +1,6 @@
 <datasources xmlns="http://www.jboss.org/ironjacamar/schema">
 	<datasource jndi-name="java:/multinivelDS" pool-name="MySQLPool">
-		<connection-url>jdbc:jtds:sqlserver://10.10.10.251:1433/KamiloPruebas
+		<connection-url>jdbc:jtds:sqlserver://localhost:1433/Multinivel
 		</connection-url>
 		<driver>net.sourceforge.jtds.jdbc.Driver</driver>
 		<pool>
@@ -8,7 +8,7 @@
 		</pool>
 		<security>
 			<user-name>sa</user-name>
-			<password>890938755</password>
+			<password>RedAloe2013</password>
 		</security>
 	</datasource>
 </datasources>

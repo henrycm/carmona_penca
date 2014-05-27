@@ -26,21 +26,16 @@ public class IndexFrontController extends HttpServlet {
 
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
-		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
-				config.getServletContext());
+		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		int pagina = (Integer) (request.getParameter("numPagina") == null ? 1 : request
-				.getParameter("numPagina"));
-		RequestDispatcher rd = getServletContext().getRequestDispatcher(
-				RecursosEnum.FW_INDEX_USUARIO.getRecurso());
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int pagina = (Integer) (request.getParameter("numPagina") == null ? 1 : request.getParameter("numPagina"));
+		RequestDispatcher rd = getServletContext().getRequestDispatcher(RecursosEnum.FW_INDEX_USUARIO.getRecurso());
 		try {
 			request.setAttribute("listaRoles", this.rolService.listar());
 			request.setAttribute("listaUsuarios", this.usuarioService.listarConDistribuidor(pagina));

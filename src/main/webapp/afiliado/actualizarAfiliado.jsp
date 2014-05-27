@@ -102,6 +102,20 @@ style>#accordion {
 						<td>Código del Empresario: <input name="codigoEmpresario"
 							type="text" size="30" /> <select name="letra">
 								<option value="A">A</option>
+								<option value="B">B</option>
+								<option value="C">C</option>
+								<option value="D">D</option>
+								<option value="E">E</option>
+								<option value="F">F</option>
+								<option value="G">G</option>
+								<option value="H">H</option>
+								<option value="I">I</option>
+								<option value="J">J</option>
+								<option value="K">K</option>
+								<option value="L">L</option>
+								<option value="M">M</option>
+								<option value="N">N</option>
+								<option value="O">O</option>
 						</select>
 							<div class="btn-group">
 								<a class="btn btn-sm btn-default"
@@ -136,7 +150,8 @@ Código del Empresario: <input name="codigoEmpresario" type="text"
 					<div>
 						<table>
 							<tr>
-								<td style="color: red">Estado:<select name="estado" ${rol=='1' ? '' : 'disabled'}>
+								<td style="color: red">Estado:<select name="estado"
+									${rol=='1' ? '' : 'disabled'}>
 										<c:if test='${afiliado.activo=="si"}'>
 											<option value="si" Selected>Activo</option>
 											<option value="no">Inactivo</option>
@@ -165,8 +180,9 @@ Código del Empresario: <input name="codigoEmpresario" type="text"
 								</select> <input name="numeroIdentificacion" type="text" size="13"
 									value="<c:out value='${afiliado.cedula}'/>" maxlength="13" />
 								</td>
-								<td>Fecha de Nac: <input name="fechaNacimiento" type="text" readonly="readonly"
-									class="ui-datepicker-calendar" id="fecha" size="15"
+								<td>Fecha de Nac: <input name="fechaNacimiento" type="text"
+									readonly="readonly" class="ui-datepicker-calendar" id="fecha"
+									size="15"
 									value="<fmt:formatDate pattern='yyyy-MM-dd' 
             value='${afiliado.fechaNacimiento}' />" /></td>
 							</tr>

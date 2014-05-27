@@ -9,6 +9,8 @@
 			<li class="dropdown"><a target="mainFrame" href="#"
 				class="dropdown-toggle" data-toggle="dropdown">Afiliados</a>
 				<ul class="dropdown-menu">
+					<li><a href="administracion/IndexAfiliado?accion=I"
+						target="mainFrame">Ingresar Afiliado</a></li>
 					<li><a href="administracion/IndexAfiliado?accion=C"
 						target="mainFrame">Actualizar Afiliado</a></li>
 					<li><a href="administracion/IndexAfiliado?accion=E"

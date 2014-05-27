@@ -33,11 +33,10 @@ public class ValidarUsuario extends HttpServlet {
 		Afiliado usuario = null;
 		String nombreUsuario = "";
 		char rol = UsuarioHelper.getRol();
-		log.info("Rol: " + rol);
 		String recurso = RecursosEnum.FW_INDEX.getRecurso();
 		request.setAttribute("rol", "" + rol);
 		try {
-			if (rol != '1') {
+			if (!"administrador".equalsIgnoreCase(UsuarioHelper.getUsuario().trim())) {
 				usuario = afiliadoService.consultar(UsuarioHelper.getUsuario());
 				nombreUsuario = " - " + usuario.getNombre().trim() + " " + usuario.getApellido().trim();
 			}

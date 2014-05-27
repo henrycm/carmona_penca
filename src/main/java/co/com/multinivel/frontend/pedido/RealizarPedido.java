@@ -12,8 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
+import co.com.multinivel.backend.model.Afiliado;
 import co.com.multinivel.backend.model.Consumo;
 import co.com.multinivel.backend.model.Pedido;
+import co.com.multinivel.backend.service.AfiliadoService;
 import co.com.multinivel.backend.service.ConsumoService;
 import co.com.multinivel.backend.service.PedidoService;
 import co.com.multinivel.shared.helper.PedidoHelper;
@@ -26,6 +28,8 @@ public class RealizarPedido extends HttpServlet {
 	private PedidoService pedidoService;
 	@Autowired
 	private ConsumoService consumoService;
+	@Autowired
+	private AfiliadoService afiliadoService;
 
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
@@ -50,9 +54,12 @@ public class RealizarPedido extends HttpServlet {
 					request.setAttribute("error", "Datos incompletos");
 					recurso = RecursosEnum.FW_INGRESO_PEDIDO_ERROR.getRecurso();
 				} else {
-					CorreoUtil.enviarCorreo("ENVIO PEDIDO N." + pedido.getCodigoPedido(),
-							"Se realizo el pedido para el distribuidor:" + pedido.getAfiliado() + " por valor de :" + pedido.getTotalPedido()
-									+ " periodo:" + pedido.getFecha());
+					Afiliado distribuidorPedido = this.afiliadoService.consultar(pedido.getAfiliado());
+					CorreoUtil.enviarCorreo(
+							"ENVIO PEDIDO N." + pedido.getCodigoPedido(),
+							"Se realizo el pedido para el distribuidor: " + pedido.getAfiliado() + " - " + distribuidorPedido.getNombre() + " "
+									+ distribuidorPedido.getApellido() + " por valor de: " + pedido.getTotalPedido() + " periodo: "
+									+ pedido.getFecha());
 					request.setAttribute("codigoPedido", Integer.valueOf(this.pedidoService.ultimoPedido(pedido)));
 				}
 				break;
@@ -65,9 +72,12 @@ public class RealizarPedido extends HttpServlet {
 					request.setAttribute("error", "Datos incompletos");
 					recurso = RecursosEnum.FW_INGRESO_PEDIDO_ERROR.getRecurso();
 				} else {
-					CorreoUtil.enviarCorreo("REGISTRO CONSUMO N." + pedido.getCodigoPedido(),
-							"Se registro el consumo para el afiliado:" + pedido.getAfiliado() + " por valor de :" + pedido.getTotalPedido()
-									+ " periodo:" + pedido.getFecha());
+					Afiliado distribuidorPedido = this.afiliadoService.consultar(pedido.getAfiliado());
+					CorreoUtil.enviarCorreo(
+							"REGISTRO PEDIDO N." + pedido.getCodigoPedido(),
+							"Se registro el consumo para el afiliado: " + pedido.getAfiliado() + " - " + distribuidorPedido.getNombre() + " "
+									+ distribuidorPedido.getApellido() + " por valor de: " + pedido.getTotalPedido() + " periodo: "
+									+ pedido.getFecha());
 
 					request.setAttribute("codigoPedido", Integer.valueOf(this.pedidoService.ultimoPedido(pedido)));
 				}
@@ -78,9 +88,12 @@ public class RealizarPedido extends HttpServlet {
 					request.setAttribute("error", "Datos incompletos");
 					recurso = RecursosEnum.FW_INGRESO_PEDIDO_ERROR.getRecurso();
 				} else {
-					CorreoUtil.enviarCorreo("ENVIO PEDIDO N." + pedido.getCodigoPedido(),
-							"Se realizo el pedido para el distribuidor:" + pedido.getAfiliado() + " por valor de :" + pedido.getTotalPedido()
-									+ " periodo:" + pedido.getFecha());
+					Afiliado distribuidorPedido = this.afiliadoService.consultar(pedido.getAfiliado());
+					CorreoUtil.enviarCorreo(
+							"ENVIO PEDIDO N." + pedido.getCodigoPedido(),
+							"Se realizo el pedido para el distribuidor: " + pedido.getAfiliado() + " - " + distribuidorPedido.getNombre() + " "
+									+ distribuidorPedido.getApellido() + " por valor de: " + pedido.getTotalPedido() + " periodo: "
+									+ pedido.getFecha());
 					request.setAttribute("codigoPedido", Integer.valueOf(this.pedidoService.ultimoPedido(pedido)));
 				}
 				break;
