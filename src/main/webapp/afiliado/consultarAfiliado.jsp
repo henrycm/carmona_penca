@@ -31,8 +31,16 @@ style>#accordion {
 			action="AfiliadoFrontController" method="post">
 			<div align="center" class="titulo">CONSULTA DE DATOS DE
 				AFILIADO</div>
-			<input name="accion" type="hidden" value="<c:out value='${accion}'/>" />
+			<input name="accion" type="hidden" value="${accion}" />
 			<c:if test='${afiliado==null}'>
+				<c:if test="${not empty mensaje}">
+					<div class="form-group">
+						<div class="alert alert-danger">
+							<p>${mensaje}</p>
+						</div>
+					</div>
+					<div class="separador"></div>
+				</c:if>
 				<fieldset>
 					<div class="form-group">
 						<select name="nomFiltro" class="form-control input-sm">
@@ -50,7 +58,7 @@ style>#accordion {
 						<button type="submit" class="btn btn-primary btn-sm">Buscar</button>
 					</div>
 				</fieldset>
-				<br/>
+				<br />
 				<table class="tbl-lista" border="1">
 					<tr>
 						<th colspan="15">Lista de Afiliados</th>
@@ -61,6 +69,7 @@ style>#accordion {
 						<th>Tipo</th>
 						<th>Activo</th>
 						<th>Seleccionar</th>
+						<th>Cambiar</th>
 					</tr>
 					<c:if test='${listaAfiliados!=null}'>
 						<c:forEach var='af' items='${listaAfiliados}'>
@@ -78,6 +87,15 @@ style>#accordion {
 								<td><a
 									href="AfiliadoFrontController?accion=E&letra=A&codigoEmpresario=${af.cedula}">Seleccionar</a>
 								</td>
+								<td><c:if test='${af.tipoAfiliado=="3"}'>
+										<a
+											href="AfiliadoFrontController?accion=O&codigoEmpresario=${af.cedula}">Cambiar
+											a distribudor</a>
+									</c:if> <c:if test='${af.tipoAfiliado=="2"}'>
+										<a
+											href="AfiliadoFrontController?accion=P&codigoEmpresario=${af.cedula}">Cambiar
+											a Afiliado</a>
+									</c:if></td>
 							</tr>
 						</c:forEach>
 					</c:if>

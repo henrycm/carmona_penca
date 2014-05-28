@@ -49,7 +49,8 @@ public class AfiliadoFrontController extends HttpServlet {
 	@Autowired
 	private CantidadAfiliacionesDistribuidorService cantidaAfiliacionesDistribuidorService;
 
-	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		RequestDispatcher rd = null;
 		String recurso = null;
 		Afiliado afiliado = null;
@@ -61,7 +62,8 @@ public class AfiliadoFrontController extends HttpServlet {
 		GroupMember rolPorUsuario = null;
 		char rolUserLogged = UsuarioHelper.getRol();
 		try {
-			char accion = request.getParameter("accion") == null ? 'I' : request.getParameter("accion").charAt(0);
+			char accion = request.getParameter("accion") == null ? 'I' : request.getParameter(
+					"accion").charAt(0);
 
 			recurso = RecursosEnum.FW_INDEX_AFILIADO.getRecurso();
 			switch (accion) {
@@ -73,12 +75,16 @@ public class AfiliadoFrontController extends HttpServlet {
 					lista = this.afiliadoService.buscar(nomFiltro, filtro);
 					request.setAttribute("listaAfiliados", lista);
 				} else {
-					afiliadoConsulta = this.afiliadoService.consultar(request.getParameter("codigoEmpresario"));
+					afiliadoConsulta = this.afiliadoService.consultar(request
+							.getParameter("codigoEmpresario"));
 					request.setAttribute("afiliado", afiliadoConsulta);
-					request.setAttribute("banco", this.bancoService.consultar(afiliadoConsulta.getBanco()));
+					request.setAttribute("banco",
+							this.bancoService.consultar(afiliadoConsulta.getBanco()));
 					if ((afiliadoConsulta != null) && (afiliadoConsulta.getCedula() != null)) {
-						request.setAttribute("patrocinador", this.afiliadoService.consultar(afiliadoConsulta.getCedulaPapa()));
-						List<AfiliadoDTO> listaAfiliado = this.afiliadoService.buscarDistribuidor(afiliadoConsulta.getCedulaDistribuidor(), null);
+						request.setAttribute("patrocinador",
+								this.afiliadoService.consultar(afiliadoConsulta.getCedulaPapa()));
+						List<AfiliadoDTO> listaAfiliado = this.afiliadoService.buscarDistribuidor(
+								afiliadoConsulta.getCedulaDistribuidor(), null);
 						if ((listaAfiliado != null) && (listaAfiliado.size() > 0)) {
 							request.setAttribute("distribuidor", listaAfiliado.get(0));
 						}
@@ -94,7 +100,8 @@ public class AfiliadoFrontController extends HttpServlet {
 					afiliadoConsulta = new Afiliado();
 					afiliadoConsulta.setCedula(request.getParameter("codigoEmpresario"));
 					this.afiliadoService.actualizarAfiliadoADistribuidor(afiliadoConsulta);
-					User usuario = this.usuarioService.consultar(request.getParameter("codigoEmpresario"));
+					User usuario = this.usuarioService.consultar(request
+							.getParameter("codigoEmpresario"));
 					rol = this.rolService.consultar("2");
 					if (rol != null) {
 						rolPorUsuario = new GroupMember();
@@ -104,13 +111,18 @@ public class AfiliadoFrontController extends HttpServlet {
 					}
 					recurso = RecursosEnum.FW_ACTUALIZAR_AFILIADO_DISTRIBUIDOR_EXITO.getRecurso();
 				} else {
-					afiliadoConsulta = this.afiliadoService.consultar(request.getParameter("codigoEmpresario") + "-" + request.getParameter("letra"));
+					afiliadoConsulta = this.afiliadoService
+							.consultar(request.getParameter("codigoEmpresario") + "-"
+									+ request.getParameter("letra"));
 					recurso = RecursosEnum.FW_ACTUALIZAR_AFILIADO_DISTRIBUIDOR.getRecurso();
 					request.setAttribute("afiliado", afiliadoConsulta);
-					request.setAttribute("banco", this.bancoService.consultar(afiliadoConsulta.getBanco()));
+					request.setAttribute("banco",
+							this.bancoService.consultar(afiliadoConsulta.getBanco()));
 					if ((afiliadoConsulta != null) && (afiliadoConsulta.getCedula() != null)) {
-						request.setAttribute("patrocinador", this.afiliadoService.consultar(afiliadoConsulta.getCedulaPapa()));
-						List<AfiliadoDTO> listaAfiliado = this.afiliadoService.buscarDistribuidor(afiliadoConsulta.getCedulaDistribuidor(), null);
+						request.setAttribute("patrocinador",
+								this.afiliadoService.consultar(afiliadoConsulta.getCedulaPapa()));
+						List<AfiliadoDTO> listaAfiliado = this.afiliadoService.buscarDistribuidor(
+								afiliadoConsulta.getCedulaDistribuidor(), null);
 						if ((listaAfiliado != null) && (listaAfiliado.size() > 0)) {
 							request.setAttribute("distribuidor", listaAfiliado.get(0));
 						}
@@ -132,13 +144,18 @@ public class AfiliadoFrontController extends HttpServlet {
 				break;
 			case 'I':
 				afiliado = AfiliadoHelper.cargarEntidad(request);
-				afiliado.setIdAfiliacionDistribuidor(this.afiliadoService.consultarIdDistribuidor(afiliado.getCedulaDistribuidor()));
+				afiliado.setIdAfiliacionDistribuidor(this.afiliadoService
+						.consultarIdDistribuidor(afiliado.getCedulaDistribuidor()));
 				this.afiliadoService.ingresar(afiliado);
 				User usuario = UsuarioHelper.cargarEntidad(afiliado, request);
 				this.usuarioService.ingresar(usuario);
 				try {
-					CorreoUtil.enviarCorreo("INSCRIPCIÓN AFILIADO", "Se ha realizado la inscripción de un nuevo afiliado: " + afiliado.getCedula()
-							+ " - " + afiliado.getNombre() + " " + afiliado.getApellido() + " para el patrocinador: " + afiliado.getCedulaPapa());
+					CorreoUtil.enviarCorreo(
+							"INSCRIPCIÓN AFILIADO",
+							"Se ha realizado la inscripción de un nuevo afiliado: "
+									+ afiliado.getCedula()
+									+ " - " + afiliado.getNombre() + " " + afiliado.getApellido()
+									+ " para el patrocinador: " + afiliado.getCedulaPapa());
 				} catch (Exception e) {
 					log.error(e);
 				}
@@ -157,14 +174,18 @@ public class AfiliadoFrontController extends HttpServlet {
 				break;
 			case 'C':
 				request.setAttribute("rol", "" + rolUserLogged);
-				afiliadoConsulta = this.afiliadoService.consultar(request.getParameter("codigoEmpresario") + "-" + request.getParameter("letra"));
+				afiliadoConsulta = this.afiliadoService.consultar(request
+						.getParameter("codigoEmpresario") + "-" + request.getParameter("letra"));
 				recurso = RecursosEnum.FW_ACTUALIZACION_AFILIADO.getRecurso();
 				request.setAttribute("distribuidores", afiliadoService.listarDistribuidores());
 				request.setAttribute("afiliado", afiliadoConsulta);
 				if ((afiliadoConsulta != null) && (afiliadoConsulta.getCedula() != null)) {
-					request.setAttribute("banco", this.bancoService.consultar(afiliadoConsulta.getBanco()));
-					request.setAttribute("patrocinador", this.afiliadoService.consultar(afiliadoConsulta.getCedulaPapa()));
-					List<AfiliadoDTO> listaAfiliado = this.afiliadoService.buscarDistribuidor(afiliadoConsulta.getCedulaDistribuidor(), null);
+					request.setAttribute("banco",
+							this.bancoService.consultar(afiliadoConsulta.getBanco()));
+					request.setAttribute("patrocinador",
+							this.afiliadoService.consultar(afiliadoConsulta.getCedulaPapa()));
+					List<AfiliadoDTO> listaAfiliado = this.afiliadoService.buscarDistribuidor(
+							afiliadoConsulta.getCedulaDistribuidor(), null);
 					if ((listaAfiliado != null) && (listaAfiliado.size() > 0)) {
 						request.setAttribute("distribuidor", listaAfiliado.get(0));
 					}
@@ -198,15 +219,44 @@ public class AfiliadoFrontController extends HttpServlet {
 
 				break;
 			// Opción DesHabilitada en el Menú.
+			case 'O':
+				this.afiliadoService.cambiarAdistribuidor(request.getParameter("codigoEmpresario"));
+				request.setAttribute("mensaje", "Afiliado cambiado exitosamente");
+				request.setAttribute("accion", "E");
+				recurso = RecursosEnum.FW_CONSULTAR_AFILIADO.getRecurso();
+				break;
+
+			case 'P':
+				afiliadoConsulta = this.afiliadoService.consultar(request
+						.getParameter("codigoEmpresario"));
+				request.setAttribute("afiliado", afiliadoConsulta);
+				request.setAttribute("distribuidor",
+						afiliadoService.consultar(afiliadoConsulta.getCedulaDistribuidor()));
+				request.setAttribute("distribuidores", afiliadoService.listarDistribuidores());
+				recurso = RecursosEnum.FW_CAMBIAR_DISTRIBUIDOR.getRecurso();
+				break;
+
+			case 'Q':
+				String cedula = request.getParameter("cedula");
+				String dist_ant = request.getParameter("cedulaDist");
+				String dist_nuevo = request.getParameter("nuevoDistribuidor");
+				afiliadoService.cambiarAafiliado(cedula, dist_ant, dist_nuevo);
+				request.setAttribute("mensaje", "Afiliado cambiado exitosamente!");
+				request.setAttribute("accion", "E");
+				recurso = RecursosEnum.FW_CONSULTAR_AFILIADO.getRecurso();
+				break;
+
 			case 'U':
 				String documentoActual = request.getParameter("codigoEmpresario");
 				String documentoNuevo = request.getParameter("nuevoCodigoEmpresario");
 
-				boolean retorno = this.afiliadoService.cambiarDocumento(documentoActual, documentoNuevo);
+				boolean retorno = this.afiliadoService.cambiarDocumento(documentoActual,
+						documentoNuevo);
 				if (retorno) {
 					request.setAttribute("mensaje", "el cambio de documento se realizo con exito");
 				} else {
-					request.setAttribute("mensaje", "el cambio de documento no se realizo por favor verifique con el administrador");
+					request.setAttribute("mensaje",
+							"el cambio de documento no se realizo por favor verifique con el administrador");
 				}
 				recurso = RecursosEnum.FW_CAMBIAR_DOCUMENTO_AFILIADO.getRecurso();
 
@@ -218,18 +268,25 @@ public class AfiliadoFrontController extends HttpServlet {
 						afiliadoConsulta = new Afiliado();
 						afiliadoConsulta.setCedula(request.getParameter("codigoEmpresario"));
 						if (this.afiliadoService.borrar(afiliadoConsulta)) {
-							request.setAttribute("mensaje", "El Afiliado ha sido eliminado con exito.");
+							request.setAttribute("mensaje",
+									"El Afiliado ha sido eliminado con exito.");
 							break;
 						} else {
 							request.setAttribute("rol", "" + rolUserLogged);
-							afiliadoConsulta = this.afiliadoService.consultar(request.getParameter("codigoEmpresario"));
+							afiliadoConsulta = this.afiliadoService.consultar(request
+									.getParameter("codigoEmpresario"));
 							recurso = RecursosEnum.FW_ACTUALIZACION_AFILIADO.getRecurso();
 							request.setAttribute("afiliado", afiliadoConsulta);
-							request.setAttribute("banco", this.bancoService.consultar(afiliadoConsulta.getBanco()));
-							if ((afiliadoConsulta != null) && (afiliadoConsulta.getCedula() != null)) {
-								request.setAttribute("patrocinador", this.afiliadoService.consultar(afiliadoConsulta.getCedulaPapa()));
-								List<AfiliadoDTO> listaAfiliado = this.afiliadoService.buscarDistribuidor(afiliadoConsulta.getCedulaDistribuidor(),
-										null);
+							request.setAttribute("banco",
+									this.bancoService.consultar(afiliadoConsulta.getBanco()));
+							if ((afiliadoConsulta != null)
+									&& (afiliadoConsulta.getCedula() != null)) {
+								request.setAttribute("patrocinador", this.afiliadoService
+										.consultar(afiliadoConsulta.getCedulaPapa()));
+								List<AfiliadoDTO> listaAfiliado = this.afiliadoService
+										.buscarDistribuidor(
+												afiliadoConsulta.getCedulaDistribuidor(),
+												null);
 								if ((listaAfiliado != null) && (listaAfiliado.size() > 0)) {
 									request.setAttribute("distribuidor", listaAfiliado.get(0));
 								}
@@ -237,7 +294,8 @@ public class AfiliadoFrontController extends HttpServlet {
 
 								request.setAttribute("accion", "X");
 							}
-							request.setAttribute("mensaje",
+							request.setAttribute(
+									"mensaje",
 									"El Afiliado tiene asociadas personas en su red. Por favor verifique o comuniquese con el Administrador.");
 						}
 						break;
@@ -256,10 +314,12 @@ public class AfiliadoFrontController extends HttpServlet {
 
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
-		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
+		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
+				config.getServletContext());
 	}
 
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
+			IOException {
 		doPost(req, resp);
 	}
 }

@@ -197,4 +197,30 @@ public class AfiliadoServiceImpl implements AfiliadoService {
 		}
 		return lista;
 	}
+
+	public void cambiarAdistribuidor(String cedula) throws MultinivelServiceException
+	{
+		Afiliado a;
+		try {
+			a = afiliadoDAO.consultar(cedula);
+			a.setTipoAfiliado("2");
+			afiliadoDAO.actualizar(a);
+		} catch (MultinivelDAOException e) {
+			throw new MultinivelServiceException(e.getMessage(), getClass());
+		}
+	}
+
+	public void cambiarAafiliado(String cedula, String dist_ant, String dist_nuevo)
+			throws MultinivelServiceException
+	{
+		Afiliado a;
+		try {
+			afiliadoDAO.cambiarDistribuidor(dist_ant, dist_nuevo);
+			a = afiliadoDAO.consultar(cedula);
+			a.setTipoAfiliado("3");
+			afiliadoDAO.actualizar(a);
+		} catch (MultinivelDAOException e) {
+			throw new MultinivelServiceException(e.getMessage(), getClass());
+		}
+	}
 }

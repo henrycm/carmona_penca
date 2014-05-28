@@ -88,7 +88,8 @@ public enum RecursosEnum {
 			"listaAfiliadoPorDistribuidoresPeriodo.jasper"), FW_JASPER_REPORTE_LISTA_CONSUMOS_PRODUCTO(
 			"Reporte_lista_consumo_producto_periodo.jasper"), FW_ADMINISTRACION(
 			"/administracion/index.jsp"), FW_INICIO_CALCULO_ARBOL("/liquidacion/calcularArbol.jsp"), FW_MOVIMIENTO_CONTABLE(
-			"/pedido/movimiento.jsp"), FW_INVENTARIO_DISTRIBUIDOR("/pedido/inventarioDistribuidor.jsp"), FW_INDEX_PARAMETRO("/parametro/parametros.jsp");
+			"/pedido/movimiento.jsp"), FW_INVENTARIO_DISTRIBUIDOR(
+			"/pedido/inventarioDistribuidor.jsp"), FW_INDEX_PARAMETRO("/parametro/parametros.jsp"), FW_CAMBIAR_DISTRIBUIDOR("/afiliado/cambioDistribuidorAfiliado.jsp");
 
 	private String recurso;
 
