@@ -1,10 +1,12 @@
 package co.com.multinivel.backend.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import co.com.multinivel.backend.dao.RolDAO;
 import co.com.multinivel.backend.model.GroupAuthority;
@@ -18,9 +20,20 @@ public class RolServiceImpl implements RolService {
 	@EJB
 	private RolDAO rolDAO;
 
+	@EJB
+	private UsuarioService usrService;
+
 	public void actualizar(GroupAuthority rol) throws MultinivelServiceException {
 		try {
 			this.rolDAO.actualizar(rol);
+		} catch (MultinivelDAOException e) {
+			throw new MultinivelServiceException(e.getMessage(), getClass());
+		}
+	}
+
+	public void actualizarMember(GroupMember mem) throws MultinivelServiceException {
+		try {
+			this.rolDAO.actualizarRolUsuario(mem);
 		} catch (MultinivelDAOException e) {
 			throw new MultinivelServiceException(e.getMessage(), getClass());
 		}
@@ -38,6 +51,16 @@ public class RolServiceImpl implements RolService {
 		try {
 			return this.rolDAO.consultar(codigo);
 		} catch (MultinivelDAOException e) {
+			throw new MultinivelServiceException(e.getMessage(), getClass());
+		}
+	}
+
+	@Transactional
+	public List<GroupMember> consultarMiembroUsuario(String usuario)
+			throws MultinivelServiceException {
+		try {
+			return new ArrayList<GroupMember>(usrService.consultar(usuario).getGroupMembers());
+		} catch (Exception e) {
 			throw new MultinivelServiceException(e.getMessage(), getClass());
 		}
 	}

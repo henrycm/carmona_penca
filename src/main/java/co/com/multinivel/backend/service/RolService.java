@@ -35,6 +35,11 @@ public abstract interface RolService {
 
 	public abstract void actualizarRolUsuario(GroupMember paramGroupMember)
 			throws MultinivelServiceException;
+
+	public abstract List<GroupMember> consultarMiembroUsuario(String usuario)
+			throws MultinivelServiceException;
+
+	public void actualizarMember(GroupMember mem) throws MultinivelServiceException;
 }
 
 /*

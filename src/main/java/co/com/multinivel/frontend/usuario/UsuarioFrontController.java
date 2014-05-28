@@ -41,11 +41,12 @@ public class UsuarioFrontController extends HttpServlet {
 			case 'A':
 				User usuarioConsultado = this.usuarioService.consultar(usuario.getUsername());
 				if (usuarioConsultado != null) {
-					usuario.setGroupMembers(usuarioConsultado.getGroupMembers());
-					for (GroupMember gm : usuarioConsultado.getGroupMembers()) {
-						gm.getGroupAuthority().setGroupId(request.getParameter("rol"));
-						rolService.actualizar(gm.getGroupAuthority());
-					}
+					List<GroupMember> miembros = rolService.consultarMiembroUsuario(usuario.getUsername());
+					GroupAuthority ga = rolService.consultar(request.getParameter("rol"));
+					for (GroupMember gm : miembros) {
+						gm.setGroupAuthority(ga);
+						rolService.actualizarMember(gm);
+					}					
 					this.usuarioService.actualizar(usuario);
 				}
 				request.setAttribute("actualizo", Boolean.valueOf(true));

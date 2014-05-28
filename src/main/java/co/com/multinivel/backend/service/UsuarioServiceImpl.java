@@ -7,6 +7,7 @@ import javax.ejb.EJB;
 import org.springframework.stereotype.Service;
 
 import co.com.multinivel.backend.dao.UsuarioDAO;
+import co.com.multinivel.backend.model.GroupMember;
 import co.com.multinivel.backend.model.User;
 import co.com.multinivel.shared.dto.UsuarioDTO;
 import co.com.multinivel.shared.exception.MultinivelDAOException;
@@ -17,6 +18,9 @@ import co.com.multinivel.shared.util.Pagina;
 public class UsuarioServiceImpl implements UsuarioService {
 	@EJB
 	private UsuarioDAO usuarioDAO;
+
+	@EJB
+	private RolService rolSrv;
 
 	public void actualizar(User barrio) throws MultinivelServiceException {
 		try {
@@ -83,6 +87,12 @@ public class UsuarioServiceImpl implements UsuarioService {
 		List<UsuarioDTO> lista = null;
 		try {
 			lista = this.usuarioDAO.buscar(nomFiltro, filtro);
+			for (UsuarioDTO u : lista)
+			{
+				List<GroupMember> l = rolSrv.consultarMiembroUsuario(u.getUsername());
+				for (GroupMember gm : l)
+					u.setRol(gm.getGroupAuthority().getGroupId());
+			}
 		} catch (MultinivelDAOException e) {
 			throw new MultinivelServiceException(e.getMessage(), getClass());
 		}

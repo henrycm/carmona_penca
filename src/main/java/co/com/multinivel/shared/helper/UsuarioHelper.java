@@ -18,7 +18,8 @@ public class UsuarioHelper {
 		User usuario = new User();
 		usuario.setUsername(request.getParameter("usuario"));
 		usuario.setPassword(request.getParameter("password"));
-		byte activado = (request.getParameter("activado") == null) || ("0".equals(request.getParameter("activado"))) ? Byte.valueOf("0").byteValue()
+		byte activado = (request.getParameter("activado") == null)
+				|| ("0".equals(request.getParameter("activado"))) ? Byte.valueOf("0").byteValue()
 				: Byte.valueOf("1").byteValue();
 		usuario.setEnabled(activado);
 		return usuario;
@@ -78,5 +79,21 @@ public class UsuarioHelper {
 			}
 		}
 		return roleRetornado;
+	}
+
+	public static String getNombreRol() {
+		Authentication principal = SecurityContextHolder.getContext().getAuthentication();
+		Collection<? extends GrantedAuthority> roles = principal.getAuthorities();
+
+		if (roles != null) {
+			Iterator<? extends GrantedAuthority> listaRoles = roles.iterator();
+
+			while (listaRoles.hasNext()) {
+				GrantedAuthority grantedAuthority = (GrantedAuthority) listaRoles.next();
+				return grantedAuthority.getAuthority();
+			}
+		}
+
+		return null;
 	}
 }

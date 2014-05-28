@@ -54,7 +54,7 @@
 							</select></td>
 						</tr>
 						<tr>
-							<td align="left">Tol:</td>
+							<td align="left">Rol:</td>
 							<td align="left"><select name="rol" id="rol">
 									<option value=''>--Seleccione--</option>
 									<c:forEach items="${roles}" var="r">
@@ -69,6 +69,14 @@
 				method="POST">
 				<input name="accion" type="hidden" value="C">
 				<fieldset>
+					<c:if test="${actualizo eq true }">
+						<div class="form-group">
+							<div class="alert alert-danger">
+								<p>Usuario actualizado exitosamente!</p>
+							</div>
+						</div>
+						<div class="separador"></div>
+					</c:if>
 					<div class="form-group">
 						<select name="nomFiltro" class="form-control input-sm">
 							<option value="Nombre">Nombre</option>
@@ -109,7 +117,7 @@
 										<c:out value='Inactivo' />
 									</c:if></td>
 								<td><a
-									href="javascript:cargarUsuario('${usuario.username}','${usuario.password}','${usuario.enabled}', '${usuario.enabled}');">Seleccionar</a>
+									href="javascript:cargarUsuario('${usuario.username}','${usuario.password}','${usuario.enabled}', '${usuario.rol}');">Seleccionar</a>
 								</td>
 							</tr>
 						</c:forEach>
