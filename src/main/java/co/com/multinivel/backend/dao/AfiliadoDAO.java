@@ -58,6 +58,8 @@ public abstract interface AfiliadoDAO {
 
 	public abstract void cambiarDistribuidor(String dist_ant, String dist_nuevo)
 			throws MultinivelDAOException;
+
+	public abstract List<Afiliado> consultarAfiliados(String distribuidor);
 }
 
 /*

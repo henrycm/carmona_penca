@@ -520,6 +520,15 @@ public class AfiliadoDAOImp implements AfiliadoDAO {
 		return lista;
 	}
 
+	public List<Afiliado> consultarAfiliados(String distribuidor)
+	{
+		String query = "from Afiliado a where a.cedulaDistribuidor = :distribuidor " +
+				"order by a.nombre";
+		Query q = entityManager.createQuery(query);
+		q.setParameter("distribuidor", distribuidor);
+		return q.getResultList();
+	}
+
 	public boolean cambiarDocumento(String documentoActual, String documentoNuevo)
 			throws MultinivelDAOException {
 		boolean retorno = Boolean.FALSE;

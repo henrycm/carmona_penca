@@ -58,8 +58,10 @@ public abstract interface AfiliadoService {
 
 	public abstract void cambiarAdistribuidor(String cedula) throws MultinivelServiceException;
 
-	public abstract void cambiarAafiliado(String cedula, String dist_ant, String dist_nuevo)
+	public abstract void cambiarAafiliado(String cedula, String dist_nuevo)
 			throws MultinivelServiceException;
+
+	public abstract List<Afiliado> consultarAfiliados(String distribuidor);
 }
 
 /*

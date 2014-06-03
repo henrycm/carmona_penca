@@ -218,7 +218,9 @@ public class AfiliadoFrontController extends HttpServlet {
 				recurso = RecursosEnum.FW_LISTAR_AFILIADO_POR_NIVEL.getRecurso();
 
 				break;
-			// Opción DesHabilitada en el Menú.
+			/**
+			 * Opcion para cambiar a Distribuidor
+			 */
 			case 'O':
 				this.afiliadoService.cambiarAdistribuidor(request.getParameter("codigoEmpresario"));
 				request.setAttribute("mensaje", "Afiliado cambiado exitosamente");
@@ -226,21 +228,38 @@ public class AfiliadoFrontController extends HttpServlet {
 				recurso = RecursosEnum.FW_CONSULTAR_AFILIADO.getRecurso();
 				break;
 
+			/**
+			 * Opciones P y Q para cambiar de distribuidor a afiliado.
+			 */
 			case 'P':
-				afiliadoConsulta = this.afiliadoService.consultar(request
-						.getParameter("codigoEmpresario"));
-				request.setAttribute("afiliado", afiliadoConsulta);
-				request.setAttribute("distribuidor",
-						afiliadoService.consultar(afiliadoConsulta.getCedulaDistribuidor()));
-				request.setAttribute("distribuidores", afiliadoService.listarDistribuidores());
-				recurso = RecursosEnum.FW_CAMBIAR_DISTRIBUIDOR.getRecurso();
+				String st_cedula = request
+						.getParameter("codigoEmpresario");
+				lista = afiliadoService.consultarAfiliados(st_cedula);
+				if (lista == null || lista.size() == 0)
+				{
+					/**
+					 * Como se envia nulo el distribuidor nuevo, la
+					 * consulta no actualiza ningun registro de distribuidor.
+					 * JOHEAMA 2014-06-02.
+					 */
+					afiliadoService.cambiarAafiliado(st_cedula, null);
+					request.setAttribute("mensaje", "Afiliado cambiado exitosamente!");
+					request.setAttribute("accion", "E");
+					recurso = RecursosEnum.FW_CONSULTAR_AFILIADO.getRecurso();
+				} else
+				{
+					request.setAttribute("afiliados", lista);
+					afiliadoConsulta = this.afiliadoService.consultar(st_cedula);
+					request.setAttribute("afiliado", afiliadoConsulta);
+					request.setAttribute("distribuidores", afiliadoService.listarDistribuidores());
+					recurso = RecursosEnum.FW_CAMBIAR_DISTRIBUIDOR.getRecurso();
+				}
 				break;
 
 			case 'Q':
 				String cedula = request.getParameter("cedula");
-				String dist_ant = request.getParameter("cedulaDist");
 				String dist_nuevo = request.getParameter("nuevoDistribuidor");
-				afiliadoService.cambiarAafiliado(cedula, dist_ant, dist_nuevo);
+				afiliadoService.cambiarAafiliado(cedula, dist_nuevo);
 				request.setAttribute("mensaje", "Afiliado cambiado exitosamente!");
 				request.setAttribute("accion", "E");
 				recurso = RecursosEnum.FW_CONSULTAR_AFILIADO.getRecurso();

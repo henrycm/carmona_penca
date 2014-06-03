@@ -24,14 +24,9 @@
 					<div class="separador"></div>
 				</c:if>
 				<div class="form-group">
-					<label>Afiliado:</label> <input type="text"
+					<label>Distribuidor:</label> <input type="text"
 						class="form-control input-sm" name="afiliado" readonly="readonly"
 						value="${afiliado.nombre} ${afiliado.apellido}" />
-				</div>
-				<div class="form-group">
-					<label>Distribuidor:</label> <input type="text"
-						class="form-control input-sm" name="distribuidor"
-						readonly="readonly" value="${distribuidor.nombre} ${distribuidor.apellido}">
 				</div>
 				<div class="form-group">
 					<label>Nuevo distribuidor:</label> <select name="nuevoDistribuidor"
@@ -48,6 +43,25 @@
 				</div>
 			</fieldset>
 		</form>
+		<div class="titulo">Lista de afiliados del distribuidor</div>
+		<table class="table table-bordered table-condensed">
+			<thead>
+				<tr class="enc-tabla">
+					<th>Cedula</th>
+					<th>Nombres</th>
+					<th>Apellidos</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach var="i" items="${afiliados}">
+					<tr>
+						<td>${i.cedula}</td>
+						<td>${i.nombre}</td>
+						<td>${i.apellido}</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
 	</div>
 </body>
 </html>

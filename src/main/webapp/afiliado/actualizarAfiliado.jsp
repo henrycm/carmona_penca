@@ -286,17 +286,19 @@ Código del Empresario: <input name="codigoEmpresario" type="text"
 					<div id="datosPatrocinador">
 						<table>
 							<tr>
-								<td>Nombres y Apellidos(completos) <c:out
-										value='${patrocinador.nombre}' /> &nbsp;<c:out
-										value='${patrocinador.apellido}' />
+								<td>Nombres y Apellidos(completos)<input type="text"
+									value="${patrocinador.nombre} ${patrocinador.apellido}"
+									readonly="readonly" name="nombrePatrocinador"
+									onclick="$(this).attr('readOnly','true');" />
 								</td>
 							</tr>
 							<tr>
 								<td>Número de Empresario: <input name="numeroEmpresario"
-									type="hidden" value="<c:out value='${afiliado.cedulaPapa}'/>" />
-									<c:out value='${afiliado.cedulaPapa}' /> <input type="hidden"
-									name="red" value="<c:out value='${afiliado.red}'/>">
-
+									type="text" value="${afiliado.cedulaPapa}" readonly="readonly"
+									onclick="$(this).attr('readOnly','true');" /> <c:if
+										test="${rol=='1'}">
+										<a href="javascript:abrirBuscarAfiliado()">Buscar</a>
+									</c:if>
 								</td>
 							</tr>
 							<tr>
@@ -308,6 +310,7 @@ Código del Empresario: <input name="codigoEmpresario" type="text"
 								</td>
 							</tr>
 						</table>
+						<div class="titulo">DATOS DEL DISTRIBUIDOR</div>
 						<table>
 							<tr>
 								<td>Nombres y Apellidos del distribuidor <input
